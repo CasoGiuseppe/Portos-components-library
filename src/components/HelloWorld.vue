@@ -9,13 +9,14 @@ defineProps<{
     <h1 class="green">{{ msg }}</h1>
     <h3>
       You’ve successfully created a project with
+      <div class="square"></div>
       <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
       <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>.
     </h3>
   </div>
 </template>
 
-<style scoped>
+<style lang="scss">
 h1 {
   font-weight: 500;
   font-size: 2.6rem;
@@ -37,5 +38,11 @@ h3 {
   .greetings h3 {
     text-align: left;
   }
+}
+
+.square {
+  @include create-elevation($weight: 400, $type: 'alt');
+  background: var(--color-brand-10, #000);
+  aspect-ratio: 1 / 1;
 }
 </style>
