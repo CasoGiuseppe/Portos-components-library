@@ -44,5 +44,6 @@ h3 {
   @include create-elevation($weight: 400, $type: 'alt');
   background: var(--color-brand-10, #000);
   aspect-ratio: 1 / 1;
+  padding: var(--spacing-120);
 }
 </style>
