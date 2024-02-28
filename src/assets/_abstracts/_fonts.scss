@@ -11,29 +11,14 @@
     --font-style-normal: normal;
     --font-style-bold: bold;
 
-    --font-display-l-size: #{px2rem(calc(40))};
-    --font-display-l-line: #{px2rem(calc(25))};
-
-    --font-display-m-size: #{px2rem(calc(32))}; 
-    --font-display-m-line: #{px2rem(calc(44))};
-
-    --font-display-s-size: #{px2rem(calc(24))}; 
-    --font-display-s-line: #{px2rem(calc(33))};
-
-    --font-heading-l-size: #{px2rem(calc(20))};
-    --font-heading-l-line: #{px2rem(calc(28))};
-
-    --font-heading-m-size: #{px2rem(calc(18))};
-    --font-heading-m-line: #{px2rem(calc(25))};
-
-    --font-body-m-size: #{px2rem(calc(16))}; 
-    --font-body-m-line: #{px2rem(calc(24))};
-
-    --font-body-s-size: #{px2res(calc(10))}; 
-    --font-body-s-line: #{px2res(calc(20))};
-
-    --font-body-xs-size: #{px2res(calc(12))}; 
-    --font-body-xs-line: #{px2res(calc(16z))};
+    --font-display-l-size: #{px2rem(calc(40))} / #{px2rem(calc(25))};
+    --font-display-m-size: #{px2rem(calc(32))} / #{px2rem(calc(44))}; 
+    --font-display-s-size: #{px2rem(calc(24))} / #{px2rem(calc(33))}; 
+    --font-heading-l-size: #{px2rem(calc(20))} / #{px2rem(calc(28))};
+    --font-heading-m-size: #{px2rem(calc(18))} / #{px2rem(calc(25))};
+    --font-body-m-size: #{px2rem(calc(16))} / #{px2rem(calc(24))}; 
+    --font-body-s-size: #{px2res(calc(10))} / #{px2res(calc(20))};
+    --font-body-xs-size: #{px2res(calc(12))} / #{px2res(calc(16z))};
 }
 
 :root {
@@ -45,29 +30,48 @@
     --font-display-l: 
         var(--font-style-normal, normal) 
         var(--font-weight-700, bold) 
-        var(--font-display-l-size, 1rem)/ 
-        var(--font-display-l-line, 1rem) 
+        var(--font-display-l-size, 1rem)
         var(--font-defualt-family);
 
     --font-display-m:
         var(--font-style-normal, normal)
         var(--font-weight-700, bold)
-        var(--font-display-m-size, 1rem)/ 
-        var(--font-display-m-line, 1rem) 
+        var(--font-display-m-size, 1rem)
         var(--font-defualt-family);
 
     --font-display-s:
         var(--font-style-normal, normal)
         var(--font-weight-700, bold)
-        var(--font-display-s-size, 1rem)/ 
-        var(--font-display-s-line, 1rem) 
+        var(--font-display-s-size, 1rem)
         var(--font-defualt-family);
     
     --font-heading-l:
         var(--font-style-normal, normal)
         var(--font-weight-700, bold)
-        var(--font-heading-l-size, 1rem)/ 
-        var(--font-heading-l-line, 1rem) 
+        var(--font-heading-l-size, 1rem)
+        var(--font-defualt-family);
+
+    --font-heading-m:
+        var(--font-style-normal, normal)
+        var(--font-weight-700, bold)
+        var(--font-heading-m-size, 1rem)
+        var(--font-defualt-family);
+
+    --font-body-m:
+        var(--font-style-normal, normal)
+        var(--font-weight-400, normal)
+        var(--font-body-m-size, 1rem)
         var(--font-defualt-family);
     
+    --font-body-s:
+        var(--font-style-normal, normal)
+        var(--font-weight-400, normal)
+        var(--font-body-s-size, 1rem)
+        var(--font-defualt-family);
+    
+    --font-body-xs:
+        var(--font-style-normal, normal)
+        var(--font-weight-400, normal)
+        var(--font-body-xs-size, 1rem)
+        var(--font-defualt-family);
 }

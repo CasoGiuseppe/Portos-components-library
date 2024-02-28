@@ -46,6 +46,6 @@ h3 {
   aspect-ratio: 1 / 1;
   padding: var(--spacing-120);
   color: #000;
-  font: var(--font-heading-l);
+  font: var(--font-display-l);
 }
 </style>
