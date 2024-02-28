@@ -17,8 +17,8 @@
     --font-heading-l-size: #{px2rem(calc(20))} / #{px2rem(calc(28))};
     --font-heading-m-size: #{px2rem(calc(18))} / #{px2rem(calc(25))};
     --font-body-m-size: #{px2rem(calc(16))} / #{px2rem(calc(24))}; 
-    --font-body-s-size: #{px2res(calc(10))} / #{px2res(calc(20))};
-    --font-body-xs-size: #{px2res(calc(12))} / #{px2res(calc(16z))};
+    --font-body-s-size: #{px2rem(calc(14))} / #{px2rem(calc(20))};
+    --font-body-xs-size: #{px2rem(calc(12))} / #{px2rem(calc(16))};
 }
 
 :root {

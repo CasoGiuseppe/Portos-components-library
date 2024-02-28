@@ -42,10 +42,11 @@ h3 {
 
 .square {
   @include create-elevation($weight: 400, $type: 'alt');
+  @include text-body-xs--regular;
+  
   background: var(--color-brand-10, #000);
   aspect-ratio: 1 / 1;
   padding: var(--spacing-120);
   color: #000;
-  font: var(--font-display-l);
 }
 </style>
