@@ -9,7 +9,7 @@ defineProps<{
     <h1 class="green">{{ msg }}</h1>
     <h3>
       You’ve successfully created a project with
-      <div class="square"></div>
+      <div class="square">cccio</div>
       <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
       <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>.
     </h3>
@@ -45,5 +45,7 @@ h3 {
   background: var(--color-brand-10, #000);
   aspect-ratio: 1 / 1;
   padding: var(--spacing-120);
+  color: #000;
+  font: var(--font-heading-l);
 }
 </style>
