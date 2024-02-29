@@ -1,0 +1,35 @@
+.shadow {
+    &-100 {
+        @include create-elevation()
+    }
+
+    &-200 {
+        @include create-elevation($weight: 200)
+    }
+
+    &-300 {
+        @include create-elevation($weight: 300)
+    }
+
+    &-400 {
+        @include create-elevation($weight: 400)
+    }
+
+    &-alt {
+        &-100 {
+            @include create-elevation($type: 'alt')
+        }
+    
+        &-200 {
+            @include create-elevation($weight: 200, $type: 'alt')
+        }
+    
+        &-300 {
+            @include create-elevation($weight: 300, $type: 'alt')
+        }
+    
+        &-400 {
+            @include create-elevation($weight: 400, $type: 'alt')
+        }
+    }
+}

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
-import './style.scss';
 import '../shared/styles/index.scss';
+import '../shared/styles/layout.scss';
 
 import configuration from './configuration';
 import { copyToClipboard } from "../shared/helpers/";
@@ -18,18 +18,19 @@ type Story = StoryObj<typeof meta>;
 
 const Template: Story = {
   render: (args) => ({
-    setup() { return { args }},
     template: `
     ${( () => configuration.map(section => `
-      <section class="foundation-colors">
-          <h2 class="foundation-colors__title">
+      <section class="foundation">
+          <h2
+            class="foundation__title"
+            data-subarea="${section.subarea ? `: ${section.subarea}` : ''}"
+          >
             ${section.area}
-            ${section.subarea ? `: <span>${section.subarea}</span>` : ''}
           </h2>
-          <ul class="foundation-colors__items">
+          <ul class="foundation__list">
             ${( () => section.items.map(color => `
               <li
-                class="foundation-colors__item"
+                class="foundation__item"
                 data-name="${color.token}"
               >
                   <span style="background: var(--${color.token}, #000)">

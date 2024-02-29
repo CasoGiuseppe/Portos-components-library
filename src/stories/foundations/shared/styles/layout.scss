@@ -1,4 +1,4 @@
-.foundation-colors {
+.foundation {
     display: flex;
     gap: var(--spacing-30, 0);
     flex-direction: column;
@@ -8,16 +8,18 @@
         color: var(--color-neutral-60, #000);
         text-transform: uppercase;
 
-        > span {
+        &:after {
             @include text-body-s--regular;
+
+            content: attr(data-subarea);
             color: var(--color-neutral-50, #000)
         }
     }
 
-    &__items {
+    &__list {
         display: flex;
         flex-wrap: wrap;
-        gap: var(--spacing-10, 0);
+        gap: var(--spacing-40, 0);
     }
 
     &__item {
@@ -26,10 +28,10 @@
         align-items: flex-end;
         flex-direction: column;
         justify-content: flex-end;
-        overflow: hidden;
-
+        
         color: var(--color-neutral-70, #000);
-        min-width: calc(100% / 10);
+        width: max(var(--spacing-130, 0));
+
 
         > span {
             padding: var(--spacing-40, 0);
