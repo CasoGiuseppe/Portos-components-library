@@ -1,0 +1,16 @@
+* {
+    box-sizing: border-box;
+
+    &:is(ul, ol, li, h1, h2, h3, h4, p, form) {
+        margin: var(--spacing-00, 0);
+        padding: var(--spacing-00, 0);
+        list-style: none;
+    }
+
+    &:is(button) {
+        cursor: pointer;
+        background: none;
+        border: none;
+        outline: none;
+    }
+}

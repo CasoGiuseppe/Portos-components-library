@@ -1,0 +1,56 @@
+.foundation-colors {
+    display: flex;
+    gap: var(--spacing-30, 0);
+    flex-direction: column;
+
+    &__title {
+        @include text-heading-m;
+        color: var(--color-neutral-60, #000);
+        text-transform: uppercase;
+
+        > span {
+            @include text-body-s--regular;
+            color: var(--color-neutral-50, #000)
+        }
+    }
+
+    &__items {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-10, 0);
+    }
+
+    &__item {
+        @include text-body-xs--regular;
+        display: flex;
+        align-items: flex-end;
+        flex-direction: column;
+        justify-content: flex-end;
+        overflow: hidden;
+
+        color: var(--color-neutral-70, #000);
+        min-width: calc(100% / 10);
+
+        > span {
+            padding: var(--spacing-40, 0);
+            width: 100%;
+            text-align: right;
+
+            aspect-ratio: 1/1;
+            border-radius: var(--radius-400, 0);
+            border: 1px solid var(--color-neutral-50, #000);
+
+            > button {
+                @include text-body-xs--regular;
+                @include create-elevation($weight: 200);
+
+                background: var(--color-neutral-30, #000);
+                border-radius: var(--radius-200, 0);
+            }
+        }
+
+        &::after {
+            content: attr(data-name);
+        }
+    }
+}
