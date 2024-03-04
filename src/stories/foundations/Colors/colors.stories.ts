@@ -41,11 +41,11 @@ const Template: Story = {
                     </button>
                   </span>
               </li>
-            `) )()
+            `))()
             }
           </ul>
       </section>
-    `) )()}`,
+    `))()}`,
     methods: { action: copyToClipboard }
   })
 }

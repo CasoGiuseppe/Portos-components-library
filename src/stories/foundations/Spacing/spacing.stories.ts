@@ -50,7 +50,7 @@ const Template: Story = {
                     }
                 </ul>
             </section>
-        `) )()}`,
+        `))()}`,
       methods: { action: copyToClipboard }
     })
   }

@@ -37,7 +37,7 @@ export default [
     },
 
     {
-        area: 'Body',
+        area: 'Body text',
         items: [
             {
                 token: 'Body M (bold)',
@@ -73,7 +73,7 @@ export default [
     },
 
     {
-        area: 'Link',
+        area: 'Text link',
         items: [
             {
                 token: 'Link M (bold)',
