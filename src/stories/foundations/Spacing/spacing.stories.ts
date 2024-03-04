@@ -17,7 +17,11 @@ const Template: Story = {
     render: (args) => ({
       template: `
         <section class="foundation">
-            <ul class="foundation__list foundation--is-column">
+            <ul class="
+                foundation__list
+                foundation--is-column
+                graduate
+            ">
                 ${(() => configuration.map(space => `
                     <li
                         class="
@@ -26,10 +30,11 @@ const Template: Story = {
                             foundation--is-row
                             foundation--is-align-center
                             foundation--is-justify-between
+                            graduate-color
                         "
                         style="
-                            padding-bottom: var(--${space.token}, 0);
-                            background: var(--${space?.background}, #000);
+                            padding: var(--spacing-40, 0) var(--spacing-40, 0) var(--${space.token}, 0);
+                            background: var(--graduate-color, #000);
                         "
                         data-name="${space.token}"
                     >

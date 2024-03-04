@@ -22,18 +22,19 @@ const Template: Story = {
                 <ul
                     class="
                         foundation__list
+                        graduate
                         ${section?.mode === 'positive' ? 'foundation--has-positive-font' : null}
                     "
                     style="background: ${section.background ?? null}"
                 >
                     ${( () => section.items.map(item => `
                         <li
-                            class="foundation__item"
+                            class="foundation__item graduate-color"
                             data-name="${item?.token}"
                         >
                             <span
                                 style="
-                                    background: var(--${item?.background}, #000);
+                                    background: var(--graduate-color, #000);
                                     box-shadow: var(--${item?.token})
                                 "
                             >

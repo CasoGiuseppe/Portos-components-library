@@ -1,0 +1,17 @@
+$deep: 40;
+$color: hsla(201, 6%, 53%, 1);
+$amount: 3;
+
+@for $i from 0 through $deep {
+    .graduate {
+        &-color {
+            &:nth-child(#{$i}) {
+                $value: $i * $amount;
+                @if $value > 90 {
+                    $value: 90;
+                }
+                --graduate-color: #{lighten($color, $value)};
+            }
+        }
+    }
+  }
