@@ -14,9 +14,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const Template: Story = {
-  render: (args) => ({
+  render: () => ({
     template: `
-    ${( () => configuration.map(section => `
+    ${( () => configuration.map((section: Record<string, any>) => `
       <section class="foundation">
           <h2
             class="foundation__title"
@@ -25,7 +25,7 @@ const Template: Story = {
             ${section.area}
           </h2>
           <ul class="foundation__list">
-            ${( () => section.items.map(color => `
+            ${( () => section.items.map((color: Record<string, string>) => `
               <li
                 class="foundation__item"
                 data-name="${color.token}"

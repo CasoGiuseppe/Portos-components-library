@@ -14,7 +14,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const Template: Story = {
-    render: (args) => ({
+    render: () => ({
       template: `
         <section class="foundation">
             <ul class="
@@ -22,7 +22,7 @@ const Template: Story = {
                 foundation--is-column
                 graduate
             ">
-                ${(() => configuration.map(space => `
+                ${(() => configuration.map((section: Record<string, any>) => `
                     <li
                         class="
                             foundation__item
@@ -33,14 +33,14 @@ const Template: Story = {
                             graduate-color
                         "
                         style="
-                            padding: var(--spacing-40, 0) var(--spacing-40, 0) var(--${space.token}, 0);
+                            padding: var(--spacing-40, 0) var(--spacing-40, 0) var(--${section.token}, 0);
                             background: var(--graduate-color, #000);
                         "
-                        data-name="${space.token}"
+                        data-name="${section.token}"
                     >
                         <button
                             class="foundation__action foundation--is-order-2"
-                            @click="action('${space?.copy}')"
+                            @click="action('${section?.copy}')"
                         >
                             copy
                         </button>

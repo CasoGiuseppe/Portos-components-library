@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
-import { copyToClipboard } from "../shared/helpers/";
+import { copyToClipboard } from "../shared/helpers";
 
 import configuration from './configuration';
 
 const meta = {
-    title: 'Foundations/Elevations',
+    title: 'Foundations/Radius',
     argTypes: {
       copyToClipboard: () => {},
     },
@@ -23,9 +23,7 @@ const Template: Story = {
                     class="
                         foundation__list
                         graduate
-                        ${section?.mode === 'positive' ? 'foundation--has-positive-font' : null}
                     "
-                    style="background: ${section.background ?? null}"
                 >
                     ${( () => section.items.map((item: Record<string, string>) => `
                         <li
@@ -35,7 +33,7 @@ const Template: Story = {
                             <span
                                 style="
                                     background: var(--graduate-color, #000);
-                                    box-shadow: var(--${item?.token})
+                                    border-radius: var(--${item?.token})
                                 "
                             >
                                 <button
