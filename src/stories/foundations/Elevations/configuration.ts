@@ -1,43 +1,54 @@
 export default [
     {
         type: 'Negative',
+        mode: 'negative',
         items: [
             {
                 token: 'shadow-100',
-                copy: '@include create-elevation()'
+                background: 'color-neutral-50',
+                copy: 'var(--shadow-100)',
             },
             {
                 token: 'shadow-200',
-                copy: '@include create-elevation($weight: 200)'
+                background: 'color-neutral-40',
+                copy: 'var(--shadow-200)'
             },
             {
                 token: 'shadow-300',
-                copy: '@include create-elevation($weight: 300)'
+                background: 'color-neutral-30',
+                copy: 'var(--shadow-300)'
             },
             {
                 token: 'shadow-400',
-                copy: '@include create-elevation($weight: 400)'
+                background: 'color-neutral-20',
+                copy: 'var(--shadow-400)'
             }
         ]
     },
     {
         type: 'Positive',
+        background: 'var(--color-neutral-60, #000)',
+        mode: 'positive',
         items: [
             {
                 token: 'shadow-alt-100',
-                copy: '@include create-elevation($type: alt)'
+                background: 'color-neutral-50',
+                copy: 'var(--shadow-alt-100)'
             },
             {
                 token: 'shadow-alt-200',
-                copy: '@include create-elevation($weight: 200, $type: alt)'
+                background: 'color-neutral-40',
+                copy: 'var(--shadow-alt-200)'
             },
             {
                 token: 'shadow-alt-300',
-                copy: '@include create-elevation($weight: 300, $type: alt)'
+                background: 'color-neutral-30',
+                copy: 'var(--shadow-alt-300)'
             },
             {
                 token: 'shadow-alt-400',
-                copy: '@include create-elevation($weight: 400, $type: alt)'
+                background: 'color-neutral-20',
+                copy: 'var(--shadow-alt-400)'
             }
         ]
     }

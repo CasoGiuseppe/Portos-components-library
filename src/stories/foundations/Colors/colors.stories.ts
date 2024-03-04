@@ -1,10 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
-import '../shared/styles/index.scss';
-import '../shared/styles/layout.scss';
 
 import configuration from './configuration';
 import { copyToClipboard } from "../shared/helpers/";
-
 
 const meta = {
     title: 'Foundations/Colors',
@@ -34,7 +31,12 @@ const Template: Story = {
                 data-name="${color.token}"
               >
                   <span style="background: var(--${color.token}, #000)">
-                    <button @click="action('${color?.copy}')">copy</button>
+                    <button
+                      class="foundation__action"
+                      @click="action('${color?.copy}')"
+                    >
+                      copy
+                    </button>
                   </span>
               </li>
             `) )()

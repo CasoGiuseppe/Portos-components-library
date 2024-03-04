@@ -1,0 +1,43 @@
+.foundation {
+    &--is-row {
+        flex-direction: row;
+    }
+
+    &--is-column {
+        flex-direction: column;
+    }
+
+    &--is-auto {
+        width: auto;
+    }
+
+    &--is-align-center {
+        align-items: center;
+    }
+
+    &--is-justify-between {
+        justify-content: space-between;
+    }
+
+    &--is-order-1 {
+        order: 1;
+    }
+
+    &--is-order-2 {
+        order: 2;
+    }
+
+    &--has-positive-font {
+        color: var(--color-neutral-10, #fff);
+
+        .foundation__item {
+            &::after {
+                color: var(--color-neutral-10, #fff)
+            }
+        }
+    }
+
+    &--has-base-padding {
+        padding: var(--spacing-30, 0);
+    }
+}

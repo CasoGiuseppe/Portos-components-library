@@ -74,4 +74,8 @@
         var(--font-weight-400, normal)
         var(--font-body-xs-size, 1rem)
         var(--font-defualt-family);
+
+    --elevation-400:
+        var(--elevation-400-size)
+        hsla(var(--color-neutral-default-70), .4)
 }

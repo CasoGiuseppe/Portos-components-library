@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
-import './style.scss';
 import { copyToClipboard } from "../shared/helpers/";
 
 import configuration from './configuration';
@@ -20,17 +19,28 @@ const Template: Story = {
         ${( () => configuration.map(section => `
             <section class="foundation">
                 <h2 class="foundation__title">${section.type}</h2>
-                <ul class="foundation__list">
+                <ul
+                    class="
+                        foundation__list
+                        ${section?.mode === 'positive' ? 'foundation--has-positive-font' : null}
+                    "
+                    style="background: ${section.background ?? null}"
+                >
                     ${( () => section.items.map(item => `
                         <li
-                            class="foundation__item foundation__item--extra-space"
+                            class="foundation__item"
                             data-name="${item?.token}"
                         >
                             <span
-                                style="background: var(--color-primary-10, #000)"
-                                class="${item?.token}"
+                                style="
+                                    background: var(--${item?.background}, #000);
+                                    box-shadow: var(--${item?.token})
+                                "
                             >
-                                <button @click="action('${item?.copy}')">copy</button>
+                                <button
+                                    class="foundation__action"
+                                    @click="action('${item?.copy}')"
+                                >copy</button>
                             </span>
                         </li>`) )()
                     }
