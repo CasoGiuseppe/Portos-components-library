@@ -1,0 +1,72 @@
+.typography {
+    color: var(--color-primary-40, #000);
+    &--is {
+        &-display-{
+            &l {
+                @include text-display-l
+            }
+
+            &m {
+                @include text-display-m
+            }
+
+            &s {
+                @include text-display-s
+            }
+        }
+
+        &-heading-{
+            &l {
+                @include text-heading-l
+            }
+
+            &m {
+                @include text-heading-m
+            }
+        }
+
+        &-body-{
+            &m {
+                @include text-body-m--bold
+            }
+
+            &m-regular {
+                @include text-body-m--regular
+            }
+
+            &s{
+                @include text-body-s--bold
+            }
+
+            &s-regular{
+                @include text-body-s--regular
+            }
+
+            &xs{
+                @include text-body-xs--bold
+            }
+
+            &xs-regular{
+                @include text-body-xs--regular
+            }
+        }
+
+        &-link-{
+            &m {
+                @include text-link-m--bold
+            }
+
+            &m-regular {
+                @include text-link-m--regular
+            }
+
+            &s {
+                @include text-link-s--bold
+            }
+
+            &s-regular {
+                @include text-link-s--regular
+            }
+        }
+    }
+}

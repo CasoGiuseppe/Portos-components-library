@@ -30,7 +30,9 @@ const Template: Story = {
                 class="foundation__item"
                 data-name="${color.token}"
               >
-                  <span style="background: var(--${color.token}, #000)">
+                  <span
+                    class="foundation--is-square"
+                    style="background: var(--${color.token}, #000)">
                     <button
                       class="foundation__action"
                       @click="action('${color?.copy}')"

@@ -16,39 +16,41 @@ type Story = StoryObj<typeof meta>;
 const Template: Story = {
     render: () => ({
       template: `
-        <section class="foundation">
-            <ul class="
-                foundation__list
-                foundation--is-column
-                graduate
-            ">
-                ${(() => configuration.map((section: Record<string, any>) => `
-                    <li
-                        class="
-                            foundation__item
-                            foundation--is-auto
-                            foundation--is-row
-                            foundation--is-align-center
-                            foundation--is-justify-between
-                            graduate-color
-                        "
-                        style="
-                            padding: var(--spacing-40, 0) var(--spacing-40, 0) var(--${section.token}, 0);
-                            background: var(--graduate-color, #000);
-                        "
-                        data-name="${section.token}"
-                    >
-                        <button
-                            class="foundation__action foundation--is-order-2"
-                            @click="action('${section?.copy}')"
+        ${( () => configuration.map((section: Record<string, any>) => `
+            <section class="foundation">
+                <h2 class="foundation__title">${section.type}</h2>
+                <ul class="
+                    foundation__list
+                    foundation--is-column
+                    graduate
+                ">
+                    ${( () => section.items.map((item: Record<string, string>) => `
+                        <li
+                            class="
+                                foundation__item
+                                foundation--is-auto
+                                foundation--is-row
+                                foundation--is-align-center
+                                foundation--is-justify-between
+                                graduate-color
+                            "
+                            style="
+                                padding: var(--spacing-40, 0) var(--spacing-40, 0) var(--${item.token}, 0);
+                                background: var(--graduate-color, #000);
+                            "
+                            data-name="${item.token}"
                         >
-                            copy
-                        </button>
-                    </li>`))()
-                }
-            </ul>
-        </section>
-      `,
+                            <button
+                                class="foundation__action foundation--is-order-2"
+                                @click="action('${item?.copy}')"
+                            >
+                                copy
+                            </button>
+                        </li>`))()
+                    }
+                </ul>
+            </section>
+        `) )()}`,
       methods: { action: copyToClipboard }
     })
   }

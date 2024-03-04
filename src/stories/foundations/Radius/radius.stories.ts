@@ -31,6 +31,7 @@ const Template: Story = {
                             data-name="${item?.token}"
                         >
                             <span
+                                class="foundation--is-square"
                                 style="
                                     background: var(--graduate-color, #000);
                                     border-radius: var(--${item?.token})

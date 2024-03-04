@@ -44,3 +44,23 @@
     font: var(--font-body-xs);
     font-weight: var(--font-weight-700);
 }
+
+@mixin text-link-m--bold {
+    @include text-body-m--bold;
+    text-decoration: var(--font-underline);
+}
+
+@mixin text-link-m--regular {
+    @include text-body-m--regular;
+    text-decoration: var(--font-underline);
+}
+
+@mixin text-link-s--bold {
+    @include text-body-s--bold;
+    text-decoration: var(--font-underline);
+}
+
+@mixin text-link-s--regular {
+    @include text-body-s--regular();
+    text-decoration: var(--font-underline);
+}
