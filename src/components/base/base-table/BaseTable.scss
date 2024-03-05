@@ -1,0 +1,11 @@
+.base-table {
+    &__display {
+        width: 100%;
+    }
+
+    &__head {
+        th {
+            text-align: left;
+        }
+    }
+}
