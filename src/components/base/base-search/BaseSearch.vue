@@ -22,7 +22,7 @@
 // slot-scope para las recomendaciones
 // debounce en el componente
 
-import { ref, watch, defineProps, defineEmits } from 'vue'
+import { ref, watch } from 'vue'
 import type { Suggestion } from './interfaces' // Importar la interfaz Suggestion
 
 // Define prop types
