@@ -15,6 +15,15 @@ const meta = {
             { id: '2', values: [
                 {id: 'name2', value: 'Carlos'}, {id: 'email', value: 'carlos@example'}, {id: 'age', value: '20'}
             ]},
+            { id: '3', values: [
+                {id: 'name3', value: 'Pedro'}, {id: 'email', value: 'pedro@example'}, {id: 'age', value: '35'}
+            ]},
+            { id: '4', values: [
+                {id: 'name4', value: 'Andrea'}, {id: 'email', value: 'andrea@example'}, {id: 'age', value: '26'}
+            ]},
+            { id: '5', values: [
+                {id: 'name5', value: 'Mariany'}, {id: 'email', value: 'mariany@example'}, {id: 'age', value: '32'}
+            ]},
         ]
     }
 } satisfies Meta<typeof BaseTable>;
