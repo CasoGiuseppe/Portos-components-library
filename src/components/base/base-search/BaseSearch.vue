@@ -1,5 +1,5 @@
 <template>
-  <div class="base-search" ref="baseSearch" @keydown="handleKeyDown">
+  <div class="base-search" ref="baseSearch">
     <input type="text" v-model="searchTerm" @keydown.enter="handleEnter" @input="handleInput" />
     <ul v-if="showDropdown && filteredSuggestions.length > 0" class="dropdown">
       <li
@@ -53,7 +53,7 @@ function handleInput() {
   }
   debounceTimer = setTimeout(() => {
     emit('debounce', searchTerm.value)
-  }, 500)
+  }, 1000)
 }
 
 function handleSuggestionClick(suggestion: Suggestion) {
@@ -68,20 +68,6 @@ function handleSuggestionClick(suggestion: Suggestion) {
       inputElement.focus()
     }
   })
-}
-
-function handleKeyDown(event: KeyboardEvent) {
-  if (event.key === 'ArrowDown') {
-    event.preventDefault() // Evitar el comportamiento predeterminado de desplazamiento
-    if (selectedIndex.value < filteredSuggestions.value.length - 1) {
-      selectedIndex.value++
-    }
-  } else if (event.key === 'ArrowUp') {
-    event.preventDefault() // Evitar el comportamiento predeterminado de desplazamiento
-    if (selectedIndex.value > 0) {
-      selectedIndex.value--
-    }
-  }
 }
 </script>
 
