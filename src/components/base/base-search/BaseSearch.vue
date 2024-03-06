@@ -1,10 +1,11 @@
 <template>
-  <div class="base-search" ref="baseSearch">
+  <div class="base-search" ref="baseSearch" @keydown="handleKeyDown">
     <input type="text" v-model="searchTerm" @keydown.enter="handleEnter" @input="handleInput" />
     <ul v-if="showDropdown && filteredSuggestions.length > 0" class="dropdown">
       <li
-        v-for="suggestion in filteredSuggestions"
+        v-for="(suggestion, index) in filteredSuggestions"
         :key="suggestion.id"
+        :class="{ selected: index === selectedIndex }"
         @click="handleSuggestionClick(suggestion)"
       >
         {{ suggestion.id }}
@@ -14,62 +15,73 @@
 </template>
 
 <script setup lang="ts">
-//cuando el searchterm esta vacio hacer return
-// sino esta vacio lanzar el emit con el value
-// me lo devuelve a traves de un slot
-// no olvidar el debounce
-// meter una prop para inicializar con un valor o v-model /
-// slot-scope para las recomendaciones
-// debounce en el componente
-
 import { ref, watch } from 'vue'
-import type { Suggestion } from './interfaces' // Importar la interfaz Suggestion
+import type { Suggestion } from './interfaces'
 
-// Define prop types
 const props = defineProps<{
   suggestions: Suggestion[]
-  // liveSearch: boolean
 }>()
 
-// Define emit function
-const emit = defineEmits(['search', 'select'])
+const emit = defineEmits(['debounce', 'select'])
 
-// Reactive data
 const searchTerm = ref('')
 const showDropdown = ref(false)
-
-// Filter suggestions based on input value
 const filteredSuggestions = ref<Suggestion[]>([])
+let debounceTimer: ReturnType<typeof setTimeout> | null = null
+const selectedIndex = ref(-1)
 
-watch(searchTerm, (newValue) => {
-  if (newValue.trim() === '') {
-    filteredSuggestions.value = []
-  } else {
-    filteredSuggestions.value = props.suggestions.filter((suggestion) =>
-      suggestion.id.toLowerCase().includes(newValue.toLowerCase())
-    )
-  }
+watch(props, (newValue) => {
+  filteredSuggestions.value = newValue.suggestions
 })
 
-// Search handler on Enter key
 function handleEnter(event: KeyboardEvent) {
   if (event.key === 'Enter') {
-    emit('search', searchTerm.value)
-    if (filteredSuggestions.value.length > 0) {
-      emit('select', filteredSuggestions.value[0])
-    }
+    emit('select', filteredSuggestions.value[0])
   }
 }
 
-// Input handler
 function handleInput() {
   showDropdown.value = true
+  if (searchTerm.value.trim() === '') {
+    filteredSuggestions.value = []
+    showDropdown.value = false
+    return
+  }
+
+  if (debounceTimer) {
+    clearTimeout(debounceTimer)
+  }
+  debounceTimer = setTimeout(() => {
+    emit('debounce', searchTerm.value)
+  }, 500)
 }
 
-// Suggestion click handler
 function handleSuggestionClick(suggestion: Suggestion) {
   searchTerm.value = suggestion.id
+  filteredSuggestions.value = [suggestion]
   showDropdown.value = false
+  setTimeout(() => {
+    const inputElement = document.querySelector(
+      '.base-search input[type="text"]'
+    ) as HTMLInputElement
+    if (inputElement) {
+      inputElement.focus()
+    }
+  })
+}
+
+function handleKeyDown(event: KeyboardEvent) {
+  if (event.key === 'ArrowDown') {
+    event.preventDefault() // Evitar el comportamiento predeterminado de desplazamiento
+    if (selectedIndex.value < filteredSuggestions.value.length - 1) {
+      selectedIndex.value++
+    }
+  } else if (event.key === 'ArrowUp') {
+    event.preventDefault() // Evitar el comportamiento predeterminado de desplazamiento
+    if (selectedIndex.value > 0) {
+      selectedIndex.value--
+    }
+  }
 }
 </script>
 

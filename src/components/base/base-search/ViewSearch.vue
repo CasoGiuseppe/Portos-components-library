@@ -1,6 +1,11 @@
 <template>
   <div>
-    <BaseSearch :suggestions="suggestions" @select="handleSelect" @search="handleSearch" />
+    <h2>Live Search</h2>
+    <BaseSearch
+      @select="handleSelect"
+      @debounce="handleSearch"
+      :suggestions="filteredSuggestions"
+    /><br />
     <div v-if="selectedResult">
       <p>Resultado seleccionado:</p>
       <p>ID: {{ selectedResult.id }}</p>
@@ -12,8 +17,6 @@
 </template>
 
 <script setup lang="ts">
-// crear un template de filtrado si solo tiene valores en el slot
-
 import { ref } from 'vue'
 import BaseSearch from './BaseSearch.vue'
 import type { Suggestion } from './interfaces'
@@ -26,13 +29,15 @@ const suggestions = ref<Suggestion[]>([
 
 const selectedResult = ref<Suggestion | null>(null)
 
+const filteredSuggestions = ref<Suggestion[]>([])
+
 const handleSearch = (searchTerm: string) => {
-  console.log('Search term:', searchTerm)
-  // Realizar búsqueda y manejar resultados aquí
+  filteredSuggestions.value = suggestions.value.filter((suggestion) =>
+    suggestion.id.toLowerCase().includes(searchTerm.toLowerCase())
+  )
 }
 
 const handleSelect = (selected: Suggestion) => {
   selectedResult.value = selected
-  // Realizar alguna acción cuando se selecciona una sugerencia
 }
 </script>

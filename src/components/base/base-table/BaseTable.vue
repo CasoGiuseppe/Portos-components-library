@@ -39,7 +39,7 @@
 </template>
 <script setup lang="ts">
 import { useSlots } from 'vue';
-import { IRowValues } from './interfaces';
+import type { IRowValues } from './interfaces';
 
 const { title } = useSlots();
 
