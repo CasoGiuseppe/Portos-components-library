@@ -25,10 +25,18 @@ const Template: Story = {
       return { args }
     },
     template: `
-            <div>
-                <BaseSearch :suggestions="args.suggestions" />
-            </div>
-        `
+      <div>
+        <BaseSearch v-bind="args">
+          <template #default="{ suggestions, handleSuggestionClick }">
+            <ul>
+              <li v-for="(suggestion, index) in suggestions" :key="suggestion.id" @click="handleSuggestionClick(suggestion)">
+                {{ suggestion.id }} - {{ suggestion.city }} - {{ suggestion.carCount }} - {{ suggestion.manager }}
+              </li>
+            </ul>
+          </template>
+        </BaseSearch>
+      </div>
+    `
   })
 }
 
