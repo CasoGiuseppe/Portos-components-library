@@ -2,10 +2,24 @@
   <div>
     <h2>Live Search</h2>
     <BaseSearch
+      :suggestions="filteredSuggestions"
+      :selectedIndex="selectedIndex"
       @select="handleSelect"
       @debounce="handleSearch"
-      :suggestions="filteredSuggestions"
-    /><br />
+    >
+      <template #default="{ suggestions, handleSuggestionClick }">
+        <li
+          v-for="(suggestion, index) in suggestions"
+          :key="suggestion.id"
+          :class="{ selected: index === selectedIndex }"
+          @click="handleSuggestionClick(suggestion)"
+        >
+          {{ suggestion.id }} - {{ suggestion.city }} - {{ suggestion.carCount }} -
+          {{ suggestion.manager }}
+        </li>
+      </template>
+    </BaseSearch>
+    <br />
     <div v-if="selectedResult">
       <p>Resultado seleccionado:</p>
       <p>ID: {{ selectedResult.id }}</p>
@@ -28,6 +42,7 @@ const suggestions = ref<Suggestion[]>([
 ])
 
 const selectedResult = ref<Suggestion | null>(null)
+const selectedIndex = ref(-1)
 
 const filteredSuggestions = ref<Suggestion[]>([])
 

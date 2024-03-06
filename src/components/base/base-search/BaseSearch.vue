@@ -1,16 +1,14 @@
 <template>
   <div class="base-search" ref="baseSearch">
-    <input type="text" v-model="searchTerm" @keydown.enter="handleEnter" @input="handleInput" />
-    <ul v-if="showDropdown && filteredSuggestions.length > 0" class="dropdown">
-      <li
-        v-for="(suggestion, index) in filteredSuggestions"
-        :key="suggestion.id"
-        :class="{ selected: index === selectedIndex }"
-        @click="handleSuggestionClick(suggestion)"
-      >
-        {{ suggestion.id }}
-      </li>
-    </ul>
+    <div class="base-search" ref="baseSearch">
+      <input type="text" v-model="searchTerm" @keydown.enter="handleEnter" @input="handleInput" />
+      <ul v-if="showDropdown && filteredSuggestions.length > 0" class="dropdown">
+        <slot
+          :suggestions="filteredSuggestions"
+          :handleSuggestionClick="handleSuggestionClick"
+        ></slot>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -28,7 +26,6 @@ const searchTerm = ref('')
 const showDropdown = ref(false)
 const filteredSuggestions = ref<Suggestion[]>([])
 let debounceTimer: ReturnType<typeof setTimeout> | null = null
-const selectedIndex = ref(-1)
 
 watch(props, (newValue) => {
   filteredSuggestions.value = newValue.suggestions
