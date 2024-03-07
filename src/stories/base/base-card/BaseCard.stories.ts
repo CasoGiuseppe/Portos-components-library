@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import BaseCard from '@ui/base/base-card/BaseCard.vue'
-import IconArrowCircleDown from '@ui/icons/IconArrowCircleDown.vue'
+import IconArrowCircleDown from '@ui/icons/arrow/IconArrowCircleDown.vue'
 
 const meta: Meta = {
   title: 'Base/BaseCard',
