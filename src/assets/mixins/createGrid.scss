@@ -1,0 +1,15 @@
+@use '../_abstracts/grid' as useGrid;
+
+@mixin createGrid(
+    $media,
+    $offset: false,
+    $ordering: false,
+    $hidding: false
+) {
+    @for $column from 1 to useGrid.$columns {
+        @warn $media;
+        .col-#{$media}-#{$column} {
+            width: (100% * $column) / var(--columns);
+        }
+    }
+}

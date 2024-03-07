@@ -1,0 +1,21 @@
+@use '../_abstracts/media' as useMedia;
+
+//- generate breakpoints
+//- @param breakpoint {string} :
+//- only-phone = from 0 to 576 {mobile}
+//- tablet-pt = from 768 {tablet portrait}
+//- tablet-ld = from 992 {tablet landscape}
+//- desktop = from 1200 {desktop}
+//- large desktop = from 1430 {large desktop}
+@mixin media($breakpoint) {
+  @if map-has-key(useMedia.$breakpoints, $breakpoint) {
+    @media #{inspect(map-get(useMedia.$breakpoints, $breakpoint))} {
+      @content;
+    }
+  }
+ 
+  @else {
+    @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+        + "Available breakpoints are: #{map-keys(useMedia.$breakpoints)}.";
+  }
+}

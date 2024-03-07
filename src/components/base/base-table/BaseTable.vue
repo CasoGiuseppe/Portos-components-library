@@ -35,6 +35,13 @@
                 </tbody>
             </table>
         </section>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-medium-12">row</div>
+                <div class="col-mediun-12">row</div>
+            </div>
+        </div>
     </section>
 </template>
 <script setup lang="ts">
