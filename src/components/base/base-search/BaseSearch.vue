@@ -1,31 +1,52 @@
 <template>
-  <div class="base-search" ref="baseSearch">
-    <div class="base-search" ref="baseSearch">
-      <input type="text" v-model="searchTerm" @keydown.enter="handleEnter" @input="handleInput" />
-      <ul v-if="showDropdown && filteredSuggestions.length > 0" class="dropdown">
-        <slot
-          :suggestions="filteredSuggestions"
-          :handleSuggestionClick="handleSuggestionClick"
-        ></slot>
-      </ul>
-    </div>
-  </div>
+  <section class="base-search">
+    <input
+      type="text"
+      v-model="searchTerm"
+      :placeholder="placeholder"
+      @keydown.enter="handleEnter"
+      @input="updateValue"
+    />
+    <ul v-if="showDropdown && filteredSuggestions.length > 0" class="dropdown">
+      <slot
+        :suggestions="filteredSuggestions"
+        :handleSuggestionClick="handleSuggestionClick"
+      ></slot>
+    </ul>
+  </section>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import type { Suggestion } from './interfaces'
+import { computed, ref, watch } from 'vue';
 
-const props = defineProps<{
-  suggestions: Suggestion[]
-}>()
+export interface Results {
+  label: string;
+}
 
-const emit = defineEmits(['debounce', 'select'])
+export interface ILiveSearch {
+    /**
+     * Set input search placeholder text
+     */
+    placeholder?: string;
+
+    /**
+     * Set search results items array
+     */
+    searchResults?: Results[]
+}
+
+const {searchResults} = withDefaults(defineProps<ILiveSearch>(), {
+  placeholder: 'put here your search text',
+  searchResults: () => [],
+})
+
+const customEmits = defineEmits(['debounce', 'select', 'update:modelValue'])
+const resultsSize = computed(() => searchResults.length);
 
 const searchTerm = ref('')
 const showDropdown = ref(false)
-const filteredSuggestions = ref<Suggestion[]>([])
-let debounceTimer: ReturnType<typeof setTimeout> | null = null
+const filteredSuggestions = ref<Record<string, string>[]>([])
+// let debounceTimer: ReturnType<typeof setTimeout> | null = null
 
 watch(props, (newValue) => {
   filteredSuggestions.value = newValue.suggestions
@@ -33,25 +54,32 @@ watch(props, (newValue) => {
 
 function handleEnter(event: KeyboardEvent) {
   if (event.key === 'Enter') {
-    emit('select', filteredSuggestions.value[0])
+    customEmits('select', filteredSuggestions.value[0])
   }
 }
 
-function handleInput() {
-  showDropdown.value = true
-  if (searchTerm.value.trim() === '') {
-    filteredSuggestions.value = []
-    showDropdown.value = false
-    return
-  }
+const updateValue = (payload: Event) => {
+  const { value } = (payload.target as HTMLInputElement)
+  if (value === '') return ;
 
-  if (debounceTimer) {
-    clearTimeout(debounceTimer)
-  }
-  debounceTimer = setTimeout(() => {
-    emit('debounce', searchTerm.value)
-  }, 1000)
-}
+  customEmits('update:modelValue', value)
+};
+
+// function handleInput() {
+//   showDropdown.value = true
+//   if (searchTerm.value.trim() === '') {
+//     filteredSuggestions.value = []
+//     showDropdown.value = false
+//     return
+//   }
+
+//   if (debounceTimer) {
+//     clearTimeout(debounceTimer)
+//   }
+//   debounceTimer = setTimeout(() => {
+//     emit('debounce', searchTerm.value)
+//   }, 1000)
+// }
 
 function handleSuggestionClick(suggestion: Suggestion) {
   searchTerm.value = suggestion.id

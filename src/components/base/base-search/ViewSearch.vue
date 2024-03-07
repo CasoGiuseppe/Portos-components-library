@@ -56,3 +56,4 @@ const handleSelect = (selected: Suggestion) => {
   selectedResult.value = selected
 }
 </script>
+./BaseSearch_.vue
