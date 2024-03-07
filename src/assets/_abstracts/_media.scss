@@ -1,0 +1,11 @@
+//- custom grid size
+$grid-sm: 1024;
+$grid-md: 1280;
+$grid-lg: 1920;
+
+//- custom breakpoints
+$breakpoints: (
+  'small' : (min-width: #{$grid-sm + px}) and (max-width: #{($grid-md - 1) + px}),
+  'medium': (min-width: #{$grid-md + px}) and (max-width: #{($grid-lg - 1) + px}),
+  'large': (min-width: #{$grid-lg + px}),
+);

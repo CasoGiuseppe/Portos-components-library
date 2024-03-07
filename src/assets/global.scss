@@ -4,4 +4,7 @@
 @import './_abstracts/elevations';
 @import './_abstracts/fonts';
 @import './_abstracts/radius';
-@import './mixins/typographies';
+@import './mixins/createTypographies';
+@import './mixins/createBreakpoints';
+@import './mixins/createGrid';
+@import './grid/index';

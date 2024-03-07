@@ -42,11 +42,11 @@ const Template: Story = {
                                     @click="action('${item?.copy}')"
                                 >copy</button>
                             </span>
-                        </li>`) )()
+                        </li>`).join(""))()
                     }
                 </ul>
             </section>
-        `) )()}`,
+        `).join(""))()}`,
         methods: { action: copyToClipboard }
     })
 }

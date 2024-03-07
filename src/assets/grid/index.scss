@@ -1,0 +1,33 @@
+@use '../_abstracts/grid' as useGrid;
+
+// .container {
+//     max-width: useGrid.$container-max-width;
+//     margin: 0 auto;
+// }
+
+// .row {
+//     display: flex;
+//     flex-wrap: wrap;
+//     gap: calc(useGrid.$gutter / 2);
+// }
+
+// [class*=col] {
+//     padding: calc(useGrid.$gutter / 2) 0;
+//     flex-shrink: 1;
+//     flex-basis: 0;
+//     flex-grow: 1;
+// }
+
+// @include media('small') {
+//     @include createGrid($media: 'small', $offset: true)
+// }
+
+// @include media('medium') {
+//     @include createGrid($media: 'medium', $offset: true)
+// }
+
+// @include media('large') {
+//     @include createGrid($media: 'large', $offset: true)
+// }
+
+

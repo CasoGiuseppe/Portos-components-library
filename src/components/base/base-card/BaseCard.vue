@@ -27,7 +27,7 @@ const { title, body } = useSlots()
 // Simulación de carga de datos
 setTimeout(() => {
   isLoading.value = false
-}, 2000)
+}, 500)
 
 const hasTitleSlot = !!title
 const hasBodySlot = !!body

@@ -34,19 +34,10 @@ h3 {
 }
 
 @media (min-width: 1024px) {
+
   .greetings h1,
   .greetings h3 {
     text-align: left;
   }
-}
-
-.square {
-  @include create-elevation($weight: 400, $type: 'alt');
-  @include text-body-xs--regular;
-  
-  background: var(--color-brand-10, #000);
-  aspect-ratio: 1 / 1;
-  padding: var(--spacing-120);
-  color: #000;
 }
 </style>
