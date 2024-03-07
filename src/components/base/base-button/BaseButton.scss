@@ -1,0 +1,121 @@
+button {
+  border-radius: 24px;
+  gap: 8px;
+  min-width: 182px;
+  height: 48px;
+
+  //styleName: Body/font-body-M (bold);
+  font-family: Noto Sans;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: center;
+
+  &.large {
+    min-width: 182px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  &.medium {
+    min-width: 188px;
+    height: 40px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  &.small {
+    min-width: 138px;
+    height: 28px;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  &.primary {
+    background: #aa272f;
+    color: #ffffff;
+    border: none;
+    &:hover {
+      background: #782327;
+    }
+    &:focus {
+      border: 1px solid white;
+      outline: 3px solid #bd20cb;
+    }
+    &.disabled {
+      background: #c7cccf;
+      color: #484d50;
+    }
+
+    &Alt {
+      background: #ffeaec;
+      color: #aa272f;
+      border: none;
+      &:hover {
+        background: #ffa3aa;
+      }
+      &.disabled {
+        background: #c7cccf;
+        color: #484d50;
+      }
+    }
+  }
+
+  &.secondary {
+    background: #21578a;
+    color: #fff;
+    border: none;
+    &:hover {
+      background: #002c5f;
+      color: #fff;
+    }
+    &.disabled {
+      background: #c7cccf;
+      color: #484d50;
+    }
+    &Alt {
+      background: #ecf0f6;
+      color: #002c5f;
+      border: none;
+      &:hover {
+        background: #9bb2ce;
+        color: #00204e;
+      }
+      &.disabled {
+        background: #c7cccf;
+        color: #484d50;
+      }
+    }
+  }
+
+  &.tertiary {
+    border: 1px solid #21578a;
+    color: #21578a;
+    &:hover {
+      color: #00204e !important;
+      border: 1px solid #00204e !important;
+    }
+    &.disabled {
+      background: #c7cccf;
+      color: #484d50;
+    }
+    &Alt {
+      border: 1px solid #fff !important;
+      background: transparent;
+      color: #fff;
+      border: none;
+      &:hover {
+        color: #7090b7;
+        border: 1px solid #7090b7 !important;
+      }
+      &.disabled {
+        //background: #c7cccf;
+        color: #fff;
+      }
+    }
+  }
+}
