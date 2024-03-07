@@ -29,15 +29,16 @@ const Template: Story = {
                     foundation--is-square
                     foundation--is-center
                     foundation--has-no-padding"
+                    style="background: var(--color-neutral-20, #000)"
                   >
                     <IconAsync name="${icon.token}" type="${section.parent}" />
                   </span>
               </li>
-            `))()
+            `).join(""))()
             }
           </ul>
       </section>
-    `))()}`
+    `).join(""))()}`
   })
 }
 
