@@ -16,6 +16,10 @@
 import { ref, watch } from 'vue'
 import type { Suggestion } from './interfaces'
 
+const props = defineProps<{
+  suggestions: Suggestion[]
+}>()
+
 const emit = defineEmits(['debounce', 'select'])
 
 const searchTerm = ref('')

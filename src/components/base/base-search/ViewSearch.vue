@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import BaseSearch from './BaseSearch.vue'
+import BaseSearch from './BaseSearch_.vue'
 import type { Suggestion } from './interfaces'
 
 const suggestions = ref<Suggestion[]>([
