@@ -1,5 +1,6 @@
 <template>
   <section class="base-search" v-on-click-outside="resetResponse">
+    <!-- @input="updateModel" -->
     <input
       ref="userSearchInput"
       type="text"
@@ -36,7 +37,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { debounce } from '@/shared/helpers';
-import { vOnClickOutside } from '@vueuse/components'
+import { vOnClickOutside } from '@vueuse/components';
 
 export interface Results {
   label: string;
@@ -84,16 +85,14 @@ const searchResultHasResults = computed(() => {
 // launch update model to get suggestions
 const updateModel = (event: Event) => {
   const { value } = event.target as HTMLInputElement;
-  if (value === '') {
-    resetResponse()
-  } else {
-    updateSearch(value)
-  }
+  updateSearch(value)
 }
 
 const updateSearch = debounce((value: string) => {
-  customEmits('update:modelValue', value)
+  const valueExist = value !== ''
+  valueExist ? customEmits('update:modelValue', value) : resetResponse() 
 }, 850)
+
 
 // handle user select item from list of results
 const selectListItem = (payload: Event) => {
