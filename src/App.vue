@@ -1,15 +1,9 @@
 <script setup lang="ts">
-import IconsView from './components/IconsView.vue'
+// import HelloWorld from './components/HelloWorld.vue'
+// import TheWelcome from './components/TheWelcome.vue'
+// import ViewSearch from './components/base/base-search/ViewSearch.vue'
 </script>
 
-<template>
-  <header>
-    <h1>Noatum Library</h1>
-  </header>
-  <main>
-    <IconsView></IconsView>
-  </main>
-</template>
 
 <style scoped lang="scss">
 header {
