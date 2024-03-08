@@ -16,6 +16,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@vueuse/components": "^10.9.0",
     "vue": "^3.4.15"
   },
   "devDependencies": {

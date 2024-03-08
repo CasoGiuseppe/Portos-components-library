@@ -1,23 +1,42 @@
 <template>
-  <section class="base-search">
+  <section class="base-search" v-on-click-outside="resetResponse">
     <input
+      ref="userSearchInput"
       type="text"
-      v-model="searchTerm"
+      v-model="userSearchBy"
       :placeholder="placeholder"
-      @keydown.enter="handleEnter"
-      @input="updateValue"
+      tabindex="0"
+      @input="updateModel"
     />
-    <ul v-if="showDropdown && filteredSuggestions.length > 0" class="dropdown">
-      <slot
-        :suggestions="filteredSuggestions"
-        :handleSuggestionClick="handleSuggestionClick"
-      ></slot>
+    <span
+      v-if="$slots['alert']"
+      class="base-search__user-message"
+    >
+      <!-- @slot Alert: Define user alert message -->
+      <slot name="alert"></slot>
+    </span>
+    <ul
+      v-if="searchResultHasResults"
+      class="base-search__dropdown"
+    >
+      <li
+        v-for="(result, index) in searchResults"
+        :data-label="result.label"
+        :key="result.label"
+        :tabindex="index + 1"
+        @click="selectListItem"
+      >
+        <!-- @slot List: Set a list of suggestion results -->
+        <slot :property="result" name="list"></slot>
+      </li>
     </ul>
   </section>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
+import { debounce } from '@/shared/helpers';
+import { vOnClickOutside } from '@vueuse/components'
 
 export interface Results {
   label: string;
@@ -32,68 +51,63 @@ export interface ILiveSearch {
     /**
      * Set search results items array
      */
-    searchResults?: Results[]
+    searchResults?: Results[] | undefined;
+
+    /**
+     * Set input search loading state
+     */
+    loading?: boolean;
 }
 
-const {searchResults} = withDefaults(defineProps<ILiveSearch>(), {
+const props = withDefaults(defineProps<ILiveSearch>(), {
   placeholder: 'put here your search text',
-  searchResults: () => [],
+  searchResults: undefined,
+  loading: false
 })
 
-const customEmits = defineEmits(['debounce', 'select', 'update:modelValue'])
-const resultsSize = computed(() => searchResults.length);
+// define v-model
+const userSearchBy = ref<string>('')
 
-const searchTerm = ref('')
-const showDropdown = ref(false)
-const filteredSuggestions = ref<Record<string, string>[]>([])
-// let debounceTimer: ReturnType<typeof setTimeout> | null = null
+// define HTML input element by ref
+const userSearchInput = ref<HTMLInputElement | null>(null);
 
-watch(props, (newValue) => {
-  filteredSuggestions.value = newValue.suggestions
+// define custom emits
+const customEmits = defineEmits(['update:modelValue', 'onReset'])
+
+const searchResultHasResults = computed(() => {
+  if(!props.searchResults) return false;
+  return props.searchResults.length > 0
 })
 
-function handleEnter(event: KeyboardEvent) {
-  if (event.key === 'Enter') {
-    customEmits('select', filteredSuggestions.value[0])
+// update input model
+// check if value is !== empty
+// launch update model to get suggestions
+const updateModel = (event: Event) => {
+  const { value } = event.target as HTMLInputElement;
+  if (value === '') {
+    resetResponse()
+  } else {
+    updateSearch(value)
   }
 }
 
-const updateValue = (payload: Event) => {
-  const { value } = (payload.target as HTMLInputElement)
-  if (value === '') return ;
-
+const updateSearch = debounce((value: string) => {
   customEmits('update:modelValue', value)
-};
+}, 850)
 
-// function handleInput() {
-//   showDropdown.value = true
-//   if (searchTerm.value.trim() === '') {
-//     filteredSuggestions.value = []
-//     showDropdown.value = false
-//     return
-//   }
+// handle user select item from list of results
+const selectListItem = (payload: Event) => {
+  const { dataset: { label } } = (payload.target as HTMLInputElement);
+  if(!label) return ;
+  userSearchBy.value = label;
 
-//   if (debounceTimer) {
-//     clearTimeout(debounceTimer)
-//   }
-//   debounceTimer = setTimeout(() => {
-//     emit('debounce', searchTerm.value)
-//   }, 1000)
-// }
+  if(!userSearchInput.value) return
+  userSearchInput.value.focus();
 
-function handleSuggestionClick(suggestion: Suggestion) {
-  searchTerm.value = suggestion.id
-  filteredSuggestions.value = [suggestion]
-  showDropdown.value = false
-  setTimeout(() => {
-    const inputElement = document.querySelector(
-      '.base-search input[type="text"]'
-    ) as HTMLInputElement
-    if (inputElement) {
-      inputElement.focus()
-    }
-  })
+  resetResponse()
 }
+
+const resetResponse = () => customEmits('onReset')
 </script>
 
 <style lang="scss" src="./BaseSearch.scss" />

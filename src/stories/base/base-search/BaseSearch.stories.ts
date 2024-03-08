@@ -1,13 +1,12 @@
 import BaseSearch from '@ui/base/base-search/BaseSearch.vue'
 import type { Meta, StoryObj } from '@storybook/vue3'
 
-
 const search = (value: string) => {
   return results.filter(
-      ({ id }) => id.toLowerCase().includes(value.toLowerCase())
-    ).reduce((acc: any, item: any) => {
-      return [...acc, { label: item.id }];
-    }, [])
+    ({ id }) => id.toLowerCase().includes(value.toLowerCase())
+  ).reduce((acc: any, item: any) => {
+    return [...acc, { label: item.id }];
+  }, [])
 };
 
 const results = [
@@ -23,9 +22,15 @@ const meta = {
   argTypes: {
     search: () => {},
     searchResults: { control: 'array' },
+    placeholder: { control: 'text' },
+    loading: { control: 'radio', options: [true, false] },
+    alert: { if: { arg: 'searchResults', eq: [] }, control: 'text'}
   },
   args: {
-    searchResults: []
+    placeholder: 'put here your search text',
+    searchResults: undefined,
+    loading: false,
+    alert: 'alert'
   }
 } as Meta<typeof BaseSearch>
 
@@ -44,22 +49,22 @@ const Template: Story = {
       <div>
         <BaseSearch
           v-bind="args"
-          v-on:update:modelValue="handleQuantityUpdate"
+          v-on:update:modelValue="handleResponseUpdate"
+          @onReset="resetResponse"
         >
-          <template #default="{ suggestions, handleSuggestionClick }">
-            <ul>
-              <li v-for="(suggestion, index) in suggestions" :key="suggestion.id" @click="handleSuggestionClick(suggestion)">
-                {{ suggestion.id }} - {{ suggestion.city }} - {{ suggestion.carCount }} - {{ suggestion.manager }}
-              </li>
-            </ul>
-          </template>
+          <template #list="{ property: { label } }">{{ label }}</template>
+          <template #alert v-if="args.searchResults?.length === 0">no results found</template>
         </BaseSearch>
       </div>
     `,
     methods: {
-      handleQuantityUpdate(value: string) {
+      handleResponseUpdate(value: string) {
         updateArgs({ ...args, searchResults: search(value) })
-      }, }
+      },
+      resetResponse() {
+        updateArgs({ ...args, searchResults: undefined })
+      }
+    }
   })
 }
 
