@@ -1,10 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import  IconAsync from '@ui/base/base-icon/BaseIcon.vue';
 import configuration from './configuration';
-
+import { copyToClipboard } from "../shared/helpers/";
 
 const meta = {
     title: 'Foundations/Icons',
+    argTypes: {
+      copyToClipboard: () => {},
+    },
 } satisfies Meta;
 
 export default meta;
@@ -24,7 +27,11 @@ const Template: Story = {
           </h2>
           <ul class="foundation__list">
             ${( () => section.items.map((icon: Record<string, string>) => `
-              <li class="foundation__item foundation--is-small-size">
+              <li class="
+                foundation__item
+                foundation--is-small-size
+                foundation--is-center"
+              >
                   <span class="
                     foundation--is-square
                     foundation--is-center
@@ -33,12 +40,17 @@ const Template: Story = {
                   >
                     <IconAsync name="${icon.token}" type="${section.parent}" />
                   </span>
+                  <button
+                    class="foundation__action"
+                    @click="action('${icon?.copy}')"
+                  >copy</button>
               </li>
             `).join(""))()
             }
           </ul>
       </section>
-    `).join(""))()}`
+    `).join(""))()}`,
+    methods: { action: copyToClipboard }
   })
 }
 
