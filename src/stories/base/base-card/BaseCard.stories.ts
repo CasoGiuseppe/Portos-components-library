@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import BaseCard from '@ui/base/base-card/BaseCard.vue'
-import IconArrowCircleDown from '@ui/icons/arrow/IconArrowCircleDown.vue'
+import IconFeedbackInfo from '@ui/icons/feedback/IconFeedbackInfo.vue'
 
 const meta: Meta = {
   title: 'Base/BaseCard',
@@ -18,7 +18,7 @@ type Story = StoryObj<typeof BaseCard>
 
 const Templates: Story = {
   render: (args) => ({
-    components: { BaseCard, IconArrowCircleDown },
+    components: { BaseCard, IconFeedbackInfo },
     setup() {
       return { args }
     },
@@ -27,7 +27,7 @@ const Templates: Story = {
     <BaseCard>
       <template #title>
       <p>{{ args.title }}</p>
-        <IconArrowCircleDown />
+        <IconFeedbackInfo />
       </template>
       <template #body>
         <p>{{ args.body }}</p>
