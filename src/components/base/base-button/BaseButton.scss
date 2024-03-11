@@ -1,120 +1,146 @@
+@import './../../../assets/_abstracts/colors';
+@import './../../../assets/_abstracts/fonts';
+
 button {
   border-radius: 24px;
   gap: 8px;
   min-width: 182px;
   height: 48px;
 
-  //styleName: Body/font-body-M (bold);
-  font-family: Noto Sans;
-  font-size: 16px;
-  font-weight: 700;
+  font-size: var(--font-body-m-size, 16px);
+  font-weight: var(--font-weight-700, 700);
   line-height: 24px;
   letter-spacing: 0em;
   text-align: center;
 
+  // sizes
   &.large {
     min-width: 182px;
-    font-weight: 700;
-    font-size: 16px;
+    font-weight: var(--font-weight-700, 700);
+    font-size: var(--font-body-m-size, 16px);
     line-height: 24px;
   }
 
   &.medium {
     min-width: 188px;
     height: 40px;
-    font-weight: 700;
-    font-size: 16px;
+    font-weight: var(--font-weight-700, 700);
+    font-size: var(--font-body-m-size, 16px);
     line-height: 24px;
   }
 
   &.small {
     min-width: 138px;
     height: 28px;
-    font-weight: 700;
-    font-size: 12px;
+    font-weight: var(--font-weight-700, 700);
+    font-size: 12px; // font-body-s not working properly as expected
     line-height: 16px;
   }
 
+  // types
   &.primary {
-    background: #aa272f;
-    color: #ffffff;
+    background: var(--color-brand-50, #aa272f);
+    color: var(--color-neutral-10, #fff);
     border: none;
     &:hover {
-      background: #782327;
+      background: var(--color-brand-60, #782327);
     }
     &:focus {
-      border: 1px solid white;
-      outline: 3px solid #bd20cb;
+      border: 2px solid var(--color-neutral-10, #fff);
+      outline: 2px solid #bd20cb;
     }
     &.disabled {
-      background: #c7cccf;
-      color: #484d50;
+      background: var(--color-neutral-40, #c8cdd0);
+      color: var(--color-neutral-60, #494d50);
     }
 
     &Alt {
-      background: #ffeaec;
-      color: #aa272f;
+      background: var(--color-brand-10, #ffeaec);
+      color: var(--color-brand-50, #aa272f);
       border: none;
       &:hover {
-        background: #ffa3aa;
+        background: var(--color-brand-20, #ffa3ab);
+      }
+      &:focus {
+        border: 2px solid #bd20cb;
+        outline: 2px solid var(--color-brand-10, #ffeaec);
       }
       &.disabled {
-        background: #c7cccf;
-        color: #484d50;
+        background: var(--color-neutral-40, #c8cdd0);
+        color: var(--color-neutral-60, #494d50);
       }
     }
   }
 
   &.secondary {
-    background: #21578a;
-    color: #fff;
+    background: var(--color-primary-40, #22588c);
+    color: var(--color-neutral-10, #fff);
     border: none;
     &:hover {
-      background: #002c5f;
-      color: #fff;
+      background: var(--color-primary-50, #002d61);
+      color: var(--color-neutral-10, #fff);
+    }
+    &:focus {
+      border: 2px solid var(--color-neutral-10, #fff);
+      outline: 2px solid #bd20cb;
     }
     &.disabled {
-      background: #c7cccf;
-      color: #484d50;
+      background: var(--color-neutral-40, #c8cdd0);
+      color: var(--color-neutral-60, #494d50);
     }
+
     &Alt {
-      background: #ecf0f6;
-      color: #002c5f;
+      background: var(--color-primary-10, #ecf0f6);
+      color: var(--color-primary-50, #002d61);
       border: none;
       &:hover {
-        background: #9bb2ce;
-        color: #00204e;
+        background: var(--color-primary-20, #9bb2ce);
+        color: var(--color-primary-60, #00204e);
+      }
+      &:focus {
+        border: 2px solid #bd20cb;
+        outline: 2px solid var(--color-brand-10, #ffeaec);
       }
       &.disabled {
-        background: #c7cccf;
-        color: #484d50;
+        background: var(--color-neutral-40, #c8cdd0);
+        color: var(--color-neutral-60, #494d50);
       }
     }
   }
 
   &.tertiary {
-    border: 1px solid #21578a;
-    color: #21578a;
+    background-color: var(--color-neutral-10, #fff);
+    border: 1px solid var(--color-primary-40, #22588c);
+    color: var(--color-primary-40, #22588c);
     &:hover {
-      color: #00204e !important;
-      border: 1px solid #00204e !important;
+      color: var(--color-primary-60, #00204e) !important;
+      border: 1px solid var(--color-primary-60, #00204e) !important;
+    }
+    &:focus {
+      box-shadow:
+        0 0 0 2px var(--color-neutral-10, #fff),
+        0 0 0 4px #bd20cb;
     }
     &.disabled {
-      background: #c7cccf;
-      color: #484d50;
+      background: var(--color-neutral-40, #c8cdd0);
+      color: var(--color-neutral-60, #494d50);
     }
+
     &Alt {
-      border: 1px solid #fff !important;
+      border: 1px solid var(--color-neutral-10, #fff) !important;
       background: transparent;
-      color: #fff;
-      border: none;
+      color: var(--color-neutral-10, #fff);
       &:hover {
-        color: #7090b7;
-        border: 1px solid #7090b7 !important;
+        color: var(--color-primary-30, #7190b7);
+        border: 1px solid var(--color-primary-30, #7190b7) !important;
+      }
+      &:focus {
+        box-shadow:
+          0 0 0 2px #bd20cb,
+          0 0 0 4px var(--color-neutral-10, #fff);
       }
       &.disabled {
-        //background: #c7cccf;
-        color: #fff;
+        color: var(--color-neutral-10, #fff);
       }
     }
   }

@@ -1,0 +1,148 @@
+{
+  "buttonsList": [
+    {
+      "id": 1,
+      "alt": false,
+      "values": [
+        {
+          "id": 1,
+          "type": "primary",
+          "size": "large",
+          "disabled": false
+        },
+        {
+          "id": 2,
+          "type": "primary",
+          "size": "medium",
+          "disabled": false
+        },
+        {
+          "id": 3,
+          "type": "primary",
+          "size": "small",
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "alt": true,
+      "values": [
+        {
+          "id": 1,
+          "type": "primaryAlt",
+          "size": "large",
+          "disabled": false
+        },
+        {
+          "id": 3,
+          "type": "primaryAlt",
+          "size": "medium",
+          "disabled": false
+        },
+        {
+          "id": 3,
+          "type": "primaryAlt",
+          "size": "small",
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "alt": false,
+      "values": [
+        {
+          "id": 1,
+          "type": "secondary",
+          "size": "large",
+          "disabled": false
+        },
+        {
+          "id": 2,
+          "type": "secondary",
+          "size": "medium",
+          "disabled": false
+        },
+        {
+          "id": 3,
+          "type": "secondary",
+          "size": "small",
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "alt": true,
+      "values": [
+        {
+          "id": 1,
+          "type": "secondaryAlt",
+          "size": "large",
+          "disabled": false
+        },
+        {
+          "id": 2,
+          "type": "secondaryAlt",
+          "size": "medium",
+          "disabled": false
+        },
+        {
+          "id": 3,
+          "type": "secondaryAlt",
+          "size": "small",
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "alt": false,
+      "values": [
+        {
+          "id": 1,
+          "type": "tertiary",
+          "size": "large",
+          "disabled": false
+        },
+        {
+          "id": 2,
+          "type": "tertiary",
+          "size": "medium",
+          "disabled": false
+        },
+        {
+          "id": 3,
+          "type": "tertiary",
+          "size": "small",
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "alt": true,
+      "values": [
+        {
+          "id": 1,
+          "type": "tertiaryAlt",
+          "size": "large",
+          "disabled": false
+        },
+        {
+          "id": 2,
+          "type": "tertiaryAlt",
+          "size": "medium",
+          "disabled": false
+        },
+        {
+          "id": 3,
+          "type": "tertiaryAlt",
+          "size": "small",
+          "disabled": false
+        }
+      ]
+    }
+  ]
+}
