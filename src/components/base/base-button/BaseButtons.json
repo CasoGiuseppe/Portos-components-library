@@ -25,6 +25,30 @@
       ]
     },
     {
+      "id": 1.2,
+      "alt": false,
+      "values": [
+        {
+          "id": 1,
+          "type": "primary",
+          "size": "large",
+          "disabled": true
+        },
+        {
+          "id": 2,
+          "type": "primary",
+          "size": "medium",
+          "disabled": true
+        },
+        {
+          "id": 3,
+          "type": "primary",
+          "size": "small",
+          "disabled": true
+        }
+      ]
+    },
+    {
       "id": 2,
       "alt": true,
       "values": [

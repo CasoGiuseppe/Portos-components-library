@@ -16,8 +16,11 @@ const props = defineProps({
 })
 
 const computedClasses = {
-  ...props.config.type && { [props.config.type]: true },
-  ...props.config.size && { [props.config.size]: true },
+  'primary': !props.config.type,
+  'medium': !props.config.size,
+  'disabled': !!props.config.disabled,
+  [props.config.type || '']: !!props.config.type,
+  [props.config.size || '']: !!props.config.size,
 }
 
 const handleClick = () => {
