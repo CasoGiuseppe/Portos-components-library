@@ -1,147 +1,132 @@
-@import './../../../assets/_abstracts/colors';
-@import './../../../assets/_abstracts/fonts';
-
-button {
-  border-radius: 24px;
-  gap: 8px;
-  min-width: 182px;
-  height: 48px;
-
-  font-size: var(--font-body-m-size, 16px);
-  font-weight: var(--font-weight-700, 700);
-  line-height: 24px;
-  letter-spacing: 0em;
-  text-align: center;
-
-  // sizes
-  &.large {
-    min-width: 182px;
-    font-weight: var(--font-weight-700, 700);
-    font-size: var(--font-body-m-size, 16px);
-    line-height: 24px;
-  }
-
-  &.medium {
-    min-width: 188px;
-    height: 40px;
-    font-weight: var(--font-weight-700, 700);
-    font-size: var(--font-body-m-size, 16px);
-    line-height: 24px;
-  }
-
-  &.small {
-    min-width: 138px;
-    height: 28px;
-    font-weight: var(--font-weight-700, 700);
-    font-size: 12px; // font-body-s not working properly as expected
-    line-height: 16px;
-  }
-
-  // types
-  &.primary {
-    background: var(--color-brand-50, #aa272f);
-    color: var(--color-neutral-10, #fff);
-    border: none;
+@mixin createHoverState() {
+  @media (hover){
+    &:active,
     &:hover {
-      background: var(--color-brand-60, #782327);
+      &:not(:disabled) {
+       @content
+      }
     }
-    &:focus {
-      border: 2px solid var(--color-neutral-10, #fff);
-      outline: 2px solid #bd20cb;
-    }
-    &.disabled {
-      background: var(--color-neutral-40, #c8cdd0);
-      color: var(--color-neutral-60, #494d50);
+  }
+}
+
+.base-button {
+  $basebutton: &;
+  $animationTime: .4s;
+
+  align-items: center;
+  display: flex;
+  justify-content: center;
+
+  border: none;
+  border-radius: var(--radius-500, 0);
+  color: var(--color-neutral-10, #000);
+
+  transition: background $animationTime ease-out,
+              box-shadow $animationTime ease-out,
+              border-color $animationTime ease-out,
+              color $animationTime ease-out;
+
+  &:disabled {
+    cursor: auto;
+
+    &:not([class*="tertiary"]) {
+      background: var(--color-neutral-40, #000);
+      color:  var(--color-neutral-60, #000);
     }
 
-    &Alt {
-      background: var(--color-brand-10, #ffeaec);
-      color: var(--color-brand-50, #aa272f);
-      border: none;
-      &:hover {
-        background: var(--color-brand-20, #ffa3ab);
-      }
-      &:focus {
-        border: 2px solid #bd20cb;
-        outline: 2px solid var(--color-brand-10, #ffeaec);
-      }
-      &.disabled {
-        background: var(--color-neutral-40, #c8cdd0);
-        color: var(--color-neutral-60, #494d50);
+    background: none;
+    border-width: 1px;
+    border-style: solid;
+
+    &:not([class*="ALT"]) {
+      border-color: var(--color-neutral-50, #000);
+      color: var(--color-neutral-50, #000);
+    }
+
+    border-color: var(--color-neutral-40, #000);
+    color: var(--color-neutral-40, #000);
+  }
+
+  @media (hover) {
+    &:focus {
+      box-shadow: 0 0 0 2px var(--color-neutral-10, #000), 0 0 0 4px var(--color-outline, #000);
+
+      &[class*="ALT"] {
+        box-shadow: 0 0 0 2px var(--color-outline, #000), 0 0 0 4px var(--color-neutral-10, #000);
       }
     }
   }
 
-  &.secondary {
-    background: var(--color-primary-40, #22588c);
-    color: var(--color-neutral-10, #fff);
-    border: none;
-    &:hover {
-      background: var(--color-primary-50, #002d61);
-      color: var(--color-neutral-10, #fff);
-    }
-    &:focus {
-      border: 2px solid var(--color-neutral-10, #fff);
-      outline: 2px solid #bd20cb;
-    }
-    &.disabled {
-      background: var(--color-neutral-40, #c8cdd0);
-      color: var(--color-neutral-60, #494d50);
+  &--is{
+    &-primary {
+      background: var(--color-brand-50);
+
+      &-ALT {
+        background: var(--color-brand-10, #000);
+        color: var(--color-brand-50, #000);
+      }
+
+      @include createHoverState {
+        &:not([class*="ALT"]) {
+          background: var(--color-brand-60, #000);
+        }
+          background: var(--color-brand-20, #000);
+      }
     }
 
-    &Alt {
-      background: var(--color-primary-10, #ecf0f6);
-      color: var(--color-primary-50, #002d61);
-      border: none;
-      &:hover {
-        background: var(--color-primary-20, #9bb2ce);
-        color: var(--color-primary-60, #00204e);
-      }
-      &:focus {
-        border: 2px solid #bd20cb;
-        outline: 2px solid var(--color-brand-10, #ffeaec);
-      }
-      &.disabled {
-        background: var(--color-neutral-40, #c8cdd0);
-        color: var(--color-neutral-60, #494d50);
-      }
-    }
-  }
+    &-secondary {
+      background: var(--color-primary-40, #000);
 
-  &.tertiary {
-    background-color: var(--color-neutral-10, #fff);
-    border: 1px solid var(--color-primary-40, #22588c);
-    color: var(--color-primary-40, #22588c);
-    &:hover {
-      color: var(--color-primary-60, #00204e) !important;
-      border: 1px solid var(--color-primary-60, #00204e) !important;
-    }
-    &:focus {
-      box-shadow:
-        0 0 0 2px var(--color-neutral-10, #fff),
-        0 0 0 4px #bd20cb;
-    }
-    &.disabled {
-      background: var(--color-neutral-40, #c8cdd0);
-      color: var(--color-neutral-60, #494d50);
+      &-ALT {
+        background: var(--color-primary-10, #000);
+        color: var(--color-primary-50, #000);
+      }
+
+      @include createHoverState {
+        &:not([class*="ALT"]) {
+          background: var(--color-primary-50, #000);
+        }
+          background: var(--color-primary-20, #000);
+      }
     }
 
-    &Alt {
-      border: 1px solid var(--color-neutral-10, #fff) !important;
-      background: transparent;
-      color: var(--color-neutral-10, #fff);
-      &:hover {
-        color: var(--color-primary-30, #7190b7);
-        border: 1px solid var(--color-primary-30, #7190b7) !important;
+    &-tertiary {
+      background: none;
+      border: 1px solid var(--color-primary-40, #000);
+      color: var(--color-primary-40, #000);
+
+      &-ALT {
+        border-color: var(--color-primary-10, #000);
+        color: var(--color-primary-10, #000);
       }
-      &:focus {
-        box-shadow:
-          0 0 0 2px #bd20cb,
-          0 0 0 4px var(--color-neutral-10, #fff);
+
+      @include createHoverState {
+        &:not([class*="ALT"]) {
+          border-color: var(--color-primary-60, #000);
+          color: var(--color-primary-50, #000);
+        }
+        border-color: var(--color-primary-30, #000);
+        color: var(--color-primary-30, #000);
       }
-      &.disabled {
-        color: var(--color-neutral-10, #fff);
-      }
+    }
+
+    // sizing
+    &-L,
+    &-M {
+      @include text-body-m--bold;
+    }
+
+    &-L {
+      padding: var(--spacing-40, 0) var(--spacing-50, 0);
+    }
+    
+    &-M {
+      padding: var(--spacing-30, 0) var(--spacing-50, 0);
+    }
+
+    &-S {
+      @include text-body-xs--bold;
+      padding: var(--spacing-20, 0) var(--spacing-50, 0);
     }
   }
 }
