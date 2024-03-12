@@ -14,7 +14,7 @@
     interface IIconComponent {
         name: Names,
         type: Types,
-        size: Sizes
+        size?: Sizes
     }
 
     const { name, type } = withDefaults(defineProps<IIconComponent>(), {
@@ -26,7 +26,7 @@
          * Set Icon component type
          */
         type: Types.ARROW,
-        size: Sizes.XS
+        size: Sizes.M
     });
 
     const IconAsyncDefine = defineAsyncComponent({

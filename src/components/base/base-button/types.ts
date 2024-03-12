@@ -7,10 +7,6 @@ export enum Types {
     TERTIARY = 'tertiary',
 }
 
-export enum Variants {
-    ALT = 'ALT',
-}
-
 export enum Sizes {
     M = 'M',
     L = 'L',

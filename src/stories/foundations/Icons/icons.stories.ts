@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import  BaseIcon from '@ui/base/base-icon/BaseIcon.vue';
-import { Sizes } from '@ui/base/base-icon/types';
 import configuration from './configuration';
 import { copyToClipboard } from "../shared/helpers/";
 
@@ -43,7 +42,6 @@ const Template: Story = {
                     <BaseIcon
                       name="${icon.token}"
                       type="${section.parent}"
-                      v-bind="args"
                     />
                   </span>
                   <button

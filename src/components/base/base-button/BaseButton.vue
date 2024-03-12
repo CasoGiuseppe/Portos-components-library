@@ -5,7 +5,7 @@
       'base-button',
       `base-button--is-${type}`,
       `base-button--is-${size}`,
-      `${variant ? `base-button--is-${type}-${variant}` : ''}`
+      `${variant ? `base-button--is-${type}-ALT` : ''}`
     ]"
     :disabled="disabled"
     :title="label"
@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 import { defineEmits, type PropType } from 'vue'
-import { type UniqueId, Sizes, Types, Variants } from './types';
+import { type UniqueId, Sizes, Types } from './types';
 import useValidations from '@/components/validation/useValidation';
 
 
@@ -41,11 +41,11 @@ defineProps({
     validator: (prop: Types) => useValidations().validateValueCollectionExists({ collection: Types, value: prop})
   },
   /**
-   * Set variant type
+   * Set variant type state
    */
   variant: {
-    type: String as PropType<Variants>,
-    validator: (prop: Variants) => useValidations().validateValueCollectionExists({ collection: Variants, value: prop})
+    type: Boolean,
+    default: false
   },
   /**
    * Set the button size mode [L, M, S]

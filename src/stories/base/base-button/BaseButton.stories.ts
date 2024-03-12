@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import BaseButton from "@ui/base/base-button/BaseButton.vue";
-import { Sizes, Types, Variants } from '@ui/base/base-button/types';
+import BaseIcon from "@/components/base/base-icon/BaseIcon.vue";
+import { Sizes, Types } from '@ui/base/base-button/types';
 import { action } from '@storybook/addon-actions'
 
 const meta = {
@@ -12,7 +13,7 @@ const meta = {
         label: { control: 'text' },
         type: { control: 'select', options: Object.values(Types) },
         size: { control: 'select', options: Object.values(Sizes) },
-        variant: { control: 'radio', options: ['ALT', null] },
+        variant: { control: 'radio', options: [true, false] },
         disabled: { control: 'radio', options: [true, false] },
         default: { control: 'text' }
     },
@@ -22,6 +23,7 @@ const meta = {
         type: Types.PRIMARY,
         size: Sizes.L,
         disabled: false,
+        variant: false,
         default: 'Button label',
       }
 } satisfies Meta<typeof BaseButton>;
@@ -32,11 +34,11 @@ type Story = StoryObj<typeof BaseButton>;
 
 const Templates: Story = {
     render: (args) => ({
-        components: { BaseButton },
+        components: { BaseButton, BaseIcon },
         setup() { return { args } },
         template: `
             <BaseButton v-bind="args" @click="action">
-                <template #default>{{ args.default }}</template>
+                <template #default><BaseIcon name="IconArrowCircleLeft" type="arrow" size="S"/>{{ args.default }}</template>
             </BaseButton>
         `,
         methods: { action: action('clicked') }
