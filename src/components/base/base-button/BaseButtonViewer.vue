@@ -2,39 +2,39 @@
   <div class="wrapper">
     <div class="block">
       <BaseButtonV2>Primary L</BaseButtonV2>
-      <BaseButtonV2 size="M">Primary M</BaseButtonV2>
-      <BaseButtonV2 size="S">Primary S</BaseButtonV2>
+      <BaseButtonV2 :size="Sizes.M">Primary M</BaseButtonV2>
+      <BaseButtonV2 :size="Sizes.S">Primary S</BaseButtonV2>
       <BaseButtonV2 disabled>Primary Disabled</BaseButtonV2>
     </div>
     <div class="block block--is-dark">
-      <BaseButtonV2 variant="ALT">Primary Alt L</BaseButtonV2>
-      <BaseButtonV2 size="M" variant="ALT">Primary Alt M</BaseButtonV2>
-      <BaseButtonV2 size="S" variant="ALT">Primary Alt S</BaseButtonV2>
-      <BaseButtonV2 disabled variant="ALT">Primary Disabled</BaseButtonV2>
+      <BaseButtonV2 :variant="Variants.ALT">Primary Alt L</BaseButtonV2>
+      <BaseButtonV2 :size="Sizes.M" :variant="Variants.ALT">Primary Alt M</BaseButtonV2>
+      <BaseButtonV2 :size="Sizes.S" :variant="Variants.ALT">Primary Alt S</BaseButtonV2>
+      <BaseButtonV2 disabled :variant="Variants.ALT">Primary Disabled</BaseButtonV2>
     </div>
     <div class="block">
-      <BaseButtonV2 type="secondary">Secondary L</BaseButtonV2>
-      <BaseButtonV2 type="secondary" size="M">Secondary M</BaseButtonV2>
-      <BaseButtonV2 type="secondary" size="S">Secondary S</BaseButtonV2>
+      <BaseButtonV2 :type="Types.SECONDARY">Secondary L</BaseButtonV2>
+      <BaseButtonV2 :type="Types.SECONDARY" :size="Sizes.M">Secondary M</BaseButtonV2>
+      <BaseButtonV2 :type="Types.SECONDARY" :size="Sizes.S">Secondary S</BaseButtonV2>
       <BaseButtonV2 disabled>Secondary Disabled</BaseButtonV2>
     </div>
     <div class="block block--is-dark">
-      <BaseButtonV2 type="secondary" variant="ALT">Secondary Alt L</BaseButtonV2>
-      <BaseButtonV2 type="secondary" size="M" variant="ALT">Secondary Alt M</BaseButtonV2>
-      <BaseButtonV2 type="secondary" size="S" variant="ALT">Secondary Alt S</BaseButtonV2>
-      <BaseButtonV2 disabled variant="ALT">Secondary Disabled</BaseButtonV2>
+      <BaseButtonV2 :type="Types.SECONDARY" :variant="Variants.ALT">Secondary Alt L</BaseButtonV2>
+      <BaseButtonV2 :type="Types.SECONDARY" :size="Sizes.M" :variant="Variants.ALT">Secondary Alt M</BaseButtonV2>
+      <BaseButtonV2 :type="Types.SECONDARY" :size="Sizes.S" :variant="Variants.ALT">Secondary Alt S</BaseButtonV2>
+      <BaseButtonV2 disabled :variant="Variants.ALT">Secondary Disabled</BaseButtonV2>
     </div>
     <div class="block">
-      <BaseButtonV2 type="tertiary">Tertiary L</BaseButtonV2>
-      <BaseButtonV2 type="tertiary" size="M">Tertiary M</BaseButtonV2>
-      <BaseButtonV2 type="tertiary" size="S">Tertiary S</BaseButtonV2>
-      <BaseButtonV2 type="tertiary" disabled>Tertiary Disabled</BaseButtonV2>
+      <BaseButtonV2 :type="Types.TERTIARY">Tertiary L</BaseButtonV2>
+      <BaseButtonV2 :type="Types.TERTIARY" :size="Sizes.M">Tertiary M</BaseButtonV2>
+      <BaseButtonV2 :type="Types.TERTIARY" :size="Sizes.S">Tertiary S</BaseButtonV2>
+      <BaseButtonV2 :type="Types.TERTIARY" disabled>Tertiary Disabled</BaseButtonV2>
     </div>
     <div class="block block--is-dark">
-      <BaseButtonV2 type="tertiary" variant="ALT">Tertiary Alt L</BaseButtonV2>
-      <BaseButtonV2 type="tertiary" size="M" variant="ALT">Tertiary Alt M</BaseButtonV2>
-      <BaseButtonV2 type="tertiary" size="S" variant="ALT">Tertiary Alt S</BaseButtonV2>
-      <BaseButtonV2 type="tertiary" disabled variant="ALT">Tertiary Disabled</BaseButtonV2>
+      <BaseButtonV2 :type="Types.TERTIARY" :variant="Variants.ALT">Tertiary Alt L</BaseButtonV2>
+      <BaseButtonV2 :type="Types.TERTIARY" :size="Sizes.M" :variant="Variants.ALT">Tertiary Alt M</BaseButtonV2>
+      <BaseButtonV2 :type="Types.TERTIARY" :size="Sizes.S" :variant="Variants.ALT">Tertiary Alt S</BaseButtonV2>
+      <BaseButtonV2 :type="Types.TERTIARY" disabled :variant="Variants.ALT">Tertiary Disabled</BaseButtonV2>
     </div>
     <div>
       <BaseButton :config="{
@@ -58,7 +58,7 @@ import BaseButton from './BaseButton.vue';
 import BaseButtonV2 from './BaseButtonV2.vue';
 import buttons from './BaseButtons.json'
 import type { ButtonsListElement } from './interfaces';
-
+import { Types, Sizes, Variants } from './types';
 const list = ref<ButtonsListElement[]>(buttons.buttonsList); //type any only to show the list: ButtonsListElement
 const handleClick = () => {
   console.log('Button clicked!')

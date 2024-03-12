@@ -1,5 +1,6 @@
 <template>
   <button
+    :id="id"
     :class="[
       'base-button',
       `base-button--is-${type}`,
@@ -17,30 +18,40 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmits } from 'vue'
-export interface IBaseButton {
-  type?: string,
-  variant?: string | undefined,
-  size?: string,
-  disabled?: boolean,
-  label?: string
-}
+import { defineEmits, type PropType } from 'vue'
+import { type UniqueId, Sizes, Types, Variants } from './types';
+import useValidations from '@/components/validation/useValidation';
 
+
+defineProps({
+  id: {
+    type: String as PropType<UniqueId>,
+    default: 'buttonId'
+  },
+  type: {
+    type: String as PropType<Types>,
+    default: Types.PRIMARY,
+    validator: (prop: Types) => useValidations().validateValueCollectionExists({ collection: Types, value: prop})
+  },
+  variant: {
+    type: String as PropType<Variants>,
+    validator: (prop: Variants) => useValidations().validateValueCollectionExists({ collection: Variants, value: prop})
+  },
+  size: {
+    type: String as PropType<Sizes>,
+    default:Sizes.L,
+    validator: (prop: Sizes) => useValidations().validateValueCollectionExists({ collection: Sizes, value: prop})
+  },
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+  label: {
+    type: String
+  }
+});
 const emits = defineEmits(['click'])
-
-
-withDefaults(defineProps<IBaseButton>(), {
-  type: 'primary',
-  variant: undefined,
-  size:'L',
-  disabled: false,
-  label: 'base button'
-})
-
-
-const handleClick = () => {
-  emits('click')
-}
+const handleClick = () => emits('click')
 
 </script>
 
