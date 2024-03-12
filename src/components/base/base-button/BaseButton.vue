@@ -1,4 +1,5 @@
 <template>
+    
   <button :class="computedClasses" @handleClick="handleClick" :disabled="props.config.disabled">
     <slot></slot>
   </button>
