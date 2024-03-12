@@ -1,0 +1,23 @@
+html,
+body {
+    background: var(--color-neutral-10, #000);
+    * {
+        box-sizing: border-box;
+
+        &::after,
+        &::before {
+            box-sizing: border-box;
+        }
+
+        &:is(button) {
+            cursor: pointer;
+            outline: none;
+        }
+
+        &:is(ul, ol, li, h1, h2, h3, h4, p, form) {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+    }
+}
