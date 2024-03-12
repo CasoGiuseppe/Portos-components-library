@@ -13,6 +13,7 @@
     :aria-label="label"
     @click="handleClick"
   >
+    <!-- @slot Default slot for button label -->
     <slot />
   </button>
 </template>
@@ -24,28 +25,46 @@ import useValidations from '@/components/validation/useValidation';
 
 
 defineProps({
+  /**
+   * Set the unique id of the ui button
+   */
   id: {
     type: String as PropType<UniqueId>,
     default: 'buttonId'
   },
+  /**
+   * Set the button type family [primary, secondary, tertiary]
+   */
   type: {
     type: String as PropType<Types>,
     default: Types.PRIMARY,
     validator: (prop: Types) => useValidations().validateValueCollectionExists({ collection: Types, value: prop})
   },
+  /**
+   * Set variant type
+   */
   variant: {
     type: String as PropType<Variants>,
     validator: (prop: Variants) => useValidations().validateValueCollectionExists({ collection: Variants, value: prop})
   },
+  /**
+   * Set the button size mode [L, M, S]
+   */
   size: {
     type: String as PropType<Sizes>,
     default:Sizes.L,
     validator: (prop: Sizes) => useValidations().validateValueCollectionExists({ collection: Sizes, value: prop})
   },
+  /**
+   * Set the disabled button state
+   */
   disabled: {
     type: Boolean,
     default: false
   },
+  /**
+   * Set the aria accesibility label
+   */
   label: {
     type: String
   }
