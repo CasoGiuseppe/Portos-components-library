@@ -37,9 +37,15 @@ const Templates: Story = {
         components: { BaseButton, BaseIcon },
         setup() { return { args } },
         template: `
-            <BaseButton v-bind="args" @click="action">
-                <template #default><BaseIcon name="IconArrowCircleLeft" type="arrow" size="S"/>{{ args.default }}</template>
-            </BaseButton>
+            <section style="display: flex; gap: 10px">
+                <BaseButton v-bind="args" @click="action">
+                    <template #default>{{ args.default }}</template>
+                </BaseButton>
+
+                <BaseButton v-bind="args" @click="action">
+                    <template #default>{{ args.default }}<BaseIcon name="IconArrowCircleRight" type="arrow" size="S"/></template>
+                </BaseButton>
+            </section>
         `,
         methods: { action: action('clicked') }
     }),
