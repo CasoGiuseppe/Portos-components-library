@@ -55,4 +55,4 @@ const handleClick = () => emits('click')
 
 </script>
 
-<style src="./BaseButtonV2.scss"></style>
+<style src="./BaseButton.scss" lang="scss"></style>

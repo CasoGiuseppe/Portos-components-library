@@ -16,7 +16,7 @@ const results = [
 ]
 
 const meta = {
-  title: 'Base/v1.0/BaseSearch',
+  title: 'Base/v1.0/Base Search',
   component: BaseSearch,
   tags: ['autodocs'],
   argTypes: {
