@@ -1,13 +1,20 @@
 <template>
-    <IconAsyncDefine></IconAsyncDefine>
+    <component
+        :is="IconAsyncDefine"
+        :class="[
+            'base-icon',
+            `base-icon--is-${size}`,
+        ]"
+    />
 </template>
 <script lang="ts" setup>
     import { type Component, defineAsyncComponent } from 'vue';
-    import { IconType, type IconName } from './type';
+    import { Types, Sizes, type Names } from './types';
 
     interface IIconComponent {
-        name: IconName,
-        type: IconType
+        name: Names,
+        type: Types,
+        size?: Sizes
     }
 
     const { name, type } = withDefaults(defineProps<IIconComponent>(), {
@@ -18,11 +25,11 @@
         /**
          * Set Icon component type
          */
-        type: IconType.ARROW
+        type: Types.ARROW,
+        size: Sizes.M
     });
 
     const IconAsyncDefine = defineAsyncComponent({
-
         loader: async () => {
             try {
                 let icon: Component | undefined;
@@ -38,3 +45,4 @@
     });
 
 </script>
+<style src="./BaseIcon.scss" lang="scss"></style>./types

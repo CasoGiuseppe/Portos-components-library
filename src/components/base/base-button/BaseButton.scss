@@ -1,0 +1,135 @@
+@mixin createHoverState() {
+  @media (hover){
+    &:active,
+    &:hover {
+      &:not(:disabled) {
+       @content
+      }
+    }
+  }
+}
+
+.base-button {
+  $basebutton: &;
+  $animationTime: .4s;
+
+  align-items: center;
+  display: flex;
+  gap: var(--spacing-40, 0);
+  justify-content: center;
+
+  border: none;
+  border-radius: var(--radius-500, 0);
+  color: var(--color-neutral-10, #000);
+
+  transition: background $animationTime ease-out,
+              box-shadow $animationTime ease-out,
+              border-color $animationTime ease-out,
+              color $animationTime ease-out;
+
+  &:disabled {
+    cursor: auto;
+
+    &:not([class*="tertiary"]) {
+      background: var(--color-neutral-40, #000);
+      color:  var(--color-neutral-60, #000);
+    }
+
+    &[class*="tertiary"] {
+      background: none;
+      border-width: 1px;
+      border-style: solid;
+    }
+
+    &:not([class*="ALT"]) {
+      border-color: var(--color-neutral-50, #000);
+      color: var(--color-neutral-50, #000);
+    }
+
+    border-color: var(--color-neutral-40, #000);
+    color: var(--color-neutral-40, #000);
+  }
+
+  @media (hover) {
+    &:focus {
+      box-shadow: 0 0 0 2px var(--color-neutral-10, #000), 0 0 0 4px var(--color-outline, #000);
+
+      &[class*="ALT"] {
+        box-shadow: 0 0 0 2px var(--color-outline, #000), 0 0 0 4px var(--color-neutral-10, #000);
+      }
+    }
+  }
+
+  &--is{
+    &-primary {
+      background: var(--color-brand-50);
+
+      &-ALT {
+        background: var(--color-brand-10, #000);
+        color: var(--color-brand-50, #000);
+      }
+
+      @include createHoverState {
+        &:not([class*="ALT"]) {
+          background: var(--color-brand-60, #000);
+        }
+          background: var(--color-brand-20, #000);
+      }
+    }
+
+    &-secondary {
+      background: var(--color-primary-40, #000);
+
+      &-ALT {
+        background: var(--color-primary-10, #000);
+        color: var(--color-primary-50, #000);
+      }
+
+      @include createHoverState {
+        &:not([class*="ALT"]) {
+          background: var(--color-primary-50, #000);
+        }
+          background: var(--color-primary-20, #000);
+      }
+    }
+
+    &-tertiary {
+      background: none;
+      border: 1px solid var(--color-primary-40, #000);
+      color: var(--color-primary-40, #000);
+
+      &-ALT {
+        border-color: var(--color-primary-10, #000);
+        color: var(--color-primary-10, #000);
+      }
+
+      @include createHoverState {
+        &:not([class*="ALT"]) {
+          border-color: var(--color-primary-60, #000);
+          color: var(--color-primary-50, #000);
+        }
+        border-color: var(--color-primary-30, #000);
+        color: var(--color-primary-30, #000);
+      }
+    }
+
+    // sizing
+    &-L,
+    &-M {
+      @include text-body-m--bold;
+    }
+
+    &-L {
+      padding: var(--spacing-40, 0) var(--spacing-50, 0);
+    }
+    
+    &-M {
+      padding: var(--spacing-30, 0) var(--spacing-50, 0);
+    }
+
+    &-S {
+      @include text-body-xs--bold;
+      padding: var(--spacing-20, 0) var(--spacing-50, 0);
+    }
+  }
+}

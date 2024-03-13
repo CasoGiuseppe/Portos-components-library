@@ -3,7 +3,7 @@ import BaseCard from '@ui/base/base-card/BaseCard.vue'
 import IconFeedbackInfo from '@ui/icons/feedback/IconFeedbackInfo.vue'
 
 const meta: Meta = {
-  title: 'Base/BaseCard',
+  title: 'Base/v1.0/Base Card',
   tags: ['autodocs'],
   component: BaseCard,
   argTypes: {
