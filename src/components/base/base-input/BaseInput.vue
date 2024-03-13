@@ -39,6 +39,9 @@
                     base-input__user-input
                     base-input--is-reset
                 "
+                @input="updateValue"
+                @change="changeValue"
+                @click="clickValue"
             ></component>
             <span>icon</span>
         </section>
@@ -127,5 +130,10 @@ defineProps({
 const slots = useSlots();
 const label = computed(() => !!slots['label']);
 const message = computed(() => !!slots['message']);
+
+const customEmits = defineEmits(['update:model', 'change', 'focus']);
+const updateValue = ({ target: { value } }: { target: { value: string } }) => customEmits('update:model', value);
+const changeValue = ({ target }: { target: HTMLInputElement }) => customEmits('change', { target });
+const clickValue = () => customEmits('focus')
 </script>
 <style src="./BaseInput.scss" lang="scss"></style>
