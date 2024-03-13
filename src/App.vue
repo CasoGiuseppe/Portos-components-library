@@ -1,7 +1,10 @@
 <template>
-    <BaseInput>
-        <template #label>Label</template>
-    </BaseInput>
+    <div style="width: 35%; padding: 15px; background: #ccc;">
+        <BaseInput>
+            <template #label>Label</template>
+            <template #message>Help Text</template>
+        </BaseInput>
+    </div>
 </template>
 <script setup lang="ts">
 import BaseInput from './components/base/base-input/BaseInput.vue';
