@@ -1,0 +1,197 @@
+@mixin textarea-input-styles {
+  outline: none;
+  border-radius: var(--radius-300);
+  border: 1px solid var(--color-neutral-50, #818a8f);
+  resize: none;
+  color: var(--color-neutral-70, #1d1e20);
+  font: var(--font-body-m-size);
+
+  &.error {
+    color: red;
+    border-color: var(--color-error-30, #ff602d);
+    &:focus:not(:active) {
+      outline: none;
+      box-shadow: none;
+    }
+    &:focus-visible:not(:active) {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+
+  &:active {
+    border-color: var(--color-primary-30, #7090b7);
+  }
+  &:focus:not(:active) {
+    outline: 1px solid var(--color-neutral-50, #818a8f);
+    box-shadow:
+      0 0 0 2px var(--color-neutral-10, #fff),
+      0 0 0 4px #bd20cb;
+  }
+  &:focus-visible:not(:active) {
+    outline: 1px solid var(--color-neutral-30, #818a8f);
+    box-shadow:
+      0 0 0 2px var(--color-neutral-10, #fff),
+      0 0 0 4px #bd20cb;
+  }
+
+  &.disabled {
+    color: var(--color-neutral-60, #1d1e20);
+  }
+}
+
+.base-textarea {
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &_header {
+    display: flex;
+    justify-content: space-between;
+
+    .question-mark {
+      margin-left: 4px;
+      cursor: pointer;
+    }
+
+    .label {
+      color: var(--color-neutral-70, #1d1e20);
+      font: var(--font-body-m);
+      font-weight: var(--font-weight-700);
+    }
+  }
+
+  &_wrapper {
+    position: relative;
+
+    .textarea {
+      width: 100%;
+      height: 88px;
+      padding: 8px 32px 8px 12px;
+      @include textarea-input-styles;
+    }
+    .clear-text {
+      position: absolute;
+      top: 25%;
+      right: 4px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 16px;
+      color: --var(color-neutral-50, #ccc);
+    }
+  }
+
+  &_footer {
+    display: flex;
+    justify-content: space-between;
+
+    .help-text {
+      margin-top: auto;
+      font: var(--font-body-xs);
+    }
+    .counter {
+      font: var(--font-body-xs);
+    }
+  }
+}
+
+.base-textarea.focused .textarea {
+  box-shadow: 0px 0px 0px 4px #bd20cb;
+}
+
+/* .base-textarea {
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  // containers
+  &_header {
+    display: flex;
+    justify-content: space-between;
+
+    .question-mark {
+      margin-left: 4px;
+      cursor: pointer;
+    }
+
+    .label {
+      color: var(--color-neutral-70, #1d1e20);
+      font: var(--font-body-m);
+      font-weight: var(--font-weight-700);
+    }
+  }
+
+  &_wrapper {
+    position: relative;
+
+    .textarea {
+      width: 100%;
+      height: 88px;
+      padding: 8px 32px 8px 12px;
+      border-radius: var(--radius-300);
+      border: 1px solid var(--color-neutral-50, #818a8f);
+      resize: none;
+      color: var(--color-neutral-70, #1d1e20);
+      font: var(--font-body-m-size);
+
+      &.error {
+        border: 1px solid var(--color-error-30, #ff602d);
+        &:focus-visible {
+          outline: none;
+          border: 1px solid var(--color-error-30, #ff602d);
+        }
+      }
+
+      &:active {
+        outline: none;
+        border: 1px solid var(--color-primary-30, #7090b7);
+      }
+      &:focus:not(:active) {
+        outline: 1px solid var(--color-neutral-50, #818a8f);
+        box-shadow:
+          0 0 0 2px var(--color-neutral-10, #fff),
+          0 0 0 4px #bd20cb;
+      }
+      &:focus-visible:not(:active) {
+        outline: 1px solid var(--color-neutral-30, #818a8f);
+        box-shadow:
+          0 0 0 2px var(--color-neutral-10, #fff),
+          0 0 0 4px #bd20cb;
+      }
+
+      &.disabled {
+        color: var(--color-neutral-60, #1d1e20);
+      }
+    }
+
+    .clear-text {
+      position: absolute;
+      top: 25%;
+      right: 8px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 16px;
+      color: --var(color-neutral-50, #ccc);
+    }
+  }
+
+  &_footer {
+    display: flex;
+    justify-content: space-between;
+
+    .help-text {
+      margin-top: auto;
+      font: var(--font-body-xs);
+    }
+    .counter {
+      font: var(--font-body-xs);
+    }
+  }
+}
+
+.base-textarea.focused .textarea {
+  box-shadow: 0px 0px 0px 4px #bd20cb;
+}
+ */
