@@ -1,22 +1,75 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
 import BaseIcon from '@/components/base/base-icon/BaseIcon.vue'
+import { Sizes, Types } from '../types'
 
-describe('YourComponent', () => {
+describe('BaseIcon', () => {
   it('renders the component with default props', async () => {
-    const wrapper = mount(BaseIcon)
+    const wrapper = mount(BaseIcon, {
+      // name & type are required
+      props: {
+        name: 'IconArrowCircleDown',
+        type: Types.ARROW
+      }
+    })
 
-    // Espera a que el componente asíncrono se resuelva
     await wrapper.vm.$nextTick()
 
-    // Verifica que la clase base-icon esté presente
+    await new Promise((resolve) => setTimeout(resolve, 100))
+
     expect(wrapper.find('.base-icon').exists()).toBe(true)
-
-    // Verifica que la clase base-icon--is-M esté presente (asumiendo que el tamaño por defecto es 'M')
     expect(wrapper.find('.base-icon--is-M').exists()).toBe(true)
+  })
+  it('renders the component with size L props', async () => {
+    const wrapper = mount(BaseIcon, {
+      // name & type are required
+      props: {
+        name: 'IconArrowCircleDown',
+        type: Types.ARROW,
+        size: Sizes.L
+      }
+    })
 
-    // Puedes agregar más aserciones según sea necesario para tus requisitos específicos
+    await wrapper.vm.$nextTick()
+
+    await new Promise((resolve) => setTimeout(resolve, 100))
+
+    expect(wrapper.find('.base-icon').exists()).toBe(true)
+    expect(wrapper.find('.base-icon--is-L').exists()).toBe(true)
+  })
+  it('renders the component with size S props', async () => {
+    const wrapper = mount(BaseIcon, {
+      // name & type are required
+      props: {
+        name: 'IconArrowCircleDown',
+        type: Types.ARROW,
+        size: Sizes.S
+      }
+    })
+
+    await wrapper.vm.$nextTick()
+
+    await new Promise((resolve) => setTimeout(resolve, 100))
+
+    expect(wrapper.find('.base-icon').exists()).toBe(true)
+    expect(wrapper.find('.base-icon--is-S').exists()).toBe(true)
   })
 
-  // Puedes agregar más pruebas para cubrir otros casos, como por ejemplo, cuando se cambian las props
+  it('renders the component with size S props', async () => {
+    const wrapper = mount(BaseIcon, {
+      // name & type are required
+      props: {
+        name: 'IconArrowCircleDown',
+        type: Types.ARROW,
+        size: Sizes.XS
+      }
+    })
+
+    await wrapper.vm.$nextTick()
+
+    await new Promise((resolve) => setTimeout(resolve, 100))
+
+    expect(wrapper.find('.base-icon').exists()).toBe(true)
+    expect(wrapper.find('.base-icon--is-XS').exists()).toBe(true)
+  })
 })
