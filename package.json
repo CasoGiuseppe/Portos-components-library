@@ -1,14 +1,39 @@
 {
-  "name": "portos-components-library",
-  "version": "0.0.0",
-  "private": true,
+  "name": "vue-components-noatum",
+  "version": "1.0.14",
   "type": "module",
+  "description": "Library Components Portos",
+  "main": "dist/vue-components-noatum.umd.js",
+  "module": "dist/vue-components-noatum.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vue-components-noatum.es.js",
+      "require": "./dist/vue-components-noatum.umd.js"
+    },
+    "./dist/style.css": "./dist/style.css"
+  },
+  "files": [
+    "src",
+    "dist",
+    "!src/stories",
+    "!src/App.vue",
+    "!src/main.ts"
+  ],
+  "keywords": [
+    "vue",
+    "components",
+    "ui",
+    "library",
+    "design system"
+  ],
+  "author": "Carlos Zorrilla",
+  "license": "ISC",
   "scripts": {
     "dev": "vite",
-    "build": "run-p type-check \"build-only {@}\" --",
+    "build": "tsc & run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "test:unit": "vitest",
-    "build-only": "vite build",
+    "build-only": "vite build --emptyOutDir",
     "type-check": "vue-tsc --build --force",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/",

@@ -1,23 +1,35 @@
-import { fileURLToPath, URL } from 'node:url'
-
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    vue(),
-  ],
+  plugins: [vue()],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
-      '@ui': fileURLToPath(new URL('./src/components', import.meta.url)),
+      '@': path.resolve(__dirname, 'src'),
+      '@ui': path.resolve(__dirname, 'src/components')
     }
   },
   css: {
     preprocessorOptions: {
       scss: {
         additionalData: '@import "@/assets/global.scss";'
+      }
+    }
+  },
+  build: {
+    lib: {
+      entry: path.resolve(__dirname, 'src/index.ts'),
+      name: 'VueComponentsNoatum',
+      fileName: (format) => `vue-components-noatum.${format}.js`,
+    },
+    rollupOptions: {
+      external: ['vue'],
+      output: {
+        globals: {
+          vue: 'Vue'
+        }
       }
     }
   }
