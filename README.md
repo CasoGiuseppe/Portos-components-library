@@ -12,19 +12,26 @@ npm i vue-components-noatum
 
 ## Import Global Styles from Your Library
 
-Add this in the main.js or main.ts of your project:<br>
+Add this in the main.ts of your project:
+```bash
 import 'vue-components-noatum/dist/style.css';
+```
 
 ## Declarate Modules
 
-Create a file vue-components-noatum.d.ts in your project and add the following line:<br><br>
-
+Create a file vue-components-noatum.d.ts in your project and add the following line:
+```bash
 declare module 'vue-components-noatum';
+```
 
 ## Import Components
 
+```bash
 import { BaseCard, IconFeedbackInfo, BaseTable } from 'vue-components-noatum'
+```
 
 ## Using Component
 
+```bash
 < BaseTable />
+```
