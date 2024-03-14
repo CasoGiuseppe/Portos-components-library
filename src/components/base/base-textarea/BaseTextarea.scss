@@ -28,14 +28,14 @@
     outline: 1px solid var(--color-neutral-50, #818a8f);
     box-shadow:
       0 0 0 2px var(--color-neutral-10, #fff),
-      0 0 0 4px #bd20cb;
+      0 0 0 4px var(--color-outline, #bd20cb);
   }
 
   &:focus-visible:not(:active) {
     outline: 1px solid var(--color-neutral-30, #818a8f);
     box-shadow:
       0 0 0 2px var(--color-neutral-10, #fff),
-      0 0 0 4px #bd20cb;
+      0 0 0 4px var(--color-outline, #bd20cb);
   }
 
   &.disabled {
