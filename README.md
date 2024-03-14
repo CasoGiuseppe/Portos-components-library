@@ -10,6 +10,17 @@ You can install this component library using npm:
 npm i vue-components-noatum
 ```
 
+## Import Global Styles from Your Library
+
+Add this in the main.js or main.ts of your project:<br>
+import 'vue-components-noatum/dist/style.css';
+
+## Declarate Modules
+
+Create a file vue-components-noatum.d.ts in your project and add the following line:<br><br>
+
+declare module 'vue-components-noatum';
+
 ## Import Components
 
 import { BaseCard, IconFeedbackInfo, BaseTable } from 'vue-components-noatum'
@@ -17,8 +28,3 @@ import { BaseCard, IconFeedbackInfo, BaseTable } from 'vue-components-noatum'
 ## Using Component
 
 < BaseTable />
-
-## Import Global Styles from Your Library
-
-Add this in the main.js or main.ts of your project:<br>
-import 'vue-components-noatum/dist/style.css';
