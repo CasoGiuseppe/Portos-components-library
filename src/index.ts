@@ -5,14 +5,15 @@ import BaseTable from './components/base/base-table/BaseTable.vue';
 import BaseIcon from './components/base/base-icon/BaseIcon.vue';
 import BaseSearch from './components/base/base-search/BaseSearch.vue';
 
+export * from './components/icons';
+
 // Importa las utilidades desde la carpeta src/shared
-import * as helpers from './shared/helpers';
+export * from './shared/helpers';
+// export * from './components/base/base-icon/type'
+export * from './components/base/base-table/interfaces'
 
 // Exporta los componentes individualmente
 export { BaseCard, BaseTable, BaseIcon, BaseSearch };
-
-// Exporta las utilidades
-export { helpers };
 
 // Proporciona una función de instalación para la instalación global
 export function install(app: App): void {
