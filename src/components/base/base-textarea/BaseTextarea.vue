@@ -51,15 +51,7 @@
 import { defineEmits, ref, watchEffect, type PropType } from 'vue'
 import BaseIcon from '@ui/base/base-icon/BaseIcon.vue'
 import { Types, Sizes } from '@ui/base/base-icon/types'
-
-interface TextareaProps {
-  id: string
-  label?: string
-  placeholder?: string
-  helpText?: string
-  disabled?: boolean
-  maxLength?: any
-}
+import type { TextareaProps } from '@ui/base/base-textarea/models/baseTextarea'
 
 const { id, label, placeholder, helpText, disabled, maxLength }: TextareaProps = defineProps({
   /**
