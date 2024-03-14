@@ -12,7 +12,7 @@ npm i vue-components-noatum
 
 ## Import Components
 
-import { BaseTable } from 'vue-components-noatum';
+import { BaseCard, IconFeedbackInfo, BaseTable } from 'vue-components-noatum'
 
 ## Using Component
 
@@ -21,4 +21,4 @@ import { BaseTable } from 'vue-components-noatum';
 ## Import Global Styles from Your Library
 
 Add this in the main.js or main.ts of your project:<br>
-import 'vue-components-noatum/lib/assets/main.css';
+import 'vue-components-noatum/dist/style.css';
