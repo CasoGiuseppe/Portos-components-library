@@ -1,52 +1,37 @@
-# Portos-components-library
+# Component Library
 
-This template should help get you started developing with Vue 3 in Vite.
+Welcome to the Noatum component library by [vue-components-noatum]. This library provides a collection of reusable components for Vue.js.
 
-## Recommended IDE Setup
+## Installation
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+You can install this component library using npm:
 
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
-
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
+```bash
+npm i vue-components-noatum
 ```
 
-### Compile and Hot-Reload for Development
+## Import Global Styles from Your Library
 
-```sh
-npm run dev
+Add this in the main.ts of your project:
+```bash
+import 'vue-components-noatum/dist/style.css';
 ```
 
-### Type-Check, Compile and Minify for Production
+## Declarate Modules
 
-```sh
-npm run build
+Create a file vue-components-noatum.d.ts in your project and add the following line:
+```bash
+declare module 'vue-components-noatum';
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+## Import Components
 
-```sh
-npm run test:unit
+```bash
+import { BaseCard, IconFeedbackInfo, BaseTable } from 'vue-components-noatum'
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+## Using Component
 
-```sh
-npm run lint
+```bash
+< BaseTable />
 ```

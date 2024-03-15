@@ -1,0 +1,19 @@
+# Archivos/directorios a ignorar al publicar en npm
+
+# Archivos de configuración
+.eslintrc
+.babelrc
+
+# Directorios de salida de compilación y desarrollo
+/.storybook
+/public
+/build
+
+# Archivos de control de versiones y configuración de npm
+.git/
+.gitignore
+.npmignore
+
+# Archivos de log
+*.log
+*.log.*
