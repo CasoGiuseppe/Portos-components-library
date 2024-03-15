@@ -1,35 +1,23 @@
+<template>
+    <div style="width: 35%; padding: 15px; background: #ccc;">
+        <BaseInput
+            model="init value"
+            @update:model="update"
+            @change="change"
+            @focus="focus"
+        >
+            <template #label>Label</template>
+            <template #message>Help Text</template>
+        </BaseInput>
+    </div>
+</template>
 <script setup lang="ts">
+import BaseInput from './components/base/base-input/BaseInput.vue';
 // import HelloWorld from './components/HelloWorld.vue'
 // import TheWelcome from './components/TheWelcome.vue'
 // import ViewSearch from './components/base/base-search/ViewSearch.vue'
+
+const update = (value: string) => console.log('update', value)
+const change = (value: string) => console.log('change', value)
+const focus = () => console.log('focus')
 </script>
-
-
-<style scoped lang="scss">
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>

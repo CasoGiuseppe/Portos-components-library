@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3";
 import BaseTable from '@ui/base/base-table/BaseTable.vue';
 
 const meta = {
-    title: 'Base/BaseTable',
+    title: 'Base/v1.0/Base Table',
     component: BaseTable,
     tags: ['autodocs'],
     args: {

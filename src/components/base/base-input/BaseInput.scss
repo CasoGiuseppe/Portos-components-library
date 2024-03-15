@@ -1,0 +1,127 @@
+.base-input {
+    $baseinput: &;
+    $animationTime: .4s;
+
+    &__fieldset {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-30, 0);
+
+        &:focus {
+            background: yellow;
+        }
+    }
+
+    &__header {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        gap: var(--spacing-20, 0);
+    }
+
+    &__label {
+        @include text-body-m--bold;
+
+        display: flex;
+        gap: var(--spacing-20, 0);
+
+        color: var(--color-neutral-70, #000);
+
+        [disabled] & {
+            color: var(--color-neutral-60, #000)
+        }
+
+        &:after {
+            @include text-body-m--regular;
+            content: attr(data-required);
+            color: var(--color-neutral-60, #000);
+
+            [disabled] & {
+                color: var(--color-neutral-50, #000)
+            }
+        }
+    }
+
+    &__box {
+        align-items: center;
+        display: flex;
+        gap: var(--spacing-30, 0);
+        justify-content: space-between;
+        padding: var(--spacing-30, 0) var(--spacing-40, 0);
+
+        background: var(--color-neutral-10, #000);
+        border-width: 1px;
+        border-style: solid;
+        border-color: var(--color-neutral-50, #000);
+        border-radius: var(--radius-300, 0);
+
+        transition: border $animationTime ease-out,
+                    box-shadow $animationTime ease-out;
+
+        @media (hover) {
+            &:hover {
+                border-color: var(--color-primary-40, #000);
+            }
+
+            &:focus-within {
+                box-shadow: 0 0 0 2px var(--color-neutral-10, #000), 0 0 0 4px var(--color-outline, #000);
+            }
+        }
+
+        #{$baseinput}--is-failed & {
+            border-color: var(--color-error-30, #000);
+        }
+
+        [disabled] & {
+            background: var(--color-neutral-20, #000)
+        }
+    }
+
+    &__user {
+        &-input{
+            @include text-body-m--regular;
+
+            &:is(input) {
+                flex: 1;
+
+                &::placeholder {
+                    color: var(--color-neutral-50, #000);
+                }
+
+                #{$baseinput}__fieldset & {
+                    &:disabled {
+                        background: none
+                    }
+                }
+            }
+        }
+        
+        &-message {
+            @include text-body-xs--regular;
+
+            align-items: center;
+            display: flex;
+            gap: var(--spacing-20, 0);
+
+            color: var(--color-neutral-70, #000);
+            transition: color $animationTime ease-out;
+
+            #{$baseinput}--is-failed & {
+                color: var(--color-error-40, #000);
+            }
+        }
+    }
+
+    &--is{
+        &-reset {
+            padding: 0;
+            margin: 0;
+            border: 0;
+            background: none;
+
+            &:focus-visible {
+                outline: none;
+            }
+        }
+    }
+}

@@ -1,0 +1,21 @@
+.base-icon {
+    aspect-ratio: 1/1;
+
+    &--is {
+        &-L {
+            width: var(--spacing-80, 0);
+        }
+
+        &-M {
+            width: var(--spacing-60, 0);
+        }
+
+        &-S {
+            width: calc(var(--spacing-50) + 4px);
+        }
+
+        &-XS {
+            width: var(--spacing-50, 0);
+        }
+    }
+}

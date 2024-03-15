@@ -1,6 +1,13 @@
 import * as custom from '@ui/icons';
 
-export enum IconType {
+export enum Sizes {
+    M = 'M',
+    L = 'L',
+    S = 'S',
+    XS = 'XS',
+}
+
+export enum Types {
     ARROW = 'arrow',
     CALENDAR =  'calendar',
     CHEVRON = 'chevron',
@@ -15,4 +22,4 @@ export enum IconType {
     USER = 'user',
 }
 
-export type IconName = keyof typeof custom
+export type Names = keyof typeof custom

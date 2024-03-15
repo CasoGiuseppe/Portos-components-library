@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
-import  IconAsync from '@ui/base/base-icon/BaseIcon.vue';
+import  BaseIcon from '@ui/base/base-icon/BaseIcon.vue';
 import configuration from './configuration';
 import { copyToClipboard } from "../shared/helpers/";
 
 const meta = {
     title: 'Foundations/Icons',
-    argTypes: {
+    tags: ['autodocs'],
+    args: {
       copyToClipboard: () => {},
     },
 } satisfies Meta;
@@ -15,7 +16,7 @@ type Story = StoryObj<typeof meta>;
 
 const Template: Story = {
   render: () => ({
-    components: { IconAsync },
+    components: { BaseIcon },
     template: `
     ${( () => configuration.map((section: Record<string, any>) => `
       <section class="foundation">
@@ -38,7 +39,10 @@ const Template: Story = {
                     foundation--has-no-padding"
                     style="background: var(--color-neutral-20, #000)"
                   >
-                    <IconAsync name="${icon.token}" type="${section.parent}" />
+                    <BaseIcon
+                      name="${icon.token}"
+                      type="${section.parent}"
+                    />
                   </span>
                   <button
                     class="foundation__action"
