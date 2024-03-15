@@ -8,16 +8,6 @@
 
   &.error {
     border-color: var(--color-error-30, #ff602d);
-
-    &:focus:not(:active) {
-      outline: none;
-      box-shadow: none;
-    }
-
-    &:focus-visible:not(:active) {
-      outline: none;
-      box-shadow: none;
-    }
   }
 
   &:active {
@@ -66,8 +56,7 @@
 
     &-label {
       color: var(--color-neutral-70, #1d1e20);
-      font: var(--font-body-m);
-      font-weight: var(--font-weight-700);
+      @include text-body-m--bold;
     }
   }
 
@@ -95,7 +84,7 @@
       right: 4px;
       transform: translateY(-50%);
       cursor: pointer;
-      font-size: 16px;
+      font-size: var(--font-body-m-size, 1rem);
       color: var(--color-neutral-50, #ccc);
 
       svg path {
