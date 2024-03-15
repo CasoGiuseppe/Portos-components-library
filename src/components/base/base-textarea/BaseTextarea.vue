@@ -51,9 +51,9 @@
 import { defineEmits, ref, watchEffect, type PropType } from 'vue'
 import BaseIcon from '@ui/base/base-icon/BaseIcon.vue'
 import { Types, Sizes } from '@ui/base/base-icon/types'
-import type { TextareaProps } from '@ui/base/base-textarea/models/baseTextarea'
+import type { ITextareaComponent } from '@ui/base/base-textarea/types'
 
-const { id, label, placeholder, helpText, disabled, maxLength }: TextareaProps = defineProps({
+const { id, label, placeholder, helpText, disabled, maxLength }: ITextareaComponent = defineProps({
   /**
    * Set the unique id of the ui button
    */

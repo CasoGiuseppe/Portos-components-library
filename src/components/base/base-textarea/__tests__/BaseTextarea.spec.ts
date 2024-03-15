@@ -3,14 +3,16 @@ import { mount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
 
 import BaseTextarea from '@/components/base/base-textarea/BaseTextarea.vue'
-import type { TextareaProps } from '@/components/base/base-textarea/models/baseTextarea'
+import type { ITextareaComponent } from '@/components/base/base-textarea/types'
 
 describe('BaseTextarea', () => {
   it('updates character count when input changes', async () => {
     const wrapper = mount(BaseTextarea)
     const textarea = wrapper.find('textarea')
     await textarea.setValue('Hello')
-    const vm = wrapper.vm as ComponentPublicInstance<TextareaProps & { characterCount: number }>
+    const vm = wrapper.vm as ComponentPublicInstance<
+      ITextareaComponent & { characterCount: number }
+    >
     expect(vm.characterCount).toBe(5)
   })
 
@@ -46,7 +48,7 @@ describe('BaseTextarea', () => {
 
       await wrapper.vm.$nextTick()
       const vm = wrapper.vm as ComponentPublicInstance<
-        TextareaProps & { characterCount: number; text: string }
+        ITextareaComponent & { characterCount: number; text: string }
       >
 
       expect(vm.text).toBe('')

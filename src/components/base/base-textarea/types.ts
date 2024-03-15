@@ -1,4 +1,4 @@
-export interface TextareaProps {
+export interface ITextareaComponent {
   id: string
   label?: string
   placeholder?: string

@@ -44,6 +44,8 @@
 }
 
 .base-textarea {
+  $animationTime: 0.4s;
+
   width: 220px;
   display: flex;
   flex-direction: column;
@@ -77,6 +79,10 @@
       height: 88px;
       padding: 8px 32px 8px 12px;
       @include textarea-input-styles;
+
+      transition:
+        border $animationTime ease-out,
+        box-shadow $animationTime ease-out;
 
       &::placeholder {
         color: var(--color-neutral-50, #818a8f);
