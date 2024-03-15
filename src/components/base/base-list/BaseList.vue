@@ -12,8 +12,13 @@
       <div v-if="item.icon">
         <BaseIcon :name="item.icon.name" :type="item.icon.type"></BaseIcon>
       </div>
-      <div class="base-list--item-label_wrapper">
-        <slot :property="{ item }" name="label"> {{ item.label }} </slot>
+      <div class="base-list--item-label">
+        <div class="base-list--item-label_item">
+          <slot :property="item.label" name="label"></slot>
+        </div>
+        <div class="base-list--item-label_subitem">
+          <slot :property="item.secondLabel" name="secondLabel"></slot>
+        </div>
       </div>
     </li>
   </ul>
@@ -22,10 +27,6 @@
 <script setup lang="ts">
 import BaseIcon from '@ui/base/base-icon/BaseIcon.vue'
 import type { IListComponent } from '@ui/base/base-list/models/BaseList'
-
-/* const props = defineProps<{
-  items: IListComponent[]
-}>() */
 
 const { items } = withDefaults(
   defineProps<{

@@ -1,5 +1,12 @@
 <template>
-  <BaseList :items="items"></BaseList>
+  <BaseList :items="items">
+    <template #label="{ property }">
+      {{ property }}
+    </template>
+    <template #secondLabel="{ property }">
+      {{ property }}
+    </template>
+  </BaseList>
 </template>
 
 <script setup lang="ts">
@@ -15,10 +22,10 @@ const items: IListComponent[] = [
     icon: { type: Types.ARROW, name: 'IconArrowCircleUp', position: 'left' },
     selected: true
   },
-  { id: 2, label: 'label', secondLabel: 'second label here', selected: false },
-  { id: 3, label: 'label', secondLabel: 'second label here', selected: false },
-  { id: 4, label: 'label', secondLabel: 'second label here', selected: false },
-  { id: 5, label: 'label', secondLabel: '', selected: false }
+  { id: 2, label: 'Label', secondLabel: 'Second label here', selected: false },
+  { id: 3, label: 'Label', secondLabel: 'Second label here', selected: false },
+  { id: 4, label: 'Label', secondLabel: 'Second label here', selected: false },
+  { id: 5, label: 'Label', secondLabel: '', selected: false }
 ]
 </script>
 

@@ -1,4 +1,6 @@
 .base-list {
+  $animationTime: 0.4s;
+
   &--item {
     width: 288px;
     height: 64px;
@@ -16,6 +18,17 @@
     }
     &-right {
       flex-direction: row-reverse;
+    }
+
+    &-label {
+      &_item {
+        @include text-body-m--bold;
+        color: var(--color-neutral-70, #1d1e20);
+      }
+      &_subitem {
+        @include text-body-m--regular;
+        color: var(--color-neutral-50, #818a8f);
+      }
     }
   }
 }
