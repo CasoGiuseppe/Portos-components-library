@@ -24,8 +24,8 @@ const items: IListComponent[] = [
   },
   { id: 2, label: 'Label', secondLabel: 'Second label here', selected: false },
   { id: 3, label: 'Label', secondLabel: 'Second label here', selected: false },
-  { id: 4, label: 'Label', secondLabel: 'Second label here', selected: false },
-  { id: 5, label: 'Label', secondLabel: '', selected: false }
+  { id: 4, label: 'Label', secondLabel: 'Second label here', selected: false, disabled: true },
+  { id: 5, label: 'Label', secondLabel: 'Second Label disabled', selected: true, disabled: true }
 ]
 </script>
 

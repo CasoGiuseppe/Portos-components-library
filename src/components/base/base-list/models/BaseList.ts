@@ -10,4 +10,5 @@ export interface IListComponent {
   secondLabel?: string
   icon?: IListIcon
   selected?: boolean
+  disabled?: boolean
 }

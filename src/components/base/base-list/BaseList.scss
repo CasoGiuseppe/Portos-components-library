@@ -8,9 +8,48 @@
     gap: 8px;
     background-color: var(--color-neutral-10, #fff);
     display: flex;
+    position: relative;
 
     &-selected {
       background-color: var(--primary-color-10, #ecf0f6);
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0px;
+        width: 2px;
+        height: 100%;
+        background-color: var(--primary-color-40, #21578a);
+      }
+    }
+
+    &-disabled {
+      cursor: not-allowed;
+      * {
+        color: var(--color-neutral-50, #818a8f) !important;
+      }
+
+      &::before {
+        display: none;
+      }
+    }
+    &:hover {
+      &-disabled {
+        * {
+          color: var(--color-neutral-50, #1d1e20);
+        }
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0px;
+        width: 2px;
+        height: 100%;
+        background-color: var(--primary-color-40, #21578a);
+      }
     }
 
     &-left {
@@ -24,7 +63,11 @@
       &_item {
         @include text-body-m--bold;
         color: var(--color-neutral-70, #1d1e20);
+        .disabled {
+          color: var(--color-neutral-60, #1d1e20) !important;
+        }
       }
+
       &_subitem {
         @include text-body-m--regular;
         color: var(--color-neutral-50, #818a8f);
