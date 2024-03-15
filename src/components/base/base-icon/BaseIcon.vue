@@ -11,7 +11,7 @@
     import { type Component, defineAsyncComponent } from 'vue';
     import { Types, Sizes, type Names } from './types';
 
-    interface IIconComponent {
+    export interface IIconComponent {
         name: Names,
         type: Types,
         size?: Sizes

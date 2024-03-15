@@ -1,0 +1,21 @@
+.base-list {
+  &--item {
+    width: 288px;
+    height: 64px;
+    padding: 8px 12px 8px 12px;
+    gap: 8px;
+    background-color: var(--color-neutral-10, #fff);
+    display: flex;
+
+    &-selected {
+      background-color: var(--primary-color-10, #ecf0f6);
+    }
+
+    &-left {
+      flex-direction: row;
+    }
+    &-right {
+      flex-direction: row-reverse;
+    }
+  }
+}
