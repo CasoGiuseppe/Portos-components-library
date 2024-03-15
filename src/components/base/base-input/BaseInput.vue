@@ -140,7 +140,7 @@ const slots = useSlots();
 const label = computed(() => !!slots['label']);
 const message = computed(() => !!slots['message']);
 const error = computed(() => !!slots['error']);
-// const settedValue = computed(() => modelValue)
+
 const customEmits = defineEmits(['update:modelValue', 'change', 'focus', 'invalid']);
 const updateValue = (payload: Event) => {
     const { value } = (payload.target as HTMLInputElement)
