@@ -32,6 +32,7 @@
                 :accept="accept ?? undefined"
                 :title="title"
                 :pattern="pattern"
+                :maxlength="maxLength"
                 v-model.lazy="proxyValue" 
                 autocomplete="one-time-code"
                 aria-describedby="ui-message"
@@ -132,6 +133,13 @@ const { pattern, modelValue } = defineProps({
      title: {
         type: String as PropType<string>,
         default: 'Write your value'
+    },
+
+    /**
+     * Set max input length value
+     */
+    maxLength: {
+        type: Number as PropType<number>
     }
     
 })

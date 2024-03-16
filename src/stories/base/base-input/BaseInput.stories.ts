@@ -16,6 +16,7 @@ const meta = {
         disabled: { control: 'radio', options: [true, false] },
         pattern: { control: 'text' },
         accept: { control: 'text' },
+        maxLength: { control: 'number' },
         title: { control: 'text' },
         label: { control: 'text' },
         message: { control: 'text' },
@@ -27,8 +28,9 @@ const meta = {
         placeholder: 'Add here your text',
         required: false,
         disabled: false,
-        pattern: '[A-Za-z0-9_]{5,}',
+        pattern: '^[a-zA-Z0-9]+$',
         accept: 'image/*',
+        maxLength: 5,
         title: 'defaultTitle',
         label: 'input title',
         message: 'Allowed: letters, numbers at least 5 characters'
