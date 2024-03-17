@@ -10,6 +10,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "@ui/*": ["./src/components/*"],
+      "@tests/*": ["./src/app/shared/tests/*"],
     }
   }
 }

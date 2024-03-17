@@ -12,6 +12,7 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
       '@ui': fileURLToPath(new URL('./src/components', import.meta.url)),
+      '@tests': fileURLToPath(new URL('./src/shared/tests', import.meta.url)),
     }
   },
   css: {
