@@ -33,7 +33,7 @@
                 :title="title"
                 :pattern="pattern"
                 :maxlength="maxLength"
-                v-model.lazy="proxyValue" 
+                v-model.lazy="value" 
                 autocomplete="one-time-code"
                 aria-describedby="ui-message"
                 class="
@@ -63,12 +63,12 @@
     </fieldset>
 </template>
 <script setup lang="ts">
-import { computed, onMounted, useSlots, type PropType } from 'vue';
+import { computed, useSlots, type PropType } from 'vue';
 import {  Types } from './types';
 import useValidations from '@/components/validation/useValidation';
 
-const proxyValue = defineModel()
-const { pattern, modelValue } = defineProps({
+const value = defineModel('proxyValue')
+const { pattern, required } = defineProps({
     /**
      * Set the unique id of the ui input
      */
@@ -77,7 +77,10 @@ const { pattern, modelValue } = defineProps({
         default: 'fieldID'
     },
 
-    modelValue: {
+    /**
+     * v-model value
+     */
+    proxyValue: {
         type: String as PropType<string>
     },
 
@@ -153,18 +156,23 @@ const customEmits = defineEmits(['update:modelValue', 'change', 'focus', 'invali
 const updateValue = (payload: Event) => {
     const { value } = (payload.target as HTMLInputElement)
     customEmits('update:modelValue', value)
-    invalidModel(value)
+
+    const valueIsEmpty = value === '';
+    valueIsEmpty ? requiredModel() : invalidModel(value)
 };
+
+const requiredModel = () => {
+    if(required) customEmits('invalid', { mode: 'required', value: true });
+}
 
 const invalidModel = (value: string): void => {
     if(!pattern) return;
     const re = new RegExp(pattern)
-    customEmits('invalid', value === '' ? false : !re.test(value))
+    customEmits('invalid', {mode: 'validation', value: !re.test(value) })
 }
+
 
 const changeValue = (payload: Event) => customEmits('change', { target: payload.target });
 const focus = () => customEmits('focus')
-
-onMounted(() => modelValue ? invalidModel(modelValue) : null)
 </script>
 <style src="./BaseInput.scss" lang="scss"></style>

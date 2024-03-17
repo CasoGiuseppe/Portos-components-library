@@ -3,13 +3,18 @@ import BaseInput from "@ui/base/base-input/BaseInput.vue";
 import { Types } from '@ui/base/base-input/types';
 import { action } from '@storybook/addon-actions'
 
+const ERRORS = {
+    required: 'input value is required',
+    validation: 'input validation failed'
+};
+
 const meta = {
     title: 'Base/Base Input',
     component: BaseInput,
     tags: ['autodocs'],
     argTypes: {
         id: { control: 'text' },
-        modelValue: { control: 'text' },
+        proxyValue: { control: 'text' },
         input: { control: 'select', options: Object.values(Types) },
         placeholder: { control: 'text' },
         required: { control: 'radio', options: [true, false] },
@@ -28,7 +33,7 @@ const meta = {
         placeholder: 'Add here your text',
         required: false,
         disabled: false,
-        pattern: '^[a-zA-Z0-9]+$',
+        pattern: '^[a-zA-Z0-9 ]+$',
         accept: 'image/*',
         maxLength: 5,
         title: 'defaultTitle',
@@ -61,8 +66,10 @@ const Templates: Story = {
             </section>
         `,
         methods: {
-            setInvalid(value: string) {
-                updateArgs({ ...args, error: value ? 'input validation failed' : null })
+            setInvalid({mode, value}: {mode: string, value: string}) {
+                updateArgs({ ...args, error: value
+                    ? ERRORS[mode as keyof typeof ERRORS]
+                    : null })
             },
             update: action('update'),
             change: action('change'),
