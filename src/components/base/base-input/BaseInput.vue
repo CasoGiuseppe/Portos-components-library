@@ -22,6 +22,7 @@
         <section class="base-input__box">
             <input
                 ref="field"
+                data-testID="ui-input"
                 :id="id"
                 :name="id"
                 :aria-required="required"
@@ -48,11 +49,14 @@
         </section>
         <p
             v-if="message || error"
-            id="ui-message"
+            data-testID="ui-input-message"
             class="base-input__user-message"
         >
             <!-- @slot Slot for user alert -->
-            <span class="base-input__user-message-alert"
+            <span
+                v-if="error"
+                data-testID="ui-input-error"
+                class="base-input__user-message-alert"
 >
                 <slot name="error" />
             </span>
