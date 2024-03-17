@@ -29,7 +29,8 @@
     "types": ["node"],
     "paths": {
       "@/*": ["./src/*"],
-      "@ui/*": ["./src/components/*"]
+      "@ui/*": ["./src/components/*"],
+      "@tests/*": ["./src/shared/tests/*"]
     }
   }
 }
