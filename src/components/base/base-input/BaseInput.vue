@@ -2,7 +2,8 @@
     <fieldset :class="
         [
             'base-input__fieldset',
-            'base-input--is-reset'
+            'base-input--is-reset',
+            `base-input--is-${input}`
         ]"
         :disabled="disabled"
     >
@@ -27,7 +28,7 @@
                 :name="id"
                 :aria-required="required"
                 :aria-placeholder="placeholder"
-                type="text"
+                :type="input"
                 :placeholder="placeholder"
                 :required="required ?? undefined"
                 :accept="accept ?? undefined"
@@ -45,7 +46,15 @@
                 @change="changeValue"
                 @click="focus"
             />
-            <!-- <span>icon</span> -->
+            <button
+                v-if="submit"
+                data-testID="ui-input-submit"
+                class="base-input__submit"
+                :disabled="hasEmptyModel"
+                @click="submitAction"
+            >
+                <slot name="submit" />
+            </button>
         </section>
         <p
             v-if="message || error"
@@ -67,12 +76,12 @@
     </fieldset>
 </template>
 <script setup lang="ts">
-import { computed, useSlots, type PropType } from 'vue';
+import { computed, ref, useSlots, type PropType } from 'vue';
 import {  Types } from './types';
 import useValidations from '@/components/validation/useValidation';
 
 const value = defineModel('proxyValue')
-const { pattern, required } = defineProps({
+const { pattern, required, proxyValue } = defineProps({
     /**
      * Set the unique id of the ui input
      */
@@ -155,8 +164,11 @@ const slots = useSlots();
 const label = computed(() => !!slots['label']);
 const message = computed(() => !!slots['message']);
 const error = computed(() => !!slots['error']);
+const submit = computed(() => !!slots['submit']);
 
-const customEmits = defineEmits(['update:modelValue', 'change', 'focus', 'invalid']);
+const customEmits = defineEmits(['update:modelValue', 'change', 'focus', 'invalid', 'submit']);
+const hasEmptyModel = computed(():boolean => (value.value as string).length === 0);
+
 const updateValue = (payload: Event) => {
     const { value } = (payload.target as HTMLInputElement)
     customEmits('update:modelValue', value)
@@ -175,8 +187,9 @@ const invalidModel = (value: string): void => {
     customEmits('invalid', {mode: 'validation', value: !re.test(value) })
 }
 
-
 const changeValue = (payload: Event) => customEmits('change', { target: payload.target });
 const focus = () => customEmits('focus')
+
+const submitAction = () => customEmits('submit')
 </script>
 <style src="./BaseInput.scss" lang="scss"></style>

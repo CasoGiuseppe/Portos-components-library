@@ -3,6 +3,7 @@ import BaseInput from "@ui/base/base-input/BaseInput.vue";
 import BaseIcon from "@/components/base/base-icon/BaseIcon.vue";
 import { Types } from '@ui/base/base-input/types';
 import { action } from '@storybook/addon-actions'
+import { defineAsyncComponent } from "vue";
 
 const ERRORS = {
     required: 'input value is required',
@@ -10,7 +11,7 @@ const ERRORS = {
 };
 
 const meta = {
-    title: 'Base/Base Input/Default',
+    title: 'Base/Base Input/Password',
     component: BaseInput,
     tags: ['autodocs'],
     argTypes: {
@@ -30,16 +31,14 @@ const meta = {
     },
     args: {
         id: 'fieldID',
-        input: Types.TEXT,
-        placeholder: 'Add here your text',
+        input: Types.PASSWORD,
+        proxyValue: 'test',
+        placeholder: 'Add here your pasword',
         required: false,
         disabled: false,
-        pattern: '^[a-zA-Z0-9 ]+$',
-        accept: 'image/*',
-        maxLength: 5,
         title: 'defaultTitle',
         label: 'input title',
-        message: 'Allowed: letters, numbers at least 5 characters'
+        message: 'Help password'
     }
 } satisfies Meta<typeof BaseInput>;
 
@@ -64,6 +63,10 @@ const Templates: Story = {
                     <template #error>{{ args.error }}</template>
                     <template #label>{{ args.label }}</template>
                     <template #message>{{ args.message }}</template>
+                    <template #submit>
+                        <template v-if="args.input === 'text'"><BaseIcon name="IconEditHide" type="edit"></BaseIcon></template>
+                        <template v-else><BaseIcon name="IconEditShow" type="edit"></BaseIcon></template>
+                    </template>
                 </BaseInput>
             </section>
         `,
@@ -73,9 +76,14 @@ const Templates: Story = {
                     ? ERRORS[mode as keyof typeof ERRORS]
                     : null })
             },
-            update: action('update'),
             change: action('change'),
             focus: action('focus'),
+            update(value: string) {
+                updateArgs({ ...args, proxyValue: value })
+            },
+            changeInputState() {
+                updateArgs({ ...args, input: args.input === 'password' ? Types.TEXT : Types.PASSWORD })
+            }
         }
     }),
 }

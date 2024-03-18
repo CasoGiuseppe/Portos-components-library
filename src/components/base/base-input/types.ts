@@ -4,4 +4,5 @@ export enum Types {
   PASSWORD = 'password',
   SUBMIT = 'submit',
   TEXT = 'text',
+  SEARCH = 'search'
 }
