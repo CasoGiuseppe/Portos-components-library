@@ -2,10 +2,8 @@
     <fieldset :class="
         [
             'base-input__fieldset',
-            'base-input--is-reset',
-            `${failed ? 'base-input--is-failed' : ''}`
+            'base-input--is-reset'
         ]"
-
         :disabled="disabled"
     >
         <header class="base-input__header">
@@ -19,20 +17,24 @@
                 <slot name="label" />
             </label>
 
-            <span>icono</span>
+            <!-- <span>icono</span> -->
         </header>
         <section class="base-input__box">
-            <component
+            <input
+                ref="field"
+                data-testID="ui-input"
                 :id="id"
                 :name="id"
-                :is="type"
                 :aria-required="required"
                 :aria-placeholder="placeholder"
-                :aria-invalid="failed"
-                :type="input"
+                type="text"
                 :placeholder="placeholder"
-                :required="required"
-                :value="model"
+                :required="required ?? undefined"
+                :accept="accept ?? undefined"
+                :title="title"
+                :pattern="pattern"
+                :maxlength="maxLength"
+                v-model.lazy="value" 
                 autocomplete="one-time-code"
                 aria-describedby="ui-message"
                 class="
@@ -41,26 +43,36 @@
                 "
                 @input="updateValue"
                 @change="changeValue"
-                @click="clickValue"
-            ></component>
-            <span>icon</span>
+                @click="focus"
+            />
+            <!-- <span>icon</span> -->
         </section>
         <p
-            v-if="message"
-            id="ui-message"
+            v-if="message || error"
+            data-testID="ui-input-message"
             class="base-input__user-message"
         >
-            <!-- @slot Slot for user message -->
+            <!-- @slot Slot for user alert -->
+            <span
+                v-if="error"
+                data-testID="ui-input-error"
+                class="base-input__user-message-alert"
+>
+                <slot name="error" />
+            </span>
+
+            <!-- @slot Slot for user message info -->
             <slot name="message" />
         </p>
     </fieldset>
 </template>
 <script setup lang="ts">
 import { computed, useSlots, type PropType } from 'vue';
-import { Fields, Types } from './types';
+import {  Types } from './types';
 import useValidations from '@/components/validation/useValidation';
 
-defineProps({
+const value = defineModel('proxyValue')
+const { pattern, required } = defineProps({
     /**
      * Set the unique id of the ui input
      */
@@ -70,23 +82,14 @@ defineProps({
     },
 
     /**
-     * Set the input value
+     * v-model value
      */
-    model: {
+    proxyValue: {
         type: String as PropType<string>
     },
 
     /**
-     * Set type of user field [input, textarea]
-     */
-    type: {
-        type: String as PropType<Fields>,
-        default: Fields.INPUT,
-        validator: (prop: Fields) => useValidations().validateValueCollectionExists({ collection: Fields, value: prop}),
-    },
-
-    /**
-     * Set the type of input field [emai, file, password, submit, text, button]
+     * Set the type of input field [email, file, password, submit, text, button]
      */
     input: {
         type: String as PropType<Types>,
@@ -98,15 +101,14 @@ defineProps({
      * Set the start placeholder value
      */
     placeholder: {
-        type: String as PropType<string>,
-        default: 'Add here your text'
+        type: String as PropType<string>
     },
 
     /**
      * Set the required property
      */
     required: {
-        type: Boolean as PropType<Boolean>,
+        type: Boolean,
         default: false,
     },
 
@@ -119,21 +121,62 @@ defineProps({
     },
 
     /**
-     * Set failed state
+     * Set allowed input pattern [example: [A-Za-z0-9_]{5,}]
      */
-     failed: {
-        type: Boolean as PropType<Boolean>,
-        default: false,
+    pattern: {
+        type: String as PropType<string>
+    },
+
+    /**
+     * Set accepted file [example: image/jpeg,image/gif,image/png,application/pdf]
+     */
+    accept: {
+        type: String as PropType<string>
+    },
+
+    /**
+     * Set title value for input field
+     */
+     title: {
+        type: String as PropType<string>,
+        default: 'Write your value'
+    },
+
+    /**
+     * Set max input length value
+     */
+    maxLength: {
+        type: Number as PropType<number>
     }
+    
 })
 
 const slots = useSlots();
 const label = computed(() => !!slots['label']);
 const message = computed(() => !!slots['message']);
+const error = computed(() => !!slots['error']);
 
-const customEmits = defineEmits(['update:model', 'change', 'focus']);
-const updateValue = ({ target: { value } }: { target: { value: string } }) => customEmits('update:model', value);
-const changeValue = ({ target }: { target: HTMLInputElement }) => customEmits('change', { target });
-const clickValue = () => customEmits('focus')
+const customEmits = defineEmits(['update:modelValue', 'change', 'focus', 'invalid']);
+const updateValue = (payload: Event) => {
+    const { value } = (payload.target as HTMLInputElement)
+    customEmits('update:modelValue', value)
+
+    const valueIsEmpty = value === '';
+    valueIsEmpty ? requiredModel() : invalidModel(value)
+};
+
+const requiredModel = () => {
+    if(required) customEmits('invalid', { mode: 'required', value: true });
+}
+
+const invalidModel = (value: string): void => {
+    if(!pattern) return;
+    const re = new RegExp(pattern)
+    customEmits('invalid', {mode: 'validation', value: !re.test(value) })
+}
+
+
+const changeValue = (payload: Event) => customEmits('change', { target: payload.target });
+const focus = () => customEmits('focus')
 </script>
 <style src="./BaseInput.scss" lang="scss"></style>
