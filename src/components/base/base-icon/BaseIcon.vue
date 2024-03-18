@@ -45,4 +45,4 @@
     });
 
 </script>
-<style src="./BaseIcon.scss" lang="scss"></style>./types
+<style src="./BaseIcon.scss" lang="scss"></style>

@@ -15,6 +15,7 @@ export { default as IconChevronDownDuo } from './chevron/IconChevronDownDuo.vue'
 export { default as IconChevronUpDuo } from './chevron/IconChevronUpDuo.vue'
 export { default as IconChevronLeftDuo } from './chevron/IconChevronLeftDuo.vue'
 export { default as IconChevronRightDuo } from './chevron/IconChevronRightDuo.vue'
+export { default as IconChevronRightM } from './chevron/IconChevronRightM.vue'
 
 // Calendar
 export { default as IconCalendarAdd } from './calendar/IconCalendarAdd.vue'
