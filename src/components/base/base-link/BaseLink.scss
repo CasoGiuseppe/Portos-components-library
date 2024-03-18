@@ -1,0 +1,81 @@
+@mixin createHoverState() {
+  @media (hover) {
+    &:active,
+    &:hover {
+      &:not(:disabled) {
+        @content;
+      }
+    }
+  }
+}
+
+.base-link {
+  $animationTime: 0.4s;
+
+  display: inline-flex;
+  align-items: center;
+  flex-direction: row;
+  gap: var(--spacing-40, 0);
+  color: var(--color-primary-20, #000);
+  cursor: pointer;
+
+  transition:
+    background $animationTime ease-out,
+    box-shadow $animationTime ease-out,
+    border-color $animationTime ease-out,
+    color $animationTime ease-out;
+
+  @media (hover) {
+    &:focus-visible {
+      box-shadow:
+        0 0 0 2px var(--color-neutral-10, #000),
+        0 0 0 4px var(--color-outline, #000);
+
+      &[class*='ALT'] {
+        box-shadow:
+          0 0 0 2px var(--color-outline, #000),
+          0 0 0 4px var(--color-neutral-10, #000);
+      }
+    }
+  }
+
+  &--is {
+    // colors
+    &-primary {
+      color: var(--color-primary-40, #000);
+      @include createHoverState {
+        &:not([class*='ALT']) {
+          color: var(--color-primary-50, #000);
+        }
+        color: var(--color-primary-30, #000);
+      }
+      &-ALT {
+        color: var(--color-primary-20, #000);
+        &-disabled {
+          color: var(--color-neutral-40, #000);
+          @include createHoverState {
+            color: var(--color-neutral-40, #000);
+          }
+        }
+      }
+    }
+
+    // sizing
+    &-M {
+      @include text-link-m--regular;
+    }
+    &-S {
+      @include text-link-s--regular;
+    }
+
+    // disable
+    &-disabled {
+      color: var(--color-neutral-60, #000);
+      @include createHoverState {
+        &:not([class*='ALT']) {
+          color: var(--color-neutral-60, #000);
+        }
+      }
+    }
+  }
+}
