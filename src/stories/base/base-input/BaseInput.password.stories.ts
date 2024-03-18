@@ -32,7 +32,6 @@ const meta = {
     args: {
         id: 'fieldID',
         input: Types.PASSWORD,
-        proxyValue: 'test',
         placeholder: 'Add here your pasword',
         required: false,
         disabled: false,

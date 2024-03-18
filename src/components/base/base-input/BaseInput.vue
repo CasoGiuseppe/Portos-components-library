@@ -167,7 +167,10 @@ const error = computed(() => !!slots['error']);
 const submit = computed(() => !!slots['submit']);
 
 const customEmits = defineEmits(['update:modelValue', 'change', 'focus', 'invalid', 'submit']);
-const hasEmptyModel = computed(():boolean => (value.value as string).length === 0);
+const hasEmptyModel = computed(():boolean => {
+    if(!value.value) return true
+    return (value.value as string).length === 0
+});
 
 const updateValue = (payload: Event) => {
     const { value } = (payload.target as HTMLInputElement)
