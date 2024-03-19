@@ -9,13 +9,14 @@ const meta = {
     component: NavigationItem,
     tags: ['autodocs'],
     argTypes: {
+        id: { control: 'text' },
         selected: { expanded: true },
         rtl: { expanded: true },
         collapsed: { expanded: true },
         label: { control: 'text' },
     },
     args: {
-        id: 0,
+        id: '0',
         icon: '',
         selected: false,
         rtl: false,

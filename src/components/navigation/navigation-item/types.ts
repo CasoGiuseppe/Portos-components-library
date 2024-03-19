@@ -1,6 +1,6 @@
 export interface INavigationItemComponent {
-    id: number
-    selected: boolean
-    rtl: boolean
-    collapsed: boolean
+    id?: string
+    selected?: boolean
+    rtl?: boolean
+    collapsed?: boolean
 };

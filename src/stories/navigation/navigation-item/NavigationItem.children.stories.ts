@@ -9,6 +9,7 @@ const meta = {
     component: NavigationItem,
     tags: ['autodocs'],
     argTypes: {
+        id: { control: 'text' },
         selected: { expanded: true },
         rtl: { expanded: true },
         collapsed: { expanded: true },
@@ -16,7 +17,7 @@ const meta = {
         children: { control: 'text' }
     },
     args: {
-        id: 0,
+        id: '',
         icon: '',
         selected: false,
         rtl: false,

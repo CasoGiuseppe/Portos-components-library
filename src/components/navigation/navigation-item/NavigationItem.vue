@@ -33,8 +33,6 @@
 
 <script setup lang="ts">
 import { computed, useSlots} from 'vue';
-// import BaseIcon from '@/components/base/base-icon/BaseIcon.vue';
-// import { Sizes, Types } from '@/components/base/base-icon/types';
 import { type INavigationItemComponent } from './types';
 
 const customEmits = defineEmits(['submit', 'action']);
@@ -45,7 +43,7 @@ const children = computed(() => !!slots['children']);
 const showLabel = computed(() => label.value && !collapsed);
 
 const { id, collapsed } = withDefaults(defineProps<INavigationItemComponent>(), {
-    id: 0,
+    id: 'item',
     selected: false,
     rtl: true,
     collapsed: false
