@@ -1,5 +1,5 @@
-.error {
-    $error: &;
+.default-error {
+    $defaulterror: &;
 
     align-items: center;
     display: flex;

@@ -1,13 +1,16 @@
 import { defineAsyncComponent, type Component } from "vue";
 import type { IAsyncComponent } from "./interfaces/useAsyncComponent";
-import UserDefaultError from "@ui/defaults/exceptions/error/Error.vue";
-// import UserDefaultLoader from "@ui/components/defaults/default-loader/DefaultLoader.vue";
+import UserDefaultError from "@ui/defaults/exceptions/default-error/DefaultError.vue";
+import UserDefaultLoader from "@ui/defaults/loaders/default-loader/DefaultLoader.vue";
 
 export default function useAsyncComponent(): IAsyncComponent {
-  const create = async ({ component, error = UserDefaultError } :{ component: string, error?: Component, loader?: Component}): Promise<Component> => {
+  const create = async ({
+    component,
+    error = UserDefaultError,
+    loader = UserDefaultLoader } :{ component: string, error?: Component, loader?: Component}): Promise<Component> => {
     return await defineAsyncComponent({
       errorComponent: error,
-    //   sloadingComponent: loader,
+      loadingComponent: loader,
       loader: () => import (/* @vite-ignore */ `../../${ component }.vue`)
     })
   }

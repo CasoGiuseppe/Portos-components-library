@@ -1,6 +1,6 @@
 <template>
     <!-- get error message from error attribute -->
-    <aside :id="id" class="error">
+    <aside :id="id" class="default-error">
         <IconFeedbackError />
         <slot name="message">UPS! something was wrong</slot>
     </aside>
@@ -18,4 +18,4 @@
     }
   });
   </script>
-  <style lang="scss" src="./Error.scss" scoped />
+  <style lang="scss" src="./DefaultError.scss" scoped />

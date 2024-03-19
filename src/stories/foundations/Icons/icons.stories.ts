@@ -39,10 +39,12 @@ const Template: Story = {
                     foundation--has-no-padding"
                     style="background: var(--color-neutral-20, #000)"
                   >
-                    <BaseIcon
-                      name="${icon.token}"
-                      type="${section.parent}"
-                    />
+                    <Suspense>
+                      <BaseIcon
+                        name="${icon.token}"
+                        type="${section.parent}"
+                      />
+                    </Suspense>
                   </span>
                   <button
                     class="foundation__action"
