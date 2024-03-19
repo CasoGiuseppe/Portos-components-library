@@ -43,7 +43,7 @@
 
     &--has {
         &-child {
-            pointer-events: none;
+            cursor: default;
         }
     }
 
@@ -81,10 +81,6 @@
         display: flex;
         justify-content: center;
         width: var(--spacing-50, 0);
-
-        #{$navigationItem}--has-child & {
-            pointer-events: initial;
-        }
 
         [dir='rtl'] & {
             order: 1;

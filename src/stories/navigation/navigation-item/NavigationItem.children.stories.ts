@@ -35,7 +35,11 @@ const Templates: Story = {
         setup() { return { args } },
         template: `
             <section style="display: grid; gap: 10px; grid-template-columns: repeat(4, 1fr);">
-                <NavigationItem v-bind="args" @click="select">
+                <NavigationItem
+                    v-bind="args"
+                    @submit="submit"
+                    @action="action"
+                >
                     <template #icon>
                         <BaseIcon
                             name="IconArrowCircleRight"
@@ -49,7 +53,8 @@ const Templates: Story = {
             </section
         `,
         methods: {
-            select: action('selected'),
+            submit: action('selected'),
+            action: action('action work'),
         },
     }),
 }
