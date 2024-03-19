@@ -1,0 +1,7 @@
+.error {
+    $error: &;
+
+    align-items: center;
+    display: flex;
+    color: var(--color-error-40, #000);
+}
