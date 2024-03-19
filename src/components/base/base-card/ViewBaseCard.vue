@@ -3,7 +3,7 @@
     <BaseCard>
       <template #title>
         Este es el título
-        <IconFeedbackInfo />
+        <BaseIcon :type="Types.ARROW" :size="Sizes.S"/>
       </template>
       <template #body>
         <p>Este es el contenido del texto de la tarjeta.</p>
@@ -14,7 +14,9 @@
 
 <script setup lang="ts">
 import BaseCard from './BaseCard.vue'
-import IconFeedbackInfo from '@ui/icons/feedback/IconFeedbackInfo.vue'
+import BaseIcon from '@ui/base/base-icon/BaseIcon.vue'
+import { Types, Sizes } from '../base-icon/types';
+
 </script>
 
 <style lang="scss"></style>
