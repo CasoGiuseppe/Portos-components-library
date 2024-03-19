@@ -52,13 +52,24 @@
         display: flex;
         
         justify-content: space-between;
+
+        [dir='rtl'] & {
+            gap: var(--spacing-20, 0);
+            justify-content: start;
+
+            > * {
+                &:first-child {
+                    order: 2
+                }
+            }
+        }
     }
 
     &__label {
         @include text-body-s--regular;
         display: flex;
         justify-content: flex-start;
-        
+
         text-overflow: ellipsis;
         overflow: hidden;
         max-width: 100%;
@@ -72,6 +83,10 @@
 
         #{$navigationItem}--has-child & {
             pointer-events: initial;
+        }
+
+        [dir='rtl'] & {
+            order: 1;
         }
     }
 }
