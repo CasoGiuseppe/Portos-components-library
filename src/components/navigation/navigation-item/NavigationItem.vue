@@ -6,7 +6,7 @@
         ]"
         @click="() => selectItem(id)"
     >
-        <div 
+        <section 
             :class="[
                 'navigation-item__container',
                 (inversed && !collapsed) ? 'navigation-item--is-inversed' : '',
@@ -28,12 +28,12 @@
                     
                 />
             </picture>
-            <span
+            <p
                 v-if="!collapsed"
                 class="navigation-item__label"
                 v-text="label"
             />
-        </div>
+        </section>
     </button>
 </template>
 

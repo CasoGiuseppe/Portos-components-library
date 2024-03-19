@@ -28,6 +28,7 @@
     &--is {
         &-selected {
             box-shadow: inset var(--spacing-20, 0) 0 0 var(--color-brand-50, #000);
+            background-color: var(--color-primary-40, #000);
         }
 
         &-inversed {
