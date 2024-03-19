@@ -1,6 +1,8 @@
 <template>
     <component
         :is="IconAsyncDefine"
+        :id="id"
+        :key="id"
         :class="[
             'base-icon',
             `base-icon--is-${size}`,
@@ -12,6 +14,7 @@ import { Types, Sizes, type Names } from './types';
 import useAsyncComponent from '@/shared/composables/useAsyncComponent';
 
 interface IIconComponent {
+    id: string;
     name: Names,
     type: Types,
     size?: Sizes
@@ -19,6 +22,7 @@ interface IIconComponent {
 
 const { create } = useAsyncComponent();
 const { name, type } = withDefaults(defineProps<IIconComponent>(), {
+    id: 'IconArrowCircleUp',
     /**
      * Set Icon component name
      */
