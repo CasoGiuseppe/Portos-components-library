@@ -5,7 +5,7 @@ import NavigationItem from '@/components/navigation/navigation-item/NavigationIt
 import BaseIcon from "@/components/base/base-icon/BaseIcon.vue";
 
 const meta = {
-    title: 'Navigation/Item/Default',
+    title: 'Navigation/Item/Second Level',
     component: NavigationItem,
     tags: ['autodocs'],
     argTypes: {
@@ -13,6 +13,7 @@ const meta = {
         rtl: { expanded: true },
         collapsed: { expanded: true },
         label: { control: 'text' },
+        children: { control: 'text' }
     },
     args: {
         id: 0,
@@ -20,7 +21,7 @@ const meta = {
         selected: false,
         rtl: false,
         collapsed: false,
-        label: 'Label'
+        label: 'Label',
     }
 } satisfies Meta<typeof NavigationItem>;
 
@@ -43,6 +44,7 @@ const Templates: Story = {
                         />
                     </template>
                     <template #label>{{ args.label }}</template>
+                    <template #children>{{ args.children }}</template>
                 </NavigationItem>
             </section
         `,

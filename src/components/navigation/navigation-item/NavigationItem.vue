@@ -13,12 +13,13 @@
             <!-- @slot Slot for icon content -->
             <slot name="icon"></slot>
             <button
+                v-if="children"
                 class="navigation-item__action"
                 @click="xxx"
             />
         </picture>
         <p
-            v-if="!collapsed && label"
+            v-if="!collapsed"
             class="navigation-item__label"
         >
             <!-- @slot Slot for label content -->
