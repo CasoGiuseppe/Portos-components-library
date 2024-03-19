@@ -1,42 +1,40 @@
 <template>
-    <li>
-        <button
+    <button
+        :class="[
+            'navigation-item',
+            selected ? 'navigation-item--is-selected' : '',
+        ]"
+        @click="() => selectItem(id)"
+    >
+        <div 
             :class="[
-                'navigation-item',
-                selected ? 'navigation-item--is-selected' : '',
+                'navigation-item__container',
+                (inversed && !collapsed) ? 'navigation-item--is-inversed' : '',
+                collapsed ? 'navigation-item--is-collapsed' : ''
             ]"
-            @click="() => selectItem(id)"
         >
-            <div 
+            <picture
                 :class="[
-                    'navigation-item__container',
-                    (inversed && !collapsed) ? 'navigation-item--is-inversed' : '',
-                    collapsed ? 'navigation-item--is-collapsed' : ''
+                    'navigation-item__header',
+                    children?.length ? 'navigation-item--is-parent' : ''
                 ]"
             >
-                <picture
-                    :class="[
-                        'navigation-item__header',
-                        children?.length ? 'navigation-item--is-parent' : ''
-                    ]"
-                >
-                    <slot name="icon"></slot>
-                    <BaseIcon
-                        v-if="children?.length"
-                        name="IconChevronRightM"
-                        :type="Types.CHEVRON"
-                        :size="Sizes.XS"
-                        
-                    />
-                </picture>
-                <span
-                    v-if="!collapsed"
-                    class="navigation-item__label"
-                    v-text="label"
+                <slot name="icon"></slot>
+                <BaseIcon
+                    v-if="children?.length"
+                    name="IconChevronRightM"
+                    :type="Types.CHEVRON"
+                    :size="Sizes.XS"
+                    
                 />
-            </div>
-        </button>
-    </li>
+            </picture>
+            <span
+                v-if="!collapsed"
+                class="navigation-item__label"
+                v-text="label"
+            />
+        </div>
+    </button>
 </template>
 
 <script setup lang="ts">
