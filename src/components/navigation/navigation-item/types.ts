@@ -5,7 +5,6 @@ export interface INavigationItem {
     icon: Names
     type: Types
     link: string
-    children?: INavigationItem[]
 }
 
 export interface INavigationItemComponent {
@@ -13,6 +12,5 @@ export interface INavigationItemComponent {
     label: string
     selected: boolean
     inversed: boolean
-    children?: INavigationItem[]
     collapsed: boolean
 };

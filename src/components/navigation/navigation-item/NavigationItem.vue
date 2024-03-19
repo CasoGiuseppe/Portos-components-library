@@ -16,17 +16,17 @@
             <picture
                 :class="[
                     'navigation-item__header',
-                    children?.length ? 'navigation-item--is-parent' : ''
+                    children ? 'navigation-item--is-parent' : ''
                 ]"
             >
                 <slot name="icon"></slot>
-                <BaseIcon
-                    v-if="children?.length"
+                <!-- <BaseIcon
+                    v-if="$slots.children"
                     name="IconChevronRightM"
                     :type="Types.CHEVRON"
                     :size="Sizes.XS"
                     
-                />
+                /> -->
             </picture>
             <p
                 v-if="!collapsed"
@@ -34,24 +34,28 @@
                 v-text="label"
             />
         </section>
+
+        <!-- @slot Slot for second level content -->
+        <slot name="children" />
     </button>
 </template>
 
 <script setup lang="ts">
+import { computed, useSlots} from 'vue';
 import BaseIcon from '@/components/base/base-icon/BaseIcon.vue';
 import { Sizes, Types } from '@/components/base/base-icon/types';
 import { type INavigationItemComponent } from './types';
 
-const emit = defineEmits<{
-  (e: 'select', id: number): void
-}>();
+const emit = defineEmits<{ (e: 'select', id: number): void }>();
+
+const slots = useSlots();
+const children = computed(() => !!slots['children']);
 
 withDefaults(defineProps<INavigationItemComponent>(), {
     id: 0,
     label: '',
     selected: false,
     inversed: false,
-    children: undefined,
     collapsed: false
 });
 

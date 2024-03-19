@@ -13,10 +13,6 @@ const meta = {
         selected: { expanded: true },
         inversed: { expanded: true },
         collapsed: { expanded: true },
-        children: {
-            control: 'check',
-            options: ['Add Children'],
-          },
     },
     args: {
         id: 0,
@@ -25,7 +21,6 @@ const meta = {
         selected: false,
         inversed: false,
         collapsed: false,
-        children: []
     }
 } satisfies Meta<typeof NavigationItem>;
 
@@ -47,6 +42,7 @@ const Templates: Story = {
                             :size="args.collapsed ? 'L' : 'M'"
                         />
                     </template>
+                    <template #children>{{ args.children }}</etmplate>
                 </NavigationItem>
             </section
         `,
