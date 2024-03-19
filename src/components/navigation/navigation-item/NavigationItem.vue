@@ -5,7 +5,7 @@
             'navigation-item',
             selected ? 'navigation-item--is-selected' : null,
             collapsed ? 'navigation-item--is-collapsed' : null,
-            children ? 'navigation-item--has-child' : null
+            children ? 'navigation-item--has-second-level' : null
         ]"
         @click="submit"
     >
@@ -37,21 +37,21 @@ import { type INavigationItemComponent } from './types';
 
 const customEmits = defineEmits(['submit', 'action']);
 
-const slots = useSlots();
-const label = computed(() => !!slots['label']);
-const children = computed(() => !!slots['children']);
-const showLabel = computed(() => label.value && !collapsed);
-
-const { id, collapsed } = withDefaults(defineProps<INavigationItemComponent>(), {
+const props = withDefaults(defineProps<INavigationItemComponent>(), {
     id: 'item',
     selected: false,
     rtl: true,
     collapsed: false
 });
 
+const slots = useSlots();
+const label = computed(() => !!slots['label']);
+const children = computed(() => !!slots['children']);
+const showLabel = computed(() => label.value && !props.collapsed);
+
 const submit = () => {
     if(children.value) return
-    customEmits('submit', id)
+    customEmits('submit', props.id)
 };
 const action = () => customEmits('action');
 </script>

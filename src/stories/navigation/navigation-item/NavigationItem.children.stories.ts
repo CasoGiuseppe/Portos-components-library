@@ -11,8 +11,8 @@ const meta = {
     argTypes: {
         id: { control: 'text' },
         selected: { expanded: true },
-        rtl: { expanded: true },
-        collapsed: { expanded: true },
+        rtl:  { control: 'radio', options: [true, false] },
+        collapsed:  { control: 'radio', options: [true, false] },
         label: { control: 'text' },
         children: { control: 'text' }
     },
@@ -45,7 +45,7 @@ const Templates: Story = {
                         <BaseIcon
                             name="IconArrowCircleRight"
                             type="arrow"
-                            :size="args.collapsed ? 'L' : 'M'"
+                            :size="args.collapsed ? 'M' : 'S'"
                         />
                     </template>
                     <template #label>{{ args.label }}</template>

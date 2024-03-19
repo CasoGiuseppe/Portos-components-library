@@ -6,6 +6,7 @@
     border: none;
     background-color: var(--color-primary-60, #000);
     display: grid;
+    min-height: calc(var(--spacing-100, 0) + 4px);
     max-width: var(--spacing-131);
     padding: var(--spacing-40, 0) var(--spacing-30, 0);
     position: relative;
@@ -22,8 +23,10 @@
     }
 
     @media (hover) {
-        &:hover {
-            background-color: var(--color-primary-40, #000);
+        &:not(#{$navigationItem}--has-second-level) {
+            &:hover {
+                background-color: var(--color-primary-40, #000);
+            }
         }
 
         &:focus {
@@ -39,10 +42,22 @@
             box-shadow: inset var(--spacing-20, 0) 0 0 var(--color-brand-50, #000);
             background-color: var(--color-primary-40, #000);
         }
+
+        &-collapsed {
+            align-items: center;
+            aspect-ratio: 1/1;
+            display: flex;
+            max-width: var(--spacing-100);
+            justify-content: flex-end;
+
+            &:not(#{$navigationItem}--has-second-level) {
+                justify-content: center;
+            }
+        }
     }
 
     &--has {
-        &-child {
+        &-second-level {
             cursor: default;
         }
     }
