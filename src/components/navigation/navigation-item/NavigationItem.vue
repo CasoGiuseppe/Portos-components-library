@@ -1,24 +1,15 @@
 <template>
     <button
+        :dir="rtl ? 'rtl' : 'ltr'"
         :class="[
             'navigation-item',
-            selected ? 'navigation-item--is-selected' : '',
+            selected ? 'navigation-item--is-selected' : null,
+            collapsed ? 'navigation-item--is-collapsed' : null
         ]"
         @click="() => selectItem(id)"
     >
-        <section 
-            :dir="rtl ? 'rtl' : 'ltr'"
-            :class="[
-                'navigation-item__container',
-                collapsed ? 'navigation-item--is-collapsed' : ''
-            ]"
-        >
-            <picture
-                :class="[
-                    'navigation-item__header',
-                    children ? 'navigation-item--is-parent' : ''
-                ]"
-            >
+            <picture class="navigation-item__header">
+                <!-- @slot Slot for icon content -->
                 <slot name="icon"></slot>
                 <!-- <BaseIcon
                     v-if="$slots.children"
@@ -29,11 +20,11 @@
                 /> -->
             </picture>
             <p
-                v-if="!collapsed"
+                v-if="!collapsed && label"
                 class="navigation-item__label"
-                v-text="label"
-            />
-        </section>
+            >
+                <slot name="label" />
+            </p>
 
         <!-- @slot Slot for second level content -->
         <slot name="children" />
@@ -49,11 +40,11 @@ import { type INavigationItemComponent } from './types';
 const emit = defineEmits<{ (e: 'select', id: number): void }>();
 
 const slots = useSlots();
+const label = computed(() => !!slots['label']);
 const children = computed(() => !!slots['children']);
 
 withDefaults(defineProps<INavigationItemComponent>(), {
     id: 0,
-    label: '',
     selected: false,
     rtl: true,
     collapsed: false

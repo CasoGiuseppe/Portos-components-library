@@ -9,18 +9,18 @@ const meta = {
     component: NavigationItem,
     tags: ['autodocs'],
     argTypes: {
-        label: { control: 'text' },
         selected: { expanded: true },
         rtl: { expanded: true },
         collapsed: { expanded: true },
+        label: { control: 'text' },
     },
     args: {
         id: 0,
         icon: '',
-        label: 'Label',
         selected: false,
         rtl: false,
         collapsed: false,
+        label: 'Label'
     }
 } satisfies Meta<typeof NavigationItem>;
 
@@ -42,7 +42,8 @@ const Templates: Story = {
                             :size="args.collapsed ? 'L' : 'M'"
                         />
                     </template>
-                    <template #children>{{ args.children }}</etmplate>
+                    <template #children>{{ args.children }}</template>
+                    <template #label>{{ args.label }}</template>
                 </NavigationItem>
             </section
         `,
