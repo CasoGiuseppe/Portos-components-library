@@ -45,6 +45,7 @@ const Template: Story = {
                   >
                     <Suspense>
                       <BaseIcon
+                        id="${icon.token}"
                         name="${icon.token}"
                         type="${section.parent}"
                         :size="args.size"
