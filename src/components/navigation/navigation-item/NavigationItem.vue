@@ -7,9 +7,9 @@
         @click="() => selectItem(id)"
     >
         <section 
+            :dir="rtl ? 'rtl' : 'ltr'"
             :class="[
                 'navigation-item__container',
-                (inversed && !collapsed) ? 'navigation-item--is-inversed' : '',
                 collapsed ? 'navigation-item--is-collapsed' : ''
             ]"
         >
@@ -42,8 +42,8 @@
 
 <script setup lang="ts">
 import { computed, useSlots} from 'vue';
-import BaseIcon from '@/components/base/base-icon/BaseIcon.vue';
-import { Sizes, Types } from '@/components/base/base-icon/types';
+// import BaseIcon from '@/components/base/base-icon/BaseIcon.vue';
+// import { Sizes, Types } from '@/components/base/base-icon/types';
 import { type INavigationItemComponent } from './types';
 
 const emit = defineEmits<{ (e: 'select', id: number): void }>();
@@ -55,7 +55,7 @@ withDefaults(defineProps<INavigationItemComponent>(), {
     id: 0,
     label: '',
     selected: false,
-    inversed: false,
+    rtl: true,
     collapsed: false
 });
 

@@ -11,6 +11,6 @@ export interface INavigationItemComponent {
     id: number
     label: string
     selected: boolean
-    inversed: boolean
+    rtl: boolean
     collapsed: boolean
 };

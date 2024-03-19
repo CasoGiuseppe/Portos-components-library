@@ -11,7 +11,7 @@ const meta = {
     argTypes: {
         label: { control: 'text' },
         selected: { expanded: true },
-        inversed: { expanded: true },
+        rtl: { expanded: true },
         collapsed: { expanded: true },
     },
     args: {
@@ -19,7 +19,7 @@ const meta = {
         icon: '',
         label: 'Label',
         selected: false,
-        inversed: false,
+        rtl: false,
         collapsed: false,
     }
 } satisfies Meta<typeof NavigationItem>;
