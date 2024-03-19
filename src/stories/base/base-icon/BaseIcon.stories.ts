@@ -27,7 +27,7 @@ const Templates: Story = {
     render: (args) => ({
         components: { BaseIcon },
         setup() { return { args } },
-        template: `<BaseIcon v-bind="args" />`,
+        template: `<Suspense><BaseIcon v-bind="args" /></Suspense>`,
     }),
 }
 

@@ -18,4 +18,4 @@
     }
   });
   </script>
-  <style lang="scss" src="./DefaultError.scss" scoped />
+  <style lang="scss" src="./Error.scss" scoped />
