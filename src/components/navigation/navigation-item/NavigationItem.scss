@@ -27,12 +27,13 @@
 
     &--is {
         &-selected {
-            border-left: .5rem solid var(--color-brand-50, #000);
+            // border-left: .5rem solid var(--color-brand-50, #000);
+            box-shadow: calc(var(--spacing-20, 0) * -1) 0 0 var(--color-brand-50, #000);
         }
 
         &-inversed {
             justify-self: end;
-            
+
             .navigation-item__header {
                 justify-self: end;
             }
