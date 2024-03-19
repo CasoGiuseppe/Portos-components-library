@@ -70,5 +70,8 @@
     &__label {
         @include text-body-s--regular;
         justify-self: start;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: 100%;
     }
 }
