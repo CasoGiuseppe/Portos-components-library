@@ -76,10 +76,11 @@
     }
 
     &__action {
+        align-items: center;
         aspect-ratio: 1/1;
+        display: flex;
+        justify-content: center;
         width: var(--spacing-50, 0);
-
-        background: red;
 
         #{$navigationItem}--has-child & {
             pointer-events: initial;
@@ -87,6 +88,16 @@
 
         [dir='rtl'] & {
             order: 1;
+        }
+
+        &:before {
+            border: solid var(--color-primary-10, #000);
+            border-width: 0 var(--spacing-10, 0) var(--spacing-10, 0) 0;
+            content: '';
+            display: inline-block;
+            padding: var(--spacing-10, 0);
+
+            transform: rotate(-45deg);
         }
     }
 }
