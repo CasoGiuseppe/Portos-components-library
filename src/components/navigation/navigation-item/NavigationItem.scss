@@ -1,6 +1,6 @@
 .navigation-item {
     $animationTime: .4s;
-    
+
     align-items: center;
     border: none;
     background-color: var(--color-primary-60, #000);
@@ -10,7 +10,8 @@
     position: relative;
     z-index: 1;
 
-    transition: box-shadow $animationTime ease-out;
+    transition: box-shadow $animationTime ease-out,
+                background $animationTime ease-out;
 
     @media (hover) {
         &:hover {
