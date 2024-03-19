@@ -4,7 +4,7 @@
     background-color: var(--color-primary-60, #000);
     display: grid;
     height: var(--spacing-110);
-    width: -webkit-fill-available;
+    max-width: var(--spacing-131);
     position: relative;
     z-index: 1;
 
