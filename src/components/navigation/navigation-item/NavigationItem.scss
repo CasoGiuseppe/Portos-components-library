@@ -1,4 +1,5 @@
 .navigation-item {
+    $navigationItem: &;
     $animationTime: .4s;
 
     align-items: center;
@@ -16,10 +17,15 @@
     transition: box-shadow $animationTime ease-out,
                 background $animationTime ease-out;
 
+    &:is(button) {
+        border: none;
+    }
+
     @media (hover) {
         &:hover {
             background-color: var(--color-primary-40, #000);
         }
+
         &:focus {
             z-index: 2;
             box-shadow:
@@ -35,35 +41,37 @@
         }
     }
 
-    &__container  {
-        color: var(--color-neutral-10, #000);
-        display: grid;
-        gap: var(--spacing-40, 0);
-
-        &.navigation-item--is-collapsed {
-            padding: var(--spacing-10, 0);
-            place-self: center;
-
-            .navigation-item__header {
-                display: grid;
-                grid-template-columns: 5fr 1fr;
-                align-items: center;
-                gap: 0;
-            }
+    &--has {
+        &-child {
+            pointer-events: none;
         }
     }
 
     &__header {
+        align-items: center;
         display: flex;
-        gap: .5rem;
+        
         justify-content: space-between;
     }
 
     &__label {
         @include text-body-s--regular;
-        justify-self: start;
+        display: flex;
+        justify-content: flex-start;
+        
         text-overflow: ellipsis;
         overflow: hidden;
         max-width: 100%;
+    }
+
+    &__action {
+        aspect-ratio: 1/1;
+        width: var(--spacing-50, 0);
+
+        background: red;
+
+        #{$navigationItem}--has-child & {
+            pointer-events: initial;
+        }
     }
 }

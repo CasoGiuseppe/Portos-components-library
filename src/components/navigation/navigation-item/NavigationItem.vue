@@ -4,27 +4,26 @@
         :class="[
             'navigation-item',
             selected ? 'navigation-item--is-selected' : null,
-            collapsed ? 'navigation-item--is-collapsed' : null
+            collapsed ? 'navigation-item--is-collapsed' : null,
+            children ? 'navigation-item--has-child' : null
         ]"
         @click="() => selectItem(id)"
     >
-            <picture class="navigation-item__header">
-                <!-- @slot Slot for icon content -->
-                <slot name="icon"></slot>
-                <!-- <BaseIcon
-                    v-if="$slots.children"
-                    name="IconChevronRightM"
-                    :type="Types.CHEVRON"
-                    :size="Sizes.XS"
-                    
-                /> -->
-            </picture>
-            <p
-                v-if="!collapsed && label"
-                class="navigation-item__label"
-            >
-                <slot name="label" />
-            </p>
+        <picture class="navigation-item__header">
+            <!-- @slot Slot for icon content -->
+            <slot name="icon"></slot>
+            <button
+                class="navigation-item__action"
+                @click="xxx"
+            />
+        </picture>
+        <p
+            v-if="!collapsed && label"
+            class="navigation-item__label"
+        >
+            <!-- @slot Slot for label content -->
+            <slot name="label" />
+        </p>
 
         <!-- @slot Slot for second level content -->
         <slot name="children" />
@@ -53,6 +52,8 @@ withDefaults(defineProps<INavigationItemComponent>(), {
 const selectItem = (id: number) => {
     emit('select', id);
 }
+
+const xxx = () => console.log('ciccio');
 </script>
 
 <style src="./NavigationItem.scss" lang="scss"></style>

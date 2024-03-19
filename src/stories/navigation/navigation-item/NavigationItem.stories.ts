@@ -12,6 +12,7 @@ const meta = {
         selected: { expanded: true },
         rtl: { expanded: true },
         collapsed: { expanded: true },
+        children: {control: 'text' },
         label: { control: 'text' },
     },
     args: {
@@ -42,7 +43,6 @@ const Templates: Story = {
                             :size="args.collapsed ? 'L' : 'M'"
                         />
                     </template>
-                    <template #children>{{ args.children }}</template>
                     <template #label>{{ args.label }}</template>
                 </NavigationItem>
             </section
