@@ -1,13 +1,20 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import  BaseIcon from '@ui/base/base-icon/BaseIcon.vue';
+import { Sizes } from '@ui/base/base-icon/types';
 import configuration from './configuration';
-import { copyToClipboard } from "../shared/helpers/";
 
 const meta = {
-    title: 'Foundations/Icons',
+    title: 'Base/Base Icon',
     tags: ['autodocs'],
+    argTypes: {
+      size: { control: 'select', options: Object.values(Sizes) },
+      background: { control: 'text' },
+      color: { control: 'text' }
+    },
     args: {
-      copyToClipboard: () => {},
+      size: Sizes.S,
+      background: '#F2F4F5',
+      color: '#21578A'
     },
 } satisfies Meta;
 
@@ -15,8 +22,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const Template: Story = {
-  render: () => ({
+  render: (args) => ({
     components: { BaseIcon },
+    setup() { return { args } },
     template: `
     ${( () => configuration.map((section: Record<string, any>) => `
       <section class="foundation">
@@ -37,24 +45,26 @@ const Template: Story = {
                     foundation--is-square
                     foundation--is-center
                     foundation--has-no-padding"
-                    style="background: var(--color-neutral-20, #000)"
+                    :style="{
+                      'background': args.background,
+                      'color': args.color
+                    }"
                   >
-                    <BaseIcon
-                      name="${icon.token}"
-                      type="${section.parent}"
-                    />
+                    <Suspense>
+                      <BaseIcon
+                        id="${icon.token}"
+                        name="${icon.token}"
+                        type="${section.parent}"
+                        :size="args.size"
+                      />
+                    </Suspense>
                   </span>
-                  <button
-                    class="foundation__action"
-                    @click="action('${icon?.copy}')"
-                  >copy</button>
               </li>
             `).join(""))()
             }
           </ul>
       </section>
     `).join(""))()}`,
-    methods: { action: copyToClipboard }
   })
 }
 

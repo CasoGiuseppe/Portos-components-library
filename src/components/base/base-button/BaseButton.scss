@@ -28,7 +28,7 @@
               color $animationTime ease-out;
 
   &:disabled {
-    cursor: auto;
+    pointer-events: none;
 
     &:not([class*="tertiary"]) {
       background: var(--color-neutral-40, #000);

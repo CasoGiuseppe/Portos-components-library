@@ -3,6 +3,7 @@ import BaseInput from "@ui/base/base-input/BaseInput.vue";
 import BaseIcon from "@/components/base/base-icon/BaseIcon.vue";
 import { Types } from '@ui/base/base-input/types';
 import { action } from '@storybook/addon-actions'
+import { defineAsyncComponent } from "vue";
 
 const ERRORS = {
     required: 'input value is required',
@@ -10,7 +11,7 @@ const ERRORS = {
 };
 
 const meta = {
-    title: 'Base/Base Input/Default',
+    title: 'Base/Base Input/Password',
     component: BaseInput,
     tags: ['autodocs'],
     argTypes: {
@@ -30,16 +31,13 @@ const meta = {
     },
     args: {
         id: 'fieldID',
-        input: Types.TEXT,
-        placeholder: 'Add here your text',
+        input: Types.PASSWORD,
+        placeholder: 'Add here your pasword',
         required: false,
         disabled: false,
-        pattern: '^[a-zA-Z0-9 ]+$',
-        accept: 'image/*',
-        maxLength: 5,
         title: 'defaultTitle',
         label: 'input title',
-        message: 'Allowed: letters, numbers at least 5 characters'
+        message: 'Help password'
     }
 } satisfies Meta<typeof BaseInput>;
 
@@ -53,18 +51,28 @@ const Templates: Story = {
         setup() { return { args } },
         template: `
             <section style="display: flex; padding: 10px; background: #eee;">
-                <BaseInput
-                    v-bind="args"
-                    @invalid="setInvalid"
-                    @update:modelValue="update"
-                    @change="change"
-                    @focus="focus"
-                    @submit="changeInputState"
-                >
-                    <template #error>{{ args.error }}</template>
-                    <template #label>{{ args.label }}</template>
-                    <template #message>{{ args.message }}</template>
-                </BaseInput>
+                <Suspense>
+                    <BaseInput
+                        v-bind="args"
+                        @invalid="setInvalid"
+                        @update:modelValue="update"
+                        @change="change"
+                        @focus="focus"
+                        @submit="changeInputState"
+                    >
+                        <template #error>{{ args.error }}</template>
+                        <template #label>{{ args.label }}</template>
+                        <template #message>{{ args.message }}</template>
+                        <template #submit>
+                            <template v-if="args.input === 'text'"><
+                                BaseIcon id="IconEditHide" name="IconEditHide" type="edit" />
+                            </template>
+                            <template v-else>
+                                <BaseIcon id="IconEditHide" name="IconEditShow" type="edit" />
+                            </template>
+                        </template>
+                    </BaseInput>
+                </Suspense>
             </section>
         `,
         methods: {
@@ -73,9 +81,14 @@ const Templates: Story = {
                     ? ERRORS[mode as keyof typeof ERRORS]
                     : null })
             },
-            update: action('update'),
             change: action('change'),
             focus: action('focus'),
+            update(value: string) {
+                updateArgs({ ...args, proxyValue: value })
+            },
+            changeInputState() {
+                updateArgs({ ...args, input: args.input === 'password' ? Types.TEXT : Types.PASSWORD })
+            }
         }
     }),
 }
