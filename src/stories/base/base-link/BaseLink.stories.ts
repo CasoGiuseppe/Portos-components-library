@@ -12,12 +12,12 @@ const meta: Meta = {
     variant: false,
     disabled: false,
     elementType: Element.ANCHOR,
-    href: 'https://amaris.com/',
+    href: 'https://amaris.com/'
   },
   argTypes: {
     size: { control: 'select', options: Object.values(Sizes) },
     elementType: { control: 'select', options: Object.values(Element) },
-    href: { control: 'text' },
+    href: { control: 'text' }
   }
 }
 

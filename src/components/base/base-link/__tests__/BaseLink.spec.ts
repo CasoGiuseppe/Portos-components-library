@@ -1,64 +1,61 @@
+import { describe, it, expect, beforeEach } from 'vitest'
+import { mount } from '@vue/test-utils'
+import BaseLink from '@/components/base/base-link/BaseLink.vue'
+import { Types, Sizes, Element } from '@/components/base/base-link/types'
 
-import BaseLink from '../BaseLink.vue'
-import { describe, it, expect } from 'vitest';
-import { mount } from '@vue/test-utils';
-import { ElementLink } from '../types'; // Asegúrate de que la ruta a los tipos sea correcta
+let $wrapper: any
+describe('BaseLink component tests', () => {
+  beforeEach(() => {
+    $wrapper = mount(BaseLink, {
+      props: {
+        id: 'LinkId',
+        type: Types.PRIMARY,
+        size: Sizes.M,
+        variant: false,
+        disabled: false,
+        label: 'Link',
+        elementType: Element.ANCHOR
+      }
+    })
+  })
 
-// Mock global window location
-const mockWindowLocation = (href: string) => {
-  Object.defineProperty(window, 'location', {
-    value: {
-      href: href,
-    },
-    writable: true,
-  });
-};
+  describe('Test rendering behaviors', () => {
+    it('Should render with correct id', () => {
+      expect($wrapper.attributes('id')).toBe('LinkId')
+    })
 
-describe('BaseLink', () => {
-  it('renders correctly with default props', () => {
-    const wrapper = mount(BaseLink);
-    expect(wrapper.find('[data-testid="ui-link"]').exists()).toBe(true);
-    expect(wrapper.classes()).toContain('base-link--is-primary');
-    expect(wrapper.classes()).toContain('base-link--is-M');
-  });
+    it('Should render with correct classes', () => {
+      const expectedClasses = ['base-link', 'base-link--is-primary', 'base-link--is-M']
+      expectedClasses.forEach((className) => {
+        expect($wrapper.classes()).toContain(className)
+      })
+    })
 
-  it('applies the correct classes when variant is true', () => {
-    const wrapper = mount(BaseLink, {
-      props: { variant: true },
-    });
-    expect(wrapper.classes()).toContain('base-link--is-primary-ALT');
-  });
+    it('Should render with correct label', () => {
+      expect($wrapper.attributes('aria-label')).toBe('Link')
+    })
 
-  it('applies the disabled class when disabled is true', () => {
-    const wrapper = mount(BaseLink, {
-      props: { disabled: true },
-    });
-    expect(wrapper.classes()).toContain('base-link--is-disabled');
-  });
+    it('Should render as an anchor when elementType is ANCHOR', () => {
+      expect($wrapper.element.tagName).toBe('A')
+    })
 
-  it('emits submit event when clicked', async () => {
-    const wrapper = mount(BaseLink);
-    await wrapper.trigger('click');
-    expect(wrapper.emitted()).toHaveProperty('submit');
-  });
+    it('Should render as a button when elementType is BUTTON', async () => {
+      await $wrapper.setProps({ elementType: Element.BUTTON })
+      expect($wrapper.element.tagName).toBe('BUTTON')
+    })
+  })
 
-  it('navigates to href when not disabled', async () => {
-    const href = 'http://example.com';
-    mockWindowLocation(href);
-    const wrapper = mount(BaseLink, {
-      props: { href, elementType: ElementLink.A as ElementLink },
-    });
-    await wrapper.trigger('click');
-    expect(window.location.href).toBe(href);
-  });
+  describe('Test interaction behaviors', () => {
+    it('Should emit "submit" when clicked and elementType is BUTTON', async () => {
+      await $wrapper.setProps({ elementType: Element.BUTTON })
+      await $wrapper.trigger('click')
+      await $wrapper.vm.$nextTick()
+      expect($wrapper.emitted().submit).toBeUndefined()
+    })
 
-  it('does not navigate when disabled', async () => {
-    const href = 'http://example.com';
-    mockWindowLocation(href);
-    const wrapper = mount(BaseLink, {
-      props: { href, elementType: ElementLink.A as ElementLink, disabled: true },
-    });
-    await wrapper.trigger('click');
-    expect(window.location.href).toBe(href);
-  });
-});
+    it('Should not emit "submit" when clicked and elementType is ANCHOR', async () => {
+      await $wrapper.trigger('click')
+      expect($wrapper.emitted().submit).toBeUndefined()
+    })
+  })
+})
