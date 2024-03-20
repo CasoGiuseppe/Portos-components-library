@@ -1,65 +1,59 @@
 <template>
-    <li>
-        <button
-            :class="[
-                'navigation-item',
-                selected ? 'navigation-item--is-selected' : '',
-            ]"
-            @click="() => selectItem(id)"
+    <button
+        :dir="rtl ? 'rtl' : 'ltr'"
+        :class="[
+            'navigation-item',
+            selected ? 'navigation-item--is-selected' : null,
+            collapsed ? 'navigation-item--is-collapsed' : null,
+            children ? 'navigation-item--has-second-level' : null
+        ]"
+        @click="submit"
+    >
+        <picture class="navigation-item__header">
+            <!-- @slot Slot for icon content -->
+            <slot name="icon"></slot>
+            <button
+                v-if="children"
+                class="navigation-item__action"
+                @click="action"
+            />
+        </picture>
+        <p
+            v-if="showLabel"
+            class="navigation-item__label"
         >
-            <div 
-                :class="[
-                    'navigation-item__container',
-                    (inversed && !collapsed) ? 'navigation-item--is-inversed' : '',
-                    collapsed ? 'navigation-item--is-collapsed' : ''
-                ]"
-            >
-                <picture
-                    :class="[
-                        'navigation-item__header',
-                        children?.length ? 'navigation-item--is-parent' : ''
-                    ]"
-                >
-                    <slot name="icon"></slot>
-                    <BaseIcon
-                        v-if="children?.length"
-                        name="IconChevronRightM"
-                        :type="Types.CHEVRON"
-                        :size="Sizes.XS"
-                        
-                    />
-                </picture>
-                <span
-                    v-if="!collapsed"
-                    class="navigation-item__label"
-                    v-text="label"
-                />
-            </div>
-        </button>
-    </li>
+            <!-- @slot Slot for label content -->
+            <slot name="label" />
+        </p>
+
+        <!-- @slot Slot for second level content -->
+        <slot name="children" />
+    </button>
 </template>
 
 <script setup lang="ts">
-import BaseIcon from '@/components/base/base-icon/BaseIcon.vue';
-import { Sizes, Types } from '@/components/base/base-icon/types';
+import { computed, useSlots} from 'vue';
 import { type INavigationItemComponent } from './types';
 
-const emit = defineEmits<{
-  (e: 'select', id: number): void
-}>();
+const customEmits = defineEmits(['submit', 'action']);
 
-withDefaults(defineProps<INavigationItemComponent>(), {
-    id: 0,
-    label: '',
+const props = withDefaults(defineProps<INavigationItemComponent>(), {
+    id: 'item',
     selected: false,
-    inversed: false,
-    children: undefined,
+    rtl: true,
     collapsed: false
 });
 
-const selectItem = (id: number) => {
-    emit('select', id);
-}
+const slots = useSlots();
+const label = computed(() => !!slots['label']);
+const children = computed(() => !!slots['children']);
+const showLabel = computed(() => label.value && !props.collapsed);
+
+const submit = () => {
+    if(children.value) return
+    customEmits('submit', props.id)
+};
+const action = () => customEmits('action');
 </script>
 
 <style src="./NavigationItem.scss" lang="scss"></style>

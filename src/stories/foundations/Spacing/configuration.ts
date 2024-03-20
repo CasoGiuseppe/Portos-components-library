@@ -54,6 +54,10 @@ export default [
             {
                 token: 'spacing-130',
                 copy: 'var(--spacing-130, 0)'
+            },
+            {
+                token: 'spacing-131',
+                copy: 'var(--spacing-131, 0)'
             }
         ]
     }

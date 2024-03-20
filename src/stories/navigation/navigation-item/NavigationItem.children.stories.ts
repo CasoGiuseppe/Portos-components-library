@@ -5,7 +5,7 @@ import NavigationItem from '@/components/navigation/navigation-item/NavigationIt
 import BaseIcon from "@/components/base/base-icon/BaseIcon.vue";
 
 const meta = {
-    title: 'Navigation/Item/Default',
+    title: 'Navigation/Item/Second Level',
     component: NavigationItem,
     tags: ['autodocs'],
     argTypes: {
@@ -14,14 +14,15 @@ const meta = {
         rtl:  { control: 'radio', options: [true, false] },
         collapsed:  { control: 'radio', options: [true, false] },
         label: { control: 'text' },
+        children: { control: 'text' }
     },
     args: {
-        id: '0',
+        id: '',
         icon: '',
         selected: false,
         rtl: false,
         collapsed: false,
-        label: 'Label'
+        label: 'Label',
     }
 } satisfies Meta<typeof NavigationItem>;
 
@@ -48,6 +49,7 @@ const Templates: Story = {
                         />
                     </template>
                     <template #label>{{ args.label }}</template>
+                    <template #children>{{ args.children }}</template>
                 </NavigationItem>
             </section
         `,
