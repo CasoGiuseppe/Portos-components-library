@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, useSlots} from 'vue';
+import { computed, useSlots } from 'vue';
 import { type INavigationItemComponent } from './types';
 
 const customEmits = defineEmits(['submit', 'action']);
@@ -50,7 +50,7 @@ const children = computed(() => !!slots['children']);
 const showLabel = computed(() => label.value && !props.collapsed);
 
 const submit = () => {
-    if(children.value) return
+    if (children.value) return
     customEmits('submit', props.id)
 };
 const action = () => customEmits('action');
