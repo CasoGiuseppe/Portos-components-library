@@ -9,7 +9,7 @@
       `base-link--is-${size}`,
       `${variant ? `base-link--is-${type}-ALT` : ''}`
     ]"
-    :disabled="disabled"
+    :disabled="disabled || null"
     :aria-disabled="disabled"
     :aria-label="label"
     :title="label"
@@ -21,11 +21,11 @@
 </template>
 
 <script setup lang="ts">
-import { PropType } from 'vue'
-import { UniqueId, Sizes, Types, Element } from './types'
+import { type PropType } from 'vue'
+import { type UniqueId, Sizes, Types, Element } from './types'
 import useValidations from '@/components/validation/useValidation'
 
-const props = defineProps({
+const { elementType } = defineProps({
   /**
    * Set the unique id of the ui link
    */
@@ -77,20 +77,12 @@ const props = defineProps({
    */
   elementType: {
     type: String as PropType<Element>
-  },
-  /**
-   * Set the href attribute for anchor element
-   */
-  href: {
-    type: String as PropType<string>,
-    default: '#'
   }
 })
 const emits = defineEmits(['submit'])
 const handleClick = () => {
-  const { disabled, elementType, href } = props
-  if (disabled) return
-  elementType === Element.ANCHOR && href !== '#' ? (window.location.href = href) : emits('submit')
+  if (elementType === Element.ANCHOR) return
+  emits('submit')
 }
 </script>
 

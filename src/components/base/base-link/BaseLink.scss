@@ -17,9 +17,19 @@
   flex-direction: row;
   gap: var(--spacing-40, 0);
   color: var(--color-primary-20, #000);
-  cursor: pointer;
   background-color: transparent;
   border: none;
+  outline: none;
+
+  &:is(a) {
+    &[href] {
+      cursor: pointer;
+    }
+  }
+
+  &:is(button) {
+    cursor: pointer;
+  }
 
   transition:
     background $animationTime ease-out,
@@ -28,7 +38,7 @@
     color $animationTime ease-out;
 
   // disable
-  &:disabled {
+  &[disabled] {
     pointer-events: none;
     &:not([class*='ALT']) {
       color: var(--color-neutral-60, #000);
