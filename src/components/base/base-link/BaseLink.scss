@@ -18,12 +18,23 @@
   gap: var(--spacing-40, 0);
   color: var(--color-primary-20, #000);
   cursor: pointer;
+  background-color: transparent;
+  border: none;
 
   transition:
     background $animationTime ease-out,
     box-shadow $animationTime ease-out,
     border-color $animationTime ease-out,
     color $animationTime ease-out;
+
+  // disable
+  &:disabled {
+    pointer-events: none;
+    &:not([class*='ALT']) {
+      color: var(--color-neutral-60, #000);
+    }
+    color: var(--color-neutral-40, #000);
+  }
 
   @media (hover) {
     &:focus-visible {
@@ -51,12 +62,6 @@
       }
       &-ALT {
         color: var(--color-primary-20, #000);
-        &-disabled {
-          color: var(--color-neutral-40, #000);
-          @include createHoverState {
-            color: var(--color-neutral-40, #000);
-          }
-        }
       }
     }
 
@@ -66,16 +71,6 @@
     }
     &-S {
       @include text-link-s--regular;
-    }
-
-    // disable
-    &-disabled {
-      color: var(--color-neutral-60, #000);
-      @include createHoverState {
-        &:not([class*='ALT']) {
-          color: var(--color-neutral-60, #000);
-        }
-      }
     }
   }
 }

@@ -7,11 +7,11 @@
       'base-link',
       `base-link--is-${type}`,
       `base-link--is-${size}`,
-      { [`base-link--is-${type}-ALT`]: variant && !disabled },
-      { [`base-link--is-${type}-ALT-disabled`]: variant && disabled },
-      { 'base-link--is-disabled': disabled && !variant }
+      `${variant ? `base-link--is-${type}-ALT` : ''}`
     ]"
     :disabled="disabled"
+    :aria-disabled="disabled"
+    :aria-label="label"
     :title="label"
     @click="handleClick"
   >
@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { PropType } from 'vue'
-import { UniqueIdLink, SizesLink, TypesLink, ElementLink } from './types'
+import { UniqueId, Sizes, Types, Element } from './types'
 import useValidations from '@/components/validation/useValidation'
 
 const props = defineProps({
@@ -30,17 +30,17 @@ const props = defineProps({
    * Set the unique id of the ui link
    */
   id: {
-    type: String as PropType<UniqueIdLink>,
+    type: String as PropType<UniqueId>,
     default: 'LinkId'
   },
   /**
    * Set the link type family [primary, secondary, tertiary]
    */
   type: {
-    type: String as PropType<TypesLink>,
-    default: TypesLink.PRIMARY,
-    validator: (prop: TypesLink) =>
-      useValidations().validateValueCollectionExists({ collection: TypesLink, value: prop })
+    type: String as PropType<Types>,
+    default: Types.PRIMARY,
+    validator: (prop: Types) =>
+      useValidations().validateValueCollectionExists({ collection: Types, value: prop })
   },
   /**
    * Set variant type state
@@ -53,10 +53,10 @@ const props = defineProps({
    * Set the link size mode [M, S]
    */
   size: {
-    type: String as PropType<SizesLink>,
-    default: SizesLink.M,
-    validator: (prop: SizesLink) =>
-      useValidations().validateValueCollectionExists({ collection: SizesLink, value: prop })
+    type: String as PropType<Sizes>,
+    default: Sizes.M,
+    validator: (prop: Sizes) =>
+      useValidations().validateValueCollectionExists({ collection: Sizes, value: prop })
   },
   /**
    * Set the disabled link state
@@ -76,8 +76,7 @@ const props = defineProps({
    * Set the element type (button or a)
    */
   elementType: {
-    type: String as PropType<ElementLink>,
-    default: ElementLink.A
+    type: String as PropType<Element>
   },
   /**
    * Set the href attribute for anchor element
@@ -89,13 +88,9 @@ const props = defineProps({
 })
 const emits = defineEmits(['submit'])
 const handleClick = () => {
-  if (props.elementType === 'a' && props.href !== '#') {
-    if (!props.disabled) {
-      window.location.href = props.href
-    }
-  } else {
-    emits('submit')
-  }
+  const { disabled, elementType, href } = props
+  if (disabled) return
+  elementType === Element.ANCHOR && href !== '#' ? (window.location.href = href) : emits('submit')
 }
 </script>
 

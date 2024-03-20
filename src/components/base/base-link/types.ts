@@ -1,14 +1,15 @@
-export type UniqueIdLink = string
+export type UniqueId = string
 
-export enum TypesLink {
+export enum Types {
   PRIMARY = 'primary',
 }
 
-export enum ElementLink {
-  A = 'a'
+export enum Element {
+  ANCHOR = 'a',
+  BUTTON = 'button'
 }
 
-export enum SizesLink {
+export enum Sizes {
   S = 'S',
   M = 'M'
 }
