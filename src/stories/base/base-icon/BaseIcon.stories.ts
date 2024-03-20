@@ -8,9 +8,13 @@ const meta = {
     tags: ['autodocs'],
     argTypes: {
       size: { control: 'select', options: Object.values(Sizes) },
+      background: { control: 'text' },
+      color: { control: 'text' }
     },
     args: {
-      size: Sizes.S
+      size: Sizes.S,
+      background: '#F2F4F5',
+      color: '#21578A'
     },
 } satisfies Meta;
 
@@ -41,7 +45,10 @@ const Template: Story = {
                     foundation--is-square
                     foundation--is-center
                     foundation--has-no-padding"
-                    style="background: var(--color-neutral-20, #000)"
+                    :style="{
+                      'background': args.background,
+                      'color': args.color
+                    }"
                   >
                     <Suspense>
                       <BaseIcon
