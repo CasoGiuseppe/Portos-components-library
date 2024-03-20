@@ -1,5 +1,6 @@
 <template>
   <button
+    data-testID="ui-button"
     :id="id"
     :class="[
       'base-button',
@@ -44,7 +45,7 @@ defineProps({
    * Set variant type state
    */
   variant: {
-    type: Boolean,
+    type: Boolean as PropType<boolean>,
     default: false
   },
   /**
@@ -59,18 +60,18 @@ defineProps({
    * Set the disabled button state
    */
   disabled: {
-    type: Boolean,
+    type: Boolean as PropType<boolean>,
     default: false
   },
   /**
    * Set the aria accesibility label
    */
   label: {
-    type: String
+    type: String as PropType<string>
   }
 });
-const emits = defineEmits(['click'])
-const handleClick = () => emits('click')
+const emits = defineEmits(['submit'])
+const handleClick = () => emits('submit')
 
 </script>
 

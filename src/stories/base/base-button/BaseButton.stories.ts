@@ -38,7 +38,7 @@ const Templates: Story = {
         setup() { return { args } },
         template: `
             <section style="display: flex; gap: 10px">
-                <BaseButton v-bind="args" @click="action">
+                <BaseButton v-bind="args" @sumbit="action">
                     <template #default>{{ args.default }}</template>
                 </BaseButton>
 
@@ -47,7 +47,7 @@ const Templates: Story = {
                 </BaseButton>
             </section>
         `,
-        methods: { action: action('clicked') }
+        methods: { action: action('sumitted') }
     }),
 }
 

@@ -1,0 +1,10 @@
+.default-error {
+    $defaulterror: &;
+
+    align-items: center;
+    display: flex;
+    gap: var(--spacing-30, 0);
+    width: fit-content;
+
+    color: var(--color-error-40, #000);
+}
