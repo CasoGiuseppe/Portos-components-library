@@ -51,22 +51,28 @@ const Templates: Story = {
         setup() { return { args } },
         template: `
             <section style="display: flex; padding: 10px; background: #eee;">
-                <BaseInput
-                    v-bind="args"
-                    @invalid="setInvalid"
-                    @update:modelValue="update"
-                    @change="change"
-                    @focus="focus"
-                    @submit="changeInputState"
-                >
-                    <template #error>{{ args.error }}</template>
-                    <template #label>{{ args.label }}</template>
-                    <template #message>{{ args.message }}</template>
-                    <template #submit>
-                        <template v-if="args.input === 'text'"><BaseIcon name="IconEditHide" type="edit"></BaseIcon></template>
-                        <template v-else><BaseIcon name="IconEditShow" type="edit"></BaseIcon></template>
-                    </template>
-                </BaseInput>
+                <Suspense>
+                    <BaseInput
+                        v-bind="args"
+                        @invalid="setInvalid"
+                        @update:modelValue="update"
+                        @change="change"
+                        @focus="focus"
+                        @submit="changeInputState"
+                    >
+                        <template #error>{{ args.error }}</template>
+                        <template #label>{{ args.label }}</template>
+                        <template #message>{{ args.message }}</template>
+                        <template #submit>
+                            <template v-if="args.input === 'text'"><
+                                BaseIcon id="IconEditHide" name="IconEditHide" type="edit" />
+                            </template>
+                            <template v-else>
+                                <BaseIcon id="IconEditHide" name="IconEditShow" type="edit" />
+                            </template>
+                        </template>
+                    </BaseInput>
+                </Suspense>
             </section>
         `,
         methods: {
