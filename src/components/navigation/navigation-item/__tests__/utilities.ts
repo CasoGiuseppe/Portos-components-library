@@ -7,7 +7,9 @@ export const $providedId = '1';
 export const $providedLabel = 'This is a label';
 
 // DOM elements
-export const $uiDOMNavigationItem = '.navigation-item';
-export const $uiDOMNavigationAction = '.navigation-item__action';
-export const $uiDOMNavigationSelected = 'navigation-item--is-selected';
-export const $uiDOMNavigationCollapsed = 'navigation-item--is-collapsed';
+export const $uiDOMNavigationItem = '[data-testID=ui-navigation-item]';
+export const $uiDOMNavigationAction = '[data-testID=ui-navigation-item-action]';
+
+// Classes
+export const $uiClassNavigationSelected = 'navigation-item--is-selected';
+export const $uiClassDOMNavigationCollapsed = 'navigation-item--is-collapsed';

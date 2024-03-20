@@ -7,6 +7,7 @@
             collapsed ? 'navigation-item--is-collapsed' : null,
             children ? 'navigation-item--has-second-level' : null
         ]"
+        data-testID="ui-navigation-item"
         @click="submit"
     >
         <picture class="navigation-item__header">
@@ -15,6 +16,7 @@
             <button
                 v-if="children"
                 class="navigation-item__action"
+                data-testID="ui-navigation-item-action"
                 @click="action"
             />
         </picture>

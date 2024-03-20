@@ -9,8 +9,8 @@ import {
     $providedChildren,
     $uiDOMNavigationItem,
     $uiDOMNavigationAction,
-    $uiDOMNavigationSelected,
-    $uiDOMNavigationCollapsed
+    $uiClassNavigationSelected,
+    $uiClassDOMNavigationCollapsed
 } from './utilities';
 
 let $wrapper: any;
@@ -86,8 +86,8 @@ describe('NavigationItem component tests', () => {
                 });
             });
 
-            it(`Should add ${$uiDOMNavigationSelected} class when is selected`, async () => {
-                expect($wrapper.classes()).toContain($uiDOMNavigationSelected);
+            it(`Should add ${$uiClassNavigationSelected} class when is selected`, async () => {
+                expect($wrapper.classes()).toContain($uiClassNavigationSelected);
             });
         });
 
@@ -104,15 +104,15 @@ describe('NavigationItem component tests', () => {
                 });
             });
             
-            it(`Should add ${$uiDOMNavigationCollapsed} class when is collapsed`, () => {
-                expect($wrapper.classes()).toContain($uiDOMNavigationCollapsed);
+            it(`Should add ${$uiClassDOMNavigationCollapsed} class when is collapsed`, () => {
+                expect($wrapper.classes()).toContain($uiClassDOMNavigationCollapsed);
             });
             
             it('Should hide label when is collapsed', () => {
                 expect($wrapper.html({ raw: true })).not.toContain($providedLabel);
             });
 
-            it(`Should not use ${$uiDOMNavigationCollapsed} class by default`, async () => {
+            it(`Should not use ${$uiClassDOMNavigationCollapsed} class by default`, async () => {
                 $wrapper = await mountComponent(NavigationItem, {
                     props: {
                         id: $providedId,
@@ -122,7 +122,7 @@ describe('NavigationItem component tests', () => {
                     }
                 });
 
-                expect($wrapper.classes()).not.toContain($uiDOMNavigationCollapsed);
+                expect($wrapper.classes()).not.toContain($uiClassDOMNavigationCollapsed);
             });
         });
 
