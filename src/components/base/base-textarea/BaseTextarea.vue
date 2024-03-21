@@ -1,59 +1,95 @@
 <template>
-  <div class="base-textarea">
+  <fieldset class="base-textarea">
     <!--Header-->
-    <div class="base-textarea--header">
-      <span class="base-textarea--header-label">
-        {{ label }}
-      </span>
-      <div class="base-textarea--header-question_mark" @click="showHelp = !showHelp">
-        <base-icon :name="'IconFeedbackAnswer'" :type="Types.FEEDBACK" :size="Sizes.S"></base-icon>
-      </div>
-    </div>
-    <!--wrapper-->
-    <div class="base-textarea--wrapper">
+    <header class="base-textarea--header">
+      <section class="base-textarea--header-box">
+        <!-- main header label -->
+        <h6 class="base-textarea--header-label">
+          {{ label }}
+        </h6>
+
+        <!-- optional message -->
+        <span v-if="!required" class="base-textarea--header-label_optional">
+          <!-- @slot Slot for optional info -->
+          <slot name="optional" />
+          {{ optional ? '' : '(optional)' }}
+        </span>
+      </section>
+
+      <button
+        v-if="iconHelp && message"
+        class="base-textarea--header-question_mark"
+        @click="showHelp = !showHelp"
+      >
+        <!-- @slot for help button-->
+        <suspense>
+          <slot name="iconHelp" />
+        </suspense>
+      </button>
+    </header>
+
+    <!--main-->
+    <main class="base-textarea--box">
       <textarea
         :id="id"
-        :value="text"
-        :class="['base-textarea--wrapper-textarea', `${hasError ? 'error' : ''}`]"
+        v-model.lazy="value"
+        :class="['base-textarea--box-textarea', `${hasError ? 'error' : ''}`]"
         :disabled="disabled"
+        :required="required"
         :placeholder="placeholder"
-        @input="updateCharacterCount"
+        :maxlength="max"
+        @input="updateValue"
+        @change="changeValue"
       ></textarea>
-      <div class="base-textarea--wrapper-clear_text" v-if="!disabled" @click="clearTextarea">
-        <base-icon :name="'IconEditCleanCircle'" :type="Types.EDIT" :size="Sizes.S"> </base-icon>
+
+      <div class="base-textarea--box-clear_text" v-if="!disabled && value" @click="clearTextarea">
+        <!-- @slot for clear icon-->
+        <suspense>
+          <slot name="iconClear" />
+        </suspense>
       </div>
-    </div>
+    </main>
+
     <!--footer -->
-    <div class="base-textarea--footer">
+    <footer class="base-textarea--footer">
       <div class="base-textarea--footer-help_area">
-        <div class="base-textarea--footer-help_area-icon_error">
-          <base-icon
-            v-if="hasError && showHelp"
-            :name="'IconFeedbackError'"
-            :type="Types.FEEDBACK"
-            :size="Sizes.XS"
-          ></base-icon>
-        </div>
-        <div
-          class="base-textarea--footer-help_area-help_text"
-          v-if="showHelp"
-          :class="hasError ? 'error' : ''"
+        <p
+          v-if="message || error"
+          data-testID="ui-textarea-message"
+          class="base-textarea__user-message"
         >
-          {{ helpText }}
-        </div>
+          <!-- @slot Slot for user alert -->
+          <span
+            v-if="error && hasError"
+            data-testID="ui-textarea-error"
+            class="base-textarea__user-message-alert"
+          >
+            <slot name="error" />
+          </span>
+
+          <!-- @slot Slot for user message info -->
+          <slot v-if="showHelp" name="message" />
+        </p>
       </div>
-      <div class="base-textarea--footer-counter">{{ characterCount }} / {{ max }}</div>
-    </div>
-  </div>
+      <div class="base-textarea--footer-counter">{{ value ? value.length : 0 }} / {{ max }}</div>
+    </footer>
+  </fieldset>
 </template>
 
 <script lang="ts" setup>
-import { defineEmits, ref, watchEffect, type PropType } from 'vue'
-import BaseIcon from '@ui/base/base-icon/BaseIcon.vue'
-import { Types, Sizes } from '@ui/base/base-icon/types'
+import { defineEmits, useSlots, computed, ref, watchEffect, type PropType } from 'vue'
 import type { ITextareaComponent } from '@ui/base/base-textarea/types'
 
-const { id, label, placeholder, helpText, disabled, maxLength }: ITextareaComponent = defineProps({
+const {
+  id,
+  label,
+  placeholder,
+  disabled,
+  maxLength,
+  minLength,
+  required
+  // proxyValue
+}: ITextareaComponent = defineProps({
   /**
    * Set the unique id of the ui button
    */
@@ -62,71 +98,128 @@ const { id, label, placeholder, helpText, disabled, maxLength }: ITextareaCompon
     default: 'textareaId'
   },
   /**
+   * v-model value
+   */
+  proxyValue: {
+    type: String as PropType<string>,
+    default: ''
+  },
+  /**
    * Set label for the ui textarea
    */
   label: {
-    type: String,
-    default: 'Label'
+    type: String as PropType<string>,
+    default: ''
   },
   /**
    * Set placeholder for the ui textarea
    */
   placeholder: {
-    type: String,
-    default: 'Write something here!...'
+    type: String as PropType<string>,
+    default: ''
   },
   /**
    * Set the help text when user click on help icon
    */
   helpText: {
-    type: String,
-    default: 'Help text'
+    type: String as PropType<string>,
+    default: ''
   },
   /**
    * Set max number characters on ui textarea to show error
    */
   maxLength: {
-    type: Number,
+    type: Number as PropType<number>,
     default: 260
+  },
+  /**
+   * Set max number characters on ui textarea to show error
+   */
+  minLength: {
+    type: Number as PropType<number>,
+    default: 0
   },
   /**
    * Sets if the ui textarea is disabled
    */
   disabled: {
-    type: Boolean,
+    type: Boolean as PropType<boolean>,
+    default: false
+  },
+  /**
+   * Sets if ui textarea is a required field
+   */
+  required: {
+    type: Boolean as PropType<boolean>,
     default: false
   }
 })
 
-const text = ref('')
+// slots
+const slots = useSlots()
+const optional = computed(() => !!slots['optional'])
+const iconHelp = computed(() => !!slots['iconHelp'])
+const error = computed(() => !!slots['error'])
+const message = computed(() => !!slots['message'])
+
+// emits
+const customEmits = defineEmits([
+  'textareaError',
+  'update:modelValue',
+  'change',
+  'focus',
+  'invalid'
+])
+
+const value = defineModel<string>('proxyValue')
+
+// refs
 const max = ref(maxLength)
-const characterCount = ref(0)
-const emitsError = defineEmits(['textareaError'])
+const min = ref(minLength)
 let hasError = ref(false)
 let showHelp = ref(false)
 
+const setError = () => {
+  if (!value.value && required) {
+    console.log('trying to set hasError as true onload')
+    hasError.value = true
+    return
+  }
+
+  hasError.value = required && typeof value.value === 'string' && value.value.length <= min.value
+}
+
 watchEffect(() => {
+  setError()
+
   if (hasError.value) {
-    emitsError('textareaError', { error: 'TEXT_SIZE_EXCEEDED' })
+    customEmits('textareaError', { error: 'TEXT_SIZE_EXCEEDED' })
   }
 })
 
-const updateCharacterCount = (event: Event) => {
+const updateValue = (event: Event) => {
   const target = event.target as HTMLTextAreaElement
-  text.value = target.value
-  characterCount.value = target.value.length
-  hasError.value = characterCount.value > max.value
-  if (hasError.value) {
-    showHelp.value = true
-  }
+  value.value = target.value
+
+  hasError.value = value.value.length > max.value
+
+  //emits
+  customEmits('update:modelValue', value)
+  !value.value && requiredModel()
 }
 
 const clearTextarea = () => {
-  text.value = ''
-  characterCount.value = 0
-  hasError.value = characterCount.value > max.value
+  value.value = ''
   if (showHelp.value) showHelp.value = false
+
+  requiredModel()
 }
+
+const requiredModel = () => {
+  if (required) customEmits('invalid', { mode: 'required', value: true })
+}
+
+const changeValue = (payload: Event) => customEmits('change', { target: payload.target })
 </script>
 
 <style lang="scss" src="./BaseTextarea.scss"></style>

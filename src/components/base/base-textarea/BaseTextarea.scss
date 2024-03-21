@@ -34,6 +34,7 @@
 }
 
 .base-textarea {
+  $basetextarea: &;
   $animationTime: 0.4s;
 
   width: 220px;
@@ -45,9 +46,17 @@
     display: flex;
     justify-content: space-between;
 
+    &-box {
+      display: flex;
+    }
+
     &-question_mark {
       margin-left: 4px;
-      cursor: pointer;
+      //cursor: pointer;
+      display: flex;
+      align-items: center;
+      border: none;
+      background: none;
 
       svg path {
         fill: var(--color-primary-40, #21578a);
@@ -57,10 +66,15 @@
     &-label {
       color: var(--color-neutral-70, #1d1e20);
       @include text-body-m--bold;
+
+      &_optional {
+        margin-left: 0.25rem;
+        color: var(--color-neutral-60, #494d50);
+      }
     }
   }
 
-  &--wrapper {
+  &--box {
     position: relative;
 
     &-textarea {
@@ -75,6 +89,9 @@
 
       &::placeholder {
         color: var(--color-neutral-50, #818a8f);
+      }
+      &:invalid {
+        border-color: var(--color-error-30, #ff602d);
       }
     }
 
@@ -102,6 +119,8 @@
 
       &-icon_error {
         display: flex;
+        border: none;
+        background: none;
         svg path {
           fill: var(--color-error-30, #ff602d);
         }
@@ -110,14 +129,38 @@
       &-help_text {
         font: var(--font-body-xs);
 
-        &.error {
-          color: var(--color-error-30, #ff602d);
+        &.base-textarea--has-error {
+          color: var(--color-error-40, #7a1e00);
         }
       }
     }
 
     &-counter {
       font: var(--font-body-xs);
+    }
+  }
+
+  &__user {
+    &-message {
+      @include text-body-xs--regular;
+
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-20, 0);
+
+      color: var(--color-neutral-70, #000);
+      transition: color $animationTime ease-out;
+
+      &-alert {
+        align-items: center;
+        display: flex;
+        gap: var(--spacing-20, 0);
+        color: var(--color-error-40, #000);
+
+        > svg {
+          color: var(--color-error-30, #000);
+        }
+      }
     }
   }
 }
