@@ -1,7 +1,12 @@
-import { type IIconComponent } from '@ui/base/base-icon/BaseIcon.vue'
+import type { Names, Types } from '@/components/base/base-icon/types'
 
-interface IListIcon extends IIconComponent {
-  position: 'left' | 'right'
+interface IListPosition {
+  type?: Types
+  name?: Names
+}
+interface IListIcon {
+  left?: IListPosition
+  right?: IListPosition
 }
 
 export interface IListComponent {

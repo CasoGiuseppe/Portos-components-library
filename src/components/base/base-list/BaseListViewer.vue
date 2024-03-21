@@ -18,14 +18,43 @@ const items: IListComponent[] = [
   {
     id: 1,
     label: 'label',
-    secondLabel: 'second label here',
-    icon: { type: Types.ARROW, name: 'IconArrowCircleUp', position: 'left' },
+    secondLabel: 'selected',
+    icon: {
+      left: { type: Types.ARROW, name: 'IconArrowCircleUp' },
+      right: { type: Types.ARROW, name: 'IconArrowCircleUp' }
+    },
     selected: true
   },
-  { id: 2, label: 'Label', secondLabel: 'Second label here', selected: false },
-  { id: 3, label: 'Label', secondLabel: 'Second label here', selected: false },
-  { id: 4, label: 'Label', secondLabel: 'Second label here', selected: false, disabled: true },
-  { id: 5, label: 'Label', secondLabel: 'Second Label disabled', selected: true, disabled: true }
+  {
+    id: 2,
+    label: 'Label',
+    secondLabel: 'icon left',
+    icon: {
+      left: { type: Types.ARROW, name: 'IconArrowCircleUp' }
+    },
+    selected: false
+  },
+  {
+    id: 3,
+    label: 'Label',
+    secondLabel: 'icon right',
+    icon: {
+      right: { type: Types.ARROW, name: 'IconArrowCircleUp' }
+    },
+    selected: false
+  },
+  { id: 4, label: 'Label', secondLabel: 'disabled', selected: false, disabled: true },
+  {
+    id: 5,
+    label: 'Label',
+    secondLabel: 'disabled && selected',
+    icon: {
+      left: { type: Types.ARROW, name: 'IconArrowCircleUp' },
+      right: { type: Types.ARROW, name: 'IconArrowCircleUp' }
+    },
+    selected: true,
+    disabled: true
+  }
 ]
 </script>
 
