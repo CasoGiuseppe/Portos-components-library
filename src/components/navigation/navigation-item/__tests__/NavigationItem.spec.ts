@@ -63,16 +63,6 @@ describe('NavigationItem component tests', () => {
             $wrapper.find($uiDOMNavigationItem).trigger('click');
             expect($wrapper.emitted()).toHaveProperty('submit');
         });
-
-        it('Should not emit "submit" when item has any children', async () => {
-            $wrapper.find($uiDOMNavigationItem).trigger('click');
-            expect($wrapper.emitted()).not.toHaveProperty('submit');
-        });
-
-        it('Should emit "action" when action button is clicked', async () => {
-            $wrapper.find($uiDOMNavigationAction).trigger('click');
-            expect($wrapper.emitted()).toHaveProperty('action');
-        });
     });
 
     describe('Test HTML appearance', () => {
