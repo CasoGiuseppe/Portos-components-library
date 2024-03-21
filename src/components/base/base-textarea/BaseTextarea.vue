@@ -5,6 +5,7 @@
       <section class="base-textarea--header-box">
         <!-- main header label -->
         <h6 class="base-textarea--header-label">
+          <!-- @slot Slot for optional info -->
           <slot v-if="label" name="label" />
         </h6>
 
@@ -19,6 +20,7 @@
       <button
         v-if="iconHelp && message"
         class="base-textarea--header-question_mark"
+        data-testID="ui-textarea-help"
         @click="showHelp = !showHelp"
       >
         <!-- @slot for help button-->
@@ -44,6 +46,7 @@
 
       <button
         class="base-textarea--box-clear_text"
+        data-testID="ui-textarea-clear"
         v-if="!disabled && value"
         @click="clearTextarea"
       >
@@ -62,12 +65,12 @@
           data-testID="ui-textarea-message"
           class="base-textarea__user-message"
         >
-          <!-- @slot Slot for user alert -->
           <span
             v-if="error && hasError"
             data-testID="ui-textarea-error"
             class="base-textarea__user-message-alert"
           >
+            <!-- @slot Slot for user alert -->
             <slot name="error" />
           </span>
 
@@ -75,6 +78,8 @@
           <slot v-if="showHelp" name="message" />
         </p>
       </div>
+
+      <!--counter -->
       <div v-if="max" class="base-textarea--footer-counter">
         {{ value ? value.length : 0 }} / {{ max }}
       </div>
@@ -181,7 +186,9 @@ const updateValue = (event: Event) => {
   const target = event.target as HTMLTextAreaElement
   value.value = target.value
 
-  hasError.value = value.value.length > max.value
+  if (max.value) {
+    hasError.value = value.value.length > max.value
+  }
 
   //emits
   customEmits('update:modelValue', value)
