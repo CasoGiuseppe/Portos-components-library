@@ -22,7 +22,7 @@
 <script setup lang="ts">
 import { defineEmits, type PropType } from 'vue'
 import { type UniqueId, Sizes, Types } from './types';
-import useValidations from '@/components/validation/useValidation';
+import useValidations from '@/components/utilities/validation/useValidation';
 
 
 defineProps({
@@ -75,4 +75,4 @@ const handleClick = () => emits('submit')
 
 </script>
 
-<style src="./BaseButton.scss" lang="scss"></style>
+<style src="./BaseButton.scss" lang="scss"></style>@/components/utilities/validation/useValidation

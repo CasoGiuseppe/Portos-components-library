@@ -5,7 +5,7 @@
     $animationTime: .4s;
     $animationName: second-level-in-out;
 
-    @mixin inOutSecondLeve() {
+    @mixin inOutSecondLevel() {
         > #{$navigationItem}__second-level {
             display: block;
             animation-name: $animationName;
@@ -57,12 +57,12 @@
 
     @media (hover) {
         &:hover {
-            @include inOutSecondLeve;
+            @include inOutSecondLevel;
             background-color: var(--color-primary-40, #000);
         }
 
         &:focus {
-            @include inOutSecondLeve;
+            @include inOutSecondLevel;
 
             z-index: 2;
             box-shadow:
@@ -75,6 +75,12 @@
         &-selected {
             box-shadow: inset var(--spacing-20, 0) 0 0 var(--color-brand-50, #000);
             background-color: var(--color-primary-40, #000);
+
+            &#{$navigationItem}--has-inside-focus {
+                @media (hover: none) {
+                    @include inOutSecondLevel;
+                }
+            }
         }
 
         &-collapsed {
@@ -153,7 +159,7 @@
         animation-duration: $animationTime;
 
         #{$navigationItem}--show-second-level & {
-            @include inOutSecondLeve;
+            @include inOutSecondLevel;
         }
     }
 }

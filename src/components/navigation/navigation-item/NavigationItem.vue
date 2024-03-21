@@ -5,9 +5,11 @@
             'navigation-item',
             selected ? 'navigation-item--is-selected' : null,
             collapsed ? 'navigation-item--is-collapsed' : null,
-            children ? 'navigation-item--has-second-level' : null
+            children ? 'navigation-item--has-second-level' : null,
+            insideFocus ? 'navigation-item--has-inside-focus' : null
         ]"
         data-testID="ui-navigation-item"
+        v-click-outside="outsideAction"
         @click="submit"
     >
         <picture class="navigation-item__user-icon">
@@ -40,10 +42,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, useSlots } from 'vue';
+import { computed, useSlots, ref } from 'vue';
 import { type INavigationItemComponent } from './types';
 
 const customEmits = defineEmits(['submit']);
+const insideFocus = ref<boolean>(false);
 
 const props = withDefaults(defineProps<INavigationItemComponent>(), {
     id: 'item',
@@ -58,9 +61,11 @@ const children = computed(() => !!slots['children']);
 const showLabel = computed(() => label.value && !props.collapsed);
 
 const submit = () => {
-    if (children.value) return
+    insideFocus.value = true;
     customEmits('submit', props.id)
 };
+
+const outsideAction = () => insideFocus.value = false;
 
 </script>
 

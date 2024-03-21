@@ -9,7 +9,7 @@ import BaseTable from './components/base/base-table/BaseTable.vue'
 
 export * from './components/icons'
 export * from './shared/helpers'
-export * from './components/validation/useValidation'
+export * from './components/utilities/validation/useValidation'
 
 // Exporta los componentes individualmente
 export { BaseCard, BaseTable, BaseIcon, BaseSearch, BaseInput, BaseButton }

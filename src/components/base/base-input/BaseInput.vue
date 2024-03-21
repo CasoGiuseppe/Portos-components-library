@@ -76,12 +76,12 @@
     </fieldset>
 </template>
 <script setup lang="ts">
-import { computed, ref, useSlots, type PropType } from 'vue';
+import { computed, useSlots, type PropType } from 'vue';
 import {  Types } from './types';
-import useValidations from '@/components/validation/useValidation';
+import useValidations from '@/components/utilities/validation/useValidation';
 
 const value = defineModel('proxyValue')
-const { pattern, required, proxyValue } = defineProps({
+const { pattern, required } = defineProps({
     /**
      * Set the unique id of the ui input
      */
@@ -195,4 +195,4 @@ const focus = () => customEmits('focus')
 
 const submitAction = () => customEmits('submit')
 </script>
-<style src="./BaseInput.scss" lang="scss"></style>
+<style src="./BaseInput.scss" lang="scss"></style>@/components/utilities/validation/useValidation
