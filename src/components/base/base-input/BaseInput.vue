@@ -78,7 +78,7 @@
 <script setup lang="ts">
 import { computed, useSlots, type PropType } from 'vue';
 import {  Types } from './types';
-import useValidations from '@/components/utilities/validation/useValidation';
+import { validateValueCollectionExists } from '@/components/utilities/validation/useValidation';
 
 const value = defineModel('proxyValue')
 const { pattern, required } = defineProps({
@@ -103,7 +103,7 @@ const { pattern, required } = defineProps({
     input: {
         type: String as PropType<Types>,
         default: Types.TEXT,
-        validator: (prop: Types) => useValidations().validateValueCollectionExists({ collection: Types, value: prop})
+        validator: (prop: Types) => validateValueCollectionExists({ collection: Types, value: prop})
     },
 
     /**

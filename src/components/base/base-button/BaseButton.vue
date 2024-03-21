@@ -22,7 +22,7 @@
 <script setup lang="ts">
 import { defineEmits, type PropType } from 'vue'
 import { type UniqueId, Sizes, Types } from './types';
-import useValidations from '@/components/utilities/validation/useValidation';
+import { validateValueCollectionExists } from '@/components/utilities/validation/useValidation';
 
 
 defineProps({
@@ -39,7 +39,7 @@ defineProps({
   type: {
     type: String as PropType<Types>,
     default: Types.PRIMARY,
-    validator: (prop: Types) => useValidations().validateValueCollectionExists({ collection: Types, value: prop})
+    validator: (prop: Types) => validateValueCollectionExists({ collection: Types, value: prop})
   },
   /**
    * Set variant type state
@@ -54,7 +54,7 @@ defineProps({
   size: {
     type: String as PropType<Sizes>,
     default:Sizes.L,
-    validator: (prop: Sizes) => useValidations().validateValueCollectionExists({ collection: Sizes, value: prop})
+    validator: (prop: Sizes) => validateValueCollectionExists({ collection: Sizes, value: prop})
   },
   /**
    * Set the disabled button state

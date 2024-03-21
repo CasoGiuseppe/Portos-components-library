@@ -1,7 +1,7 @@
 import { ValueNotFoundInCollection } from "./exceptions/ValueNotFoundInCollection";
 import type { IValidation } from "./interfaces/useValidation";
 
-export default function useValidations(): IValidation {
+function useValidations(): IValidation {
     const validateValueCollectionExists = ({
         collection,
         value
@@ -15,3 +15,6 @@ export default function useValidations(): IValidation {
         validateValueCollectionExists
     }
 }
+
+const { validateValueCollectionExists } = useValidations();
+export { validateValueCollectionExists }
