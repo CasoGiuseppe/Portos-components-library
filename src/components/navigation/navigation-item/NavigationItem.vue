@@ -10,19 +10,21 @@
         data-testID="ui-navigation-item"
         @click="submit"
     >
-        <picture class="navigation-item__header">
+        <picture class="navigation-item__user-icon">
             <!-- @slot Slot for icon content -->
             <slot name="icon"></slot>
-            <button
-                v-if="children"
-                class="navigation-item__action"
-                data-testID="ui-navigation-item-action"
-                @click="action"
-            />
         </picture>
+
+        <button
+            v-if="children"
+            class="navigation-item__action"
+            data-testID="ui-navigation-item-action"
+            @click="action"
+        />
         <p
             v-if="showLabel"
             class="navigation-item__label"
+            :dir="rtl ? 'rtl' : 'ltr'"
         >
             <!-- @slot Slot for label content -->
             <slot name="label" />
