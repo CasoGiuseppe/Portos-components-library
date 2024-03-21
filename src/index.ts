@@ -29,6 +29,7 @@ export {
 export * from './components/icons'
 export * from './shared/helpers'
 export * from './components/utilities/validation/useValidation'
+export * from './components/utilities/directives/clickOutside'
 
 // Proporcionar una función de instalación para la instalación global
 export function install(app: App): void {
