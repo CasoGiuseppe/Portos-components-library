@@ -8,6 +8,7 @@
     :maxLength="20"
     @invalid="emitsInvalid"
     @change="emitsInvalid"
+    @cleared="emitsInvalid"
     required
   >
     <template #label> Slot label </template>

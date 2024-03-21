@@ -42,12 +42,16 @@
         @change="changeValue"
       ></textarea>
 
-      <div class="base-textarea--box-clear_text" v-if="!disabled && value" @click="clearTextarea">
+      <button
+        class="base-textarea--box-clear_text"
+        v-if="!disabled && value"
+        @click="clearTextarea"
+      >
         <!-- @slot for clear icon-->
         <suspense>
           <slot name="iconClear" />
         </suspense>
-      </div>
+      </button>
     </main>
 
     <!--footer -->

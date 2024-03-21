@@ -103,6 +103,8 @@
       cursor: pointer;
       font-size: var(--font-body-m-size, 1rem);
       color: var(--color-neutral-50, #ccc);
+      border: none;
+      background: none;
 
       svg path {
         fill: var(--color-primary-40, #21578a);
