@@ -1,11 +1,32 @@
+
+
 .navigation-item {
     $navigationItem: &;
     $animationTime: .4s;
+    $animationName: second-level-in-out;
+
+    @mixin inOutSecondLevel() {
+        > #{$navigationItem}__second-level {
+            display: block;
+            animation-name: $animationName;
+        }
+    }
+
+    @include keyframe($animationName) {
+        from {
+            transform: translateX(105%);
+        }
+        to {
+            transform: translateX(100%);
+        }
+    }
 
     align-items: center;
     border: none;
     background-color: var(--color-primary-60, #000);
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
+    
     min-height: calc(var(--spacing-100, 0) + 4px);
     max-width: var(--spacing-131);
     padding: var(--spacing-40, 0) var(--spacing-30, 0);
@@ -13,7 +34,6 @@
     z-index: 1;
 
     color: var(--color-neutral-10, #000);
-    gap: var(--spacing-20, 0);
 
     transition: box-shadow $animationTime ease-out,
                 background $animationTime ease-out;
@@ -22,14 +42,28 @@
         border: none;
     }
 
+    &:not([dir='rtl']) {
+        justify-content: space-between;
+    }
+
+    &#{$navigationItem}--is-collapsed {
+        justify-content: center;
+    }
+
+    &:not(#{$navigationItem}--has-second-level),
+    &:not(#{$navigationItem}--is-collapsed) {
+        gap: var(--spacing-20, 0);
+    }
+
     @media (hover) {
-        &:not(#{$navigationItem}--has-second-level) {
-            &:hover {
-                background-color: var(--color-primary-40, #000);
-            }
+        &:hover {
+            @include inOutSecondLevel;
+            background-color: var(--color-primary-40, #000);
         }
 
         &:focus {
+            @include inOutSecondLevel;
+
             z-index: 2;
             box-shadow:
                 0 0 0 3px var(--color-neutral-10, #000),
@@ -41,6 +75,12 @@
         &-selected {
             box-shadow: inset var(--spacing-20, 0) 0 0 var(--color-brand-50, #000);
             background-color: var(--color-primary-40, #000);
+
+            &#{$navigationItem}--has-inside-focus {
+                @media (hover: none) {
+                    @include inOutSecondLevel;
+                }
+            }
         }
 
         &-collapsed {
@@ -60,37 +100,28 @@
         }
     }
 
-    &--has {
-        &-second-level {
-            cursor: default;
-        }
-    }
-
-    &__header {
-        align-items: center;
+    &__user-icon {
         display: flex;
-        
-        justify-content: space-between;
 
         [dir='rtl'] & {
-            justify-content: start;
-
-            > * {
-                &:first-child {
-                    order: 2
-                }
-            }
+            order: 1;
         }
     }
 
     &__label {
         @include text-body-s--regular;
-        display: flex;
         justify-content: flex-start;
-
-        text-overflow: ellipsis;
-        overflow: hidden;
+        flex: 0 0 100%;        
         max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-align: left;
+
+        [dir='rtl'] & {
+            order: 2;
+            text-align: right;
+        }
     }
 
     &__action {
@@ -100,10 +131,6 @@
         justify-content: center;
         width: var(--spacing-50, 0);
 
-        [dir='rtl'] & {
-            order: 1;
-        }
-
         &:before {
             border: solid var(--color-primary-10, #000);
             border-width: 0 var(--spacing-10, 0) var(--spacing-10, 0) 0;
@@ -112,6 +139,27 @@
             padding: var(--spacing-10, 0);
 
             transform: rotate(-45deg);
+        }
+    }
+
+    &__second-level {
+        display: none;
+        padding: var(--spacing-50, 0);
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        background: var(--color-neutral-10, #000);
+        box-shadow: var(--shadow-200);
+        border-radius: var(--radius-200, 0);
+        color: var(--color-neutral-60, #000);
+
+        transform: translateX(100%);
+        animation-name: $animationName;
+        animation-duration: $animationTime;
+
+        #{$navigationItem}--show-second-level & {
+            @include inOutSecondLevel;
         }
     }
 }

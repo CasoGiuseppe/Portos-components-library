@@ -28,7 +28,7 @@ export {
 
 export * from './components/icons'
 export * from './shared/helpers'
-export * from './components/validation/useValidation'
+export * from './components/utilities/validation/useValidation'
 
 // Proporcionar una función de instalación para la instalación global
 export function install(app: App): void {
