@@ -79,10 +79,10 @@ const { elementType } = defineProps({
     type: String as PropType<Element>
   }
 })
-const emits = defineEmits(['submit'])
+const emits = defineEmits(['send'])
 const handleClick = () => {
-  if (elementType === Element.ANCHOR) return
-  emits('submit')
+  if (elementType === Element.ANCHOR) return;
+  emits('send')
 }
 </script>
 

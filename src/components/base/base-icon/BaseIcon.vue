@@ -14,7 +14,7 @@ import { Types, Sizes, type Names } from './types';
 import useAsyncComponent from '@/shared/composables/useAsyncComponent';
 
 interface IIconComponent {
-    id: string;
+    id?: string;
     name: Names,
     type: Types,
     size?: Sizes
@@ -22,7 +22,7 @@ interface IIconComponent {
 
 const { create } = useAsyncComponent();
 const { name, type } = withDefaults(defineProps<IIconComponent>(), {
-    id: 'IconArrowCircleUp',
+    id: 'iconID',
     /**
      * Set Icon component name
      */

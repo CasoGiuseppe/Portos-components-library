@@ -70,8 +70,8 @@ defineProps({
     type: String as PropType<string>
   }
 });
-const emits = defineEmits(['submit'])
-const handleClick = () => emits('submit')
+const emits = defineEmits(['send'])
+const handleClick = () => emits('send')
 
 </script>
 

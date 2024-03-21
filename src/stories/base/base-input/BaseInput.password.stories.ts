@@ -58,17 +58,21 @@ const Templates: Story = {
                         @update:modelValue="update"
                         @change="change"
                         @focus="focus"
-                        @submit="changeInputState"
+                        @send="changeInputState"
                     >
                         <template #error>{{ args.error }}</template>
                         <template #label>{{ args.label }}</template>
                         <template #message>{{ args.message }}</template>
                         <template #submit>
-                            <template v-if="args.input === 'text'"><
-                                BaseIcon id="IconEditHide" name="IconEditHide" type="edit" />
+                            <template v-if="args.input === 'text'">
+                                <Suspense>
+                                    <BaseIcon id="IconEditHide" name="IconEditHide" type="edit" />
+                                </Suspense>
                             </template>
                             <template v-else>
-                                <BaseIcon id="IconEditHide" name="IconEditShow" type="edit" />
+                                <Suspense>
+                                    <BaseIcon id="IconEditHide" name="IconEditShow" type="edit" />
+                                </Suspense>
                             </template>
                         </template>
                     </BaseInput>

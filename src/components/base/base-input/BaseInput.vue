@@ -166,7 +166,7 @@ const message = computed(() => !!slots['message']);
 const error = computed(() => !!slots['error']);
 const submit = computed(() => !!slots['submit']);
 
-const customEmits = defineEmits(['update:modelValue', 'change', 'focus', 'invalid', 'submit']);
+const customEmits = defineEmits(['update:modelValue', 'change', 'focus', 'invalid', 'send']);
 const hasEmptyModel = computed(():boolean => {
     if(!value.value) return true
     return (value.value as string).length === 0
@@ -193,6 +193,6 @@ const invalidModel = (value: string): void => {
 const changeValue = (payload: Event) => customEmits('change', { target: payload.target });
 const focus = () => customEmits('focus')
 
-const submitAction = () => customEmits('submit')
+const submitAction = () => customEmits('send')
 </script>
 <style src="./BaseInput.scss" lang="scss"></style>

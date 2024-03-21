@@ -45,17 +45,17 @@ describe('BaseLink component tests', () => {
     })
   })
 
-  describe('Test interaction behaviors', () => {
-    it('Should emit "submit" when clicked and elementType is BUTTON', async () => {
+  describe('Test emits behaviors', () => {
+    it('Should emit "send" when clicked and elementType is BUTTON', async () => {
       await $wrapper.setProps({ elementType: Element.BUTTON })
       await $wrapper.trigger('click')
       await $wrapper.vm.$nextTick()
-      expect($wrapper.emitted().submit).toBeUndefined()
+      expect($wrapper.emitted().send).toBeUndefined()
     })
 
-    it('Should not emit "submit" when clicked and elementType is ANCHOR', async () => {
+    it('Should not emit "send" when clicked and elementType is ANCHOR', async () => {
       await $wrapper.trigger('click')
-      expect($wrapper.emitted().submit).toBeUndefined()
+      expect($wrapper.emitted().send).toBeUndefined()
     })
   })
 })
