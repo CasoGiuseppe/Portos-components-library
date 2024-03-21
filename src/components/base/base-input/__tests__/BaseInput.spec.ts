@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { mountComponent } from '@tests/utilities';
-import BaseInput from '../BaseInput.vue'
-import { Types } from '../types'
+import BaseInput from '../BaseInput.vue';
+import { Types } from '../types';
 import {
     $providedErrorMessage,
     $providedInfoMessage,
@@ -17,7 +17,7 @@ import {
 
 let $wrapper: any;
 describe('BaseInput component tests', () => {
-    describe('Test slost behaviours', () => {
+    describe('Test slots behaviours', () => {
         beforeEach(async () => {
             $wrapper = await mountComponent(BaseInput, {
               slots: {
@@ -116,5 +116,5 @@ describe('BaseInput component tests', () => {
         it('Should prop input have a correct content', async () => {
             expect($wrapper.props('input')).toEqual(Types.TEXT);
         });
-    })
+    });
 });

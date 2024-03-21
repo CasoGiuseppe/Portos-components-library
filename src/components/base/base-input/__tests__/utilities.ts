@@ -14,4 +14,4 @@ export const $uiDOMInputMessage = '[data-testID=ui-input-message]';
 export const $uiDOMInputTrigger = '[data-testID=ui-input]';
 
 // custom
-export const $userAllowedPattern = '^[a-zA-Z0-9 ]+$'
+export const $userAllowedPattern = '^[a-zA-Z0-9 ]+$';
