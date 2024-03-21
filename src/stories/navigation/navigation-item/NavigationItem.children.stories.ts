@@ -23,6 +23,7 @@ const meta = {
         rtl: false,
         collapsed: false,
         label: 'Label',
+        children: 'navigation children'
     }
 } satisfies Meta<typeof NavigationItem>;
 

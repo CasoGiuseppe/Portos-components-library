@@ -28,8 +28,13 @@
             <slot name="label" />
         </p>
 
-        <!-- @slot Slot for second level content -->
-        <slot name="children" />
+        <aside
+            v-if="children"
+            class="navigation-item__second-level"
+        >
+            <!-- @slot Slot for second level content -->
+            <slot name="children" />
+        </aside>
     </button>
 </template>
 
