@@ -6,10 +6,6 @@
         display: flex;
         flex-direction: column;
         gap: var(--spacing-30, 0);
-
-        &:focus {
-            background: yellow;
-        }
     }
 
     &__header {
@@ -59,17 +55,29 @@
                     box-shadow $animationTime ease-out;
 
         @media (hover) {
-            &:hover {
-                border-color: var(--color-primary-40, #000);
-            }
-
             &:focus-within {
-                box-shadow: 0 0 0 2px var(--color-neutral-10, #000), 0 0 0 4px var(--color-outline, #000);
+                &:not(:has(input:hover)) {
+                    box-shadow:
+                        0 0 0 2px var(--color-neutral-10, #000),
+                        0 0 0 4px var(--color-outline, #000);
+                }
             }
         }
 
-        #{$baseinput}--is-failed & {
+        &:has(:invalid) {
             border-color: var(--color-error-30, #000);
+
+            + #{$baseinput} {
+                &__user {
+                    &-message {
+                        &-alert {
+                            &:before {
+                                content: attr(data-error)
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         [disabled] & {
@@ -99,15 +107,45 @@
         &-message {
             @include text-body-xs--regular;
 
-            align-items: center;
             display: flex;
+            flex-direction: column;
             gap: var(--spacing-20, 0);
 
             color: var(--color-neutral-70, #000);
             transition: color $animationTime ease-out;
 
-            #{$baseinput}--is-failed & {
+            &-alert {
+                align-items: center;
+                display: flex;
+                gap: var(--spacing-20, 0);
                 color: var(--color-error-40, #000);
+
+                > svg {
+                    color: var(--color-error-30, #000);
+                }
+            }
+        }
+    }
+
+    &__submit {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+
+        transition: color $animationTime ease-out;
+
+        :disabled{
+            color: var(--color-neutral-50, #000);
+        }
+
+        #{$baseinput}--is-password &{
+            &:disabled {
+                pointer-events: none;
+                color: var(--color-neutral-50, #000);
+            }
+
+            &:not(#{$baseinput}--is-empty) & {
+                color: var(--color-primary-40, #000);            
             }
         }
     }
