@@ -19,7 +19,6 @@
             v-if="children"
             class="navigation-item__action"
             data-testID="ui-navigation-item-action"
-            @click="action"
         />
         <p
             v-if="showLabel"
@@ -44,7 +43,7 @@
 import { computed, useSlots } from 'vue';
 import { type INavigationItemComponent } from './types';
 
-const customEmits = defineEmits(['submit', 'action']);
+const customEmits = defineEmits(['submit']);
 
 const props = withDefaults(defineProps<INavigationItemComponent>(), {
     id: 'item',
@@ -62,7 +61,7 @@ const submit = () => {
     if (children.value) return
     customEmits('submit', props.id)
 };
-const action = () => customEmits('action');
+
 </script>
 
 <style src="./NavigationItem.scss" lang="scss"></style>

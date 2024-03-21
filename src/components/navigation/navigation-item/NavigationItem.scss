@@ -151,5 +151,9 @@
         transform: translateX(100%);
         animation-name: $animationName;
         animation-duration: $animationTime;
+
+        #{$navigationItem}--show-second-level & {
+            @include inOutSecondLeve;
+        }
     }
 }

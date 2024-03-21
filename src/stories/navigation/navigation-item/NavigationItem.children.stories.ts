@@ -40,7 +40,6 @@ const Templates: Story = {
                 <NavigationItem
                     v-bind="args"
                     @submit="submit"
-                    @action="action"
                 >
                     <template #icon>
                         <Suspense>
@@ -58,7 +57,6 @@ const Templates: Story = {
         `,
         methods: {
             submit: action('selected'),
-            action: action('action work'),
         },
     }),
 }
