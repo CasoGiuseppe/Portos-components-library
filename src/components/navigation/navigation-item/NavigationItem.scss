@@ -48,10 +48,14 @@
             aspect-ratio: 1/1;
             display: flex;
             max-width: var(--spacing-100);
-            justify-content: flex-end;
+            justify-content:center;
 
-            &:not(#{$navigationItem}--has-second-level) {
-                justify-content: center;
+            &.navigation-item--has-second-level {
+                justify-content: flex-end;
+
+                &[dir='rtl'] {
+                    justify-content: flex-start;
+                }
             }
         }
     }
@@ -69,7 +73,6 @@
         justify-content: space-between;
 
         [dir='rtl'] & {
-            gap: var(--spacing-20, 0);
             justify-content: start;
 
             > * {
