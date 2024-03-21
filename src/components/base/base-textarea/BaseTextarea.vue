@@ -5,7 +5,7 @@
       <section class="base-textarea--header-box">
         <!-- main header label -->
         <h6 class="base-textarea--header-label">
-          {{ label }}
+          <slot v-if="label" name="label" />
         </h6>
 
         <!-- optional message -->
@@ -71,7 +71,9 @@
           <slot v-if="showHelp" name="message" />
         </p>
       </div>
-      <div class="base-textarea--footer-counter">{{ value ? value.length : 0 }} / {{ max }}</div>
+      <div v-if="max" class="base-textarea--footer-counter">
+        {{ value ? value.length : 0 }} / {{ max }}
+      </div>
     </footer>
   </fieldset>
 </template>
@@ -82,7 +84,6 @@ import type { ITextareaComponent } from '@ui/base/base-textarea/types'
 
 const {
   id,
-  label,
   placeholder,
   disabled,
   maxLength,
@@ -105,13 +106,6 @@ const {
     default: ''
   },
   /**
-   * Set label for the ui textarea
-   */
-  label: {
-    type: String as PropType<string>,
-    default: ''
-  },
-  /**
    * Set placeholder for the ui textarea
    */
   placeholder: {
@@ -119,18 +113,10 @@ const {
     default: ''
   },
   /**
-   * Set the help text when user click on help icon
-   */
-  helpText: {
-    type: String as PropType<string>,
-    default: ''
-  },
-  /**
    * Set max number characters on ui textarea to show error
    */
   maxLength: {
-    type: Number as PropType<number>,
-    default: 260
+    type: Number as PropType<number>
   },
   /**
    * Set max number characters on ui textarea to show error
@@ -157,19 +143,14 @@ const {
 
 // slots
 const slots = useSlots()
+const label = computed(() => !!slots['label'])
 const optional = computed(() => !!slots['optional'])
 const iconHelp = computed(() => !!slots['iconHelp'])
 const error = computed(() => !!slots['error'])
 const message = computed(() => !!slots['message'])
 
 // emits
-const customEmits = defineEmits([
-  'textareaError',
-  'update:modelValue',
-  'change',
-  'focus',
-  'invalid'
-])
+const customEmits = defineEmits(['update:modelValue', 'cleared', 'change', 'focus', 'invalid'])
 
 const value = defineModel<string>('proxyValue')
 
@@ -181,7 +162,6 @@ let showHelp = ref(false)
 
 const setError = () => {
   if (!value.value && required) {
-    console.log('trying to set hasError as true onload')
     hasError.value = true
     return
   }
@@ -191,10 +171,6 @@ const setError = () => {
 
 watchEffect(() => {
   setError()
-
-  if (hasError.value) {
-    customEmits('textareaError', { error: 'TEXT_SIZE_EXCEEDED' })
-  }
 })
 
 const updateValue = (event: Event) => {
@@ -212,6 +188,7 @@ const clearTextarea = () => {
   value.value = ''
   if (showHelp.value) showHelp.value = false
 
+  customEmits('cleared', { cleared: true })
   requiredModel()
 }
 

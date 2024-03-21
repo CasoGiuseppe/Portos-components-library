@@ -1,18 +1,16 @@
 <template>
   <BaseTextarea
     :id="'textarea-1'"
-    :label="'label one'"
     :placeholder="'Type your text...'"
     :helpText="helpText"
     :disabled="false"
     :text="'I was typing all day long...'"
     :maxLength="20"
-    @textareaError="emitsError"
     @invalid="emitsInvalid"
-    @update:modelValue="emitsInvalid"
     @change="emitsInvalid"
     required
   >
+    <template #label> Slot label </template>
     <template #iconHelp>
       <base-icon
         :id="'IconFeedbackAnswer'"
@@ -43,14 +41,12 @@
     </template>
     <template #message>this is my message</template>
   </BaseTextarea>
+
   <br />
-  <BaseTextarea
-    :id="'textarea-2'"
-    :label="'label 2'"
-    :placeholder="'Type your text...'"
-    :maxLength="100"
-    :minLength="10"
-  >
+
+  <BaseTextarea :id="'textarea-2'" :label="'label 2'" :placeholder="'Type your text...'">
+    <template #label> Slot label </template>
+
     <template #iconHelp>
       <base-icon
         :id="'IconFeedbackAnswer'"
@@ -90,6 +86,8 @@
     :disabled="true"
     :text="'I was typing all day long...'"
   >
+    <template #label> Slot label </template>
+
     <template #optional>(*)</template>
     <template #iconHelp>
       <base-icon
@@ -128,14 +126,9 @@ import { ref } from 'vue'
 import BaseTextarea from './BaseTextarea.vue'
 import BaseIcon from '@ui/base/base-icon/BaseIcon.vue'
 import { Types, Sizes } from '@ui/base/base-icon/types'
-import type { ITextareaComponent } from '@ui/base/base-textarea/types'
 
 let helpText = ref('Type since you can...')
 
-const emitsError = (error: any) => {
-  console.log('error')
-  helpText.value = error.error ? 'Max characters are 20' : 'Other message'
-}
 const emitsInvalid = (invalid: any) => {
   console.log(invalid)
 }

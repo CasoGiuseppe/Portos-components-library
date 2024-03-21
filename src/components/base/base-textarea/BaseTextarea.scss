@@ -28,7 +28,7 @@
       0 0 0 4px var(--color-outline, #bd20cb);
   }
 
-  &.disabled {
+  &:disabled {
     color: var(--color-neutral-60, #1d1e20);
   }
 }
@@ -148,17 +148,17 @@
       flex-direction: column;
       gap: var(--spacing-20, 0);
 
-      color: var(--color-neutral-70, #000);
+      color: var(--color-neutral-70, #1d1e20);
       transition: color $animationTime ease-out;
 
       &-alert {
         align-items: center;
         display: flex;
         gap: var(--spacing-20, 0);
-        color: var(--color-error-40, #000);
+        color: var(--color-error-40, #7a1e00);
 
         > svg {
-          color: var(--color-error-30, #000);
+          color: var(--color-error-30, #ff602d);
         }
       }
     }
