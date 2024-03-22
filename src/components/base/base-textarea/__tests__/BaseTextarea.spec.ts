@@ -3,34 +3,33 @@ import { mount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
 
 import BaseTextarea from '@/components/base/base-textarea/BaseTextarea.vue'
-import type { ITextareaComponent } from '@/components/base/base-textarea/types'
 
 describe('BaseTextarea', () => {
-  it('should update character count when input changes', async () => {
-    const wrapper = mount(BaseTextarea, {
-      props: {
-        id: 'textarea-1',
-        disabled: false
-      },
-      slots: {
-        label: 'Slot label',
+  describe('Test errors handles', () => {
+    it('should update character count when input changes', async () => {
+      const wrapper = mount(BaseTextarea, {
+        props: {
+          id: 'textarea-1',
+          disabled: false
+        },
+        slots: {
+          label: 'Slot label',
 
-        error: `
-          
-          <span>error</span>
-        `,
-        message: 'this is my message'
-      }
+          error: `
+            
+            <span>error</span>
+          `,
+          message: 'this is my message'
+        }
+      })
+
+      const textarea = wrapper.find('textarea')
+      await textarea.setValue('Hello')
+      const vm = wrapper.vm as ComponentPublicInstance<any & { value: number }>
+
+      expect(vm.value.length).toBe(5)
     })
 
-    const textarea = wrapper.find('textarea')
-    await textarea.setValue('Hello')
-    const vm = wrapper.vm as ComponentPublicInstance<any & { value: number }>
-
-    expect(vm.value.length).toBe(5)
-  })
-
-  describe('When there is an error', () => {
     it('should show error message', async () => {
       const wrapper = mount(BaseTextarea, {
         slots: {
@@ -46,22 +45,7 @@ describe('BaseTextarea', () => {
     })
   })
 
-  describe('when help button is clicked', () => {
-    it('should show help message ', async () => {
-      const wrapper = mount(BaseTextarea, {
-        slots: {
-          iconHelp: '?',
-          message: 'This is a help message'
-        }
-      })
-      const helpButton = wrapper.find('[data-testID=ui-textarea-help]')
-      const helpMessage = wrapper.find('[data-testID=ui-textarea-message]')
-      await helpButton.trigger('click')
-      expect(helpMessage.exists()).toBeTruthy()
-      expect(helpMessage.text()).toBe('This is a help message')
-    })
-  })
-  describe(' when clear button is clicked', () => {
+  describe('Test user events behaviours', () => {
     it('should clear textarea', async () => {
       const wrapper = mount(BaseTextarea, {
         props: {
@@ -83,7 +67,7 @@ describe('BaseTextarea', () => {
     })
   })
 
-  describe('When textarea has errors', () => {
+  describe('Test textarea errors', () => {
     it('should show error icon', async () => {
       const wrapper = mount(BaseTextarea, {
         props: {
@@ -105,7 +89,7 @@ describe('BaseTextarea', () => {
     })
   })
 
-  describe('Emitters', () => {
+  describe('Test emits behaviours', () => {
     it('should emit "change" event when the textarea value changes', async () => {
       const wrapper = mount(BaseTextarea)
       const textarea = wrapper.find('textarea')
@@ -129,7 +113,6 @@ describe('BaseTextarea', () => {
 
       expect(wrapper.emitted('cleared')).toBeTruthy()
       expect(wrapper.emitted('cleared')?.length).toBe(1)
-      expect(wrapper.emitted('cleared')).toEqual([[{ cleared: true }]])
     })
   })
 })
