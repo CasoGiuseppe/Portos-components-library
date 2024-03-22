@@ -1,5 +1,6 @@
 <template>
     <component
+        data-testID="ui-icon"
         :is="IconAsyncDefine"
         :id="id"
         :key="id"
