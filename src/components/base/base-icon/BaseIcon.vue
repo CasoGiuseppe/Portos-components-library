@@ -22,7 +22,7 @@ interface IIconComponent {
 
 const { create } = useAsyncComponent();
 const { name, type } = withDefaults(defineProps<IIconComponent>(), {
-    id: 'icon',
+    id: 'iconID',
     /**
      * Set Icon component name
      */

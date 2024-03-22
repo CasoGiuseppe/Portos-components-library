@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import BaseCard from '@ui/base/base-card/BaseCard.vue'
-import BaseIcon from '@/components/base/base-icon/BaseIcon.vue'
-import IconFeedbackInfo from '@ui/icons/feedback/IconFeedbackInfo.vue'
+import BaseIcon from '@ui/base/base-icon/BaseIcon.vue'
 
 const meta: Meta = {
   title: 'Base/v1.0/Base Card',

@@ -37,17 +37,29 @@ const Templates: Story = {
         components: { BaseButton, BaseIcon },
         setup() { return { args } },
         template: `
-            <section style="display: flex; gap: 10px">
-                <BaseButton v-bind="args" @sumbit="action">
-                    <template #default>{{ args.default }}</template>
-                </BaseButton>
+            <section
+                :style="{
+                    'display' : 'flex',
+                    'gap' : '10px',
+                    'padding' : '10px',
+                    'background-color' : args.variant === true ? '#002C5F' : 'white'
+                }"
+            >
+                    <BaseButton v-bind="args" @send="action">
+                        <template #default>{{ args.default }}</template>
+                    </BaseButton>
 
-                <BaseButton v-bind="args" @click="action">
-                    <template #default>{{ args.default }}<BaseIcon name="IconArrowCircleRight" type="arrow" size="S"/></template>
-                </BaseButton>
+                    <BaseButton v-bind="args" @send="action">
+                        <template #default>
+                            {{ args.default }}
+                            <Suspense>
+                                <BaseIcon name="IconArrowCircleRight" type="arrow" size="S"/>
+                            </Suspense>
+                        </template>
+                    </BaseButton>
             </section>
         `,
-        methods: { action: action('sumitted') }
+        methods: { action: action('submitted') }
     }),
 }
 
