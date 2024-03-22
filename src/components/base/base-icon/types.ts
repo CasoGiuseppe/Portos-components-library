@@ -1,5 +1,6 @@
 import * as custom from '@ui/icons';
 
+export type UniqueId = string;
 export enum Sizes {
     M = 'M',
     L = 'L',
