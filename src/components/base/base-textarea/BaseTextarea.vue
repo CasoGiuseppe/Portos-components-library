@@ -17,17 +17,17 @@
         </span>
       </section>
 
-      <button
+      <!-- 
+        <button
         v-if="iconHelp && tooltip"
         class="base-textarea--header-question_mark"
         data-testID="ui-textarea-help"
         @click="showTooltip"
       >
-        <!-- @slot for help button-->
         <suspense>
           <slot name="iconHelp" />
         </suspense>
-      </button>
+      </button>-->
     </header>
 
     <!--main-->
@@ -150,10 +150,10 @@ const {
 const slots = useSlots()
 const label = computed(() => !!slots['label'])
 const optional = computed(() => !!slots['optional'])
-const iconHelp = computed(() => !!slots['iconHelp'])
+//const iconHelp = computed(() => !!slots['iconHelp'])
 const error = computed(() => !!slots['error'])
 const message = computed(() => !!slots['message'])
-const tooltip = computed(() => !!slots['tooltip'])
+//const tooltip = computed(() => !!slots['tooltip'])
 
 // emits
 const customEmits = defineEmits([
@@ -211,9 +211,9 @@ const requiredModel = () => {
 
 const changeValue = (payload: Event) => customEmits('change', { target: payload.target })
 
-const showTooltip = () => {
+/* const showTooltip = () => {
   customEmits('showTooltip')
-}
+} */
 </script>
 
 <style lang="scss" src="./BaseTextarea.scss"></style>
