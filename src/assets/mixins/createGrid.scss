@@ -1,15 +1,22 @@
-@use '../_abstracts/grid' as useGrid;
+@mixin createGrid($columns) {
+    display: grid;
+    gap: var(--spacing-60);
+    grid-template-columns: repeat($columns, minmax(0, 1fr));
+    margin: 0 var(--spacing-100);
 
-@mixin createGrid(
-    $media,
-    $offset: false,
-    $ordering: false,
-    $hidding: false
-) {
-    @for $column from 1 to useGrid.$columns {
-        @warn $media;
-        .col-#{$media}-#{$column} {
-            width: (100% * $column) / var(--columns);
+    @for $i from 1 through $columns {
+        .grid-item-span-#{$i} {
+            grid-column: span $i;
         }
+    }
+
+    @include media('medium') {
+        margin: 0 var(--spacing-70);
+        gap: var(--spacing-50);
+    }
+
+    @include media('small') {
+        margin: 0 var(--spacing-60);
+        gap: var(--spacing-50);
     }
 }
