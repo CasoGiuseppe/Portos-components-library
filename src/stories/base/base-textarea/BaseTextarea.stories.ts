@@ -1,82 +1,81 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import BaseInput from '@ui/base/base-input/BaseInput.vue'
+import BaseTextarea from '@/components/base/base-textarea/BaseTextarea.vue'
 import BaseIcon from '@/components/base/base-icon/BaseIcon.vue'
-import { Types } from '@ui/base/base-input/types'
+import { Types, Sizes } from '@/components/base/base-icon/types'
 import { action } from '@storybook/addon-actions'
-
-const ERRORS = {
-  required: 'input value is required',
-  validation: 'input validation failed'
-}
+import IconFeedbackInfo from '@ui/icons/feedback/IconFeedbackInfo.vue'
 
 const meta = {
   title: 'Base/Base Textarea/Default',
-  component: BaseInput,
+  component: BaseTextarea,
   tags: ['autodocs'],
   argTypes: {
     id: { control: 'text' },
     proxyValue: { control: 'text' },
-    input: { control: 'select', options: Object.values(Types) },
+    //input: { control: 'select', options: Object.values(Types) },
     placeholder: { control: 'text' },
     required: { control: 'radio', options: [true, false] },
     disabled: { control: 'radio', options: [true, false] },
-    pattern: { control: 'text' },
-    accept: { control: 'text' },
+    //pattern: { control: 'text' },
+    //accept: { control: 'text' },
     maxLength: { control: 'number' },
-    title: { control: 'text' },
+    //title: { control: 'text' },
     label: { control: 'text' },
     message: { control: 'text' },
-    error: { control: 'text' }
+    error: { control: 'text' },
+    optional: { control: 'text' }
   },
   args: {
-    id: 'fieldID',
-    input: Types.TEXT,
+    id: 'textareaId',
+    //input: Types.TEXT,
     placeholder: 'Add here your text',
     required: false,
     disabled: false,
-    pattern: '^[a-zA-Z0-9 ]+$',
-    accept: 'image/*',
-    maxLength: 5,
-    title: 'defaultTitle',
-    label: 'input title',
-    message: 'Allowed: letters, numbers at least 5 characters'
+    //accept: 'image/*',
+    maxLength: 35,
+    //title: 'defaultTitle',
+    label: 'Textarea title',
+    message: 'Fill this text area with your words'
   }
-} satisfies Meta<typeof BaseInput>
+} satisfies Meta<typeof BaseTextarea>
 
 export default meta
 
-type Story = StoryObj<typeof BaseInput>
+type Story = StoryObj<typeof BaseTextarea>
 
 const Templates: Story = {
-  render: (args, { updateArgs }) => ({
-    components: { BaseInput, BaseIcon },
+  render: (args, { Types, Sizes }) => ({
+    components: { BaseTextarea, BaseIcon },
     setup() {
       return { args }
     },
     template: `
             <section style="display: flex; padding: 10px; background: #eee;">
-                <BaseInput
-                    v-bind="args"
-                    @invalid="setInvalid"
-                    @update:modelValue="update"
-                    @change="change"
-                    @focus="focus"
-                    @submit="changeInputState"
-                >
-                    <template #error>{{ args.error }}</template>
-                    <template #label>{{ args.label }}</template>
-                    <template #message>{{ args.message }}</template>
-                </BaseInput>
+            <BaseTextarea :id="'textarea-2'" :label="'label 2'" :maxLength="34" :placeholder="'Type your text'">
+            <template #label> Slot label </template>
+        
+            <template #iconHelp>
+              <Suspense>
+                <base-icon
+                  :id="'IconFeedbackError'"
+                  :name="'IconFeedbackError'"
+                  :type="args.Types.FEEDBACK"
+                  :size="args.Sizes.XS"
+                ></base-icon>
+              </Suspense>
+            </template>
+            <template #iconClear>
+              x
+              
+            </template>
+            <template #error>
+              ! mensaje error
+            </template>
+            <template #message>this is my message</template>
+            <template #tooltip>this is my tooltip</template>
+          </BaseTextarea>
             </section>
-        `,
-    methods: {
-      setInvalid({ mode, value }: { mode: string; value: string }) {
-        updateArgs({ ...args, error: value ? ERRORS[mode as keyof typeof ERRORS] : null })
-      },
-      update: action('update'),
-      change: action('change'),
-      focus: action('focus')
-    }
+        `
   })
 }
 
