@@ -6,13 +6,14 @@ import BaseIcon from './components/base/base-icon/BaseIcon.vue'
 import BaseInput from './components/base/base-input/BaseInput.vue'
 import BaseSearch from './components/base/base-search/BaseSearch.vue'
 import BaseTable from './components/base/base-table/BaseTable.vue'
+import BaseToggle from './components/base/base-toggle/BaseToggle.vue'
 
 export * from './components/icons'
 export * from './shared/helpers'
 export * from './components/validation/useValidation'
 
 // Exporta los componentes individualmente
-export { BaseCard, BaseTable, BaseIcon, BaseSearch, BaseInput, BaseButton }
+export { BaseCard, BaseTable, BaseIcon, BaseSearch, BaseInput, BaseButton, BaseToggle }
 
 // Proporcionar una función de instalación para la instalación global
 export function install(app: App): void {
@@ -22,4 +23,5 @@ export function install(app: App): void {
   app.component('BaseTable', BaseTable)
   app.component('BaseIcon', BaseIcon)
   app.component('BaseSearch', BaseSearch)
+  app.component('BaseToggle', BaseToggle)
 }
