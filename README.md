@@ -27,7 +27,7 @@ declare module 'vue-components-noatum';
 ## Import Components
 
 ```bash
-import { BaseCard, IconFeedbackInfo, BaseTable } from 'vue-components-noatum'
+import { BaseButton, BaseCard, BaseIcon, BaseInput, BaseSearch, BaseTable, NavigationItem, DefaultLoader, DefaultError } from 'vue-components-noatum'
 ```
 
 ## Using Component

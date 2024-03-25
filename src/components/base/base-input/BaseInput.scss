@@ -127,6 +127,29 @@
         }
     }
 
+    &__submit {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+
+        transition: color $animationTime ease-out;
+
+        :disabled{
+            color: var(--color-neutral-50, #000);
+        }
+
+        #{$baseinput}--is-password &{
+            &:disabled {
+                pointer-events: none;
+                color: var(--color-neutral-50, #000);
+            }
+
+            &:not(#{$baseinput}--is-empty) & {
+                color: var(--color-primary-40, #000);            
+            }
+        }
+    }
+
     &--is{
         &-reset {
             padding: 0;

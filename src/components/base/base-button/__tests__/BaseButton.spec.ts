@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { mountComponent } from '@tests/utilities';
 import BaseButton from '@/components/base/base-button/BaseButton.vue';
-import { Types, Sizes, type UniqueId } from '../types';
+import { Types, Sizes } from '../types';
 import {
   $providedButtonLabel,
   $uiSubmitTrigger
@@ -72,7 +72,7 @@ describe('BaseButton component tests', () => {
   describe('Test emits behaviours', () => {
     it('Should emit "submit" could have a correct property on reset click', async () => {
       $wrapper.find(`${$uiSubmitTrigger}`).trigger('click');
-      expect($wrapper.emitted()).toHaveProperty('submit');
+      expect($wrapper.emitted()).toHaveProperty('send');
     });
   });
 

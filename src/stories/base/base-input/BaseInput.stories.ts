@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import BaseInput from "@ui/base/base-input/BaseInput.vue";
+import BaseIcon from "@/components/base/base-icon/BaseIcon.vue";
 import { Types } from '@ui/base/base-input/types';
 import { action } from '@storybook/addon-actions'
 
@@ -9,7 +10,7 @@ const ERRORS = {
 };
 
 const meta = {
-    title: 'Base/Base Input',
+    title: 'Base/Base Input/Default',
     component: BaseInput,
     tags: ['autodocs'],
     argTypes: {
@@ -48,7 +49,7 @@ type Story = StoryObj<typeof BaseInput>;
 
 const Templates: Story = {
     render: (args, { updateArgs }) => ({
-        components: { BaseInput },
+        components: { BaseInput, BaseIcon },
         setup() { return { args } },
         template: `
             <section style="display: flex; padding: 10px; background: #eee;">
@@ -58,6 +59,7 @@ const Templates: Story = {
                     @update:modelValue="update"
                     @change="change"
                     @focus="focus"
+                    @send="changeInputState"
                 >
                     <template #error>{{ args.error }}</template>
                     <template #label>{{ args.label }}</template>
@@ -73,7 +75,8 @@ const Templates: Story = {
             },
             update: action('update'),
             change: action('change'),
-            focus: action('focus')
+            focus: action('focus'),
+            changeInputState: action('change'),
         }
     }),
 }
