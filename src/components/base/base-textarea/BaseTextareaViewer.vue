@@ -13,33 +13,40 @@
   >
     <template #label> Slot label </template>
     <template #iconHelp>
-      <base-icon
-        :id="'IconFeedbackAnswer'"
-        :name="'IconFeedbackAnswer'"
-        :type="Types.FEEDBACK"
-        :size="Sizes.S"
-      ></base-icon>
+      <span style="color: #21578a">
+        <base-icon
+          :id="'IconFeedbackAnswer'"
+          :name="'IconFeedbackAnswer'"
+          :type="Types.FEEDBACK"
+          :size="Sizes.S"
+        ></base-icon>
+      </span>
     </template>
     <template #iconClear>
-      <base-icon
-        :id="'IconEditCleanCircle'"
-        :name="'IconEditCleanCircle'"
-        :type="Types.EDIT"
-        :size="Sizes.S"
-      >
-      </base-icon>
+      <span style="color: #21578a">
+        <base-icon
+          :id="'IconEditCleanCircle'"
+          :name="'IconEditCleanCircle'"
+          :type="Types.EDIT"
+          :size="Sizes.S"
+        >
+        </base-icon>
+      </span>
     </template>
     <template #error>
       <Suspense>
-        <base-icon
-          :id="'IconFeedbackError'"
-          :name="'IconFeedbackError'"
-          :type="Types.FEEDBACK"
-          :size="Sizes.XS"
-        ></base-icon>
+        <span style="color: #ff602d">
+          <base-icon
+            :id="'IconFeedbackError'"
+            :name="'IconFeedbackError'"
+            :type="Types.FEEDBACK"
+            :size="Sizes.XS"
+          ></base-icon>
+        </span>
       </Suspense>
       <span> este es el error texto</span>
     </template>
+    <template #tooltip>this is my tooltip</template>
     <template #message>this is my message</template>
   </BaseTextarea>
 
@@ -76,7 +83,7 @@
       </Suspense>
       <span> este es el error texto</span>
     </template>
-    <template #message>this is my message</template>
+    <template #tooltip>this is my message</template>
   </BaseTextarea>
   <br />
   <BaseTextarea
@@ -119,6 +126,7 @@
       <span> este es el error texto</span>
     </template>
     <template #message>this is my message</template>
+    <template #tooltip>this is my tooltip</template>
   </BaseTextarea>
 </template>
 

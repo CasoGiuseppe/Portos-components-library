@@ -6,10 +6,6 @@
   color: var(--color-neutral-70, #1d1e20);
   font: var(--font-body-m-size);
 
-  &.error {
-    border-color: var(--color-error-30, #ff602d);
-  }
-
   &:active {
     border-color: var(--color-primary-30, #7090b7);
   }
@@ -30,6 +26,7 @@
 
   &:disabled {
     color: var(--color-neutral-60, #1d1e20);
+    background-color: var(--color-neutral-20, #f2f4f5);
   }
 }
 
@@ -37,7 +34,6 @@
   $basetextarea: &;
   $animationTime: 0.4s;
 
-  width: 220px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -48,27 +44,26 @@
 
     &-box {
       display: flex;
+      align-items: center;
+      font: var(--font-body-s) !important;
     }
 
     &-question_mark {
-      margin-left: 4px;
+      margin-left: var(--spacing-20, 4px);
       //cursor: pointer;
       display: flex;
       align-items: center;
       border: none;
       background: none;
-
-      svg path {
-        fill: var(--color-primary-40, #21578a);
-      }
     }
 
     &-label {
       color: var(--color-neutral-70, #1d1e20);
+      margin: auto;
       @include text-body-m--bold;
 
       &_optional {
-        margin-left: 0.25rem;
+        margin-left: var(--spacing-20, 0.25rem);
         color: var(--color-neutral-60, #494d50);
       }
     }
@@ -79,8 +74,10 @@
 
     &-textarea {
       width: 100%;
-      height: 88px;
-      padding: 8px 32px 8px 12px;
+      height: calc(var(--spacing-110) + 8px);
+      padding: var(--spacing-30, 8px) var(--spacing-70, 32px) var(--spacing-30, 8px)
+        var(--spacing-40, 12px);
+      font: var(--font-body-s) !important;
       @include textarea-input-styles;
 
       transition:
@@ -98,17 +95,13 @@
     &-clear_text {
       position: absolute;
       top: 20%;
-      right: 4px;
+      right: var(--spacing-20, 4px);
       transform: translateY(-50%);
       cursor: pointer;
       font-size: var(--font-body-m-size, 1rem);
       color: var(--color-neutral-50, #ccc);
       border: none;
       background: none;
-
-      svg path {
-        fill: var(--color-primary-40, #21578a);
-      }
     }
   }
 
@@ -116,24 +109,20 @@
     display: flex;
     justify-content: space-between;
 
-    &-help_area {
+    &-icon_error {
       display: flex;
-
-      &-icon_error {
-        display: flex;
-        border: none;
-        background: none;
-        svg path {
-          fill: var(--color-error-30, #ff602d);
-        }
+      border: none;
+      background: none;
+      svg path {
+        fill: var(--color-error-30, #ff602d);
       }
+    }
 
-      &-help_text {
-        font: var(--font-body-xs);
+    &-help_text {
+      font: var(--font-body-xs);
 
-        &.base-textarea--has-error {
-          color: var(--color-error-40, #7a1e00);
-        }
+      &.base-textarea--has-error {
+        color: var(--color-error-40, #7a1e00);
       }
     }
 

@@ -4,10 +4,10 @@
     <header class="base-textarea--header">
       <section class="base-textarea--header-box">
         <!-- main header label -->
-        <h6 class="base-textarea--header-label">
+        <label class="base-textarea--header-label">
           <!-- @slot Slot for optional info -->
           <slot v-if="label" name="label" />
-        </h6>
+        </label>
 
         <!-- optional message -->
         <span v-if="!required" class="base-textarea--header-label_optional">
@@ -18,10 +18,10 @@
       </section>
 
       <button
-        v-if="iconHelp && message"
+        v-if="iconHelp && tooltip"
         class="base-textarea--header-question_mark"
         data-testID="ui-textarea-help"
-        @click="showHelp = !showHelp"
+        @click="showTooltip"
       >
         <!-- @slot for help button-->
         <suspense>
@@ -31,11 +31,14 @@
     </header>
 
     <!--main-->
-    <main class="base-textarea--box">
+    <section class="base-textarea--box">
       <textarea
         :id="id"
         v-model.lazy="value"
-        :class="['base-textarea--box-textarea', `${hasError ? 'error' : ''}`]"
+        :class="[
+          'base-textarea--box-textarea',
+          `${hasError ? 'base-textarea--box-textarea--has-error' : ''}`
+        ]"
         :disabled="disabled"
         :required="required"
         :placeholder="placeholder"
@@ -55,29 +58,23 @@
           <slot name="iconClear" />
         </suspense>
       </button>
-    </main>
+    </section>
 
     <!--footer -->
     <footer class="base-textarea--footer">
-      <div class="base-textarea--footer-help_area">
-        <p
-          v-if="message || error"
-          data-testID="ui-textarea-message"
-          class="base-textarea__user-message"
+      <p v-if="error" data-testID="ui-textarea-message" class="base-textarea__user-message">
+        <span
+          v-if="error && hasError"
+          data-testID="ui-textarea-error"
+          class="base-textarea__user-message-alert"
         >
-          <span
-            v-if="error && hasError"
-            data-testID="ui-textarea-error"
-            class="base-textarea__user-message-alert"
-          >
-            <!-- @slot Slot for user alert -->
-            <slot name="error" />
-          </span>
+          <!-- @slot Slot for user alert -->
+          <slot name="error" />
+        </span>
 
-          <!-- @slot Slot for user message info -->
-          <slot v-if="showHelp" name="message" />
-        </p>
-      </div>
+        <!-- @slot Slot for user message info -->
+        <slot v-if="message" name="message" />
+      </p>
 
       <!--counter -->
       <div v-if="max" class="base-textarea--footer-counter">
@@ -111,15 +108,14 @@ const {
    * v-model value
    */
   proxyValue: {
-    type: String as PropType<string>,
-    default: ''
+    type: String as PropType<string>
   },
   /**
    * Set placeholder for the ui textarea
    */
   placeholder: {
     type: String as PropType<string>,
-    default: ''
+    default: 'Type your text...'
   },
   /**
    * Set max number characters on ui textarea to show error
@@ -157,9 +153,17 @@ const optional = computed(() => !!slots['optional'])
 const iconHelp = computed(() => !!slots['iconHelp'])
 const error = computed(() => !!slots['error'])
 const message = computed(() => !!slots['message'])
+const tooltip = computed(() => !!slots['tooltip'])
 
 // emits
-const customEmits = defineEmits(['update:modelValue', 'cleared', 'change', 'focus', 'invalid'])
+const customEmits = defineEmits([
+  'update:modelValue',
+  'cleared',
+  'change',
+  'focus',
+  'invalid',
+  'showTooltip'
+])
 
 const value = defineModel<string>('proxyValue')
 
@@ -167,7 +171,6 @@ const value = defineModel<string>('proxyValue')
 const max = ref(maxLength)
 const min = ref(minLength)
 let hasError = ref(false)
-let showHelp = ref(false)
 
 const setError = () => {
   if (!value.value && required) {
@@ -197,9 +200,8 @@ const updateValue = (event: Event) => {
 
 const clearTextarea = () => {
   value.value = ''
-  if (showHelp.value) showHelp.value = false
 
-  customEmits('cleared', { cleared: true })
+  customEmits('cleared')
   requiredModel()
 }
 
@@ -208,6 +210,10 @@ const requiredModel = () => {
 }
 
 const changeValue = (payload: Event) => customEmits('change', { target: payload.target })
+
+const showTooltip = () => {
+  customEmits('showTooltip')
+}
 </script>
 
 <style lang="scss" src="./BaseTextarea.scss"></style>
