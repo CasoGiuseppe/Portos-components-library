@@ -31,7 +31,7 @@ const { id, selected }: INavigationItemContextualComponent = defineProps({
     default: 'tabId'
   },
   /**
-   * v-model value
+   * Set the selected tab
    */
   selected: {
     type: Boolean as PropType<boolean>,
