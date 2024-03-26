@@ -1,0 +1,23 @@
+.base-tag {
+  display: inline-flex;
+  align-items: center;
+  flex-direction: row;
+  gap: var(--spacing-30, 0);
+  padding: var(--spacing-20) var(--spacing-30) var(--spacing-20) var(--spacing-30);
+  border-radius: var(--radius-300, 0);
+
+  &--is {
+    &-default {
+      background-color: var(--color-neutral-20, #000);
+      color: var(--color-neutral-70, #000);
+    }
+    &-warning {
+      background-color: var(--color-warning-10, #000);
+      color: var(--color-warning-40, #000);
+    }
+    &-damage {
+      background-color: var(--color-info-10, #000);
+      color: var(--color-info-40, #000);
+    }
+  }
+}
