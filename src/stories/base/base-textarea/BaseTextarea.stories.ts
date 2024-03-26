@@ -12,14 +12,10 @@ const meta = {
   argTypes: {
     id: { control: 'text' },
     proxyValue: { control: 'text' },
-    //input: { control: 'select', options: Object.values(Types) },
     placeholder: { control: 'text' },
     required: { control: 'radio', options: [true, false] },
     disabled: { control: 'radio', options: [true, false] },
-    //pattern: { control: 'text' },
-    //accept: { control: 'text' },
     maxLength: { control: 'number' },
-    //title: { control: 'text' },
     label: { control: 'text' },
     message: { control: 'text' },
     error: { control: 'text' },
@@ -27,13 +23,10 @@ const meta = {
   },
   args: {
     id: 'textareaId',
-    //input: Types.TEXT,
     placeholder: 'Add here your text',
     required: false,
     disabled: false,
-    //accept: 'image/*',
     maxLength: 35,
-    //title: 'defaultTitle',
     label: 'Textarea title',
     message: 'Fill this text area with your words'
   }

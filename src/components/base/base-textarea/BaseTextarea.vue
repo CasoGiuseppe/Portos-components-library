@@ -16,18 +16,6 @@
           {{ optional ? '' : '(optional)' }}
         </span>
       </section>
-
-      <!-- 
-        <button
-        v-if="iconHelp && tooltip"
-        class="base-textarea--header-question_mark"
-        data-testID="ui-textarea-help"
-        @click="showTooltip"
-      >
-        <suspense>
-          <slot name="iconHelp" />
-        </suspense>
-      </button>-->
     </header>
 
     <!--main-->
@@ -86,7 +74,7 @@
 
 <script lang="ts" setup>
 import { defineEmits, useSlots, computed, ref, watchEffect, type PropType } from 'vue'
-import type { ITextareaComponent } from '@ui/base/base-textarea/types'
+import type { ITextareaComponent } from './types'
 
 const {
   id,
@@ -210,10 +198,6 @@ const requiredModel = () => {
 }
 
 const changeValue = (payload: Event) => customEmits('change', { target: payload.target })
-
-/* const showTooltip = () => {
-  customEmits('showTooltip')
-} */
 </script>
 
 <style lang="scss" src="./BaseTextarea.scss"></style>
