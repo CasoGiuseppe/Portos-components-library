@@ -1,8 +1,20 @@
 .navigation-item-contextual {
   $animationTime: 0.4s;
+  @include text-body-m--regular;
 
   padding: var(--spacing-40, 12px);
   padding-right: var(--spacing-50, 16px);
+
+  color: var(--color-primary-40, #21578a);
+
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-30, 8px);
+
+  cursor: pointer;
+
+  background: none;
+  border: none;
 
   &:focus {
     box-shadow:
@@ -10,12 +22,18 @@
       0 0 0 4px var(--color-outline, #bd20cb);
   }
 
-  &:hover {
-    opacity: 0.6;
-    box-shadow: inset 0px -3px 0px 0px var(--color-neutral-40, #c7cccf);
-    transition:
-      box-shadow $animationTime ease-out,
-      opacity $animationTime ease-out;
+  @media (hover) {
+    &:hover {
+      .navigation-item__user-icon,
+      .navigation-item-contextual--content {
+        color: var(--color-primary-30, #7090b7); // Cambiar el color a gris
+      }
+
+      box-shadow: inset 0px -3px 0px 0px var(--color-neutral-40, #c7cccf);
+      transition:
+        box-shadow $animationTime ease-out,
+        color $animationTime ease-out;
+    }
   }
 
   &--is-selected {
@@ -26,16 +44,5 @@
       font-weight: var(--font-style-bold);
       transition: font-weight $animationTime ease-out;
     }
-  }
-
-  &--content {
-    font: var(--font-body-m);
-    color: var(--color-primary-40, #21578a);
-
-    display: flex;
-    justify-content: space-between;
-    gap: var(--spacing-30, 8px);
-
-    cursor: pointer;
   }
 }

@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import { type PropType } from 'vue'
 import { type UniqueId, Sizes, Types, Element } from './types'
-import { validateValueCollectionExists } from '@/components/utilities/validation/useValidation';
+import { validateValueCollectionExists } from '@/components/utilities/validation/useValidation'
 
 const { elementType } = defineProps({
   /**
@@ -79,7 +79,7 @@ const { elementType } = defineProps({
 })
 const emits = defineEmits(['send'])
 const handleClick = () => {
-  if (elementType === Element.ANCHOR) return;
+  if (elementType === Element.ANCHOR) return
   emits('send')
 }
 </script>

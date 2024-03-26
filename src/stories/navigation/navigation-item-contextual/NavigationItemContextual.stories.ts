@@ -9,12 +9,11 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     id: { control: 'text' },
-    selected: { expanded: true }
+    selected: { expanded: false }
   },
   args: {
     id: '0',
-    selected: false,
-    content: 'Content tab'
+    selected: false
   }
 } satisfies Meta<typeof NavigationItemContextual>
 
@@ -29,32 +28,23 @@ const Templates: Story = {
       return { args }
     },
     template: `
-            <section style="display: grid; gap: 10px; grid-template-columns: repeat(6, 1fr);">
-                <NavigationItemContextual
-                    v-bind="args"
-                    
-                >
-                    <template #iconLeft>
-                        <Suspense>
-                            <BaseIcon
-                                name="IconArrowCircleRight"
-                                type="arrow"
-                                :size="'S'"
-                            />
-                        </Suspense>
-                    </template>
-                    <template #content>{{ args.content }}</template>
-                    <template #iconRight>
-                        <Suspense>
-                            <BaseIcon
-                                name="IconArrowCircleLeft"
-                                type="arrow"
-                                :size="'S'"
-                            />
-                        </Suspense>
-                    </template>
-                </NavigationItemContextual>
-            </section
+      <section style="display: grid; gap: 10px; grid-template-columns: repeat(6, 1fr)">
+      <NavigationItemContextual v-bind="args">
+        <template #item>
+          <picture class="navigation-item__user-icon">
+            <Suspense>
+              <BaseIcon name="IconArrowCircleRight" type="arrow" :size="'S'" />
+            </Suspense>
+          </picture>
+          <span class="navigation-item-contextual--content">content</span>
+          <picture class="navigation-item__user-icon">
+            <Suspense>
+              <BaseIcon name="IconArrowCircleLeft" type="arrow" :size="'S'" />
+            </Suspense>
+          </picture>
+        </template>
+      </NavigationItemContextual>
+    </section>
         `
   })
 }
