@@ -1,0 +1,164 @@
+@mixin textarea-input-styles {
+  outline: none;
+  border-radius: var(--radius-300);
+  border: 1px solid var(--color-neutral-50, #818a8f);
+  resize: none;
+  color: var(--color-neutral-70, #1d1e20);
+  font: var(--font-body-m-size);
+
+  &:active {
+    border-color: var(--color-primary-30, #7090b7);
+  }
+
+  &:focus:not(:active) {
+    outline: 1px solid var(--color-neutral-50, #818a8f);
+    box-shadow:
+      0 0 0 2px var(--color-neutral-10, #fff),
+      0 0 0 4px var(--color-outline, #bd20cb);
+  }
+
+  &:focus-visible:not(:active) {
+    outline: 1px solid var(--color-neutral-30, #818a8f);
+    box-shadow:
+      0 0 0 2px var(--color-neutral-10, #fff),
+      0 0 0 4px var(--color-outline, #bd20cb);
+  }
+
+  &:disabled {
+    color: var(--color-neutral-60, #1d1e20);
+    background-color: var(--color-neutral-20, #f2f4f5);
+  }
+}
+
+.base-textarea {
+  $basetextarea: &;
+  --animationTime: 0.4s;
+  --from-animation: 100%;
+  --to-animation: -70%;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-30, 6px);
+
+  * {
+    &:is(button) {
+      border: none;
+      background: none;
+      display: flex;
+    }
+  }
+
+  &--header {
+    display: flex;
+    justify-content: space-between;
+
+    &-box {
+      display: flex;
+      align-items: center;
+      font: var(--font-body-s) !important;
+    }
+
+    &-question_mark {
+      margin-left: var(--spacing-20, 4px);
+      display: flex;
+      align-items: center;
+      border: none;
+      background: none;
+    }
+
+    &-label {
+      color: var(--color-neutral-70, #1d1e20);
+      margin: auto;
+      @include text-body-m--bold;
+
+      &_optional {
+        margin-left: var(--spacing-20, 0.25rem);
+        color: var(--color-neutral-60, #494d50);
+      }
+    }
+  }
+
+  &--box {
+    @include create-animation(
+      $name: 'appear-clear-button',
+      $from: translateX(30%),
+      $to: translateX(30%),
+      $duration: var(--animationTime),
+      $duration-out: .2s
+    );
+
+    position: relative;
+    display: flex;
+
+    &-textarea {
+      @include textarea-input-styles;
+      @include text-body-m--regular;
+
+      width: 100%;
+      padding:
+        var(--spacing-30, 8px)
+        var(--spacing-70, 32px)
+        var(--spacing-30, 8px)
+        var(--spacing-40, 12px);
+
+      transition:
+        border --animationTime ease-out,
+        box-shadow --animationTime ease-out;
+
+      &::placeholder {
+        color: var(--color-neutral-50, #818a8f);
+      }
+      &:invalid {
+        border-color: var(--color-error-30, #ff602d);
+      }
+    }
+
+    &-clear {
+      position: absolute;
+      top: var(--spacing-30, 0);
+      right: var(--spacing-40, 0);
+      cursor: pointer;
+      color: var(--color-primary-40, #ccc);
+    }
+  }
+
+  &--footer {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--spacing-30, 8px);
+
+    &-icon_error {
+      display: flex;
+      border: none;
+      background: none;
+    }
+
+    &-help_text {
+      font: var(--font-body-xs);
+    }
+
+    &-counter {
+      font: var(--font-body-xs);
+    }
+  }
+
+  &__user {
+    &-message {
+      @include text-body-xs--regular;
+
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-20, 0);
+
+      color: var(--color-neutral-70, #1d1e20);
+      transition: color --animationTime ease-out;
+
+      &-alert {
+        align-items: center;
+        display: flex;
+        gap: var(--spacing-20, 0);
+        color: var(--color-error-40, #7a1e00);
+      }
+    }
+  }
+}

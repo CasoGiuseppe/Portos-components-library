@@ -177,7 +177,7 @@ const updateValue = (payload: Event) => {
     customEmits('update:modelValue', value)
 
     const valueIsEmpty = value === '';
-    valueIsEmpty ? requiredModel() : invalidModel(value)
+    valueIsEmpty ? requiredModel() : invalidModel(value);
 };
 
 const requiredModel = () => {
