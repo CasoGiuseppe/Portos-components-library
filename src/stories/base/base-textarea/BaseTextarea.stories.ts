@@ -14,10 +14,12 @@ const meta = {
     required: { control: 'radio', options: [true, false] },
     disabled: { control: 'radio', options: [true, false] },
     maxLength: { control: 'number' },
+    minLength: { control: 'number' },
     label: { control: 'text' },
     message: { control: 'text' },
     error: { control: 'text' },
-    optional: { control: 'text' }
+    optional: { control: 'text' },
+    rows: { control: 'number' },
   },
   args: {
     id: 'textareaId',
@@ -25,7 +27,10 @@ const meta = {
     required: false,
     disabled: false,
     label: 'Textarea title',
-    message: 'Fill this text area with your words'
+    message: 'Fill this text area with your words',
+    minLength: 10,
+    maxLength: 30,
+    rows: 3
   }
 } satisfies Meta<typeof BaseTextarea>
 

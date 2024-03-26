@@ -31,6 +31,7 @@
         :required="required"
         :placeholder="placeholder"
         :maxlength="max"
+        :rows="rows"
         @input="updateValue"
         @change="changeValue"
       ></textarea>
@@ -131,6 +132,13 @@ const {
   required: {
     type: Boolean as PropType<boolean>,
     default: false
+  },
+  /**
+   * Set numer of text areas rows to set element height
+   */
+   rows: {
+    type: Number as PropType<number>,
+    default: 3
   }
 })
 
