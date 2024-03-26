@@ -24,7 +24,7 @@ const meta = {
   args: {
     id: 'textareaId',
     placeholder: 'Add here your text',
-    required: false,
+    required: true,
     disabled: false,
     label: 'Textarea title',
     message: 'Fill this text area with your words',
@@ -48,22 +48,11 @@ const Templates: Story = {
             <section style="display: flex; padding: 10px; background: #eee;">
             <BaseTextarea v-bind="args">
               <template #label> Slot label </template>
-          
-              <template #iconHelp>
-                <Suspense>
-                  <BaseIcon
-                    id="'IconFeedbackError'"
-                    name="'IconFeedbackError'"
-                    type="feedback"
-                    size="xs"
-                  />
-                </Suspense>
-              </template>
               <template #clear>
-                <BaseIcon id="IconEditCleanCircle" name="IconEditCleanCircle" type="edit" />
+                <Suspense><BaseIcon id="IconEditCleanCircle" name="IconEditCleanCircle" type="edit" /></Suspense>
               </template>
               <template #error>
-                ! mensaje error
+                <Suspense><BaseIcon id="IconFeedbackError" name="IconFeedbackError" type="feedback" size="XS" /></Suspense> mensaje error
               </template>
               <template #message>this is my message</template>
             </BaseTextarea>

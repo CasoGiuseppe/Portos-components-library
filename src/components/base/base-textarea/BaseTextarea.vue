@@ -43,9 +43,7 @@
         @click="clearTextarea"
       >
         <!-- @slot for clear icon-->
-        <Suspense>
-          <slot name="clear" />
-        </Suspense>
+        <slot name="clear" />
       </button>
     </section>
 
