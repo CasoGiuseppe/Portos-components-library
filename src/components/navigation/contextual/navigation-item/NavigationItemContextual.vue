@@ -2,11 +2,11 @@
   <div
     :class="[
       'navigation-item-contextual',
-      `${selected ? 'navigation-item-contextual--is-selected' : ''}`
+      selected ? 'navigation-item-contextual--is-selected' : null
     ]"
     :id="id"
     @click="handleClickItem"
-    :aria-selected="selected"
+    data-testID="ui-navigation-item-contextual"
   >
     <section class="navigation-item-contextual--content">
       <!-- @ slot for content-->
@@ -41,7 +41,7 @@ const { id, selected }: INavigationItemContextualComponent = defineProps({
 // emits
 const customEmits = defineEmits(['selected'])
 
-const handleClickItem = () => customEmits('selected')
+const handleClickItem = () => customEmits('selected', id)
 </script>
 
 <style src="./NavigationItemContextual.scss"></style>

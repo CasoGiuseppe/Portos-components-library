@@ -1,12 +1,17 @@
 .navigation-item-contextual {
+  $animationTime: 0.4s;
+
   padding: var(--spacing-40, 12px);
   padding-right: var(--spacing-50, 16px);
 
   &--is-selected {
     box-shadow: inset 0px -3px 0px 0px var(--color-brand-50, #aa272f);
 
+    transition: box-shadow $animationTime ease-out;
+
     .navigation-item-contextual--content {
       font-weight: var(--font-style-bold);
+      transition: font-weight $animationTime ease-out;
     }
   }
 
