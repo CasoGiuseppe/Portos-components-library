@@ -34,15 +34,17 @@
         @change="changeValue"
       ></textarea>
 
-      <button
-        v-if="!disabled && value && clear"
-        data-testID="ui-textarea-clear"
-        class="base-textarea--box-clear"
-        @click="clearTextarea"
-      >
-        <!-- @slot for clear icon-->
-        <slot name="clear" />
-      </button>
+      <Transition name="appear-clear-button">
+        <button
+          v-if="!disabled && value && clear"
+          data-testID="ui-textarea-clear"
+          class="base-textarea--box-clear"
+          @click="clearTextarea"
+        >
+          <!-- @slot for clear icon-->
+          <slot name="clear" />
+        </button>
+      </Transition>
     </section>
 
     <!--footer -->
@@ -74,7 +76,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineEmits, useSlots, computed, ref, type PropType } from 'vue'
+import { defineEmits, useSlots, computed, type PropType } from 'vue'
 import type { ITextareaComponent } from './types'
 
 const {
@@ -83,7 +85,6 @@ const {
   disabled,
   maxLength,
   required
-  // proxyValue
 }: ITextareaComponent = defineProps({
   /**
    * Set the unique id of the ui button

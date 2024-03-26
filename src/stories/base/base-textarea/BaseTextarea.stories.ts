@@ -27,7 +27,8 @@ const meta = {
     label: 'Textarea title',
     message: 'Fill this text area with your words',
     maxLength: 30,
-    rows: 3
+    rows: 3,
+    proxyValue: 'init text'
   }
 } satisfies Meta<typeof BaseTextarea>
 
