@@ -21,17 +21,15 @@
     <!--main-->
     <section class="base-textarea--box">
       <textarea
+        ref="textarea"
         :id="id"
-        v-model.lazy="value"
-        :class="[
-          'base-textarea--box-textarea',
-          `${hasError ? 'base-textarea--box-textarea--has-error' : ''}`
-        ]"
+        class="base-textarea--box-textarea"
         :disabled="disabled"
         :required="required"
         :placeholder="placeholder"
-        :maxlength="max"
+        :maxlength="maxLength"
         :rows="rows"
+        v-model.lazy="value"
         @input="updateValue"
         @change="changeValue"
       ></textarea>
@@ -49,9 +47,13 @@
 
     <!--footer -->
     <footer class="base-textarea--footer">
-      <p v-if="error" data-testID="ui-textarea-message" class="base-textarea__user-message">
+      <p
+        v-if="message || error"
+        data-testID="ui-textarea-message"
+        class="base-textarea__user-message"
+      >
         <span
-          v-if="error && hasError"
+          v-if="error"
           data-testID="ui-textarea-error"
           class="base-textarea__user-message-alert"
         >
@@ -64,15 +66,15 @@
       </p>
 
       <!--counter -->
-      <div v-if="max" class="base-textarea--footer-counter">
-        {{ value ? value.length : 0 }} / {{ max }}
+      <div v-if="maxLength" class="base-textarea--footer-counter">
+        {{ counterUserMesssage }}
       </div>
     </footer>
   </fieldset>
 </template>
 
 <script lang="ts" setup>
-import { defineEmits, useSlots, computed, ref, watchEffect, type PropType } from 'vue'
+import { defineEmits, useSlots, computed, ref, type PropType } from 'vue'
 import type { ITextareaComponent } from './types'
 
 const {
@@ -151,45 +153,23 @@ const customEmits = defineEmits([
 
 const value = defineModel<string>('proxyValue')
 
-// refs
-const max = ref(maxLength)
-let hasError = ref(false)
-
-const setError = () => {
-  if (!value.value && required) {
-    hasError.value = true
-    return
-  }
-
-  // hasError.value = required && typeof value.value === 'string' && value.value.length <= min.value
-}
-
-watchEffect(() => {
-  setError()
-})
-
-const updateValue = (event: Event) => {
-  const target = event.target as HTMLTextAreaElement
-  value.value = target.value
-
-  if (max.value) {
-    hasError.value = value.value.length > max.value
-  }
-
-  //emits
-  customEmits('update:modelValue', value)
-  !value.value && requiredModel()
+const counterUserMesssage = computed(() => `${(value.value || '').length}/${maxLength}`)
+const updateValue = (payload: Event) => {
+  const { value: targetValue } = (payload.target as HTMLInputElement)
+  value.value = targetValue;
+  customEmits('update:modelValue', value);
+  requiredModel(value.value.length === 0)
 }
 
 const clearTextarea = () => {
   value.value = ''
 
   customEmits('cleared')
-  requiredModel()
+  requiredModel(value.value.length === 0)
 }
 
-const requiredModel = () => {
-  if (required) customEmits('invalid', { mode: 'required', value: true })
+const requiredModel = (state: boolean) => {
+  if (required) customEmits('invalid', { mode: 'required', value: state })
 }
 
 const changeValue = (payload: Event) => customEmits('change', { target: payload.target })
