@@ -3,7 +3,6 @@ import BaseInput from "@ui/base/base-input/BaseInput.vue";
 import BaseIcon from "@/components/base/base-icon/BaseIcon.vue";
 import { Types } from '@ui/base/base-input/types';
 import { action } from '@storybook/addon-actions'
-import { defineAsyncComponent } from "vue";
 
 const ERRORS = {
     required: 'input value is required',
