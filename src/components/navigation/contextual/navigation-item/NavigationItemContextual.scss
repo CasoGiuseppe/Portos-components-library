@@ -18,5 +18,20 @@
   &--content {
     font: var(--font-body-m);
     color: var(--color-primary-40, #21578a);
+
+    display: flex;
+    justify-content: space-evenly;
+
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+
+  &:focus {
+    box-shadow:
+      0 0 0 2px var(--color-neutral-10, #fff),
+      0 0 0 4px var(--color-outline, #bd20cb);
   }
 }

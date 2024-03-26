@@ -9,8 +9,17 @@
     data-testID="ui-navigation-item-contextual"
   >
     <section class="navigation-item-contextual--content">
+      <picture class="navigation-item__user-icon">
+        <!-- @slot Slot for icon content -->
+        <slot name="iconLeft"></slot>
+      </picture>
       <!-- @ slot for content-->
       <slot name="content" />
+
+      <picture class="navigation-item__user-icon">
+        <!-- @slot Slot for icon content -->
+        <slot name="iconRight"></slot>
+      </picture>
     </section>
   </div>
 </template>
