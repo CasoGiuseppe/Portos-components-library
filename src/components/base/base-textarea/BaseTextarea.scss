@@ -109,6 +109,7 @@
   &--footer {
     display: flex;
     justify-content: space-between;
+    gap: var(--spacing-30, 8px);
 
     &-icon_error {
       display: flex;
