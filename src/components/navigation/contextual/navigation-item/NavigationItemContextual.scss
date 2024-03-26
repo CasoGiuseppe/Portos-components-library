@@ -23,15 +23,20 @@
     justify-content: space-evenly;
 
     cursor: pointer;
-
-    &:hover {
-      opacity: 0.5;
-    }
   }
 
   &:focus {
     box-shadow:
       0 0 0 2px var(--color-neutral-10, #fff),
       0 0 0 4px var(--color-outline, #bd20cb);
+  }
+
+  &:hover {
+    opacity: 0.6;
+    box-shadow: inset 0px -3px 0px 0px var(--color-neutral-40, #c7cccf);
+
+    transition:
+      box-shadow $animationTime ease-out,
+      opacity $animationTime ease-out;
   }
 }
