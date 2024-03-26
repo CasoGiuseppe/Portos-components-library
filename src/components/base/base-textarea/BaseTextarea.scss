@@ -38,6 +38,14 @@
   flex-direction: column;
   gap: var(--spacing-30, 6px);
 
+  * {
+    &:is(button) {
+      border: none;
+      background: none;
+      display: flex;
+    }
+  }
+
   &--header {
     display: flex;
     justify-content: space-between;
@@ -50,7 +58,6 @@
 
     &-question_mark {
       margin-left: var(--spacing-20, 4px);
-      //cursor: pointer;
       display: flex;
       align-items: center;
       border: none;
@@ -74,12 +81,15 @@
     display: flex;
 
     &-textarea {
-      width: 100%;
-      height: calc(var(--spacing-110) + 8px);
-      padding: var(--spacing-30, 8px) var(--spacing-70, 32px) var(--spacing-30, 8px)
-        var(--spacing-40, 12px);
-      font: var(--font-body-s) !important;
       @include textarea-input-styles;
+      @include text-body-m--regular;
+
+      width: 100%;
+      padding:
+        var(--spacing-30, 8px)
+        var(--spacing-70, 32px)
+        var(--spacing-30, 8px)
+        var(--spacing-40, 12px);
 
       transition:
         border $animationTime ease-out,
@@ -93,16 +103,12 @@
       }
     }
 
-    &-clear_text {
+    &-clear {
       position: absolute;
-      top: 20%;
-      right: var(--spacing-20, 4px);
-      transform: translateY(-50%);
+      top: var(--spacing-30, 0);
+      right: var(--spacing-40, 0);
       cursor: pointer;
-      font-size: var(--font-body-m-size, 1rem);
-      color: var(--color-neutral-50, #ccc);
-      border: none;
-      background: none;
+      color: var(--color-primary-40, #ccc);
     }
   }
 

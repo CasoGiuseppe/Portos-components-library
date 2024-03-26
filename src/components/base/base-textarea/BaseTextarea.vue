@@ -36,15 +36,15 @@
       ></textarea>
 
       <button
-        class="base-textarea--box-clear_text"
+        v-if="!disabled && value && clear"
         data-testID="ui-textarea-clear"
-        v-if="!disabled && value"
+        class="base-textarea--box-clear"
         @click="clearTextarea"
       >
         <!-- @slot for clear icon-->
-        <suspense>
-          <slot name="iconClear" />
-        </suspense>
+        <Suspense>
+          <slot name="clear" />
+        </Suspense>
       </button>
     </section>
 
@@ -138,10 +138,9 @@ const {
 const slots = useSlots()
 const label = computed(() => !!slots['label'])
 const optional = computed(() => !!slots['optional'])
-//const iconHelp = computed(() => !!slots['iconHelp'])
 const error = computed(() => !!slots['error'])
 const message = computed(() => !!slots['message'])
-//const tooltip = computed(() => !!slots['tooltip'])
+const clear = computed(() => !!slots['clear'])
 
 // emits
 const customEmits = defineEmits([
@@ -150,7 +149,6 @@ const customEmits = defineEmits([
   'change',
   'focus',
   'invalid',
-  'showTooltip'
 ])
 
 const value = defineModel<string>('proxyValue')

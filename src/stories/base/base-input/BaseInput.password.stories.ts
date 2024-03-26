@@ -64,8 +64,8 @@ const Templates: Story = {
                         <template #label>{{ args.label }}</template>
                         <template #message>{{ args.message }}</template>
                         <template #submit>
-                            <template v-if="args.input === 'text'"><
-                                BaseIcon id="IconEditHide" name="IconEditHide" type="edit" />
+                            <template v-if="args.input === 'text'">
+                                <BaseIcon id="IconEditHide" name="IconEditHide" type="edit" />
                             </template>
                             <template v-else>
                                 <BaseIcon id="IconEditHide" name="IconEditShow" type="edit" />
