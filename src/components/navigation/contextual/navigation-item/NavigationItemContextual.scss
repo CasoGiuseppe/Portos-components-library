@@ -1,0 +1,17 @@
+.navigation-item-contextual {
+  padding: var(--spacing-40, 12px);
+  padding-right: var(--spacing-50, 16px);
+
+  &--is-selected {
+    box-shadow: inset 0px -3px 0px 0px var(--color-brand-50, #aa272f);
+
+    .navigation-item-contextual--content {
+      font-weight: var(--font-style-bold);
+    }
+  }
+
+  &--content {
+    font: var(--font-body-m);
+    color: var(--color-primary-40, #21578a);
+  }
+}
