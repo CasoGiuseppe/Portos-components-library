@@ -51,7 +51,7 @@ const insideFocus = ref<boolean>(false);
 const props = withDefaults(defineProps<INavigationItemComponent>(), {
     id: 'item',
     selected: false,
-    rtl: true,
+    rtl: false,
     collapsed: false
 });
 

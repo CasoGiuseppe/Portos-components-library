@@ -9,6 +9,7 @@ export { default as IconArrowDownMD } from './arrow/IconArrowDownMD.vue'
 export { default as IconArrowLeftMD } from './arrow/IconArrowLeftMD.vue'
 export { default as IconArrowUpMD } from './arrow/IconArrowUpMD.vue'
 export { default as IconArrowRightMD } from './arrow/IconArrowRightMD.vue'
+export { default as IconArrowLeftRight } from './arrow/IconArrowLeftRight.vue'
 
 // Arrow-DUO
 export { default as IconChevronDownDuo } from './chevron/IconChevronDownDuo.vue'
@@ -77,6 +78,7 @@ export { default as IconFilePauseCircle } from './file/IconFilePauseCircle.vue'
 export { default as IconFilePlayCircle } from './file/IconFilePlayCircle.vue'
 export { default as IconFileShuffle } from './file/IconFileShuffle.vue'
 export { default as IconFileStopCircle } from './file/IconFileStopCircle.vue'
+export { default as IconFileBilling } from './file/IconFileBilling.vue'
 
 // Location
 export { default as IconLocationBuilding } from './location/IconLocationBuilding.vue'
@@ -91,6 +93,7 @@ export { default as IconLocationHouseClose } from './location/IconLocationHouseC
 export { default as IconLocationHouseRemove } from './location/IconLocationHouseRemove.vue'
 export { default as IconLocationMap } from './location/IconLocationMap.vue'
 export { default as IconLocationMapPin } from './location/IconLocationMapPin.vue'
+export { default as IconLocationUnit } from './location/IconLocationUnit.vue'
 
 // Miscellanea
 export { default as IconMiscellaneaCoffee } from './miscellanea/IconMiscellaneaCoffee.vue'
@@ -118,7 +121,12 @@ export { default as IconSystemSave } from './system/IconSystemSave.vue'
 export { default as IconSystemTabletButton } from './system/IconSystemTabletButton.vue'
 export { default as IconSystemTerminal } from './system/IconSystemTerminal.vue'
 export { default as IconSystemWindowClose } from './system/IconSystemWindowClose.vue'
+export { default as IconSystemConfiguration } from './system/IconSystemConfiguration.vue'
 
 // User
 export { default as IconUserUser } from './user/IconUserUser.vue'
 export { default as IconUserUserCircle } from './user/IconUserUserCircle.vue'
+export { default as IconUserUserCardId } from './user/IconUserUserCardId.vue'
+
+// Placeholder
+export { default as IconPlaceholderBase } from './placeholder/IconPlaceholderBase.vue'
