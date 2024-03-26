@@ -80,7 +80,6 @@ const {
   placeholder,
   disabled,
   maxLength,
-  minLength,
   required
   // proxyValue
 }: ITextareaComponent = defineProps({
@@ -109,13 +108,6 @@ const {
    */
   maxLength: {
     type: Number as PropType<number>
-  },
-  /**
-   * Set max number characters on ui textarea to show error
-   */
-  minLength: {
-    type: Number as PropType<number>,
-    default: 0
   },
   /**
    * Sets if the ui textarea is disabled
@@ -161,7 +153,6 @@ const value = defineModel<string>('proxyValue')
 
 // refs
 const max = ref(maxLength)
-const min = ref(minLength)
 let hasError = ref(false)
 
 const setError = () => {
@@ -170,7 +161,7 @@ const setError = () => {
     return
   }
 
-  hasError.value = required && typeof value.value === 'string' && value.value.length <= min.value
+  // hasError.value = required && typeof value.value === 'string' && value.value.length <= min.value
 }
 
 watchEffect(() => {
