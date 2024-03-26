@@ -8,11 +8,13 @@ const meta: Meta = {
   component: BaseTag,
   tags: ['autodocs'],
   argTypes: {
+    id: { control: 'text' },
     status: { control: 'select', options: Object.values(Types) },
-    default: { control: 'text' },
+    default: { control: 'text' }
   },
 
   args: {
+    id: 'TagId',
     status: Types.Default,
     default: 'Default'
   }
@@ -35,9 +37,9 @@ const Templates: Story = {
         'gap' : '10px',
       }">
         <BaseTag v-bind="args" >
-        <Suspense>
-        <BaseIcon name="IconArrowCircleRight" type="arrow" size="S"/>
-        </Suspense>
+          <Suspense>
+            <BaseIcon name="IconArrowCircleRight" type="arrow" size="S"/>
+          </Suspense>
         {{args.default}}
         </BaseTag>
       </section>
