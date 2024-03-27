@@ -5,6 +5,10 @@
     gap: var(--spacing-30, 0);
     flex-direction: column;
 
+    + .foundation {
+        margin-top: var(--spacing-60, 0)
+    }
+
     &__title {
         @include text-heading-m;
         color: var(--color-neutral-60, #000);
