@@ -1,4 +1,5 @@
 export interface ISlideShowComponent {
   id: string
-  arrows: boolean
+  arrows?: boolean
+  width?: number
 }

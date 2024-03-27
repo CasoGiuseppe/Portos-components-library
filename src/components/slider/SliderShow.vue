@@ -1,63 +1,95 @@
 <template>
-  <section class="slider-show" :id="id">
+  <section class="slider-show" :id="id" ref="observer">
     <div class="slider-show--container" ref="container">
       <!-- @Slot for slider show content (slides)-->
       <slot name="content" />
     </div>
 
-    <div v-if="arrows">
-      <button @click="prevSlide" class="slider-show--arrow">◀</button>
-      <button @click="nextSlide" class="slider-show--arrow">▶</button>
+    <div v-if="showArrows">
+      <button @click="prevSlide" class="slider-show--arrow">
+        <Suspense>
+          <!-- @slot for left slider arrow-->
+          <slot name="leftArrow"></slot>
+        </Suspense>
+      </button>
+      <button @click="nextSlide" class="slider-show--arrow">
+        <!-- @slot for right slider arrow-->
+        <slot name="rightArrow"></slot>
+      </button>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { ref, type PropType } from 'vue'
+import { ref, onMounted, defineProps, type PropType } from 'vue'
 import { type ISlideShowComponent } from './types'
+import useResizeObserver from '@/shared/composables/useResizeObserver'
 
-const { id, arrows }: ISlideShowComponent = defineProps({
-  /**
-   * Set the unique id of the default loading message
-   */
+const { id, arrows, width }: ISlideShowComponent = defineProps({
   id: {
     type: String as PropType<string>,
     default: 'slideShow'
   },
-  /**
-   * Set if slider has to show arrows
-   */
   arrows: {
     type: Boolean as PropType<boolean>,
     default: true
+  },
+  width: {
+    type: Number as PropType<number>,
+    default: 80
   }
 })
 
-const container = ref(null)
-const slideWidth = 100 // Ancho de cada slide en píxeles
+const observer = ref<HTMLElement | null>(null)
+const container = ref<HTMLElement | null>(null)
+const showArrows = arrows
+const slideWidth = width
 let currentIndex = 0
 
+onMounted(() => {
+  const { createObserver } = useResizeObserver({
+    action: ({ width }) => {
+      const containerWidth = width
+      const maxIndex = Math.ceil(container.value!.scrollWidth / containerWidth) - 1
+      if (currentIndex > maxIndex) {
+        currentIndex = maxIndex
+        container.value!.style.transform = `translateX(-${currentIndex * slideWidth}px)`
+      }
+    }
+  })
+
+  if (observer.value) {
+    createObserver({
+      trigger: observer.value
+    })
+  }
+})
+
 const nextSlide = () => {
-  const containerWidth = container.value.offsetWidth
-  const maxIndex = Math.ceil(container.value.scrollWidth / containerWidth) - 1
+  const containerWidth = observer.value!.clientWidth
+  const maxIndex = Math.ceil((container.value!.scrollWidth - containerWidth) / slideWidth)
   if (currentIndex < maxIndex) {
     currentIndex++
-    container.value.style.transform = `translateX(-${currentIndex * slideWidth}px)`
+    container.value!.style.transform = `translateX(-${currentIndex * slideWidth}px)`
   }
 }
 
 const prevSlide = () => {
   if (currentIndex > 0) {
     currentIndex--
-    container.value.style.transform = `translateX(-${currentIndex * slideWidth}px)`
+    container.value!.style.transform = `translateX(-${currentIndex * slideWidth}px)`
   }
 }
+
+//TODO: calcular nextClick solo para el width del siguiente item
+//TODO: mostrar ocultar los iconos
+//TODO: añadir iconos base icon (por slot)
 </script>
 
 <style lang="scss">
 .slider-show {
-  position: relative;
   width: 100%;
+  position: relative;
   overflow: hidden;
 
   &--container {
