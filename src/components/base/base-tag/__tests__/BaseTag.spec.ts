@@ -5,7 +5,11 @@ import { Types } from '@/components/base/base-tag/types'
 
 describe('BaseTag component tests', () => {
   it('should render default status when no props are provided', () => {
-    const wrapper = mount(BaseTag)
+    const wrapper = mount(BaseTag, {
+      slots: {
+        default: 'Default'
+      }
+    })
     expect(wrapper.find('span').text()).toBe('Default')
   })
 
@@ -13,6 +17,9 @@ describe('BaseTag component tests', () => {
     const wrapper = mount(BaseTag, {
       props: {
         status: Types.Warning
+      },
+      slots: {
+        default: 'Bloqueada'
       }
     })
     expect(wrapper.find('span').text()).toBe('Bloqueada')
@@ -21,8 +28,10 @@ describe('BaseTag component tests', () => {
   it('should render damage status and damage amount when status is damage', () => {
     const wrapper = mount(BaseTag, {
       props: {
-        status: Types.Damage,
-        damage: 5
+        status: Types.Damage
+      },
+      slots: {
+        default: '5 Daños'
       }
     })
     expect(wrapper.find('span').text()).toBe('5 Daños')
