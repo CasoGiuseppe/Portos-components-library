@@ -1,5 +1,5 @@
 <template>
-  <span :class="['base-tag', `base-tag--is-${status || Types.Default}`]">
+  <span :class="['base-tag', `base-tag--is-${status}`]">
     <slot />
   </span>
 </template>
