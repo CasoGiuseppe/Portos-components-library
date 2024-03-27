@@ -44,7 +44,20 @@ const Templates: Story = {
                 @selected="selected"
                 :selected="itemSelected === i"
               >
-                <template #item> tab {{ i }} </template>
+              <template #item>
+                <picture class="navigation-item__user-icon">
+                  <Suspense>
+                    <BaseIcon name="IconArrowCircleRight" type="arrow" :size="'S'" />
+                  </Suspense>
+                </picture>
+                <span class="navigation-item-contextual--content">content {{i}}</span>
+                <picture class="navigation-item__user-icon">
+                  <Suspense>
+                    <BaseIcon name="IconArrowCircleLeft" type="arrow" :size="'S'" />
+                  </Suspense>
+                </picture>
+              </template>
+                
               </NavigationItemContextual>
             </template>
             <template #leftArrow>

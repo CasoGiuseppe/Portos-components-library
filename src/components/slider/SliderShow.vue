@@ -5,7 +5,7 @@
       <slot name="content" />
     </div>
 
-    <div v-if="showArrows">
+    <template v-if="showArrows">
       <button @click="prevSlide" class="slider-show--arrow">
         <Suspense>
           <!-- @slot for left slider arrow-->
@@ -16,61 +16,77 @@
         <!-- @slot for right slider arrow-->
         <slot name="rightArrow"></slot>
       </button>
-    </div>
+    </template>
   </section>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, defineProps, type PropType } from 'vue'
+import { ref, onMounted, defineProps, onUnmounted, onUpdated } from 'vue'
 import { type ISlideShowComponent } from './types'
 import useResizeObserver from '@/shared/composables/useResizeObserver'
 
 const { id, arrows, width }: ISlideShowComponent = defineProps({
   id: {
-    type: String as PropType<string>,
+    type: String,
     default: 'slideShow'
   },
   arrows: {
-    type: Boolean as PropType<boolean>,
+    type: Boolean,
     default: true
   },
   width: {
-    type: Number as PropType<number>,
-    default: 80
+    type: Number,
+    default: 125
   }
 })
 
 const observer = ref<HTMLElement | null>(null)
 const container = ref<HTMLElement | null>(null)
+const observerValues = ref<{ width: number; height: number } | null>(null)
+const containerValues = ref<{ width: number; height: number } | null>(null)
 const showArrows = arrows
 const slideWidth = width
 let currentIndex = 0
 
-onMounted(() => {
-  const { createObserver } = useResizeObserver({
-    action: ({ width }) => {
-      const containerWidth = width
-      const maxIndex = Math.ceil(container.value!.scrollWidth / containerWidth) - 1
-      if (currentIndex > maxIndex) {
-        currentIndex = maxIndex
-        container.value!.style.transform = `translateX(-${currentIndex * slideWidth}px)`
-      }
-    }
-  })
+const showResizeData = ({ width, height }: { width: number; height: number }): any => {
+  observerValues.value = { width, height }
+}
+const showContainerResizeData = ({ width, height }: { width: number; height: number }): any => {
+  containerValues.value = { width, height }
+}
+const { createObserver } = useResizeObserver({ action: showResizeData })
+const { createObserver: createContainerObserver } = useResizeObserver({
+  action: showContainerResizeData
+})
 
+onMounted(() => {
   if (observer.value) {
     createObserver({
       trigger: observer.value
     })
   }
+
+  if (container.value) {
+    createContainerObserver({
+      trigger: container.value
+    })
+  }
+})
+
+onUnmounted(() => {
+  observerValues.value = null
+  containerValues.value = null
 })
 
 const nextSlide = () => {
-  const containerWidth = observer.value!.clientWidth
-  const maxIndex = Math.ceil((container.value!.scrollWidth - containerWidth) / slideWidth)
-  if (currentIndex < maxIndex) {
-    currentIndex++
-    container.value!.style.transform = `translateX(-${currentIndex * slideWidth}px)`
+  if (containerValues.value && observerValues.value) {
+    const maxIndex = Math.ceil(
+      (container.value!.scrollWidth - containerValues.value.width) / slideWidth
+    )
+    if (currentIndex < maxIndex) {
+      currentIndex++
+      container.value!.style.transform = `translateX(-${currentIndex * slideWidth}px)`
+    }
   }
 }
 
@@ -80,10 +96,6 @@ const prevSlide = () => {
     container.value!.style.transform = `translateX(-${currentIndex * slideWidth}px)`
   }
 }
-
-//TODO: calcular nextClick solo para el width del siguiente item
-//TODO: mostrar ocultar los iconos
-//TODO: añadir iconos base icon (por slot)
 </script>
 
 <style lang="scss">
@@ -95,14 +107,6 @@ const prevSlide = () => {
   &--container {
     display: flex;
     transition: transform 0.3s ease;
-  }
-
-  slide {
-    border: 1px solid grey;
-    padding: 0.5rem 1rem;
-    margin: 0 0.5rem;
-    flex-shrink: 0;
-    width: 100px; /* Ancho de cada slide */
   }
 
   &--arrow {
@@ -121,6 +125,16 @@ const prevSlide = () => {
 
   &--arrow:last-child {
     right: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .slider-show {
+    overflow-x: auto;
+  }
+
+  .slider-show--arrow {
+    display: none;
   }
 }
 </style>
