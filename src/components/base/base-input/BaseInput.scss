@@ -131,7 +131,7 @@
         align-items: center;
         display: flex;
         justify-content: center;
-
+        color: var(--color-primary-40, #000);
         transition: color $animationTime ease-out;
 
         :disabled{

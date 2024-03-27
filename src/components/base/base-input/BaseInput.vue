@@ -176,16 +176,17 @@ const updateValue = (payload: Event) => {
     const { value } = (payload.target as HTMLInputElement)
     customEmits('update:modelValue', value)
 
-    const valueIsEmpty = value === '';
-    valueIsEmpty ? requiredModel() : invalidModel(value);
+    requiredModel(value.length === 0);
+    invalidModel(value);
 };
 
-const requiredModel = () => {
-    if(required) customEmits('invalid', { mode: 'required', value: true });
+const requiredModel = (state: boolean) => {
+    if(required) customEmits('invalid', { mode: 'required', value: state });
 }
 
 const invalidModel = (value: string): void => {
     if(!pattern) return;
+    if(value.length === 0) return;
     const re = new RegExp(pattern)
     customEmits('invalid', {mode: 'validation', value: !re.test(value) })
 }
