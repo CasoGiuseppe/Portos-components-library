@@ -1,33 +1,55 @@
+@use '../_abstracts/media' as useMedia;
 @use '../_abstracts/grid' as useGrid;
+@use '../mixins/createGrid.scss' as useCreateGrid;
 
-// .container {
-//     max-width: useGrid.$container-max-width;
-//     margin: 0 auto;
-// }
+body {
+    margin: 0;
+    padding: 0;
+}
 
-// .row {
-//     display: flex;
-//     flex-wrap: wrap;
-//     gap: calc(useGrid.$gutter / 2);
-// }
+.grid {
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+    width: 100%;
 
-// [class*=col] {
-//     padding: calc(useGrid.$gutter / 2) 0;
-//     flex-shrink: 1;
-//     flex-basis: 0;
-//     flex-grow: 1;
-// }
+    @include media('large') {
+        margin: 0 var(--spacing-100, 0);
+        max-width: (useMedia.$grid-lg * 1px)
+    }
 
-// @include media('small') {
-//     @include createGrid($media: 'small', $offset: true)
-// }
+    @include media('medium') {
+        margin: 0 var(--spacing-70, 0);
+        max-width: useMedia.$grid-md * 1px
+    }
 
-// @include media('medium') {
-//     @include createGrid($media: 'medium', $offset: true)
-// }
+    @include media('small') {
+        margin: 0 var(--spacing-60, 0);
+        max-width: useMedia.$grid-sm * 1px
+    }
 
-// @include media('large') {
-//     @include createGrid($media: 'large', $offset: true)
-// }
+    &__row {
+        display: flex;
+        flex: 1;
+        justify-content: space-between;
+
+        @include media('large') {
+            gap: var(--spacing-60, 0)
+        }
+
+        @include media('medium') {
+            gap: var(--spacing-50, 0)
+        }
+    }
+
+    *[class*="grid__col"] {
+        display: flex;
+        align-items: center;
+    }
+
+    @each $modifier , $breakpoint in useGrid.$map-grid {
+        @include useCreateGrid.create-grid-classes($modifier, useGrid.$columns, $breakpoint);
+    }
+}
 
 

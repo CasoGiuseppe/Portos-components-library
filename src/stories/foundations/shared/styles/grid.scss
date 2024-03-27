@@ -1,0 +1,17 @@
+.foundation {
+    &__grid-col {
+        @include text-body-m--regular;
+        background: var(--color-primary-10, #000);
+        padding: var(--spacing-40, 0);
+        border-radius: var(--radius-300, 0);
+        justify-content: center;
+
+        &--secondary {
+            background-color: var(--color-success-10, #000);
+        }
+
+        &--tertiary {
+            background: var(--color-error-10, #000);
+        }
+    }
+}
