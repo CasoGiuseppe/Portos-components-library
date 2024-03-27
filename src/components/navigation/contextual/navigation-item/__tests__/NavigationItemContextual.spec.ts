@@ -59,6 +59,6 @@ describe('NavigationItemContextual', () => {
     })
 
     await wrapper.trigger('click')
-    expect(wrapper.emitted('selected')).toBeTruthy()
+    expect(wrapper.emitted('send')).toBeTruthy()
   })
 })

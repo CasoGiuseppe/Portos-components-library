@@ -9,8 +9,8 @@
     @click="handleClickItem"
     data-testID="ui-navigation-item-contextual"
   >
-    <!-- @Slot for item (icon left, content, icon right)-->
-    <slot name="item" />
+    <!-- @slot Default slot for item content -->
+    <slot/>
   </component>
 </template>
 
@@ -19,7 +19,7 @@ import { validateValueCollectionExists } from '@/components/utilities/validation
 import { type PropType } from 'vue'
 import { type INavigationItemContextualComponent, Element } from './types'
 
-const { id, selected }: INavigationItemContextualComponent = defineProps({
+const { id }: INavigationItemContextualComponent = defineProps({
   /**
    * Set the unique id of the ui button
    */
@@ -45,9 +45,8 @@ const { id, selected }: INavigationItemContextualComponent = defineProps({
   }
 })
 // emits
-const customEmits = defineEmits(['selected'])
-
-const handleClickItem = () => customEmits('selected', id)
+const customEmits = defineEmits(['send'])
+const handleClickItem = () => customEmits('send', id)
 </script>
 
 <style src="./NavigationItemContextual.scss"></style>

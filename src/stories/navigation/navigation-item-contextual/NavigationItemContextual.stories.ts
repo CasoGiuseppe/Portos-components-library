@@ -1,7 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
-
-import NavigationItemContextual from '@/components/navigation/contextual/navigation-item/NavigationItemContextual.vue'
-import BaseIcon from '@/components/base/base-icon/BaseIcon.vue'
+import type { Meta, StoryObj } from '@storybook/vue3';
+import NavigationItemContextual from '@/components/navigation/contextual/navigation-item/NavigationItemContextual.vue';
+import { Element } from '@/components/navigation/contextual/navigation-item/types';
+import BaseIcon from '@/components/base/base-icon/BaseIcon.vue';
+import { action } from '@storybook/addon-actions'
 
 const meta = {
   title: 'Navigation/contextual',
@@ -9,11 +10,15 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     id: { control: 'text' },
-    selected: { expanded: false }
+    elementType: { control: 'select', options: Object.values(Element) },
+    selected:{ control: 'radio', options: [true, false] },
+    default: { control: 'text' }
   },
   args: {
-    id: '0',
-    selected: false
+    id: 'navigationID',
+    selected: false,
+    elementType: Element.BUTTON,
+    default: 'item'
   }
 } satisfies Meta<typeof NavigationItemContextual>
 
@@ -29,23 +34,17 @@ const Templates: Story = {
     },
     template: `
       <section style="display: grid; gap: 10px; grid-template-columns: repeat(6, 1fr)">
-      <NavigationItemContextual v-bind="args">
-        <template #item>
-          <picture class="navigation-item__user-icon">
-            <Suspense>
-              <BaseIcon name="IconArrowCircleRight" type="arrow" :size="'S'" />
-            </Suspense>
-          </picture>
-          <span class="navigation-item-contextual--content">content</span>
-          <picture class="navigation-item__user-icon">
-            <Suspense>
-              <BaseIcon name="IconArrowCircleLeft" type="arrow" :size="'S'" />
-            </Suspense>
-          </picture>
-        </template>
+      <NavigationItemContextual v-bind="args" @send="action">
+          <Suspense>
+            <BaseIcon name="IconArrowCircleRight" type="arrow" :size="'S'" />
+          </Suspense>
+          {{ args.default }}
+          <Suspense>
+            <BaseIcon name="IconArrowCircleLeft" type="arrow" :size="'S'" />
+          </Suspense>
       </NavigationItemContextual>
-    </section>
-        `
+    </section>`,
+    methods: { action: action('submitted') }
   })
 }
 
