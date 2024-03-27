@@ -8,7 +8,7 @@ import BaseInput from './components/base/base-input/BaseInput.vue'
 import BaseSearch from './components/base/base-search/BaseSearch.vue'
 import BaseTable from './components/base/base-table/BaseTable.vue'
 // nav
-import NavigationItem from './components/navigation/navigation-item/NavigationItem.vue'
+import NavigationItem from './components/navigation/main/navigation-item/NavigationItem.vue'
 // defaults
 import DefaultError from './components/defaults/exceptions/default-error/DefaultError.vue'
 import DefaultLoader from './components/defaults/loaders/default-loader/DefaultLoader.vue'
