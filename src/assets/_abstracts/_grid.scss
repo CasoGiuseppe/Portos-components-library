@@ -1,3 +1,8 @@
-$container-max-width: px2rem(1920);
+@use './media' as useMedia;
+
 $columns: 12;
-$gutter: 1rem
+$map-grid: (
+  '-sm': useMedia.$grid-sm,
+  '-md': useMedia.$grid-md,
+  '-lg': useMedia.$grid-lg
+);

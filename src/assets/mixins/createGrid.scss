@@ -1,15 +1,57 @@
 @use '../_abstracts/grid' as useGrid;
+@use './createBreakpoints.scss' as useMedia;
 
-@mixin createGrid(
-    $media,
-    $offset: false,
-    $ordering: false,
-    $hidding: false
-) {
-    @for $column from 1 to useGrid.$columns {
-        @warn $media;
-        .col-#{$media}-#{$column} {
-            width: (100% * $column) / var(--columns);
+$base: 16;
+@mixin build-mq($breakpoint, $min-or-max) {
+    @if($breakpoint == 0) {
+        @content;
+    } @else {
+        @media screen and (#{$min-or-max}-width: $breakpoint * 1px) {
+        @content;
+        }
+    }
+}
+
+@mixin create-grid-classes($modifier, $grid-cols, $breakpoint) {
+    @include build-mq($breakpoint, 'min') {
+      &__col#{$modifier}-offset-0 {
+        margin-left: 0;
+      }
+
+      @for $i from 1 through $grid-cols {
+        &__col--is-hidden#{$modifier} {
+            display: none !important;
+        }
+
+        &__col#{$modifier}-#{$i} {
+          @if $i != 12 {
+            flex: 0 0 calc((100 / calc($grid-cols / $i) * 1%));
+            @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
+              flex-basis: calc((100% / calc($grid-cols / $i)));
+           }
+          } @else {
+            flex: 0 0 calc((100 / calc($grid-cols / $i) * 1%));
+            @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
+              flex-basis: calc((100% / calc($grid-cols / $i)));
+           }
+          }
+        }
+  
+        &__col-#{$modifier}-offset-right-#{$i} {
+          margin-right: calc((100 / calc($grid-cols / $i) ) * 1%);
+        }
+  
+        &__col-#{$modifier}-offset-left-#{$i} {
+          margin-left: calc((100 / calc($grid-cols / $i) ) * 1%);
+        }
+      }
+    }
+  }
+
+@each $modifier , $breakpoint in useGrid.$map-grid {
+    @include build-mq($breakpoint - 1, 'max') {
+        .hidden#{$modifier} {
+            display: none !important;
         }
     }
 }
