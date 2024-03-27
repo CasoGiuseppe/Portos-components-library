@@ -9,6 +9,9 @@ import BaseSearch from './components/base/base-search/BaseSearch.vue'
 import BaseTable from './components/base/base-table/BaseTable.vue'
 // nav
 import NavigationItem from './components/navigation/main/navigation-item/NavigationItem.vue'
+// slider
+import SliderShow from './components/slider/SliderShow.vue'
+
 // defaults
 import DefaultError from './components/defaults/exceptions/default-error/DefaultError.vue'
 import DefaultLoader from './components/defaults/loaders/default-loader/DefaultLoader.vue'
@@ -22,6 +25,7 @@ export {
   BaseSearch,
   BaseTable,
   NavigationItem,
+  SliderShow,
   DefaultLoader,
   DefaultError
 }
@@ -40,6 +44,7 @@ export function install(app: App): void {
   app.component('BaseSearch', BaseSearch)
   app.component('BaseTable', BaseTable)
   app.component('NavigationItem', NavigationItem)
+  app.component('SliderShow', SliderShow)
   app.component('DefaultLoader', DefaultLoader)
   app.component('DefaultError', DefaultError)
 }
