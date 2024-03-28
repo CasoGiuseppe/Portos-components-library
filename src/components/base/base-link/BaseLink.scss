@@ -17,9 +17,11 @@
   flex-direction: row;
   gap: var(--spacing-30, 0);
   padding: var(--spacing-20, 0);
-  color: var(--color-primary-20, #000);
+
   background-color: transparent;
   border: none;
+  border-radius: var(--radius-200, 0);
+  color: var(--color-primary-20, #000);
   outline: none;
 
   &:is(a) {

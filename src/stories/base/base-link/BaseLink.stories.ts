@@ -25,7 +25,7 @@ const meta: Meta = {
     variant: false,
     disabled: false,
     default: 'Base Link',
-    elementType: Element.ANCHOR,
+    elementType: Element.BUTTON,
     href: 'https://amaris.com/'
   }
 }

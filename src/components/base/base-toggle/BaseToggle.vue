@@ -10,22 +10,27 @@
         @change="handleChange"
     >
         <input
+            ref="checkbox"
             type="checkbox"
             :checked="checked"
             :disabled="disabled"
             :aria-disabled="disabled"
             style="display: none;"
         >
-        <button class="base-toggle__switch" />
+        <button
+            class="base-toggle__switch"
+            @keyup.enter="setChangeByKey"
+            @keyup.space="setChangeByKey"
+        />
         <slot />
     </label>
 </template>
 <script lang="ts" setup>
-import { type PropType } from 'vue';
+import { ref, type PropType } from 'vue';
 import { type UniqueId, Sizes } from './types';
 import { validateValueCollectionExists } from '@/components/utilities/validation/useValidation';
 
-defineProps({
+const { disabled } = defineProps({
     /**
     * Set the unique id of the ui toggle
     */
@@ -46,7 +51,7 @@ defineProps({
     */
     checked: {
         type: Boolean as PropType<boolean>,
-        default: false
+        default: true
     },
     /**
     * Set the disabled toggle state
@@ -72,10 +77,19 @@ defineProps({
 })
 
 const emits = defineEmits(['checked'])
+const checkbox = ref<HTMLInputElement | null>(null);
 
 const handleChange = (payload: Event) => {
     const { checked } = (payload.target as HTMLInputElement)
     emits('checked', checked)
+}
+
+const setChangeByKey = () => {
+    if(disabled) return;
+    if(!checkbox.value) return;
+    const { checked } = checkbox.value
+    checkbox.value.checked = !checked
+    emits('checked', checkbox.value.checked)
 }
 </script>
 <style src="./BaseToggle.scss" lang="scss"></style>
