@@ -112,43 +112,4 @@ const prevSlide = () => {
 }
 </script>
 
-<style lang="scss">
-.slider-show {
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-
-  &--container {
-    display: flex;
-    transition: transform 0.3s ease;
-  }
-
-  &--arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-  }
-
-  &--arrow:first-child {
-    left: 0;
-  }
-
-  &--arrow:last-child {
-    right: 0;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .slider-show {
-    overflow-x: auto;
-  }
-
-  .slider-show--arrow {
-    display: none;
-  }
-}
-</style>
+<style lang="scss" src="./SlideShow.scss"></style>

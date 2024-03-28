@@ -1,0 +1,60 @@
+.slider-show {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+
+  &::-webkit-scrollbar {
+    height: 1px;
+  }
+  &--container {
+    display: flex;
+    padding: 0 var(--spacing-60, 24px);
+
+    transition: transform 0.3s ease;
+  }
+
+  &--arrow {
+    display: flex;
+    align-items: center;
+
+    position: absolute;
+    top: 50%;
+
+    height: 8vh;
+    min-width: var(--spacing-60, 24px);
+    padding: var(--spacing-10, 4px) 7px;
+
+    transform: translateY(-50%);
+
+    background-color: var(--color-neutral-10, #fff);
+    box-shadow: var(--spacing-00, 0px) var(--spacing-00, 0px) var(--spacing-10, 4px)
+      var(--spacing-00, 0px) rgba(0, 0, 0, 0.25);
+
+    border: none;
+    //font-size: 20px;
+    cursor: pointer;
+  }
+
+  &:disabled {
+    background-color: white;
+  }
+
+  &--arrow:first-child {
+    left: 0;
+  }
+
+  &--arrow:last-child {
+    right: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  //TODO: how to use here breakpoints scss??
+  .slider-show {
+    overflow-x: auto;
+  }
+
+  .slider-show--arrow {
+    display: none;
+  }
+}
