@@ -32,7 +32,7 @@ defineProps({
    */
    disabled: {
     type: Boolean as PropType<boolean>,
-    default: true
+    default: false
   },
   /**
    * Set the aria accesibility label

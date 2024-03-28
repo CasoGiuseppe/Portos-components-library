@@ -11,7 +11,16 @@
     
     &:not(:has(input:disabled)) {
         cursor: pointer;
+
+        @media (hover) {
+            &:hover {
+                #{$basetoggle}__switch {
+                    box-shadow: var(--shadow-100);
+                }
+            }
+        }
     }
+
 
     &__switch {
         display: flex;
@@ -21,7 +30,8 @@
 
         border-radius: var(--radius-400, 0);
         background: var(--color-neutral-50, #000);
-        transition: background var(--animationTime, 0s) ease-out;
+        transition: background var(--animationTime, 0s) ease-out,
+                    box-shadow var(--animationTime, 0s) ease-out;
 
         &::before {
             content: '';
