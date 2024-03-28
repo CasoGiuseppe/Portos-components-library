@@ -3,6 +3,7 @@
         :class="[
             'base-toggle',
             `base-toggle--is-${size}`,
+            `${variant ? `base-toggle--is-ALT` : ''}`
         ]"
         :title="label"
         :aria-label="label"
@@ -51,6 +52,13 @@ defineProps({
     * Set the disabled toggle state
     */
     disabled: {
+        type: Boolean as PropType<boolean>,
+        default: false
+    },
+    /**
+    * Set variant type state
+    */
+    variant: {
         type: Boolean as PropType<boolean>,
         default: false
     },

@@ -13,12 +13,32 @@
         cursor: pointer;
 
         @media (hover) {
-            #{$basetoggle}__switch {
-                :focus-within &,
-                :focus & {
+            &:hover {
+                &:not(#{$basetoggle}--is-ALT) {
+                    #{$basetoggle}__switch {
+                        box-shadow: var(--shadow-100) 
+                    }
+                }
+
+                #{$basetoggle}__switch {
+                    box-shadow: var(--shadow-alt-100)
+                }
+            }
+
+            :focus-within &,
+            :focus & {
+                &:not(#{$basetoggle}--is-ALT) {
+                    #{$basetoggle}__switch {
+                        box-shadow:
+                            0 0 0 2px var(--color-neutral-10, #000),
+                            0 0 0 4px var(--color-outline, #000);
+                    }
+                } 
+
+                #{$basetoggle}__switch {
                     box-shadow:
-                        0 0 0 2px var(--color-neutral-10, #000),
-                        0 0 0 4px var(--color-outline, #000); 
+                        0 0 0 2px var(--color-outline, #000),
+                        0 0 0 4px var(--color-neutral-10, #000);
                 }
             }
         }
@@ -60,11 +80,14 @@
             transition: transform var(--animationTime, 0s) ease-out;
         }
 
-        @media(hover) {
-            &:hover {
-                box-shadow: var(--shadow-100);
-            }
-        }
+        // @media(hover) {
+        //     :hover & {
+        //         #{$basetoggle}--is-ALT & {
+        //             box-shadow: var(--shadow-alt-400)
+        //         }
+        //         box-shadow: var(--shadow-100);
+        //     }
+        // }
     }
 
     input {
