@@ -6,13 +6,13 @@
     </div>
 
     <template v-if="showArrows">
-      <button @click="prevSlide" class="slider-show--arrow">
+      <button @click="prevSlide" class="slider-show--arrow" :disabled="!prevArrow">
         <Suspense>
           <!-- @slot for left slider arrow-->
           <slot name="leftArrow"></slot>
         </Suspense>
       </button>
-      <button @click="nextSlide" class="slider-show--arrow">
+      <button @click="nextSlide" class="slider-show--arrow" :disabled="!nextArrow">
         <!-- @slot for right slider arrow-->
         <slot name="rightArrow"></slot>
       </button>
@@ -47,6 +47,8 @@ const containerValues = ref<{ width: number; height: number } | null>(null)
 const showArrows = arrows
 const slideWidth = width
 let currentIndex = 0
+const nextArrow = ref(true)
+const prevArrow = ref(false)
 
 const showResizeData = ({ width, height }: { width: number; height: number }): any => {
   observerValues.value = { width, height }
@@ -86,6 +88,12 @@ const nextSlide = () => {
     if (currentIndex < maxIndex) {
       currentIndex++
       container.value!.style.transform = `translateX(-${currentIndex * slideWidth}px)`
+      container.value!.style.transition = 'transform 0.4s ease'
+      nextArrow.value = true
+      prevArrow.value = true
+    } else {
+      nextArrow.value = false
+      prevArrow.value = true
     }
   }
 }
@@ -94,6 +102,12 @@ const prevSlide = () => {
   if (currentIndex > 0) {
     currentIndex--
     container.value!.style.transform = `translateX(-${currentIndex * slideWidth}px)`
+    container.value!.style.transition = 'transform 0.4s ease'
+    prevArrow.value = true
+    nextArrow.value = true
+  } else {
+    prevArrow.value = false
+    nextArrow.value = true
   }
 }
 </script>
