@@ -1,6 +1,10 @@
 <template>
   <section></section>
-  <MainNavigation />
+  <MainNavigation>
+      <template #logo>
+          <img src="@/assets/logo.svg" />
+      </template>
+  </MainNavigation>
 </template>
 
 <script setup lang="ts">
