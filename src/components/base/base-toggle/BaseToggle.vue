@@ -1,6 +1,9 @@
 <template>
     <label
-        class="base-toggle"
+        :class="[
+            'base-toggle',
+            `base-toggle--is-${size}`,
+        ]"
         :title="label"
         :aria-label="label"
         @change="handleChange"
@@ -18,29 +21,46 @@
 </template>
 <script lang="ts" setup>
 import { type PropType } from 'vue';
+import { type UniqueId, Sizes } from './types';
+import { validateValueCollectionExists } from '@/components/utilities/validation/useValidation';
 
 defineProps({
     /**
-   * Set checked state
-   */
-  checked: {
-    type: Boolean as PropType<boolean>,
-    default: false
-  },
-  /**
-   * Set the disabled component state
-   */
-   disabled: {
-    type: Boolean as PropType<boolean>,
-    default: false
-  },
-  /**
-   * Set the aria accesibility label
-   */
-   label: {
-    type: String as PropType<string>,
-    default: 'component label'
-}
+    * Set the unique id of the ui toggle
+    */
+    id: {
+        type: String as PropType<UniqueId>,
+        default: 'toggleId'
+    },
+    /**
+    * Set the toggle size mode [M, S]
+    */
+    size: {
+        type: String as PropType<Sizes>,
+        default:Sizes.S,
+        validator: (prop: Sizes) => validateValueCollectionExists({ collection: Sizes, value: prop})
+    },
+    /**
+    * Set checked state
+    */
+    checked: {
+        type: Boolean as PropType<boolean>,
+        default: false
+    },
+    /**
+    * Set the disabled toggle state
+    */
+    disabled: {
+        type: Boolean as PropType<boolean>,
+        default: false
+    },
+    /**
+    * Set the aria accesibility label
+    */
+    label: {
+        type: String as PropType<string>,
+        default: 'component label'
+    }
 })
 
 const emits = defineEmits(['checked'])

@@ -24,22 +24,35 @@
         }
     }
 
+    &--is {
+        &-S {
+            @include text-body-s--regular;
+        }
+    }
+
 
     &__switch {
         display: flex;
         padding: var(--spacing-10, 0);
         min-width: calc(var(--spacing-80, 0) + var(--spacing-20, 0));
-        height: 24px;
+        
 
         border-radius: var(--radius-400, 0);
         background: var(--color-neutral-50, #000);
         transition: background var(--animationTime, 0s) ease-out,
                     box-shadow var(--animationTime, 0s) ease-out;
 
+        #{$basetoggle}--is-S & {
+            min-width: calc(var(--spacing-70, 0) + var(--spacing-20, 0));
+
+            &::before {
+                width: var(--spacing-50, 0);
+            }
+        }
+
         &::before {
             content: '';
-            height: 100%;
-
+            width: calc(var(--spacing-50, 0) + var(--spacing-20, 0));
             aspect-ratio: 1/1;
             border-radius: var(--radius-600, 0);
             background: var(--color-neutral-10, #000);
