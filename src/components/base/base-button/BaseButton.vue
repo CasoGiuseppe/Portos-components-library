@@ -67,7 +67,8 @@ defineProps({
    * Set the aria accesibility label
    */
   label: {
-    type: String as PropType<string>
+    type: String as PropType<string>,
+    default: 'component label'
   }
 });
 const emits = defineEmits(['send'])
