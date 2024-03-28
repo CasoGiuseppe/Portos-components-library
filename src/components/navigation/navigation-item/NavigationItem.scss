@@ -35,8 +35,8 @@
 
     color: var(--color-neutral-10, #000);
 
-    transition: box-shadow var(--animationTime ease-out,
-                background var(--animationTime ease-out;
+    transition: box-shadow var(--animationTime ease-out),
+                background var(--animationTime ease-out);
 
     &:is(button) {
         border: none;

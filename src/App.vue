@@ -1,5 +1,5 @@
 <template>
-  <section style="padding: 20px">
+  <section style="padding: 20px; background: blue">
     <BaseToggle @checked="xxx">Label</BaseToggle>
   </section>
 </template>

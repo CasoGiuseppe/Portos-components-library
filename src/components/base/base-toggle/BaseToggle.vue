@@ -10,13 +10,13 @@
         @change="handleChange"
     >
         <input
-            v-show="false"
             type="checkbox"
             :checked="checked"
             :disabled="disabled"
             :aria-disabled="disabled"
+            style="display: none;"
         >
-        <span class="base-toggle__switch"></span>
+        <button class="base-toggle__switch" />
         <slot />
     </label>
 </template>
@@ -38,7 +38,7 @@ defineProps({
     */
     size: {
         type: String as PropType<Sizes>,
-        default:Sizes.S,
+        default:Sizes.M,
         validator: (prop: Sizes) => validateValueCollectionExists({ collection: Sizes, value: prop})
     },
     /**
