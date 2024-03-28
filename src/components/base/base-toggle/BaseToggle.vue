@@ -5,8 +5,8 @@
         :aria-label="label"
         @change="handleChange"
     >
-        <!-- v-show="false" -->
         <input
+            v-show="false"
             type="checkbox"
             :checked="checked"
             :disabled="disabled"
