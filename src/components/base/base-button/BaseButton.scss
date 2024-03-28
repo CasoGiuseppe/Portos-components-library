@@ -11,7 +11,7 @@
 
 .base-button {
   $basebutton: &;
-  $animationTime: .4s;
+  --animationTime: .4s;
 
   align-items: center;
   display: flex;
@@ -22,10 +22,10 @@
   border-radius: var(--radius-500, 0);
   color: var(--color-neutral-10, #000);
 
-  transition: background $animationTime ease-out,
-              box-shadow $animationTime ease-out,
-              border-color $animationTime ease-out,
-              color $animationTime ease-out;
+  transition: background var(--animationTime, 0s) ease-out,
+              box-shadow var(--animationTime, 0s) ease-out,
+              border-color var(--animationTime, 0s) ease-out,
+              color var(--animationTime, 0s) ease-out;
 
   &:disabled {
     pointer-events: none;

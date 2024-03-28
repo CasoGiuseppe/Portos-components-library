@@ -10,7 +10,7 @@
 }
 
 .base-link {
-  $animationTime: 0.4s;
+  --animationTime: 0.4s;
 
   display: inline-flex;
   align-items: center;
@@ -33,10 +33,10 @@
   }
 
   transition:
-    background $animationTime ease-out,
-    box-shadow $animationTime ease-out,
-    border-color $animationTime ease-out,
-    color $animationTime ease-out;
+    background var(--animationTime, 0s) ease-out,
+    box-shadow var(--animationTime, 0s) ease-out,
+    border-color var(--animationTime, 0s) ease-out,
+    color var(--animationTime, 0s) ease-out;
 
   // disable
   &[disabled] {

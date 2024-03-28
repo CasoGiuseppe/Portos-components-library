@@ -75,4 +75,4 @@ const handleClick = () => emits('send')
 
 </script>
 
-<style src="./BaseButton.scss" lang="scss"></style>@/components/utilities/validation/useValidation
+<style src="./BaseButton.scss" lang="scss"></style>

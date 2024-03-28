@@ -1,5 +1,8 @@
 <template>
-    <label class="base-toggle">
+    <label
+        class="base-toggle"
+        @change="handleChange"
+    >
         <!-- v-show="false" -->
         <input
             type="checkbox"
@@ -10,7 +13,7 @@
     </label>
 </template>
 <script lang="ts" setup>
-import type { PropType } from 'vue';
+import { ref, type PropType } from 'vue';
 
 defineProps({
     /**
@@ -21,4 +24,12 @@ defineProps({
     default: true
   },
 })
+
+const emits = defineEmits(['checked'])
+
+const handleChange = (payload: Event) => {
+    const { checked } = (payload.target as HTMLInputElement)
+    emits('checked', checked)
+}
 </script>
+<style src="./BaseToggle.scss" lang="scss"></style>
