@@ -23,19 +23,23 @@
                             />
                         </Suspense>
                     </template>
+
                     <template #label>
                         <p v-text="item.label" />
                     </template>
+
                     <template #children v-if="item.children">
-                        <template
-                            v-for="child in item.children"
-                            :key="child.label"
-                        >
-                            <p
-                                v-text="child.label"
-                                style="padding: 10px 0; width: 220px;"
-                            />
-                        </template>
+                        <ul ref="children">
+                            <li
+                                v-for="child in item.children"
+                                :key="child.label"
+                            >
+                                <p
+                                    v-text="child.label"
+                                    style="padding: 10px 0; width: 220px;"
+                                />
+                            </li>
+                        </ul>
                     </template>
                 </NavigationItem>
             </li>
@@ -44,24 +48,30 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
 import NavigationItem from '@/components/navigation/navigation-item/NavigationItem.vue';
 import BaseIcon from '@/components/base/base-icon/BaseIcon.vue';
 import { Types, Sizes } from '@/components/base/base-icon/types';
 import type { INavigationItem } from './types';
+import {
+    handleChildrenWatcher,
+    loadNavigationItems,
+    switchChildrenPosition
+} from './helpers';
 
 const navigationItems = ref<INavigationItem[]>([]);
 const collapsed = ref<boolean>(false);
+const children = ref<HTMLCollection | null>(null);
 
-const loadNavigationItems = async (userRole: string) => {
-    try {
-        const { default: items } = await import(`./items/${userRole}`);
-        return items;
-    } catch (error) {
-        console.error('Error loading items file:', error);
-    }
-};
+watch(children, () => {
+  if (children.value) {
+    handleChildrenWatcher(
+        children.value,
+        switchChildrenPosition
+    );
+  }
+});
 
 onMounted(async () => {
     const userRole = 'admin';

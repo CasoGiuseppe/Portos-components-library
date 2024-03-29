@@ -62,7 +62,24 @@ const items: INavigationItem[] = [
     {
         label: 'Configuración',
         type: Types.SYSTEM,
-        icon: 'IconSystemConfiguration'
+        icon: 'IconSystemConfiguration',
+        children: [
+            {
+                label: 'Ficha de unidad',
+                type: Types.LOCATION,
+                icon: 'IconLocationUnit',
+            },
+            {
+                label: 'Stock Search',
+                type: Types.LOCATION,
+                icon: 'IconLocationUnit',
+            },
+            {
+                label: 'Bolsa de unidades',
+                type: Types.LOCATION,
+                icon: 'IconLocationUnit',
+            }
+        ]
     }
 ];
 
