@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { mountComponent } from '@tests/utilities';
-import BaseButton from '@/components/base/base-button/BaseButton.vue';
+import BaseButton from '../BaseButton.vue';
 import { Types, Sizes } from '../types';
 import {
   $providedButtonLabel,

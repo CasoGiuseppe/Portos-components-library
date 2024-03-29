@@ -10,6 +10,7 @@
         @change="handleChange"
     >
         <input
+            data-testID="ui-checkbox"
             ref="checkbox"
             type="checkbox"
             :checked="checked"
