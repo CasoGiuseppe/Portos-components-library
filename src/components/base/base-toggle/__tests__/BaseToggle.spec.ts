@@ -21,8 +21,8 @@ describe('BaseToggle component tests', () => {
         })
 
         it('Should input checkbox have correct disabled state', () => {
-            const checkbox = $wrapper.get(`${$uiInputCheckbox}`).html()
-            expect(checkbox).toContain('disabled')
+            const DOMElement = $wrapper.get(`${$uiInputCheckbox}`).html()
+            expect(DOMElement).toContain('disabled')
         })
 
         it('Should input checkbox be hidden', () => {
@@ -87,7 +87,7 @@ describe('BaseToggle component tests', () => {
             }
           })
         })
-        
+
         it('Should have a correct variant class', async () => {
           expect($wrapper.classes()).toContain('base-toggle--is-ALT')
         })

@@ -18,8 +18,9 @@ describe('BaseButton component tests', () => {
       })
     })
 
-    it('Should input have correct disabled state', () => {
-      expect($wrapper.props('disabled')).toBeTruthy
+    it('Should button have correct disabled state', () => {
+      const DOMElement = $wrapper.html()
+      expect(DOMElement).toContain('disabled')
     })
   })
 
