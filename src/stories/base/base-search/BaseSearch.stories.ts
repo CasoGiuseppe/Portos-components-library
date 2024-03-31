@@ -58,10 +58,10 @@ const Template: Story = {
       </div>
     `,
     methods: {
-      handleResponseUpdate(value: string) {
+      handleResponseUpdate(value: string): void {
         updateArgs({ ...args, searchResults: search(value) })
       },
-      resetResponse() {
+      resetResponse(): void {
         updateArgs({ ...args, searchResults: undefined })
       }
     }

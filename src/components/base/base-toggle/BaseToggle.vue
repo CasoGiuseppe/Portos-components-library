@@ -13,7 +13,7 @@
             data-testID="ui-checkbox"
             ref="checkbox"
             type="checkbox"
-            :checked="checked"
+            :checked="active"
             :disabled="disabled"
             :aria-disabled="disabled"
             style="display: none;"
@@ -50,9 +50,9 @@ const { disabled } = defineProps({
     /**
     * Set checked state
     */
-    checked: {
+    active: {
         type: Boolean as PropType<boolean>,
-        default: true
+        default: false
     },
     /**
     * Set the disabled toggle state

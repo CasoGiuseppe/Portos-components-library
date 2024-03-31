@@ -60,7 +60,7 @@ const Templates: Story = {
             </section>
         `,
         methods: {
-          setInvalid({value}: {value: string}) {
+          setInvalid({value}: {value: string}): void {
               updateArgs({ ...args, error: value
                   ? 'mensaje error'
                   : null })

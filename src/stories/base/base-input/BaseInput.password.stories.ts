@@ -79,17 +79,17 @@ const Templates: Story = {
             </section>
         `,
         methods: {
-            setInvalid({mode, value}: {mode: string, value: string}) {
+            setInvalid({mode, value}: {mode: string, value: string}): void {
                 updateArgs({ ...args, error: value
                     ? ERRORS[mode as keyof typeof ERRORS]
                     : null })
             },
             change: action('change'),
             focus: action('focus'),
-            update(value: string) {
+            update(value: string): void {
                 updateArgs({ ...args, proxyValue: value })
             },
-            changeInputState() {
+            changeInputState(): void {
                 updateArgs({ ...args, input: args.input === 'password' ? Types.TEXT : Types.PASSWORD })
             }
         }

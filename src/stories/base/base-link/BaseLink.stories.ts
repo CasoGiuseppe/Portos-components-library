@@ -28,7 +28,7 @@ const meta: Meta = {
     elementType: Element.BUTTON,
     href: 'https://amaris.com/'
   }
-}
+} as Meta<typeof BaseLink>
 
 export default meta
 

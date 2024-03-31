@@ -68,8 +68,7 @@ const Templates: Story = {
             </section>
         `,
         methods: {
-            setInvalid({mode, value}: {mode: string, value: string}) {
-                console.log(mode);
+            setInvalid({mode, value}: {mode: string, value: string}): void {
                 updateArgs({ ...args, error: value
                     ? ERRORS[mode as keyof typeof ERRORS]
                     : null })
