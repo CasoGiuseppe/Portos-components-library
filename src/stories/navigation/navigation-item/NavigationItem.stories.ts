@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import { action } from '@storybook/addon-actions';
 
-import NavigationItem from '@/components/navigation/navigation-item/NavigationItem.vue';
+import NavigationItem from '@/components/navigation/main/navigation-item/NavigationItem.vue';
 import BaseIcon from "@/components/base/base-icon/BaseIcon.vue";
 
 const meta = {

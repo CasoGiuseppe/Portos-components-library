@@ -1,0 +1,45 @@
+.navigation-item-contextual {
+  $navigationItemContextual: &;
+  $animationTime: 0.4s;
+  @include text-body-m--regular;
+
+  padding: var(--spacing-40, 12px) var(--spacing-50, 16px);
+  color: var(--color-primary-40, #21578a);
+
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-30, 8px);
+
+  cursor: pointer;
+
+  background: none;
+  border: none;
+
+  transition: box-shadow $animationTime ease-out,
+              font-weight $animationTime ease-out;
+
+  &:focus {
+    box-shadow:
+      0 0 0 2px var(--color-neutral-10, #fff),
+      0 0 0 4px var(--color-outline, #bd20cb);
+  }
+
+  @media (hover) {
+    &:not(#{$navigationItemContextual}--is-selected) {
+      &:hover {
+        box-shadow: inset 0px -3px 0px 0px var(--color-neutral-40, #c7cccf);
+        color: var(--color-primary-30, #7090b7); // Cambiar el color a gris
+        transition:
+          box-shadow $animationTime ease-out,
+          color $animationTime ease-out;
+      } 
+    }
+  }
+
+  &--is-selected {
+    @include text-body-m--bold;
+    pointer-events: none;
+    box-shadow: inset 0px -3px 0px 0px var(--color-brand-50, #aa272f);
+  }
+}
