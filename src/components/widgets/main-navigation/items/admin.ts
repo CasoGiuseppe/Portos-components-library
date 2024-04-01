@@ -57,7 +57,24 @@ const items: INavigationItem[] = [
     {
         label: 'Facturación',
         type: Types.FILE,
-        icon: 'IconFileBilling'
+        icon: 'IconFileBilling',
+        children: [
+            {
+                label: 'Ficha de unidad',
+                type: Types.LOCATION,
+                icon: 'IconLocationUnit',
+            },
+            {
+                label: 'Stock Search',
+                type: Types.LOCATION,
+                icon: 'IconLocationUnit',
+            },
+            {
+                label: 'Bolsa de unidades',
+                type: Types.LOCATION,
+                icon: 'IconLocationUnit',
+            }
+        ]
     },
     {
         label: 'Configuración',

@@ -55,22 +55,26 @@ import BaseIcon from '@/components/base/base-icon/BaseIcon.vue';
 import { Types, Sizes } from '@/components/base/base-icon/types';
 import type { INavigationItem } from './types';
 import {
-    handleChildrenWatcher,
     loadNavigationItems,
     switchChildrenPosition
 } from './helpers';
+import useIntersectionObserver from '@/shared/composables/useIntersectionObserver';
 
 const navigationItems = ref<INavigationItem[]>([]);
 const collapsed = ref<boolean>(false);
 const children = ref<HTMLCollection | null>(null);
+const observed = ref<boolean>(false);
 
-watch(children, () => {
-  if (children.value) {
-    handleChildrenWatcher(
-        children.value,
-        switchChildrenPosition
-    );
-  }
+const { createObserver } = useIntersectionObserver({
+    action: switchChildrenPosition,
+});
+
+watch(children, (currentValue) => {
+    if (currentValue && !observed.value) {
+        observed.value = !!createObserver({
+            collection: currentValue
+        });
+    }
 });
 
 onMounted(async () => {
