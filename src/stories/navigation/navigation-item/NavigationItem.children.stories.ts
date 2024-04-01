@@ -7,7 +7,7 @@ import BaseIcon from "@/components/base/base-icon/BaseIcon.vue";
 setup((app) => app.directive('click-outside', ClickOutside));
 
 const meta = {
-    title: 'Navigation/Item/Second Level',
+    title: 'Navigation/Main/Second Level',
     component: NavigationItem,
     tags: ['autodocs'],
     argTypes: {

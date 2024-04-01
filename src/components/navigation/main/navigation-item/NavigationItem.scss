@@ -2,17 +2,17 @@
 
 .navigation-item {
     $navigationItem: &;
+    $animationName: second-level-in-out;
     --animationTime: .4s;
-    --animationName: second-level-in-out;
 
     @mixin inOutSecondLevel() {
         > #{$navigationItem}__second-level {
             display: block;
-            animation-name: var(--animationName);
+            animation-name: $animationName;
         }
     }
 
-    @include keyframe(ar(--animationName)) {
+    @include keyframe($animationName) {
         from {
             transform: translateX(105%);
         }
@@ -155,7 +155,7 @@
         color: var(--color-neutral-60, #000);
 
         transform: translateX(100%);
-        animation-name: ar(--animationName);
+        animation-name: $animationName;
         animation-duration: var(--animationTime);
 
         #{$navigationItem}--show-second-level & {

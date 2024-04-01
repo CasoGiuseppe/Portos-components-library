@@ -5,7 +5,7 @@ import BaseIcon from '@/components/base/base-icon/BaseIcon.vue';
 import { action } from '@storybook/addon-actions'
 
 const meta = {
-  title: 'Navigation/contextual',
+  title: 'Navigation/Contextual',
   component: NavigationItemContextual,
   tags: ['autodocs'],
   argTypes: {
