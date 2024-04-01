@@ -6,8 +6,10 @@
       selected ? 'navigation-item-contextual--is-selected' : null
     ]"
     :id="id"
-    @click="handleClickItem"
     data-testID="ui-navigation-item-contextual"
+    @click="handleSendEvent"
+    @keyup.enter="handleSendEvent"
+    @keyup.space="handleSendEvent"
   >
     <!-- @slot Default slot for item content -->
     <slot/>
@@ -19,7 +21,7 @@ import { validateValueCollectionExists } from '@/components/utilities/validation
 import { type PropType } from 'vue'
 import { type INavigationItemContextualComponent, Element } from './types'
 
-const { id }: INavigationItemContextualComponent = defineProps({
+const { id, selected }: INavigationItemContextualComponent = defineProps({
   /**
    * Set the unique id of the ui button
    */
@@ -46,7 +48,10 @@ const { id }: INavigationItemContextualComponent = defineProps({
 })
 // emits
 const customEmits = defineEmits(['send'])
-const handleClickItem = () => customEmits('send', id)
+const handleSendEvent = () => {
+  if(selected) return;
+  customEmits('send', id)
+}
 </script>
 
 <style src="./NavigationItemContextual.scss"></style>

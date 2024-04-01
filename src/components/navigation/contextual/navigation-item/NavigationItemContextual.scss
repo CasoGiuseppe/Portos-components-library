@@ -39,7 +39,7 @@
 
   &--is-selected {
     @include text-body-m--bold;
+    pointer-events: none;
     box-shadow: inset 0px -3px 0px 0px var(--color-brand-50, #aa272f);
-
   }
 }
