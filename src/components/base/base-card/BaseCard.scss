@@ -1,11 +1,38 @@
 .base-card {
   border: 1px solid var(--color-primary-10, #000);
   border-radius: var(--radius-300, 0);
-  padding: var(--spacing-70, 0);
   margin-bottom: var(--spacing-50, 0);
-  width: 500px;
   box-shadow: var(--shadow-100);
+  color: var(--color-neutral-60, #000);
 
+  &--is {
+    //status
+    &-default {
+      background-color: var(--color-neutral-10, #000);
+    }
+    &-warning {
+      background-color: var(--color-warning-10, #000);
+    }
+    //types
+    &-NONE {
+      padding: 0;
+      .base-card__header .base-card__title {
+        @include text-heading-l;
+      }
+    }
+    &-M {
+      padding: var(--spacing-50, 0);
+      .base-card__header .base-card__title {
+        @include text-heading-l;
+      }
+    }
+    &-L {
+      padding: var(--spacing-60, 0);
+      .base-card__header .base-card__title {
+        @include text-display-s;
+      }
+    }
+  }
 
   &.fade-in {
     opacity: 1;
@@ -23,15 +50,23 @@
   }
 
   &__title {
-    @include text-display-s;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-40, 0);
+    width: 100%;
+  }
+
+  &__tag {
     display: flex;
     gap: var(--spacing-50, 0);
-    align-items: center;
-    justify-content: space-between;
-    width: 100%
   }
 
   &__body {
     @include text-body-m--regular;
+    padding: var(--spacing-50, 0) 0;
+  }
+
+  &__link {
+    text-align: right;
   }
 }
