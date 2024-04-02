@@ -1,41 +1,56 @@
 <template>
-  <div :class="['base-card', `base-card--is-${status}`, `base-card--is-${type}`]">
-    <div v-if="isLoading" class="loader">
-      <DefaultLoader id="loader-card">
-        <template #default>Loading...</template>
-      </DefaultLoader>
-    </div>
-    <article v-else :class="{ 'fade-in': !isLoading }">
-      <header class="base-card__header" v-if="hasTitleSlot">
-        <div class="base-card__title">
+  <article :class="[
+    'base-card',
+    `base-card--is-${status}`,
+    `base-card--is-${spacing}`
+  ]">
+    <template v-if="!hasBodySlot">
+      <aside class="base-card--has-loader">
+        <!-- @slot Slot component loader state -->
+        <slot name="loader">
+          ...loading
+        </slot>
+      </aside>
+    </template>
+    <template v-else>
+      <header
+        v-if="hasTitleSlot"
+        class="base-card__header"
+      >
+        <h2 class="base-card__title">
           <!-- @slot Title: Set card title -->
           <slot name="title"></slot>
-        </div>
-        <div class="base-card__tag" v-if="hasTagSlot">
-          <!-- @slot Tag: Set card tag -->
-          <slot name="tag"></slot>
-        </div>
+
+          <span class="base-card__tag">
+            <!-- @slot Tag: Set card tag -->
+            <slot name="tag"></slot>
+          </span>
+        </h2>
       </header>
-      <div class="base-card__body" v-if="hasBodySlot">
+      <section
+        v-if="hasBodySlot"
+        class="base-card__body"
+      >
         <!-- @slot Text: Set card text -->
         <slot name="body"></slot>
-      </div>
-      <div class="base-card__link" v-if="hasLinkSlot">
+      </section>
+      <footer
+        v-if="hasFooterSlot"
+        class="base-card__link"
+      >
         <!-- @slot Link: Set card link -->
-        <slot name="link"></slot>
-      </div>
-    </article>
-  </div>
+        <slot name="footer"></slot>
+      </footer>
+    </template>
+  </article>
 </template>
 
 <script setup lang="ts">
-import { ref, useSlots, type PropType } from 'vue'
-import { type UniqueId, Status, Types } from './types'
-import DefaultLoader from '@/components/defaults/loaders/default-loader/DefaultLoader.vue'
+import { useSlots, type PropType } from 'vue'
+import { type UniqueId, Status, Spacing } from './types'
 import { validateValueCollectionExists } from '@/components/utilities/validation/useValidation'
 
-const isLoading = ref(true)
-const { title, body, link, tag } = useSlots()
+const { title, body, footer } = useSlots()
 
 defineProps({
   /**
@@ -50,27 +65,22 @@ defineProps({
    */
   status: {
     type: String as PropType<Status>,
-    default: Status.DEFAULT
+    default: Status.DEFAULT,
+    validator: (prop: Status) => validateValueCollectionExists({ collection: Status, value: prop })
   },
   /**
    * Set the card type [none, m, l]
    */
-  type: {
-    type: String as PropType<Types>,
-    default: Types.L,
-    validator: (prop: Types) => validateValueCollectionExists({ collection: Types, value: prop })
+  spacing: {
+    type: String as PropType<Spacing>,
+    default: Spacing.L,
+    validator: (prop: Spacing) => validateValueCollectionExists({ collection: Spacing, value: prop })
   }
 })
 
-// Simulación de carga de datos
-setTimeout(() => {
-  isLoading.value = false
-}, 500)
-
 const hasTitleSlot = !!title
 const hasBodySlot = !!body
-const hasLinkSlot = !!link
-const hasTagSlot = !!tag
+const hasFooterSlot = !!footer
 </script>
 
 <style lang="scss" src="./BaseCard.scss" />

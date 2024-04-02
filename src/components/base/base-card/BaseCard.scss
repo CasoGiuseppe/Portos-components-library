@@ -1,4 +1,6 @@
 .base-card {
+  $basecard: &;
+
   border: 1px solid var(--color-primary-10, #000);
   border-radius: var(--radius-300, 0);
   margin-bottom: var(--spacing-50, 0);
@@ -16,43 +18,47 @@
     //types
     &-NONE {
       padding: 0;
+      
       .base-card__header .base-card__title {
         @include text-heading-l;
       }
     }
     &-M {
       padding: var(--spacing-50, 0);
+
       .base-card__header .base-card__title {
         @include text-heading-l;
       }
     }
     &-L {
       padding: var(--spacing-60, 0);
+
       .base-card__header .base-card__title {
         @include text-display-s;
       }
     }
   }
 
-  &.fade-in {
-    opacity: 1;
-    transition: opacity 0.5s;
-  }
-
-  &article {
-    opacity: 0;
+  &--has-loader {
+    display: flex;
+    justify-content: center;
   }
 
   &__header {
     font-weight: bold;
     margin-bottom: var(--spacing-40, 0);
     display: flex;
+
+    ~ [class^='base-card'] {
+      margin-top: var(--spacing-50, 0)
+    }
   }
 
   &__title {
     display: flex;
     align-items: center;
     gap: var(--spacing-40, 0);
+    justify-content: space-between;
     width: 100%;
   }
 
@@ -63,7 +69,6 @@
 
   &__body {
     @include text-body-m--regular;
-    padding: var(--spacing-50, 0) 0;
   }
 
   &__link {

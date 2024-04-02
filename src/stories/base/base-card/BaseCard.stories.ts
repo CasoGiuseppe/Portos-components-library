@@ -3,25 +3,29 @@ import BaseCard from '@ui/base/base-card/BaseCard.vue'
 import BaseIcon from '@ui/base/base-icon/BaseIcon.vue'
 import BaseTag from '@/components/base/base-tag/BaseTag.vue'
 import BaseLink from '@/components/base/base-link/BaseLink.vue'
-import { Status, Types } from '@/components/base/base-card/types'
+import { Status, Spacing } from '@/components/base/base-card/types'
 
 const meta: Meta = {
-  title: 'Base/v1.0/Base Card',
+  title: 'Base/Base Card',
   tags: ['autodocs'],
   component: BaseCard,
   argTypes: {
     id: { control: 'text' },
     status: { control: 'select', options: Object.values(Status) },
-    type: { control: 'select', options: Object.values(Types) },
+    spacing: { control: 'select', options: Object.values(Spacing) },
     title: { control: 'text' },
-    body: { control: 'text' }
+    loader: { control: 'text' },
+    body: { control: 'text' },
+    footer: { control: 'text' },
   },
   args: {
     id: 'CardId',
     status: Status.DEFAULT,
-    type: Types.L,
-    title: 'Título de ejemplo',
-    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing. Mauris finibus efficitur dolor sit amet, dolor sit amet, consectetur sit del conse (...)'
+    spacing: Spacing.L,
+    title: 'Title',
+    loader: 'wait for load ...',
+    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing. Mauris finibus efficitur dolor sit amet, dolor sit amet, consectetur sit del conse (...)',
+    footer: '<a href="#">Link</a>',
   }
 }
 
@@ -58,7 +62,7 @@ const Templates: Story = {
       <template #body>
         <p>{{ args.body }}</p>
       </template>
-      <template #link>
+      <template #footer>
         <BaseLink elementType="a" size="M" href="https://amaris.com/"> 
           Link
         </BaseLink>

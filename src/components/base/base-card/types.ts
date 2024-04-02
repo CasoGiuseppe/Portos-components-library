@@ -1,6 +1,6 @@
 export type UniqueId = string
 
-export enum Types {
+export enum Spacing {
   NONE = 'NONE',
   M = 'M',
   L = 'L'
