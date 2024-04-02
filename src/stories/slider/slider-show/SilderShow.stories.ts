@@ -34,39 +34,33 @@ const Templates: Story = {
     template: `
       <section>
         <div style="padding: 3rem">
-          <SliderShow v-bind="args">
+          <SliderShow :arrows="true" :id="'slideShow1'" :width="120">
             <template #content>
               <NavigationItemContextual
                 style="margin: 0.5rem"
-                v-for="i in 20"
+                v-for="i in 10"
                 :key="i"
                 :id="i"
                 @selected="selected"
                 :selected="itemSelected === i"
               >
-              <template #item>
-                <picture class="navigation-item__user-icon">
-                  <Suspense>
-                    <BaseIcon name="IconArrowCircleRight" type="arrow" :size="'S'" />
-                  </Suspense>
-                </picture>
-                <span class="navigation-item-contextual--content">content {{i}}</span>
-                <picture class="navigation-item__user-icon">
-                  <Suspense>
-                    <BaseIcon name="IconArrowCircleLeft" type="arrow" :size="'S'" />
-                  </Suspense>
-                </picture>
-              </template>
-                
+                <template #item>
+                  <picture class="navigation-item__user-icon"> X </picture>
+                  <span class="navigation-item-contextual--content">content </span>
+                  <picture class="navigation-item__user-icon"> Y </picture>
+                </template>
               </NavigationItemContextual>
             </template>
             <template #leftArrow>
-            <
+              <Suspense>
+                <BaseIcon id="card" type="chevron" name="IconChevronLeftM" size="S" />
+              </Suspense>
             </template>
             <template #rightArrow>
-            >
+              <Suspense>
+                <BaseIcon id="card" type="chevron" name="IconChevronRightM" size="S" />
+              </Suspense>
             </template>
-            
           </SliderShow>
         </div>
       </section>

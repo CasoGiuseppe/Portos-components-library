@@ -7,10 +7,8 @@
 
     <template v-if="showArrows">
       <button @click="prevSlide" class="slider-show--arrow" :disabled="!prevArrow">
-        <Suspense>
-          <!-- @slot for left slider arrow-->
-          <slot name="leftArrow"></slot>
-        </Suspense>
+        <!-- @slot for left slider arrow-->
+        <slot name="leftArrow"></slot>
       </button>
       <button @click="nextSlide" class="slider-show--arrow" :disabled="!nextArrow">
         <!-- @slot for right slider arrow-->
@@ -21,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, defineProps, onUnmounted, onUpdated } from 'vue'
+import { ref, onMounted, defineProps, onUnmounted } from 'vue'
 import { type ISlideShowComponent } from './types'
 import useResizeObserver from '@/shared/composables/useResizeObserver'
 
@@ -82,6 +80,28 @@ onUnmounted(() => {
 
 const nextSlide = () => {
   if (containerValues.value && observerValues.value) {
+    const containerChildren = container.value!.children
+    const totalItems = containerChildren.length
+    const totalItemsValues = new Map<string, number>()
+
+    let visibleItems = []
+    for (let i = 0; i < totalItems; i++) {
+      const childElement = containerChildren[i] as HTMLElement
+      const id = childElement.id
+      const width = childElement.offsetWidth
+      const leftOffset = childElement.offsetLeft
+
+      if (leftOffset >= 0 && leftOffset + width <= containerValues.value.width) {
+        visibleItems.push([id, width])
+      }
+
+      totalItemsValues.set(id, width)
+
+      console.log(totalItemsValues, visibleItems)
+    }
+
+    //TODO: CONTROL size of next movement with exact size of actual hidden item to show ??
+
     const maxIndex = Math.ceil(
       (container.value!.scrollWidth - containerValues.value.width) / slideWidth
     )
