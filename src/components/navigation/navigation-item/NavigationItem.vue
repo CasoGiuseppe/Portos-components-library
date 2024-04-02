@@ -1,13 +1,14 @@
 <template>
     <button
-        :dir="rtl ? 'rtl' : 'ltr'"
-        :class="[
-            'navigation-item',
-            selected ? 'navigation-item--is-selected' : null,
-            collapsed ? 'navigation-item--is-collapsed' : null,
-            children ? 'navigation-item--has-second-level' : null,
-            insideFocus ? 'navigation-item--has-inside-focus' : null
-        ]"
+    :id="id"
+    :dir="rtl ? 'rtl' : 'ltr'"
+    :class="[
+        'navigation-item',
+        selected ? 'navigation-item--is-selected' : null,
+        collapsed ? 'navigation-item--is-collapsed' : null,
+        children ? 'navigation-item--has-second-level' : null,
+        insideFocus ? 'navigation-item--has-inside-focus' : null
+    ]"
         data-testID="ui-navigation-item"
         v-click-outside="outsideAction"
         @click="submit"

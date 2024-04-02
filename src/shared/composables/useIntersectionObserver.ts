@@ -1,33 +1,23 @@
-import type {
-    IUseIntersectionObserver,
-    IIntersectionObserver,
-    ICreateObserver,
-} from './interfaces/useIntersectionObserver';
+import type { IIntersectionObserver } from './interfaces/useIntersectionObserver';
+
+const config = {
+    root: document.body,
+    rootMargin: "0",
+    threshold: 0,
+};
 
 export default function useIntersectionObserver({
     action,
-    options = { threshold: 0 },
-}: IUseIntersectionObserver): IIntersectionObserver {
+}: { action?: (e:any) => any}): IIntersectionObserver {
     const createObserver = ({
         element,
-        collection,
-    }: ICreateObserver): IntersectionObserver => {
-        const observer = new IntersectionObserver(
-            entries => entries.forEach(action ?? console.log),
-            options
-        );
+        options
+    }: { element:  HTMLElement | Element,  options?: Record<string, any> }): void => {
+        const observer = new IntersectionObserver((entry) => {
+            if(action) action(entry[0])
+        }, {...config, ...options});
 
-        if (element) {
-            observer.observe(element);
-        }
-
-        if (collection) {
-            for (const node of collection) {
-                observer.observe(node);
-            }
-        }
-  
-        return observer;
+        observer.observe(element)
     }
 
     return {

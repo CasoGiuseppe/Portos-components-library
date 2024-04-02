@@ -1,6 +1,6 @@
 export interface IUseIntersectionObserver {
-    action?: (entry: IntersectionObserverEntry) => void
-    options?: IntersectionObserverInit
+    action?: (entry: any) => any,
+    options: Record<string, any>
 }
 
 export interface ICreateObserver {
@@ -9,5 +9,5 @@ export interface ICreateObserver {
 }
 
 export interface IIntersectionObserver {
-    createObserver: ({ element, collection }: ICreateObserver) => IntersectionObserver
+    createObserver: ({ element, options }: { element:  HTMLElement | Element, options?: Record<string, any> }) => void
 }

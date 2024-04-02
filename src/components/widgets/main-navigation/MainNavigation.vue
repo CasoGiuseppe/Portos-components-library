@@ -1,7 +1,14 @@
 <template>
-    <nav class="main-navigation">
+    <nav
+        class="main-navigation"
+        id="mainNav"
+    >
         <slot name="logo" />
-        <ul>
+        <TransitionGroup
+            appear
+            tag="ul"
+            @after-enter="endEnterEvent"
+        >
             <li
                 :class="[
                     'main-navigation--list-item',
@@ -11,6 +18,7 @@
                 :key="item.label"
             >
                 <NavigationItem
+                    :id="item.label"
                     :collapsed="collapsed"
                     @click="item.action"
                 >
@@ -43,39 +51,42 @@
                     </template>
                 </NavigationItem>
             </li>
-        </ul>
+        </TransitionGroup>
     </nav>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import NavigationItem from '@/components/navigation/navigation-item/NavigationItem.vue';
 import BaseIcon from '@/components/base/base-icon/BaseIcon.vue';
 import { Types, Sizes } from '@/components/base/base-icon/types';
 import type { INavigationItem } from './types';
-import {
-    loadNavigationItems,
-    switchChildrenPosition
-} from './helpers';
+import { loadNavigationItems } from './helpers';
 import useIntersectionObserver from '@/shared/composables/useIntersectionObserver';
 
 const navigationItems = ref<INavigationItem[]>([]);
 const collapsed = ref<boolean>(false);
-const children = ref<HTMLCollection | null>(null);
-const observed = ref<boolean>(false);
 
-const { createObserver } = useIntersectionObserver({
-    action: switchChildrenPosition,
-});
+const { createObserver } = useIntersectionObserver({ action: (e: any) => {
+    e.target.dataset.position = e.isIntersecting ? 'top' : 'bottom'
+} });
 
-watch(children, (currentValue) => {
-    if (currentValue && !observed.value) {
-        observed.value = !!createObserver({
-            collection: currentValue
-        });
-    }
-});
+
+const endEnterEvent = (e: any): void => {
+    const child = e.children[0];
+    const secondLevel = child.querySelector('.navigation-item__second-level')
+    const secondLevelOffset = secondLevel ? secondLevel.offsetHeight : 0
+
+    if(secondLevel) secondLevel.classList.add('navigation-item__second-level--is-hidden')
+    createObserver({
+        element: child,
+        options: {
+            rootMargin: `0px 0px ${secondLevelOffset * -1}px 0px`,
+            threshold: 1,
+        }
+    })
+}
 
 onMounted(async () => {
     const userRole = 'admin';
@@ -90,7 +101,7 @@ onMounted(async () => {
             customClass: "main-navigation--list-item-minimize",
             action: () => (collapsed.value = !collapsed.value)
         }
-    ];
+    ]
 });
 </script>
 

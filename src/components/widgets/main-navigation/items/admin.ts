@@ -52,51 +52,68 @@ const items: INavigationItem[] = [
     {
         label: 'Maestros',
         type: Types.USER,
-        icon: 'IconUserUserCardId'
+        icon: 'IconUserUserCardId',
+        children: [
+            {
+                label: 'Ficha de unidad',
+                type: Types.LOCATION,
+                icon: 'IconLocationUnit',
+            },
+            {
+                label: 'Stock Search',
+                type: Types.LOCATION,
+                icon: 'IconLocationUnit',
+            },
+            {
+                label: 'Bolsa de unidades',
+                type: Types.LOCATION,
+                icon: 'IconLocationUnit',
+            }
+        ]
     },
     {
         label: 'Facturación',
         type: Types.FILE,
         icon: 'IconFileBilling',
-        children: [
-            {
-                label: 'Ficha de unidad',
-                type: Types.LOCATION,
-                icon: 'IconLocationUnit',
-            },
-            {
-                label: 'Stock Search',
-                type: Types.LOCATION,
-                icon: 'IconLocationUnit',
-            },
-            {
-                label: 'Bolsa de unidades',
-                type: Types.LOCATION,
-                icon: 'IconLocationUnit',
-            }
-        ]
+        // children: [
+        //     {
+        //         label: 'Ficha de unidad',
+        //         type: Types.LOCATION,
+        //         icon: 'IconLocationUnit',
+        //     },
+        //     {
+        //         label: 'Stock Search',
+        //         type: Types.LOCATION,
+        //         icon: 'IconLocationUnit',
+        //     },
+        //     {
+        //         label: 'Bolsa de unidades',
+        //         type: Types.LOCATION,
+        //         icon: 'IconLocationUnit',
+        //     }
+        // ]
     },
     {
         label: 'Configuración',
         type: Types.SYSTEM,
         icon: 'IconSystemConfiguration',
-        children: [
-            {
-                label: 'Ficha de unidad',
-                type: Types.LOCATION,
-                icon: 'IconLocationUnit',
-            },
-            {
-                label: 'Stock Search',
-                type: Types.LOCATION,
-                icon: 'IconLocationUnit',
-            },
-            {
-                label: 'Bolsa de unidades',
-                type: Types.LOCATION,
-                icon: 'IconLocationUnit',
-            }
-        ]
+        // children: [
+        //     {
+        //         label: 'Ficha de unidad',
+        //         type: Types.LOCATION,
+        //         icon: 'IconLocationUnit',
+        //     },
+        //     {
+        //         label: 'Stock Search',
+        //         type: Types.LOCATION,
+        //         icon: 'IconLocationUnit',
+        //     },
+        //     {
+        //         label: 'Bolsa de unidades',
+        //         type: Types.LOCATION,
+        //         icon: 'IconLocationUnit',
+        //     }
+        // ]
     }
 ];
 
