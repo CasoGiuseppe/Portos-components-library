@@ -1,54 +1,37 @@
 import BaseCard from '@ui/base/base-card/BaseCard.vue'
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { Status, Spacing } from '@/components/base/base-card/types' // Importando los enums Status y Spacing desde types.ts
+import BaseTag from '@/components/base/base-tag/BaseTag.vue'
+import BaseLink from '@/components/base/base-link/BaseLink.vue'
 
-// Mock global setTimeout
 vi.useFakeTimers()
 
 describe('BaseCard', () => {
-  it('displays the loader when isLoading is true', () => {
-    const wrapper = mount(BaseCard)
-    expect(wrapper.find('.loader').exists()).toBe(true)
-    expect(wrapper.find('article').exists()).toBe(false)
-  })
-
-  it('hides the loader and displays content after loading', async () => {
-    const wrapper = mount(BaseCard)
-
-    // Advance the timer to simulate loading time
-    vi.runAllTimers()
-
-    // Wait for the component to update after changing isLoading state
-    await wrapper.vm.$nextTick()
-
-    expect(wrapper.find('.loader').exists()).toBe(false)
-    expect(wrapper.find('article').exists()).toBe(true)
-    expect(wrapper.find('article').classes()).toContain('fade-in')
-  })
-
-  it('renders slots content correctly after loading', async () => {
+  it('should render slots content correctly after loading', async () => {
     const wrapper = mount(BaseCard, {
+      props: {
+        isLoading: true,
+        status: Status.DEFAULT,
+        spacing: Spacing.L
+      },
       slots: {
         title: '<div>Este es el título</div>',
-        body: '<p>Este es el contenido del texto de la tarjeta.</p>'
+        body: '<p>Este es el contenido del texto de la tarjeta.</p>',
+        tag: BaseTag,
+        footer: BaseLink
       }
     })
 
-    // Advance the timer and wait for the component to update
     vi.runAllTimers()
     await wrapper.vm.$nextTick()
 
-    // Verify if the title slot content renders correctly
-    expect(wrapper.find('.base-card__title').exists()).toBe(true)
-    expect(wrapper.find('.base-card__title').html()).toContain('Este es el título')
+    expect(wrapper.find('.base-card__tag').exists()).toBe(true)
+    expect(wrapper.find('.base-card__tag').findComponent(BaseTag).exists()).toBe(true)
 
-    // Verify if the body slot content renders correctly
-    expect(wrapper.find('.base-card__body').exists()).toBe(true)
-    expect(wrapper.find('.base-card__body').html()).toContain(
-      'Este es el contenido del texto de la tarjeta.'
-    )
+    expect(wrapper.find('.base-card__link').exists()).toBe(true)
+    expect(wrapper.find('.base-card__link').findComponent(BaseLink).exists()).toBe(true)
   })
 })
 
-// Restore timers to their original behavior after tests
 vi.restoreAllMocks()

@@ -69,7 +69,7 @@ defineProps({
     validator: (prop: Status) => validateValueCollectionExists({ collection: Status, value: prop })
   },
   /**
-   * Set the card type [none, m, l]
+   * Set the card spacing [none, m, l]
    */
   spacing: {
     type: String as PropType<Spacing>,
