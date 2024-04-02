@@ -1,26 +1,28 @@
-import type { IIntersectionObserver } from './interfaces/useIntersectionObserver';
+import type {
+    IIntersectionObserver,
+    ICreateObserver
+} from './interfaces/useIntersectionObserver';
 
 const config = {
     root: document.body,
-    rootMargin: "0",
-    threshold: 0,
+    rootMargin: '0',
+    threshold: 1,
 };
 
 export default function useIntersectionObserver({
     action,
 }: { action?: (e:any) => any}): IIntersectionObserver {
-    const createObserver = ({
-        element,
-        options
-    }: { element:  HTMLElement | Element,  options?: Record<string, any> }): void => {
+    const createObserver = ({ element, options }: ICreateObserver): IntersectionObserver => {
         const observer = new IntersectionObserver((entry) => {
-            if(action) action(entry[0])
+            if(action) action(entry[0]);
         }, {...config, ...options});
 
-        observer.observe(element)
+        observer.observe(element);
+
+        return observer;
     }
 
     return {
         createObserver
     }
-}
+};

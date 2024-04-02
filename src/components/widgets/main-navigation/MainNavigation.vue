@@ -1,8 +1,5 @@
 <template>
-    <nav
-        class="main-navigation"
-        id="mainNav"
-    >
+    <nav class="main-navigation">
         <slot name="logo" />
         <TransitionGroup
             appear
@@ -37,7 +34,7 @@
                     </template>
 
                     <template #children v-if="item.children">
-                        <ul ref="children">
+                        <ul>
                             <li
                                 v-for="child in item.children"
                                 :key="child.label"
@@ -61,31 +58,35 @@ import { onMounted, ref } from 'vue';
 import NavigationItem from '@/components/navigation/navigation-item/NavigationItem.vue';
 import BaseIcon from '@/components/base/base-icon/BaseIcon.vue';
 import { Types, Sizes } from '@/components/base/base-icon/types';
+import useIntersectionObserver from '@/shared/composables/useIntersectionObserver';
 import type { INavigationItem } from './types';
 import { loadNavigationItems } from './helpers';
-import useIntersectionObserver from '@/shared/composables/useIntersectionObserver';
 
 const navigationItems = ref<INavigationItem[]>([]);
 const collapsed = ref<boolean>(false);
 
-const { createObserver } = useIntersectionObserver({ action: (e: any) => {
-    e.target.dataset.position = e.isIntersecting ? 'top' : 'bottom'
-} });
-
+const { createObserver } = useIntersectionObserver({
+    action: (e: any) => {
+        e.target.dataset.position = e.isIntersecting ? 'top' : 'bottom';
+    }
+});
 
 const endEnterEvent = (e: any): void => {
     const child = e.children[0];
-    const secondLevel = child.querySelector('.navigation-item__second-level')
-    const secondLevelOffset = secondLevel ? secondLevel.offsetHeight : 0
+    const secondLevel = child.querySelector('.navigation-item__second-level');
 
-    if(secondLevel) secondLevel.classList.add('navigation-item__second-level--is-hidden')
+    if (!secondLevel) return;
+
+    const secondLevelOffset = secondLevel ? secondLevel.offsetHeight : 0;
+    if (secondLevel) secondLevel.classList.add('navigation-item__second-level--is-hidden');
+    
     createObserver({
         element: child,
         options: {
             rootMargin: `0px 0px ${secondLevelOffset * -1}px 0px`,
             threshold: 1,
         }
-    })
+    });
 }
 
 onMounted(async () => {
