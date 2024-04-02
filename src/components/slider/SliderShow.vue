@@ -47,6 +47,7 @@ const slideWidth = width
 let currentIndex = 0
 const nextArrow = ref(true)
 const prevArrow = ref(false)
+const newTranslateX = ref(0)
 
 const showResizeData = ({ width, height }: { width: number; height: number }): any => {
   observerValues.value = { width, height }
@@ -79,42 +80,81 @@ onUnmounted(() => {
 })
 
 const nextSlide = () => {
+  // function to retrieve the next item not visible
+  interface SliderItem {
+    id: string
+    width: number
+  }
+  const nextItemNotVisible = (
+    totalWidth: number,
+    items: SliderItem[],
+    translate: number = 0
+  ): SliderItem | undefined => {
+    let widthSum: number = 0
+    let visible = false
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i]
+      widthSum += item.width
+      if (!visible && widthSum > translate) {
+        visible = true
+        continue
+      }
+      if (visible && widthSum > totalWidth + translate) return item
+    }
+  }
+
   if (containerValues.value && observerValues.value) {
     const containerChildren = container.value!.children
     const totalItems = containerChildren.length
-    const totalItemsValues = new Map<string, number>()
+    const totalItemsValues: SliderItem[] = []
 
-    let visibleItems = []
     for (let i = 0; i < totalItems; i++) {
       const childElement = containerChildren[i] as HTMLElement
       const id = childElement.id
       const width = childElement.offsetWidth
-      const leftOffset = childElement.offsetLeft
 
-      if (leftOffset >= 0 && leftOffset + width <= containerValues.value.width) {
-        visibleItems.push([id, width])
-      }
-
-      totalItemsValues.set(id, width)
-
-      console.log(totalItemsValues, visibleItems)
+      totalItemsValues.push({ id, width })
     }
 
-    //TODO: CONTROL size of next movement with exact size of actual hidden item to show ??
+    console.log(totalItemsValues)
+
+    let totalVisibleWidth = 0
+    let lastVisibleItemWidth = 0
+    const nextItemValue = nextItemNotVisible(
+      containerValues.value!.width,
+      totalItemsValues,
+      newTranslateX.value
+    )
+
+    for (let i = 0; i < totalItemsValues.length; i++) {
+      const item = totalItemsValues[i]
+      totalVisibleWidth += item.width
+      if (totalVisibleWidth <= containerValues.value.width) {
+        lastVisibleItemWidth = nextItemValue!.width
+        break
+      }
+    }
 
     const maxIndex = Math.ceil(
       (container.value!.scrollWidth - containerValues.value.width) / slideWidth
     )
+
+    newTranslateX.value = (currentIndex + 1) * slideWidth
     if (currentIndex < maxIndex) {
-      currentIndex++
-      container.value!.style.transform = `translateX(-${currentIndex * slideWidth}px)`
-      container.value!.style.transition = 'transform 0.4s ease'
-      nextArrow.value = true
-      prevArrow.value = true
-    } else {
-      nextArrow.value = false
-      prevArrow.value = true
+      newTranslateX.value = currentIndex * slideWidth + lastVisibleItemWidth
     }
+
+    container.value!.style.transform = `translateX(-${newTranslateX.value}px)`
+    container.value!.style.transition = 'transform 0.4s ease'
+
+    console.log('nextItemValue: ', nextItemValue)
+
+    currentIndex++
+
+    nextArrow.value = currentIndex < maxIndex
+    prevArrow.value = true
+
+    console.log('NEXT newTranslateX.value ________: ', newTranslateX.value)
   }
 }
 
