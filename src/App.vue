@@ -1,11 +1,7 @@
 <template>
-  <section style="padding: 20px; background: blue">
-    <BaseToggle @checked="xxx">Label</BaseToggle>
+  <section>
   </section>
 </template>
 
 <script setup lang="ts">
-import BaseToggle from './components/base/base-toggle/BaseToggle.vue';
-
-const xxx = (checked: boolean) => console.log(`state is ${checked}`)
 </script>
