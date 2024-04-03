@@ -1,0 +1,98 @@
+// BaseCheckbox.scss
+/* input[type='checkbox'] {
+  outline: 4px auto green;
+}
+input[type='checkbox']:checked {
+  accent-color: red;
+  outline: 4px auto green;
+  border-radius: 2px;
+} */
+fieldset {
+  border: none;
+}
+
+.base-checkbox {
+  @include text-body-m--regular;
+  display: inline-flex;
+  border-radius: var(--radius-200, 0);
+  border: 1px solid var(--color-neutral-50, #818a8f);
+
+  &__label {
+    @include text-body-m--regular;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-30, 8px);
+  }
+
+  &__icon &:hover {
+    box-shadow: 0px 0px 4px 0px rgba(29, 30, 32, 0.2);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow:
+      0px 0px 0px 2px rgb(255, 255, 255),
+      0px 0px 0px 4px rgb(189, 32, 203);
+  }
+
+  &--is {
+    $basecheckboxis: &;
+    // Sizes
+    &-M {
+      width: var(--spacing-60, 24px);
+      height: var(--spacing-60, 24px);
+    }
+    &-S {
+      width: calc(var(--spacing-50) + 4px);
+      height: calc(var(--spacing-50) + 4px);
+    }
+
+    // Status
+    &-default {
+      border: 1px solid var(--color-neutral-50, #818a8f);
+      //background-color: var(--color-neutral-20, #000);
+      //color: var(--color-neutral-70, #000);
+
+      // Checked state
+      &.base-checkbox--is-checked {
+        border: 1px solid var(--color-primary-40, #21578a);
+        background-color: var(--color-primary-40, #21578a);
+        color: var(--color-neutral-10, white);
+      }
+
+      // Disabled state
+      &-disabled {
+        // Aquí puedes añadir estilos para el estado de deshabilitado si es necesario
+      }
+    }
+
+    &-error {
+      border: 1px solid var(--color-error-30, #000);
+      // Checked state
+
+      &-checked {
+        background-color: var(--color-error-30, #000);
+        color: white;
+
+        &-icon {
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+
+    /* &__label {
+      @include text-body-m--regular;
+      font-family: var(--font-default-family);
+    } */
+  }
+}
+
+.checkbox {
+  width: 24px;
+  height: 24px;
+  border: 1px solid red;
+}
+
+.base-checkbox--is-checked {
+}
