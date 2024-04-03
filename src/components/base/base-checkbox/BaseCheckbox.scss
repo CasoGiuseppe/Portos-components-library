@@ -1,239 +1,156 @@
 // BaseCheckbox.scss
+// TODO: REFACTOR!!
 .base-checkbox {
-  $basecheckbox: &;
-  --animationTime: 0.4s;
+    $basecheckbox: &;
+    --animationTime: 0.4s;
 
-  @include text-body-m--regular;
-  align-items: center;
-  display: inline-flex;
-  gap: var(--spacing-30, 0);
+    @include text-body-m--regular;
+    align-items: center;
+    display: inline-flex;
+    gap: var(--spacing-30, 0);
 
-  color: var(--color-neutral-70, #000);
+    color: var(--color-neutral-70, #000);
 
-  /*   &:has(input:disabled) {
+    /*   &:has(input:disabled) {
     button {
       background: var(--color-neutral-20, #000);
       border: 1px solid var(--color-neutral-50, #000);
     }
   } */
 
-  &__square {
-    height: 24px;
-    width: 24px;
+    &__square {
+        height: 24px;
+        width: 24px;
 
-    background-color: var(--color-neutral-10, #fff);
-    border-radius: var(--radius-200, 4px);
-    border: 1px solid var(--color-neutral-70);
+        background-color: var(--color-neutral-10, #fff);
+        border-radius: var(--radius-200, 4px);
+        border: 1px solid var(--color-neutral-70);
 
-    &:focus {
-      box-shadow:
-        0px 0px 0px 2px rgb(255, 255, 255),
-        0px 0px 0px 4px rgb(189, 32, 203);
-    }
-  }
-
-  &--is {
-    &-M {
-      @include text-body-m--regular;
-      button {
-        width: var(--spacing-60, 24px);
-        height: var(--spacing-60, 24px);
-      }
-    }
-    &-S {
-      @include text-body-s--regular;
-      button {
-        width: calc(var(--spacing-50) + 4px);
-        height: calc(var(--spacing-50) + 4px);
-      }
-    }
-
-    // Status
-    &-default {
-      //border: 1px solid var(--color-neutral-50, #818a8f);
-      //background-color: var(--color-neutral-20, #000);
-      //color: var(--color-neutral-70, #000);
-      .base-checkbox__square {
-        border: 1px solid var(--color-primary-30, #818a8f);
-      }
-
-      // Checked state
-      &-checked .base-checkbox__square {
-        border: 1px solid var(--color-primary-40, #21578a);
-        background-color: var(--color-primary-40, #21578a);
-        color: var(--color-neutral-10, white);
-
-        transition:
-          background var(--animationTime, 0s) ease-out,
-          border var(--animationTime, 0s) ease-out;
-      }
-
-      // Disabled state
-      &-disabled {
-        .base-checkbox__square {
-          border: 1px solid var(--color-neutral-50, #818a8f);
+        &:focus {
+            box-shadow:
+                0px 0px 0px 2px rgb(255, 255, 255),
+                0px 0px 0px 4px rgb(189, 32, 203);
         }
 
-        // Checked state
-        &-checked .base-checkbox__square {
-          border: 1px solid var(--color-neutral-50, #000);
-          background-color: var(--color-primary-40, #000);
-          color: var(--color-neutral-20, #fff);
-
-          transition:
-            background var(--animationTime, 0s) ease-out,
-            border var(--animationTime, 0s) ease-out;
+        &:hover {
+            box-shadow: 0px 0px 4px 0px rgba(29, 30, 32, 0.2);
         }
-      }
     }
 
-    &-error {
-      // Checked state
-      .base-checkbox__square {
-        border: 1px solid var(--color-error-30, #000);
-      }
+    &--is {
+        &-M {
+            @include text-body-m--regular;
+            button {
+                width: var(--spacing-60, 24px);
+                height: var(--spacing-60, 24px);
+            }
+        }
+        &-S {
+            @include text-body-s--regular;
+            button {
+                width: calc(var(--spacing-50) + 4px);
+                height: calc(var(--spacing-50) + 4px);
+            }
+        }
 
-      &-checked .base-checkbox__square {
-        border: 1px solid var(--color-error-30, #000);
-        background-color: var(--color-error-30, #000);
-        color: var(--color-neutral-10, white);
+        // Status
+        &-default {
+            //border: 1px solid var(--color-neutral-50, #818a8f);
+            //background-color: var(--color-neutral-20, #000);
+            //color: var(--color-neutral-70, #000);
+            .base-checkbox__square {
+                border: 1px solid var(--color-neutral-50, #818a8f);
+            }
 
-        transition:
-          background var(--animationTime, 0s) ease-out,
-          border var(--animationTime, 0s) ease-out;
-      }
+            // Checked state
+            &-checked .base-checkbox__square {
+                border: 1px solid var(--color-primary-40, #21578a);
+                background-color: var(--color-primary-40, #21578a);
+                color: var(--color-neutral-10, white);
+
+                transition:
+                    background var(--animationTime, 0s) ease-out,
+                    border var(--animationTime, 0s) ease-out;
+            }
+
+            // Disabled state
+            &-disabled {
+                .base-checkbox__square {
+                    border: 1px solid var(--color-neutral-50, #818a8f);
+                }
+
+                // Checked state
+                &-checked .base-checkbox__square {
+                    border: 1px solid var(--color-neutral-50, #000);
+                    background-color: var(--color-primary-40, #000);
+                    color: var(--color-neutral-20, #fff);
+
+                    transition:
+                        background var(--animationTime, 0s) ease-out,
+                        border var(--animationTime, 0s) ease-out;
+                }
+            }
+        }
+
+        &-error {
+            // Checked state
+            .base-checkbox__square {
+                border: 1px solid var(--color-error-30, #000);
+            }
+
+            &-checked .base-checkbox__square {
+                border: 1px solid var(--color-error-30, #000);
+                background-color: var(--color-error-30, #000);
+                color: var(--color-neutral-10, white);
+
+                transition:
+                    background var(--animationTime, 0s) ease-out,
+                    border var(--animationTime, 0s) ease-out;
+            }
+        }
     }
-  }
 }
 
 // default ALT
 .base-checkbox--is-default.base-checkbox--is-ALT button {
-  border: 1px solid var(--color-primary-20, #000);
-  background-color: var(--color-neutral-10, #000);
+    border: 1px solid var(--color-primary-20, #000);
+    background-color: var(--color-neutral-10, #000);
 }
 // default ALT-checked
 .base-checkbox--is-default-checked.base-checkbox--is-ALT button {
-  border: 1px solid var(--color-primary-20, #000);
-  background-color: var(--color-primary-20, #000);
-  color: var(--color-primary-60, white);
+    border: 1px solid var(--color-primary-20, #000);
+    background-color: var(--color-primary-20, #000);
+    color: var(--color-primary-60, white);
 }
 // default-alt checked disabled
 .base-checkbox--is-default.base-checkbox--is-ALT button:disabled {
-  border: 1px solid var(--color-neutral-50, #000);
-  background-color: var(--color-neutral-20, #000);
-  color: var(--color-primary-60, white);
+    border: 1px solid var(--color-neutral-50, #000);
+    background-color: var(--color-neutral-20, #000);
+    color: var(--color-primary-60, white);
 }
 // default-alt checked disabled checked
 .base-checkbox--is-default-checked.base-checkbox--is-ALT button:disabled {
-  border: 1px solid var(--color-neutral-50, #fff);
-  background-color: var(--color-primary-20, #fff);
-  color: var(--color-neutral-70, #000) !important;
+    border: 1px solid var(--color-neutral-50, #fff);
+    background-color: var(--color-primary-20, #fff);
+    color: var(--color-neutral-70, #000) !important;
 }
 .base-checkbox--is-error.base-checkbox--is-ALT button {
-  border: 1px solid var(--color-error-30, #000);
+    border: 1px solid var(--color-error-30, #000);
 }
 .base-checkbox--is-error-checked.base-checkbox--is-ALT button {
-  border: 1px solid var(--color-error-30, #000);
-  background-color: var(--color-error-30, #000);
-  color: var(--color-primary-60);
+    border: 1px solid var(--color-error-30, #000);
+    background-color: var(--color-error-30, #000);
+    color: var(--color-primary-60);
 }
-
-/* input[type='checkbox'] {
-  outline: 4px auto green;
-}
-input[type='checkbox']:checked {
-  accent-color: red;
-  outline: 4px auto green;
-  border-radius: 2px;
-} 
-fieldset {
-  border: none;
-}
-
-.base-checkbox {
-  @include text-body-m--regular;
-  display: inline-flex;
-  align-items: center;
-  flex-direction: row;
-  border-radius: var(--radius-200, 0);
-  border: 1px solid var(--color-neutral-50, #818a8f);
-
-  &__label {
-    @include text-body-m--regular;
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-30, 8px);
-  }
-
-  &__icon &:hover {
-    box-shadow: 0px 0px 4px 0px rgba(29, 30, 32, 0.2);
-  }
-
-  &:focus {
-    outline: none;
+.base-checkbox--is-ALT button:focus,
+.base-checkbox--is-error-checked.base-checkbox--is-ALT button:focus {
     box-shadow:
-      0px 0px 0px 2px rgb(255, 255, 255),
-      0px 0px 0px 4px rgb(189, 32, 203);
-  }
-
-  &--is {
-    $basecheckboxis: &;
-    // Sizes
-    &-M {
-      width: var(--spacing-60, 24px);
-      height: var(--spacing-60, 24px);
-    }
-    &-S {
-      width: calc(var(--spacing-50) + 4px);
-      height: calc(var(--spacing-50) + 4px);
-    }
-
-    // Status
-    &-default {
-      border: 1px solid var(--color-neutral-50, #818a8f);
-      //background-color: var(--color-neutral-20, #000);
-      //color: var(--color-neutral-70, #000);
-
-      // Checked state
-      &.base-checkbox--is-checked {
-        border: 1px solid var(--color-primary-40, #21578a);
-        background-color: var(--color-primary-40, #21578a);
-        color: var(--color-neutral-10, white);
-      }
-
-      // Disabled state
-      &-disabled {
-        // Aquí puedes añadir estilos para el estado de deshabilitado si es necesario
-      }
-    }
-
-    &-error {
-      border: 1px solid var(--color-error-30, #000);
-      // Checked state
-
-      &-checked {
-        background-color: var(--color-error-30, #000);
-        color: white;
-
-        &-icon {
-          display: flex;
-          align-items: center;
-        }
-      }
-    }
-
-    /* &__label {
-      @include text-body-m--regular;
-      font-family: var(--font-default-family);
-    } 
-  }
+        0px 0px 0px 2px rgba(189, 32, 203, 1),
+        0px 0px 0px 4px rgba(255, 255, 255, 1);
+}
+.base-checkbox--is-error-checked.base-checkbox--is-ALT button:focus {
+    border: none;
 }
 
-.checkbox {
-  width: 24px;
-  height: 24px;
-  border: 1px solid red;
+label.base-checkbox.base-checkbox--is-S.base-checkbox--is-default.base-checkbox--is-indeterminate {
 }
-
-.base-checkbox--is-checked {
-}*/
