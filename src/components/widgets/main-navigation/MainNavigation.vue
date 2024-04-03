@@ -71,22 +71,34 @@ const { createObserver } = useIntersectionObserver({
     }
 });
 
+const minimizeItem = {
+    label: 'Minimize',
+    type: Types.CHEVRON,
+    icon: 'IconChevronLeftDuo',
+    iconAlt: 'IconChevronRightDuo',
+    customClass: "main-navigation--list-item-minimize",
+    action: () => (collapsed.value = !collapsed.value)
+};
+
 const endEnterEvent = (e: any): void => {
-    const child = e.children[0];
-    const secondLevel = child.querySelector('.navigation-item__second-level');
+    const child = e?.children?.[0];
 
-    if (!secondLevel) return;
-
-    const secondLevelOffset = secondLevel ? secondLevel.offsetHeight : 0;
-    if (secondLevel) secondLevel.classList.add('navigation-item__second-level--is-hidden');
+    if (child) {
+        const secondLevel = child.querySelector('.navigation-item__second-level');
     
-    createObserver({
-        element: child,
-        options: {
-            rootMargin: `0px 0px ${secondLevelOffset * -1}px 0px`,
-            threshold: 1,
-        }
-    });
+        if (!secondLevel) return;
+    
+        const secondLevelOffset = secondLevel ? secondLevel.offsetHeight : 0;
+        if (secondLevel) secondLevel.classList.add('navigation-item__second-level--is-hidden');
+        
+        createObserver({
+            element: child,
+            options: {
+                rootMargin: `0px 0px ${secondLevelOffset * -1}px 0px`,
+                threshold: 1,
+            }
+        });
+    }
 };
 
 const setIcon = (item: INavigationItem) => {
@@ -97,19 +109,12 @@ const setIcon = (item: INavigationItem) => {
 
 onMounted(async () => {
     const userRole = 'admin';
-    const items = await loadNavigationItems(userRole);
+    const items = await loadNavigationItems(userRole) || [];
 
     navigationItems.value = [
         ...items,
-        {
-            label: 'Minimize',
-            type: Types.CHEVRON,
-            icon: 'IconChevronLeftDuo',
-            iconAlt: 'IconChevronRightDuo',
-            customClass: "main-navigation--list-item-minimize",
-            action: () => (collapsed.value = !collapsed.value)
-        }
-    ]
+        minimizeItem
+    ];
 });
 </script>
 
