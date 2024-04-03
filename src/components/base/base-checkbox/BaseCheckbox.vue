@@ -1,79 +1,60 @@
 <template>
-  <input type="text" />
-  <fieldset>
+  <label
+    :class="[
+      'base-checkbox',
+      `base-checkbox--is-${size}`,
+      `${variant ? `base-checkbox--is-ALT` : ''}`,
+      `${isChecked ? `base-checkbox--is-${status}-checked` : `base-checkbox--is-${status}`}`
+    ]"
+    :title="label"
+    :aria-label="label"
+    :for="id"
+  >
     <input
-      tabindex="-1"
-      style="height: 0; width: 0; display: none"
       :id="id"
+      data-testID="ui-checkbox"
+      ref="checkbox"
       type="checkbox"
-      :checked="modelValue"
-      :disabled="isDisabled"
-      :indeterminate="indeterminate"
-      @change="handleChange"
+      :checked="active"
+      :disabled="disabled"
+      :aria-disabled="disabled"
+      style="display: none"
     />
-    <label
-      :for="id"
-      class="wrapper"
-      :class="[`${variant ? `base-checkbox__label-ALT` : `base-checkbox__label`}`]"
+    <button
+      :disabled="disabled"
+      class="base-checkbox__square"
+      @click="handleChange"
+      @keydown.enter="handleChange"
+      @keydown.space="handleChange"
     >
-      <div
-        tabindex="0"
-        @keydown.enter="modelValue = !modelValue"
-        @keydown.space="modelValue = !modelValue"
-        :class="[
-          'base-checkbox',
-          `base-checkbox--is-${size}`,
-          `${variant ? `base-checkbox--is-${status}-ALT` : `base-checkbox--is-${status}`}`,
-          `${modelValue ? `base-checkbox--is-${status}-checked` : `base-checkbox--is-${status}`}`,
-          {
-            'base-checkbox--is-checked': modelValue,
-            'base-checkbox--is-disabled': isDisabled,
-            'base-checkbox--is-intremediate': indeterminate
-          }
-        ]"
-      >
-        <span v-if="modelValue" class="base-checkbox--is-checked-icon">
-          <Suspense>
-            <BaseIcon
-              v-if="indeterminate"
-              :type="IconType.EDIT"
-              :name="'IconEditRemoveMinus'"
-              :size="size"
-            ></BaseIcon>
-            <BaseIcon
-              v-else
-              :size="size"
-              :type="IconType.FEEDBACK"
-              :name="'IconFeedbackCheck'"
-            ></BaseIcon>
-          </Suspense>
-        </span>
-      </div>
-      <slot name="label" />
-    </label>
-  </fieldset>
-
-  <label class="wrapper flex items-center">
-    <slot name="label"></slot>
-    <input
-      class="checkbox"
-      type="checkbox"
-      :checked="isChecked"
-      :value="modelValue"
-      indeterminate
-    />
-    <span class="checkmark"></span>
+      <span v-if="isChecked" class="base-checkbox--is-checked-icon">
+        <Suspense>
+          <BaseIcon
+            v-if="indeterminate"
+            :type="IconType.EDIT"
+            :name="'IconEditRemoveMinus'"
+            :size="size"
+          ></BaseIcon>
+          <BaseIcon
+            v-else
+            :size="size"
+            :type="IconType.FEEDBACK"
+            :name="'IconFeedbackCheck'"
+          ></BaseIcon>
+        </Suspense>
+      </span>
+    </button>
+    <slot />
   </label>
 </template>
-
-<script setup lang="ts">
-import { defineProps, ref, type PropType } from 'vue'
-import BaseIcon from '../base-icon/BaseIcon.vue'
+<script lang="ts" setup>
+import { ref, type PropType } from 'vue'
+import { type UniqueId, Sizes } from './types'
 import { validateValueCollectionExists } from '@/components/utilities/validation/useValidation'
-import { Types as IconType } from '../base-icon/types'
-import { Types, Sizes, type UniqueId } from './types'
-
-const { id, status, isChecked, isDisabled, indeterminate } = defineProps({
+import BaseIcon from '../base-icon/BaseIcon.vue'
+import { Types as IconType } from '@/components/base/base-icon/types'
+import { Types } from './types'
+const { disabled, indeterminate } = defineProps({
   /**
    * Set the unique id of the ui checkbox
    */
@@ -82,35 +63,59 @@ const { id, status, isChecked, isDisabled, indeterminate } = defineProps({
     default: 'checkboxId'
   },
   /**
-   * Set the checkbox type family [default, warning, damage]
-   */
-  status: {
-    type: String as PropType<Types>,
-    default: Types.DEFAULT,
-    validator: (prop: Types) => validateValueCollectionExists({ collection: Types, value: prop })
-  },
-  /**
-   * Set the checkbox size family [S, M]
+   * Set the checkbox size mode [M, S]
    */
   size: {
     type: String as PropType<Sizes>,
     default: Sizes.M,
     validator: (prop: Sizes) => validateValueCollectionExists({ collection: Sizes, value: prop })
   },
-
-  variant: Boolean as PropType<boolean>,
-  isChecked: Boolean as PropType<boolean>,
-  indeterminate: Boolean as PropType<boolean>,
-  isDisabled: Boolean as PropType<boolean>
+  /**
+   * Set checked state
+   */
+  active: {
+    type: Boolean as PropType<boolean>,
+    default: false
+  },
+  /**
+   * Set the disabled checkbox state
+   */
+  disabled: {
+    type: Boolean as PropType<boolean>,
+    default: false
+  },
+  /**
+   * Set variant type state
+   */
+  variant: {
+    type: Boolean as PropType<boolean>,
+    default: false
+  },
+  indeterminate: {
+    type: Boolean as PropType<boolean>,
+    default: false
+  },
+  /**
+   * Set the aria accesibility label
+   */
+  label: {
+    type: String as PropType<string>,
+    default: 'component label'
+  },
+  status: {
+    type: String as PropType<Types>,
+    default: Types.DEFAULT,
+    validator: (prop: Types) => validateValueCollectionExists({ collection: Types, value: prop })
+  }
 })
 
-const modelValue = ref(false)
-const customEmits = defineEmits(['update:modelValue', 'change'])
-const handleChange = (event: Event) => {
-  modelValue.value = (event.target as HTMLInputElement).checked
-  customEmits('update:modelValue', modelValue.value)
-  //customEmits('change', modelValue.value)
+const isChecked = ref(false)
+const emits = defineEmits(['checked'])
+const checkbox = ref<HTMLInputElement | null>(null)
+
+const handleChange = (payload: Event) => {
+  isChecked.value = !isChecked.value
+  emits('checked', isChecked.value)
 }
 </script>
-
 <style src="./BaseCheckbox.scss" lang="scss"></style>

@@ -33,20 +33,19 @@ const Templates: Story = {
       return { args }
     },
     template: `
-    <section>
-    {{ selected }}
-    <BaseCheckbox
-      v-model="selected"
-      :status="args.type"
-      :intermediate="true"
-      :disabled="true"
-      :size="args.size"
-    >
-      <template #label>Test input</template>
+    <section
+    :style="{
+      display: 'flex',
+      gap: '10px',
+      padding: '10px',
+    }"
+  >
+    <BaseCheckbox @checked="action" :status="'error'" :size="'S'" :variant="true">
+      Label checkbox
     </BaseCheckbox>
   </section>
     `,
-    methods: { action: action('sumitted') }
+    methods: { action: action('checked') }
   })
 }
 

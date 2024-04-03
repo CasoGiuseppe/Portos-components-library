@@ -1,28 +1,67 @@
 <template>
-  <section>
-    {{ selected }}
-    <BaseCheckbox
-      :id="'123'"
-      v-model="selected"
-      :status="Types.ERROR"
-      :indeterminate="true"
-      :disabled="false"
-      :size="Sizes.M"
-      @checked="status"
-    >
-      <template #label>Test input</template>
-    </BaseCheckbox>
-  </section>
-
   <section
     :style="{
       display: 'flex',
+      flexDirection: 'column',
       gap: '10px',
       padding: '10px',
-      'background-color': 'white'
+      'background-color': 'lightgrey'
     }"
   >
-    <BaseToggle @checked="status"> asdasd </BaseToggle>
+    <BaseCheckbox
+      @checked="checked"
+      :status="Types.DEFAULT"
+      :size="Sizes.S"
+      :variant="false"
+      :disabled="false"
+    >
+      test input
+    </BaseCheckbox>
+    <BaseCheckbox
+      @checked="checked"
+      :status="Types.ERROR"
+      :size="Sizes.S"
+      :variant="false"
+      :disabled="false"
+    >
+      test input
+    </BaseCheckbox>
+    <BaseCheckbox
+      @checked="checked"
+      :status="Types.DEFAULT"
+      :size="Sizes.S"
+      :variant="true"
+      :disabled="false"
+    >
+      test input
+    </BaseCheckbox>
+    <BaseCheckbox
+      @checked="checked"
+      :status="Types.ERROR"
+      :size="Sizes.S"
+      :variant="true"
+      :disabled="false"
+    >
+      test input
+    </BaseCheckbox>
+    <BaseCheckbox
+      @checked="checked"
+      :status="Types.DEFAULT"
+      :size="Sizes.S"
+      :variant="false"
+      :disabled="true"
+    >
+      test input dis
+    </BaseCheckbox>
+    <BaseCheckbox
+      @checked="checked"
+      :status="Types.DEFAULT"
+      :size="Sizes.S"
+      :variant="true"
+      :disabled="true"
+    >
+      test input alt dis
+    </BaseCheckbox>
   </section>
 </template>
 
@@ -36,7 +75,8 @@ const selected = ref(false)
 const selected1 = ref(false)
 const selected2 = ref(false)
 
-const status = (status: any) => {
+const checked = (status: any) => {
+  selected.value = status
   console.log(status)
 }
 </script>
