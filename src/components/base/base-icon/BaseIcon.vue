@@ -52,6 +52,7 @@ const { name, type } = defineProps({
         validator: (prop: Sizes) => validateValueCollectionExists({ collection: Sizes, value: prop})
     },
 })
-const IconAsyncDefine = await create({ component: `components/icons/${type}/${name}`})
+
+const IconAsyncDefine = await create({ component: `components/icons/${type}/${name}`});
 </script>
 <style src="./BaseIcon.scss" lang="scss"></style>

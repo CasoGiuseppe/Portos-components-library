@@ -22,7 +22,7 @@
                     <template #icon>
                         <Suspense>
                             <BaseIcon
-                                :name="item.icon"
+                                :name="setIcon(item)"
                                 :type="item.type"
                                 :size="collapsed ? Sizes.M : Sizes.S"
                             />
@@ -87,7 +87,13 @@ const endEnterEvent = (e: any): void => {
             threshold: 1,
         }
     });
-}
+};
+
+const setIcon = (item: INavigationItem) => {
+    return collapsed.value
+        ? (item.iconAlt || item.icon)
+        : item.icon;
+};
 
 onMounted(async () => {
     const userRole = 'admin';
@@ -99,6 +105,7 @@ onMounted(async () => {
             label: 'Minimize',
             type: Types.CHEVRON,
             icon: 'IconChevronLeftDuo',
+            iconAlt: 'IconChevronRightDuo',
             customClass: "main-navigation--list-item-minimize",
             action: () => (collapsed.value = !collapsed.value)
         }
