@@ -14,6 +14,7 @@ import BaseToggle from './components/base/base-toggle/BaseToggle.vue'
 // nav
 import NavigationItemContextual from './components/navigation/contextual/navigation-item/NavigationItemContextual.vue'
 import NavigationItem from './components/navigation/main/navigation-item/NavigationItem.vue'
+import MainNavigation from './components/widgets/main-navigation/MainNavigation.vue'
 // defaults
 import DefaultError from './components/defaults/exceptions/default-error/DefaultError.vue'
 import DefaultLoader from './components/defaults/loaders/default-loader/DefaultLoader.vue'
@@ -32,12 +33,14 @@ export {
   BaseToggle,
   NavigationItemContextual,
   NavigationItem,
+  MainNavigation,
   DefaultLoader,
   DefaultError
 }
 
 export * from './components/icons'
 export * from './shared/helpers'
+export * from './shared/composables/useIntersectionObserver'
 export * from './components/utilities/validation/useValidation'
 export * from './components/utilities/directives/clickOutside'
 
@@ -55,6 +58,7 @@ export function install(app: App): void {
   app.component('BaseToggle', BaseToggle)
   app.component('NavigationItemContextual', NavigationItemContextual)
   app.component('NavigationItem', NavigationItem)
+  app.component('MainNavigation', MainNavigation)
   app.component('DefaultLoader', DefaultLoader)
   app.component('DefaultError', DefaultError)
 }
