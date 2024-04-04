@@ -60,15 +60,15 @@
             @include inOutSecondLevel;
             background-color: var(--color-primary-40, #000);
         }
+    }
 
-        &:focus {
-            @include inOutSecondLevel;
+    &:focus {
+        @include inOutSecondLevel;
 
-            z-index: 2;
-            box-shadow:
-                0 0 0 3px var(--color-neutral-10, #000),
-                0 0 0 6px var(--color-outline, #000);
-        }
+        z-index: 2;
+        box-shadow:
+            0 0 0 3px var(--color-neutral-10, #000),
+            0 0 0 6px var(--color-outline, #000);
     }
 
     &--is {
