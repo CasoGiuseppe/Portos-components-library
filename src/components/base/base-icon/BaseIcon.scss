@@ -1,5 +1,14 @@
 .base-icon {
+    --animationTime: 0.4s;
     aspect-ratio: 1/1;
+
+    @include create-animation(
+      $name: 'appear-icon',
+      $from: translateX(0),
+      $to: translateX(0),
+      $duration: var(--animationTime),
+      $duration-out: .2s
+    );
 
     &--is {
         &-L {

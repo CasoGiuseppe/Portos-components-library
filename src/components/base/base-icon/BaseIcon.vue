@@ -1,16 +1,23 @@
 <template>
-  <component
-    data-testID="ui-icon"
-    :is="asyncComponent"
-    :id="id"
-    :key="id"
-    :class="['base-icon', `base-icon--is-${size}`]"
-  />
+  <picture class="base-icon">
+    <Transition
+      name="appear-icon"
+      mode="out-in"
+    >
+      <component
+        data-testID="ui-icon"
+        :is="asyncComponent"
+        :id="id"
+        :key="id"
+        :class="[`base-icon--is-${size}`]"
+      />
+    </Transition>
+  </picture>
 </template>
 <script lang="ts" setup>
 import { Types, Sizes, type UniqueId } from './types'
 import { validateValueCollectionExists } from '@/components/utilities/validation/useValidation'
-import { onMounted, type PropType, ref } from 'vue'
+import { onMounted, type PropType, shallowRef } from 'vue'
 
 onMounted(() => {
   import(`../../icons/${type}/${name}.vue`)
@@ -22,7 +29,7 @@ onMounted(() => {
     })
 })
 
-const asyncComponent = ref<null | any>(null)
+const asyncComponent = shallowRef<null | any>(null)
 
 const { name, type } = defineProps({
   /**
