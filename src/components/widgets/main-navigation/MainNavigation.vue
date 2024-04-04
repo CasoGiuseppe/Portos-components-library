@@ -21,7 +21,7 @@
                     <template #icon>
                         <Suspense>
                             <BaseIcon
-                                :name="setIcon(item)"
+                                :name="item.icon"
                                 :type="item.type"
                                 :size="collapsed ? Sizes.M : Sizes.S"
                             />
@@ -50,6 +50,7 @@
                 <NavigationItem
                     id="minimize"
                     :collapsed="collapsed"
+                    :key="iconMinimize"
                     full-size
                     @submit="handleCollapedState"
                 >
@@ -63,7 +64,7 @@
                                 :id="iconMinimize"
                                 :name="iconMinimize"
                                 :type="Types.CHEVRON"
-                                :size="collapsed ? Sizes.M : Sizes.S"
+                                :size="iconSize"
                             />
                         </Suspense>
                     </template>
@@ -86,6 +87,7 @@ import { loadNavigationItems } from './helpers';
 const navigationItems = ref<INavigationItem[]>([]);
 const collapsed = ref<boolean>(false);
 const iconMinimize = ref<string>('IconChevronLeftDuo');
+const iconSize = ref<Sizes>(Sizes.M)
 
 const { createObserver } = useIntersectionObserver({
     action: (e: any) => {
@@ -95,7 +97,9 @@ const { createObserver } = useIntersectionObserver({
 
 const handleCollapedState = () => {
     collapsed.value = !collapsed.value
-    iconMinimize.value = collapsed.value ? 'IconChevronLeftDuo' : 'IconChevronRightDuo';
+    console.log(collapsed.value);
+    iconMinimize.value = collapsed.value === true ? 'IconChevronRightDuo' : 'IconChevronLeftDuo';
+    iconSize.value = collapsed.value === true ? Sizes.S : Sizes.M;
 }
 
 const endEnterEvent = (e: any): void => {
@@ -119,12 +123,6 @@ const endEnterEvent = (e: any): void => {
     }
 };
 
-const setIcon = (item: INavigationItem) => {
-    return collapsed.value
-        ? (item.iconAlt || item.icon)
-        : item.icon;
-};
-
 onMounted(async () => {
     const userRole = 'admin';
     const items = await loadNavigationItems(userRole) || [];
@@ -133,6 +131,7 @@ onMounted(async () => {
         ...items
     ];
 });
+
 </script>
 
 <style src="./MainNavigation.scss" lang="scss"></style>

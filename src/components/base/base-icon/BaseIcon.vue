@@ -5,6 +5,7 @@
       mode="out-in"
     >
       <component
+        v-if="name !== null"
         data-testID="ui-icon"
         :is="asyncComponent"
         :id="id"
@@ -15,23 +16,16 @@
   </picture>
 </template>
 <script lang="ts" setup>
+import { onMounted, type PropType, shallowRef, watch } from 'vue'
 import { Types, Sizes, type UniqueId } from './types'
 import { validateValueCollectionExists } from '@/components/utilities/validation/useValidation'
-import { onMounted, type PropType, shallowRef } from 'vue'
 
 onMounted(() => {
-  import(`../../icons/${type}/${name}.vue`)
-    .then((module) => {
-      asyncComponent.value = module.default
-    })
-    .catch((error) => {
-      console.log(error)
-    })
+  importIcon({ name: props.name })
 })
 
 const asyncComponent = shallowRef<null | any>(null)
-
-const { name, type } = defineProps({
+const props = defineProps({
   /**
    * Set the unique id of the ui button
    */
@@ -45,7 +39,7 @@ const { name, type } = defineProps({
    */
   name: {
     type: String as PropType<string>,
-    default: 'IconNavigationCloseS'
+    default: null
   },
 
   /**
@@ -66,5 +60,18 @@ const { name, type } = defineProps({
     validator: (prop: Sizes) => validateValueCollectionExists({ collection: Sizes, value: prop })
   }
 })
+
+watch(() => props.name, (_, newName) => {
+  if(!newName) return;
+  importIcon({ name: newName })
+}, {
+  deep: true
+})
+
+const importIcon = ({ name }: { name: string }): void => {
+  import(`../../icons/${props.type}/${name}.vue`)
+    .then((module) => asyncComponent.value = module.default)
+    .catch((error) => console.error(error))
+}
 </script>
 <style src="./BaseIcon.scss" lang="scss"></style>
