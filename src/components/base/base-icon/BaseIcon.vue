@@ -22,7 +22,7 @@ onMounted(() => {
     })
 })
 
-const asyncComponent = ref(null)
+const asyncComponent = ref<null | any>(null)
 
 const { name, type } = defineProps({
   /**
