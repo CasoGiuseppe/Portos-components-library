@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 
 import MainNavigation from '@/components/widgets/main-navigation/MainNavigation.vue';
-import Logo from '@/assets/logo.svg';
+import Logo from '@/assets/images/logo.png';
 
 const meta = {
-    title: 'Navigation/Main-Navigation/Default',
+    title: 'Widgets/Navigation/Main',
     component: MainNavigation,
-    tags: ['autodocs'],
+    tags: ['autodocs']
 } satisfies Meta<typeof MainNavigation>;
 
 export default meta;
@@ -21,7 +21,7 @@ const Templates: Story = {
             logo: Logo
         } },
         template: `
-            <MainNavigation>
+            <MainNavigation v-bind="args">
                 <template #logo>
                     <img :src="logo" />
                 </template>

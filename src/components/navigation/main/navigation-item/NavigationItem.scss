@@ -100,7 +100,9 @@
         }
 
         &-fullSize {
-            width: 100%;
+            &:not(#{$navigationItem}--is-collapsed) {
+                width: 100%;
+            }
         }
     }
 

@@ -70,7 +70,6 @@ const submit = () => {
 };
 
 const outsideAction = () => insideFocus.value = false;
-
 </script>
 
 <style src="./NavigationItem.scss" lang="scss"></style>

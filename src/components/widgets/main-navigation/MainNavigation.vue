@@ -1,29 +1,33 @@
 <template>
     <nav class="main-navigation">
-        <slot name="logo" />
         <TransitionGroup
             appear
             tag="ul"
+            class="main-navigation__list"
             @after-enter="endEnterEvent"
         >
+            <li key="header">
+                <h1 class="main-navigation__logo">
+                    <figure class="main-navigation--has-image">
+                        <slot name="logo" />
+                    </figure>
+                </h1>
+            </li>
             <li
-                :class="[
-                    'main-navigation--list-item',
-                    item.customClass ? item.customClass : ''
-                ]"
                 v-for="item in navigationItems"
                 :key="item.label"
             >
                 <NavigationItem
                     :id="item.label"
-                    :collapsed="collapsed"
+                    :collapsed="collapsedState"
+                    full-size
                 >
                     <template #icon>
                         <Suspense>
                             <BaseIcon
                                 :name="item.icon"
                                 :type="item.type"
-                                :size="collapsed ? Sizes.M : Sizes.S"
+                                :size="iconSize"
                             />
                         </Suspense>
                     </template>
@@ -49,7 +53,7 @@
             <li key="minimize">
                 <NavigationItem
                     id="minimize"
-                    :collapsed="collapsed"
+                    :collapsed="collapsedState"
                     :key="iconMinimize"
                     full-size
                     @submit="handleCollapedState"
@@ -84,8 +88,10 @@ import useIntersectionObserver from '@/shared/composables/useIntersectionObserve
 import type { INavigationItem } from './types';
 import { loadNavigationItems } from './helpers';
 
+
+
 const navigationItems = ref<INavigationItem[]>([]);
-const collapsed = ref<boolean>(false);
+const collapsedState = ref<boolean>(false);
 const iconMinimize = ref<string>('IconChevronLeftDuo');
 const iconSize = ref<Sizes>(Sizes.M)
 
@@ -96,10 +102,9 @@ const { createObserver } = useIntersectionObserver({
 });
 
 const handleCollapedState = () => {
-    collapsed.value = !collapsed.value
-    console.log(collapsed.value);
-    iconMinimize.value = collapsed.value === true ? 'IconChevronRightDuo' : 'IconChevronLeftDuo';
-    iconSize.value = collapsed.value === true ? Sizes.S : Sizes.M;
+    collapsedState.value = !collapsedState.value
+    iconMinimize.value = collapsedState.value === true ? 'IconChevronRightDuo' : 'IconChevronLeftDuo';
+    iconSize.value = collapsedState.value === true ? Sizes.S : Sizes.M;
 }
 
 const endEnterEvent = (e: any): void => {
