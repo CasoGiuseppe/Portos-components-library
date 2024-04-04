@@ -3,29 +3,28 @@
         :class="[
             'base-checkbox',
             `base-checkbox--is-${size}`,
+            `base-checkbox--is-${status}`,
             `${variant ? `base-checkbox--is-ALT` : ''}`,
-            `${isChecked || indeterminate ? `base-checkbox--is-${status}-checked` : `base-checkbox--is-${status}`}`
+            { 'base-checkbox--is-INDETERMINATE': indeterminate }
+            //`${isChecked || indeterminate ? `base-checkbox--is-${status}-checked` : `base-checkbox--is-${status}`}`
         ]"
         :title="label"
         :aria-label="label"
-        :for="id"
+        @change="handleChange"
     >
         <input
-            :id="id"
             data-testID="ui-checkbox"
             ref="checkbox"
             type="checkbox"
             :checked="active"
+            :indeterminate="indeterminate"
             :disabled="disabled"
             :aria-disabled="disabled"
-            :indeterminate="indeterminate"
-            @keydown.enter="handleChange"
-            style="display: block"
-            @keydown.space="handleChange"
+            style="display: none"
         />
         <button
-            :disabled="disabled"
-            @click="handleChange"
+            @keyup.enter="setChangeByKey"
+            @keyup.space="setChangeByKey"
             class="base-checkbox__square"
         >
             <span v-if="isChecked" class="base-checkbox--is-checked-icon">
@@ -128,12 +127,23 @@ const isChecked = ref(active)
 const checkbox = ref<HTMLInputElement | null>(null)
 const emits = defineEmits(["checked"])
 
-const handleChange = () => {
-    const { checked }: any = checkbox.value
+const handleChange = (payload: Event) => {
+    const { checked } = payload.target as HTMLInputElement
+    isChecked.value = checked
+    emits("checked", { cheked: checked, indeterminate: indeterminate })
+}
 
-    console.log(checked)
-    isChecked.value = !isChecked.value
-    emits("checked", { checked: isChecked.value, indeterminate: indeterminate })
+const setChangeByKey = () => {
+    if (disabled) return
+    if (!checkbox.value) return
+    const { checked } = checkbox.value
+    checkbox.value.checked = !checked
+    isChecked.value = checkbox.value.checked
+
+    emits("checked", {
+        checked: checkbox.value.checked,
+        indeterminate: indeterminate
+    })
 }
 </script>
 <style src="./BaseCheckbox.scss" lang="scss"></style>
