@@ -113,12 +113,12 @@
       }
     }
 
-    &-quaternary {
+    &-backToTop {
       background: var(--color-neutral-70, #000);
       border-radius: var(--radius-300);
 
       @include createHoverState {
-        // TODO: add box shadow
+        box-shadow: var(--shadow-300)
       }
     }
 

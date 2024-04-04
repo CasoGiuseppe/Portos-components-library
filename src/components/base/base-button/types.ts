@@ -5,7 +5,7 @@ export enum Types {
     PRIMARY = 'primary',
     SECONDARY = 'secondary',
     TERTIARY = 'tertiary',
-    QUATERNARY = 'quaternary'
+    BACKTOTOP = 'backToTop'
 }
 
 export enum Sizes {
