@@ -48,15 +48,10 @@ describe('MainNavigation widget tests', () => {
             $wrapper = await mountComponent(MainNavigation);
 
             expect($wrapper.vm.navigationItems).toEqual([]);
-            
             await $wrapper.vm.$nextTick();
             
-            const { navigationItems, minimizeItem } = $wrapper.vm;
-            
-            expect(navigationItems).toEqual([
-                ...$mockNavigationItems,
-                minimizeItem
-            ]);
+            const { navigationItems } = $wrapper.vm;
+            expect(navigationItems).toEqual($mockNavigationItems);
         });
     });
 
@@ -104,14 +99,8 @@ describe('MainNavigation widget tests', () => {
     });
 
     describe('Test HTML appearance', () => {
-        it('should render item with customClass if it exists', () => {
-            const { minimizeItem } = $wrapper.vm;
-            expect($wrapper.html()).toContain(minimizeItem.customClass);
-        });
-
-        it('should render li items according navigationItems length', () => {
-            const { navigationItems } = $wrapper.vm;
-            expect($wrapper.findAll('li')).toHaveLength(navigationItems.length);
+        it('should always render minimize navigation item', () => {
+            expect($wrapper.html()).toContain('minimize');
         });
     });
 });
