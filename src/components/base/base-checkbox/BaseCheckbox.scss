@@ -7,7 +7,10 @@
     display: inline-flex;
     gap: var(--spacing-30, 0);
 
-    color: var(--color-neutral-70, #000);
+    &:not(#{$basecheckbox}--is-ALT) {
+        color: var(--color-neutral-70, #fff);
+    }
+    color: var(--color-neutral-10, #fff);
 
     &:not(:has(input:disabled)) {
         cursor: pointer;
