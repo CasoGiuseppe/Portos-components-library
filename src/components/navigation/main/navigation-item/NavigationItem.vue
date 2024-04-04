@@ -36,6 +36,7 @@
         <aside
             v-if="child"
             class="navigation-item__second-level"
+            tabindex="0"
         >
             <!-- @slot Slot for second level content -->
             <slot name="child" />

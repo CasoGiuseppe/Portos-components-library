@@ -67,7 +67,8 @@ defineProps({
    * Set the aria accesibility label
    */
   label: {
-    type: String as PropType<string>
+    type: String as PropType<string>,
+    default: 'component label'
   }
 });
 const emits = defineEmits(['send'])
@@ -75,4 +76,4 @@ const handleClick = () => emits('send')
 
 </script>
 
-<style src="./BaseButton.scss" lang="scss"></style>@/components/utilities/validation/useValidation
+<style src="./BaseButton.scss" lang="scss"></style>

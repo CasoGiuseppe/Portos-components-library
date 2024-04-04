@@ -8,5 +8,6 @@
 @import './mixins/createBreakpoints';
 @import './mixins/createGrid';
 @import './mixins/createKeyframes';
-@import './grid/index';
+@import './mixins/createAnimations';
 @import './layer/default';
+@import './grid/index';

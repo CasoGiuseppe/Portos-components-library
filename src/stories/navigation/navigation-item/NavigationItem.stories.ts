@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/vue3";
 import { action } from '@storybook/addon-actions';
 
-import NavigationItem from '@/components/navigation/navigation-item/NavigationItem.vue';
+import NavigationItem from '@/components/navigation/main/navigation-item/NavigationItem.vue';
 import BaseIcon from "@/components/base/base-icon/BaseIcon.vue";
 
 const meta = {
-    title: 'Navigation/Item/Default',
+    title: 'Navigation/Main/Default',
     component: NavigationItem,
     tags: ['autodocs'],
     argTypes: {
@@ -16,7 +16,7 @@ const meta = {
         label: { control: 'text' },
     },
     args: {
-        id: '0',
+        id: 'mainNavItem',
         icon: '',
         selected: false,
         rtl: false,

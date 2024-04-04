@@ -3,7 +3,6 @@ import BaseInput from "@ui/base/base-input/BaseInput.vue";
 import BaseIcon from "@/components/base/base-icon/BaseIcon.vue";
 import { Types } from '@ui/base/base-input/types';
 import { action } from '@storybook/addon-actions'
-import { defineAsyncComponent } from "vue";
 
 const ERRORS = {
     required: 'input value is required',
@@ -80,17 +79,17 @@ const Templates: Story = {
             </section>
         `,
         methods: {
-            setInvalid({mode, value}: {mode: string, value: string}) {
+            setInvalid({mode, value}: {mode: string, value: string}): void {
                 updateArgs({ ...args, error: value
                     ? ERRORS[mode as keyof typeof ERRORS]
                     : null })
             },
             change: action('change'),
             focus: action('focus'),
-            update(value: string) {
+            update(value: string): void {
                 updateArgs({ ...args, proxyValue: value })
             },
-            changeInputState() {
+            changeInputState(): void {
                 updateArgs({ ...args, input: args.input === 'password' ? Types.TEXT : Types.PASSWORD })
             }
         }

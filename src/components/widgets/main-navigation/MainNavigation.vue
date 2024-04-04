@@ -76,7 +76,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 
-import NavigationItem from '@/components/navigation/navigation-item/NavigationItem.vue';
+import NavigationItem from '@/components/navigation/main/navigation-item/NavigationItem.vue';
 import BaseIcon from '@/components/base/base-icon/BaseIcon.vue';
 import { Types, Sizes } from '@/components/base/base-icon/types';
 import useIntersectionObserver from '@/shared/composables/useIntersectionObserver';

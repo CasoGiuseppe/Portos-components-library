@@ -1,11 +1,11 @@
 import { type Meta, type StoryObj } from "@storybook/vue3";
 import { action } from '@storybook/addon-actions';
-import NavigationItem from '@/components/navigation/navigation-item/NavigationItem.vue';
+import NavigationItem from '@/components/navigation/main/navigation-item/NavigationItem.vue';
 import BaseIcon from "@/components/base/base-icon/BaseIcon.vue";
 
 
 const meta = {
-    title: 'Navigation/Item/Second Level',
+    title: 'Navigation/Main/Second Level',
     component: NavigationItem,
     tags: ['autodocs'],
     argTypes: {

@@ -1,6 +1,6 @@
 .base-input {
     $baseinput: &;
-    $animationTime: .4s;
+    --animationTime: .4s;
 
     &__fieldset {
         display: flex;
@@ -51,8 +51,8 @@
         border-color: var(--color-neutral-50, #000);
         border-radius: var(--radius-300, 0);
 
-        transition: border $animationTime ease-out,
-                    box-shadow $animationTime ease-out;
+        transition: border var(--animationTime, 0s) ease-out,
+                    box-shadow var(--animationTime, 0s) ease-out;
 
         @media (hover) {
             &:focus-within {
@@ -112,7 +112,7 @@
             gap: var(--spacing-20, 0);
 
             color: var(--color-neutral-70, #000);
-            transition: color $animationTime ease-out;
+            transition: color var(--animationTime, 0s) ease-out;
 
             &-alert {
                 align-items: center;
@@ -131,8 +131,8 @@
         align-items: center;
         display: flex;
         justify-content: center;
-
-        transition: color $animationTime ease-out;
+        color: var(--color-primary-40, #000);
+        transition: color var(--animationTime, 0s) ease-out;
 
         :disabled{
             color: var(--color-neutral-50, #000);

@@ -1,5 +1,3 @@
-import './assets/main.css'
-
 import { createApp } from 'vue'
 import ClickOutside from "@ui/utilities/directives/clickOutside";
 import App from './App.vue'
