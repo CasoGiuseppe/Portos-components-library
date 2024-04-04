@@ -60,7 +60,7 @@
     }
   }
 
-  &--is{
+  &--is {
     &-primary {
       background: var(--color-brand-50);
 
@@ -110,6 +110,15 @@
         }
         border-color: var(--color-primary-30, #000);
         color: var(--color-primary-30, #000);
+      }
+    }
+
+    &-quaternary {
+      background: var(--color-neutral-70, #000);
+      border-radius: var(--radius-300);
+
+      @include createHoverState {
+        // TODO: add box shadow
       }
     }
 
