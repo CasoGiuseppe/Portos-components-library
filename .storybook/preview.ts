@@ -1,10 +1,11 @@
-import type { Preview } from '@storybook/vue3';
+import  { type Preview, setup } from '@storybook/vue3';
 import '../src/stories/foundations/shared/styles/index.scss';
 import '../src/stories/foundations/shared/styles/layout.scss';
 import '../src/stories/foundations/shared/styles/modifiers.scss';
 import '../src/stories/foundations/shared/styles/graduate_colors.scss';
 import '../src/stories/foundations/shared/styles/typography.scss';
 import { useArgs } from '@storybook//preview-api';
+import ClickOutside from "../src/components/utilities/directives/clickOutside";
 
 const preview: Preview = {
   parameters: {
@@ -25,5 +26,10 @@ export const decorators = [
   },
   () => ({ template: '<story />' }),
 ]
+
+setup((app) => {
+  app.directive('click-outside', ClickOutside);
+});
+
 
 export default preview

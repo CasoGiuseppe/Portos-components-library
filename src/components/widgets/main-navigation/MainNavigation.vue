@@ -17,7 +17,6 @@
                 <NavigationItem
                     :id="item.label"
                     :collapsed="collapsed"
-                    @click="item.action"
                 >
                     <template #icon>
                         <Suspense>
@@ -30,21 +29,43 @@
                     </template>
 
                     <template #label>
-                        <p v-text="item.label" />
+                        {{ item.label }}
                     </template>
 
-                    <template #children v-if="item.children">
+                    <template #child v-if="item.children">
                         <ul>
                             <li
                                 v-for="child in item.children"
                                 :key="child.label"
                             >
-                                <p
-                                    v-text="child.label"
-                                    style="padding: 10px 0; width: 220px;"
-                                />
+                                <p style="padding: 10px 0; width: 220px;">
+                                    {{ child.label }}
+                                </p>
                             </li>
                         </ul>
+                    </template>
+                </NavigationItem>
+            </li>
+            <li key="minimize">
+                <NavigationItem
+                    id="minimize"
+                    :collapsed="collapsed"
+                    full-size
+                    @submit="handleCollapedState"
+                >
+                    <template #label>
+                        Minimize
+                    </template>
+
+                    <template #icon>
+                        <Suspense>
+                            <BaseIcon
+                                :id="iconMinimize"
+                                :name="iconMinimize"
+                                :type="Types.CHEVRON"
+                                :size="collapsed ? Sizes.M : Sizes.S"
+                            />
+                        </Suspense>
                     </template>
                 </NavigationItem>
             </li>
@@ -64,6 +85,7 @@ import { loadNavigationItems } from './helpers';
 
 const navigationItems = ref<INavigationItem[]>([]);
 const collapsed = ref<boolean>(false);
+const iconMinimize = ref<string>('IconChevronLeftDuo');
 
 const { createObserver } = useIntersectionObserver({
     action: (e: any) => {
@@ -71,14 +93,10 @@ const { createObserver } = useIntersectionObserver({
     }
 });
 
-const minimizeItem = {
-    label: 'Minimize',
-    type: Types.CHEVRON,
-    icon: 'IconChevronLeftDuo',
-    iconAlt: 'IconChevronRightDuo',
-    customClass: "main-navigation--list-item-minimize",
-    action: () => (collapsed.value = !collapsed.value)
-};
+const handleCollapedState = () => {
+    collapsed.value = !collapsed.value
+    iconMinimize.value = collapsed.value ? 'IconChevronLeftDuo' : 'IconChevronRightDuo';
+}
 
 const endEnterEvent = (e: any): void => {
     const child = e?.children?.[0];
@@ -89,7 +107,7 @@ const endEnterEvent = (e: any): void => {
         if (!secondLevel) return;
     
         const secondLevelOffset = secondLevel ? secondLevel.offsetHeight : 0;
-        if (secondLevel) secondLevel.classList.add('navigation-item__second-level--is-hidden');
+        child.dataset.hidden = true;
         
         createObserver({
             element: child,
@@ -112,8 +130,7 @@ onMounted(async () => {
     const items = await loadNavigationItems(userRole) || [];
 
     navigationItems.value = [
-        ...items,
-        minimizeItem
+        ...items
     ];
 });
 </script>

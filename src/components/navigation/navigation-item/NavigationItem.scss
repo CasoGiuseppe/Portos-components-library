@@ -98,6 +98,10 @@
                 }
             }
         }
+
+        &-fullSize {
+            width: 100%;
+        }
     }
 
     &__user-icon {
@@ -148,7 +152,6 @@
     }
 
     &__second-level {
-        // display: none;
         padding: var(--spacing-50, 0);
         position: absolute;
         right: 0;
@@ -176,7 +179,7 @@
             top: auto;
         }
 
-        &--is-hidden {
+        [data-hidden="true"] & {
             display: none;
         }
     }

@@ -3,4 +3,5 @@ export interface INavigationItemComponent {
     selected?: boolean
     rtl?: boolean
     collapsed?: boolean,
+    fullSize?: boolean
 };

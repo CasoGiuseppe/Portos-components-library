@@ -1,10 +1,8 @@
-import { setup, type Meta, type StoryObj } from "@storybook/vue3";
+import { type Meta, type StoryObj } from "@storybook/vue3";
 import { action } from '@storybook/addon-actions';
-import ClickOutside from "@ui/utilities/directives/clickOutside";
 import NavigationItem from '@/components/navigation/navigation-item/NavigationItem.vue';
 import BaseIcon from "@/components/base/base-icon/BaseIcon.vue";
 
-setup((app) => app.directive('click-outside', ClickOutside));
 
 const meta = {
     title: 'Navigation/Item/Second Level',
@@ -16,7 +14,7 @@ const meta = {
         rtl:  { control: 'radio', options: [true, false] },
         collapsed:  { control: 'radio', options: [true, false] },
         label: { control: 'text' },
-        children: { control: 'text' }
+        child: { control: 'text' }
     },
     args: {
         id: '',
@@ -25,7 +23,7 @@ const meta = {
         rtl: false,
         collapsed: false,
         label: 'Label',
-        children: 'navigation children'
+        child: 'navigation children'
     }
 } satisfies Meta<typeof NavigationItem>;
 
@@ -41,6 +39,7 @@ const Templates: Story = {
             <section style="display: grid; gap: 10px; grid-template-columns: repeat(4, 1fr);">
                 <NavigationItem
                     v-bind="args"
+                    :data-hidden = "true"
                     @submit="submit"
                 >
                     <template #icon>
@@ -53,7 +52,7 @@ const Templates: Story = {
                         </Suspense>
                     </template>
                     <template #label>{{ args.label }}</template>
-                    <template #children>{{ args.children }}</template>
+                    <template #child>{{ args.child }}</template>
                 </NavigationItem>
             </section
         `,

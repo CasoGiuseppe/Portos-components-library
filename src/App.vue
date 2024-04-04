@@ -1,12 +1,9 @@
 <template>
-  <section></section>
-  <MainNavigation>
-      <template #logo>
-          <img src="@/assets/logo.svg" />
-      </template>
-  </MainNavigation>
+  <section>
+    <NavigationItem></NavigationItem>
+  </section>
 </template>
 
 <script setup lang="ts">
-import MainNavigation from './components/widgets/main-navigation/MainNavigation.vue';
+import NavigationItem from '@/components/navigation/navigation-item/NavigationItem.vue';
 </script>

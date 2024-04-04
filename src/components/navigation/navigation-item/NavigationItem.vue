@@ -6,8 +6,9 @@
         'navigation-item',
         selected ? 'navigation-item--is-selected' : null,
         collapsed ? 'navigation-item--is-collapsed' : null,
-        children ? 'navigation-item--has-second-level' : null,
-        insideFocus ? 'navigation-item--has-inside-focus' : null
+        child ? 'navigation-item--has-second-level' : null,
+        insideFocus ? 'navigation-item--has-inside-focus' : null,
+        fullSize ? 'navigation-item--is-fullSize' : null
     ]"
         data-testID="ui-navigation-item"
         v-click-outside="outsideAction"
@@ -19,7 +20,7 @@
         </picture>
 
         <button
-            v-if="children"
+            v-if="child"
             class="navigation-item__action"
             data-testID="ui-navigation-item-action"
         />
@@ -33,11 +34,11 @@
         </p>
 
         <aside
-            v-if="children"
+            v-if="child"
             class="navigation-item__second-level"
         >
             <!-- @slot Slot for second level content -->
-            <slot name="children" />
+            <slot name="child" />
         </aside>
     </button>
 </template>
@@ -53,12 +54,13 @@ const props = withDefaults(defineProps<INavigationItemComponent>(), {
     id: 'item',
     selected: false,
     rtl: false,
-    collapsed: false
+    collapsed: false,
+    fullSize: false
 });
 
 const slots = useSlots();
 const label = computed(() => !!slots['label']);
-const children = computed(() => !!slots['children']);
+const child = computed(() => !!slots['child']);
 const showLabel = computed(() => label.value && !props.collapsed);
 
 const submit = () => {
