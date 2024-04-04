@@ -34,7 +34,7 @@ defineProps({
     default: 'buttonId'
   },
   /**
-   * Set the button type family [primary, secondary, tertiary]
+   * Set the button type family [primary, secondary, tertiary, backToTop]
    */
   type: {
     type: String as PropType<Types>,
