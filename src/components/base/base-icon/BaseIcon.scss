@@ -1,5 +1,6 @@
 .base-icon {
     --animationTime: 0.2s;
+    display: flex;
     aspect-ratio: 1/1;
 
     @include create-animation(

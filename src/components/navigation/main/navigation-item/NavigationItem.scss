@@ -4,6 +4,7 @@
     $navigationItem: &;
     $animationName: second-level-in-out;
     --animationTime: .4s;
+    --aniamtionDelay: 0s;
 
     @mixin inOutSecondLevel() {
         > #{$navigationItem}__second-level {
@@ -28,15 +29,16 @@
     flex-wrap: wrap;
     
     min-height: calc(var(--spacing-100, 0) + 4px);
-    max-width: var(--spacing-131);
+    width: var(--spacing-131);
     padding: var(--spacing-40, 0) var(--spacing-30, 0);
     position: relative;
     z-index: 1;
 
     color: var(--color-neutral-10, #000);
 
-    transition: box-shadow var(--animationTime ease-out),
-                background var(--animationTime ease-out);
+    transition: box-shadow var(--animationTime, 0s) ease-out,
+                background var(--animationTime, 0s) ease-out,
+                width var(--animationTime, 0s) ease-out var(--aniamtionDelay, 0);
 
     &:is(button) {
         border: none;
@@ -46,12 +48,14 @@
         justify-content: space-between;
     }
 
-    &#{$navigationItem}--is-collapsed {
+    &#{$navigationItem}--is-collapsed,
+    [data-collapsed = "true"] & {
         justify-content: center;
     }
 
     &:not(#{$navigationItem}--has-second-level),
-    &:not(#{$navigationItem}--is-collapsed) {
+    &:not(#{$navigationItem}--is-collapsed),
+    &:not([data-collapsed = "true"] &) {
         gap: var(--spacing-20, 0);
     }
 
@@ -83,11 +87,11 @@
             }
         }
 
-        &-collapsed {
+        &-collapsed &{
             align-items: center;
             aspect-ratio: 1/1;
             display: flex;
-            max-width: var(--spacing-100);
+            width: var(--spacing-100);
             justify-content:center;
 
             &.navigation-item--has-second-level {
@@ -100,8 +104,25 @@
         }
 
         &-fullSize {
-            &:not(#{$navigationItem}--is-collapsed) {
+            &:not(#{$navigationItem}--is-collapsed),
+            &:not([data-collapsed = "true"] &) {
                 width: 100%;
+            }
+        }
+    }
+
+    [data-collapsed = "true"] & {
+        align-items: center;
+        aspect-ratio: 1/1;
+        display: flex;
+        width: var(--spacing-100);
+        justify-content:center;
+
+        &.navigation-item--has-second-level {
+            justify-content: flex-end;
+
+            &[dir='rtl'] {
+                justify-content: flex-start;
             }
         }
     }
@@ -127,6 +148,10 @@
         [dir='rtl'] & {
             order: 2;
             text-align: right;
+        }
+
+        [data-collapsed = "true"] & {
+            display: none;
         }
     }
 

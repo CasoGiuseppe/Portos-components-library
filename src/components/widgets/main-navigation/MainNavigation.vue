@@ -1,5 +1,8 @@
 <template>
-    <nav class="main-navigation">
+    <nav
+        class="main-navigation"
+        :data-collapsed="collapsedState"
+    >
         <TransitionGroup
             appear
             tag="ul"
@@ -14,13 +17,14 @@
                 </h1>
             </li>
             <li
-                v-for="item in navigationItems"
+                v-for="(item, index) in navigationItems"
                 :key="item.label"
             >
                 <NavigationItem
                     :id="item.label"
-                    :collapsed="collapsedState"
                     full-size
+                    rtl
+                    :style="{ '--aniamtionDelay' : `${index * 0.03}s`}"
                 >
                     <template #icon>
                         <Suspense>
@@ -53,9 +57,9 @@
             <li key="minimize">
                 <NavigationItem
                     id="minimize"
-                    :collapsed="collapsedState"
                     :key="iconMinimize"
                     full-size
+                    rtl
                     @submit="handleCollapedState"
                 >
                     <template #label>
