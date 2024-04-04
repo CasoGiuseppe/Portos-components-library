@@ -88,22 +88,43 @@
         }
 
         &:not(#{$basecheckbox}--is-ALT) {
-            &#{$basecheckbox}--is-default.base-checkbox--is-INDETERMINATE {
+            &#{$basecheckbox}--is-default {
                 #{$basecheckbox}__square {
                     border: 1px solid var(--color-primary-40, #21578a);
-                    background-color: var(--color-primary-40, #21578a);
-                    color: var(--color-neutral-10, white);
+                    background-color: var(--color-primary-10, #21578a);
+                    color: var(--color-primary-40, white);
 
                     transition:
                         background var(--animationTime, 0s) ease-out,
                         border var(--animationTime, 0s) ease-out;
                 }
             }
-            &#{$basecheckbox}--is-error.base-checkbox--is-INDETERMINATE {
+            &#{$basecheckbox}--is-error {
                 #{$basecheckbox}__square {
                     border: 1px solid var(--color-error-30, #21578a);
-                    background-color: var(--color-error-30, #21578a);
-                    color: var(--color-neutral-10, white);
+                    background-color: var(--color-neutral-10, #21578a);
+
+                    transition:
+                        background var(--animationTime, 0s) ease-out,
+                        border var(--animationTime, 0s) ease-out;
+                }
+            }
+            &#{$basecheckbox}--is-default#{$basecheckbox}--is-INDETERMINATE {
+                #{$basecheckbox}__square {
+                    border: 1px solid var(--color-primary-40, #21578a);
+                    background-color: var(--color-neutral-10, #21578a);
+                    color: var(--color-primary-40, #21578a);
+
+                    transition:
+                        background var(--animationTime, 0s) ease-out,
+                        border var(--animationTime, 0s) ease-out;
+                }
+            }
+            &#{$basecheckbox}--is-error#{$basecheckbox}--is-INDETERMINATE {
+                #{$basecheckbox}__square {
+                    border: 1px solid var(--color-error-30, #000);
+                    background-color: var(--color-neutral-10, #000);
+                    color: var(--color-error-30, #000);
 
                     transition:
                         background var(--animationTime, 0s) ease-out,
@@ -111,14 +132,30 @@
                 }
             }
         }
-        &#{$basecheckbox}--is-default.base-checkbox--is-INDETERMINATE {
+        &#{$basecheckbox}--is-default {
+            #{$basecheckbox}__square {
+                border: 1px solid var(--color-primary-20, #000);
+                background-color: var(--color-neutral-10, #000);
+            }
+        }
+        &#{$basecheckbox}--is-error {
+            #{$basecheckbox}__square {
+                border: 1px solid var(--color-error-30, #000);
+                background-color: var(--color-neutral-20, #000);
+
+                transition:
+                    background var(--animationTime, 0s) ease-out,
+                    border var(--animationTime, 0s) ease-out;
+            }
+        }
+        &#{$basecheckbox}--is-default#{$basecheckbox}--is-INDETERMINATE {
             #{$basecheckbox}__square {
                 border: 1px solid var(--color-primary-20, #000);
                 background-color: var(--color-primary-20, #000);
                 color: var(--color-primary-60, white);
             }
         }
-        &#{$basecheckbox}--is-error.base-checkbox--is-INDETERMINATE {
+        &#{$basecheckbox}--is-error#{$basecheckbox}--is-INDETERMINATE {
             #{$basecheckbox}__square {
                 border: 1px solid var(--color-error-30, #000);
                 background-color: var(--color-error-30, #000);
@@ -135,12 +172,26 @@
         // NOT CHECKED
         &:not(:has(input:checked)) {
             &:not(#{$basecheckbox}--is-ALT) {
+                &#{$basecheckbox}--is-INDETERMINATE {
+                    #{$basecheckbox}__square {
+                        border: 1px solid var(--color-neutral-50, #000);
+                        background: var(--color-neutral-50, #000);
+                        color: var(--color-neutral-20, #000);
+                    }
+                }
                 #{$basecheckbox}__square {
                     border: 1px solid var(--color-neutral-50, #000);
                     background: var(--color-neutral-20, #000);
                 }
             }
             // ALT
+            &#{$basecheckbox}--is-INDETERMINATE {
+                #{$basecheckbox}__square {
+                    border: 1px solid var(--color-neutral-50, #000);
+                    background: var(--color-neutral-50, #000);
+                    color: var(--color-neutral-70, #000);
+                }
+            }
             #{$basecheckbox}__square {
                 border: 1px solid var(--color-neutral-50, #000);
                 background: var(--color-neutral-20, #000);
@@ -168,6 +219,9 @@
         height: 24px;
         width: 24px;
         pointer-events: none;
+
+        display: flex;
+        justify-content: center;
 
         background-color: var(--color-neutral-10, #fff);
         border-radius: var(--radius-200, 4px);

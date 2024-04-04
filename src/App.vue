@@ -94,6 +94,17 @@
         >
             indeterminate
         </BaseCheckbox>
+        <BaseCheckbox
+            :id="'id007'"
+            @checked="checked"
+            :status="Types.DEFAULT"
+            :size="Sizes.S"
+            :indeterminate="true"
+            :variant="true"
+            :disabled="true"
+        >
+            indeterminate ALT
+        </BaseCheckbox>
     </section>
 
     <section
@@ -153,6 +164,17 @@
             :id="'id007'"
             @checked="checked"
             :status="Types.DEFAULT"
+            :size="Sizes.S"
+            :indeterminate="true"
+            :variant="false"
+            :disabled="false"
+        >
+            indeterminate
+        </BaseCheckbox>
+        <BaseCheckbox
+            :id="'id007'"
+            @checked="checked"
+            :status="Types.ERROR"
             :size="Sizes.S"
             :indeterminate="true"
             :variant="false"
