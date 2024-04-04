@@ -92,7 +92,7 @@ const { active, disabled, indeterminate } = defineProps({
         default: false
     },
     /**
-     * Set variant type state
+     * Set variant type state (ALT)
      */
     variant: {
         type: Boolean as PropType<boolean>,
