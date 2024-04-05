@@ -1,7 +1,7 @@
 import type { INavigationItem } from "../types";
-import { Types } from "@/components/base/base-icon/types";
+import { Types } from "@ui/base/base-icon/types";
 
-const items: INavigationItem[] = [
+export const items: INavigationItem[] = [
     {
         label: 'Mi Panel',
         type: Types.LOCATION,

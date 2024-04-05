@@ -24,7 +24,7 @@
                     :id="item.label"
                     full-size
                     rtl
-                    :style="{ '--aniamtionDelay' : `${index * 0.03}s`}"
+                    :style="{ '--aniamtionDelay' : `${index * 0.02}s`}"
                 >
                     <template #icon>
                         <Suspense>
@@ -83,18 +83,15 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 
 import NavigationItem from '@/components/navigation/main/navigation-item/NavigationItem.vue';
 import BaseIcon from '@/components/base/base-icon/BaseIcon.vue';
 import { Types, Sizes } from '@/components/base/base-icon/types';
 import useIntersectionObserver from '@/shared/composables/useIntersectionObserver';
-import type { INavigationItem } from './types';
-import { loadNavigationItems } from './helpers';
+import { items as navigationItems } from './items/admin';
 
 
-
-const navigationItems = ref<INavigationItem[]>([]);
 const collapsedState = ref<boolean>(false);
 const iconMinimize = ref<string>('IconChevronLeftDuo');
 const iconSize = ref<Sizes>(Sizes.M)
@@ -131,15 +128,6 @@ const endEnterEvent = (e: any): void => {
         });
     }
 };
-
-onMounted(async () => {
-    const userRole = 'admin';
-    const items = await loadNavigationItems(userRole) || [];
-
-    navigationItems.value = [
-        ...items
-    ];
-});
 
 </script>
 

@@ -38,7 +38,7 @@
 
     transition: box-shadow var(--animationTime, 0s) ease-out,
                 background var(--animationTime, 0s) ease-out,
-                width var(--animationTime, 0s) ease-out var(--aniamtionDelay, 0);
+                width .2s ease-out var(--aniamtionDelay, 0);
 
     &:is(button) {
         border: none;
