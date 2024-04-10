@@ -1,28 +1,30 @@
 <template>
-  <picture class="base-icon">
-    <Transition
-      name="appear-icon"
-      mode="out-in"
-    >
-      <component
-        v-if="name !== null"
-        data-testID="ui-icon"
-        :is="asyncComponent"
-        :id="id"
-        :key="id"
-        :class="[`base-icon--is-${size}`]"
-      />
-    </Transition>
-  </picture>
+    <Suspense>
+      <picture class="base-icon">
+          <Transition
+            appear
+            name="appear-icon"
+            mode="out-in"
+          >
+            <component
+              v-if="name !== null"
+              data-testID="ui-icon"
+              :key="id"
+              :is="asyncComponent"
+              :id="id"
+              :class="[`base-icon--is-${size}`]"
+            />
+          </Transition>
+      </picture>
+    </Suspense>
 </template>
 <script lang="ts" setup>
-import { onMounted, type PropType, shallowRef, watch } from 'vue'
+import { onMounted, onUpdated, type PropType, shallowRef } from 'vue'
 import { Types, Sizes, type UniqueId } from './types'
 import { validateValueCollectionExists } from '@/components/utilities/validation/useValidation'
 
-onMounted(() => {
-  importIcon({ name: props.name })
-})
+onMounted(() => importIcon({ name: props.name }))
+onUpdated(() => importIcon({ name: props.name }))
 
 const asyncComponent = shallowRef<null | any>(null)
 const props = defineProps({
@@ -59,13 +61,6 @@ const props = defineProps({
     default: Sizes.M,
     validator: (prop: Sizes) => validateValueCollectionExists({ collection: Sizes, value: prop })
   }
-})
-
-watch(() => props.name, (_, newName) => {
-  if(!newName) return;
-  importIcon({ name: newName })
-}, {
-  deep: true
 })
 
 const importIcon = ({ name }: { name: string }): void => {

@@ -52,9 +52,7 @@ const Templates: Story = {
                     <BaseButton v-bind="args" @send="action">
                         <template #default>
                             {{ args.default }}
-                            <Suspense>
-                                <BaseIcon name="IconArrowCircleRight" type="arrow" size="S"/>
-                            </Suspense>
+                            <BaseIcon name="IconArrowCircleRight" type="arrow" size="S"/>
                         </template>
                     </BaseButton>
             </section>

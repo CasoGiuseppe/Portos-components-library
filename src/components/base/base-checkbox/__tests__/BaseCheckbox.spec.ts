@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest"
 import { mount } from "@vue/test-utils"
 import BaseCheckbox from "@/components/base/base-checkbox/BaseCheckbox.vue"
-import { Types, Sizes } from "@/components/base/base-checkbox/types"
+import { Sizes } from "@/components/base/base-checkbox/types"
 
 describe("BaseCheckbox component tests", () => {
     describe("On rendering component", () => {

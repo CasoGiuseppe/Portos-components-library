@@ -41,13 +41,11 @@ const Templates: Story = {
                     @action="action"
                 >
                     <template #icon>
-                        <Suspense>
-                            <BaseIcon
-                                name="IconArrowCircleRight"
-                                type="arrow"
-                                :size="args.collapsed ? 'M' : 'S'"
-                            />
-                        </Suspense>
+                        <BaseIcon
+                            name="IconArrowCircleRight"
+                            type="arrow"
+                            :size="args.collapsed ? 'M' : 'S'"
+                        />
                     </template>
                     <template #label>{{ args.label }}</template>
                 </NavigationItem>

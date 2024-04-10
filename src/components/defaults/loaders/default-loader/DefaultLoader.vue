@@ -1,8 +1,6 @@
 <template>
   <aside :id="id" class="default-loader">
-    <Suspense>
-      <BaseIcon name="IconCalendarAlarm" :type="Types.CALENDAR" :size="Sizes.M" />
-    </Suspense>
+    <BaseIcon name="IconCalendarAlarm" :type="Types.CALENDAR" :size="Sizes.M" />
     <!-- @slot Default slot laoding message -->
     <slot>wait a moment please...</slot>
   </aside>

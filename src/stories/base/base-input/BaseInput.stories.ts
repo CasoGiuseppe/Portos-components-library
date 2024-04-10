@@ -59,7 +59,7 @@ const Templates: Story = {
                     @update:modelValue="update"
                     @change="change"
                     @focus="focus"
-                    @send="changeInputState"
+                    @send="send"
                 >
                     <template #error>{{ args.error }}</template>
                     <template #label>{{ args.label }}</template>
@@ -76,7 +76,7 @@ const Templates: Story = {
             update: action('update'),
             change: action('change'),
             focus: action('focus'),
-            changeInputState: action('change'),
+            send: action('send'),
         }
     }),
 }

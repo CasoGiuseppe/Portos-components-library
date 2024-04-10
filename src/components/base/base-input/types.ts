@@ -6,3 +6,8 @@ export enum Types {
   TEXT = 'text',
   SEARCH = 'search'
 }
+
+export enum Icons {
+  PASSWORD = 'IconEditShow',
+  TEXT = 'IconEditHide',
+}

@@ -50,14 +50,12 @@ const Template: Story = {
                       'color': args.color
                     }"
                   >
-                    <Suspense>
-                      <BaseIcon
-                        id="${icon.token}"
-                        name="${icon.token}"
-                        type="${section.parent}"
-                        :size="args.size"
-                      />
-                    </Suspense>
+                    <BaseIcon
+                      id="${icon.token}"
+                      name="${icon.token}"
+                      type="${section.parent}"
+                      :size="args.size"
+                    />
                   </span>
               </li>
             `).join(""))()

@@ -28,7 +28,7 @@
                 :name="id"
                 :aria-required="required"
                 :aria-placeholder="placeholder"
-                :type="input"
+                :type="currentType"
                 :placeholder="placeholder"
                 :required="required ?? undefined"
                 :accept="accept ?? undefined"
@@ -47,13 +47,17 @@
                 @click="focus"
             />
             <button
-                v-if="submit"
+                v-if="useIcon"
                 data-testID="ui-input-submit"
                 class="base-input__submit"
                 :disabled="hasEmptyModel"
                 @click="submitAction"
             >
-                <slot name="submit" />
+                <BaseIcon
+                    :id="currentType"
+                    :name="currentUseIcon"
+                    :type="iconType.EDIT"
+                />
             </button>
         </section>
         <p
@@ -76,12 +80,15 @@
     </fieldset>
 </template>
 <script setup lang="ts">
-import { computed, useSlots, type PropType } from 'vue';
-import {  Types } from './types';
-import { validateValueCollectionExists } from '@/components/utilities/validation/useValidation';
+import { computed, onMounted, ref, useSlots, type PropType } from 'vue';
+import {  Types, Icons } from './types';
+import { validateValueCollectionExists } from '@ui/utilities/validation/useValidation';
+import BaseIcon from '@ui/base/base-icon/BaseIcon.vue';
+import { Types as iconType } from '@ui/base/base-icon/types';
+import { changePasswordVisibility } from './service';
 
 const value = defineModel('proxyValue')
-const { pattern, required } = defineProps({
+const { input, required, pattern, proxyValue } = defineProps({
     /**
      * Set the unique id of the ui input
      */
@@ -156,6 +163,14 @@ const { pattern, required } = defineProps({
      */
     maxLength: {
         type: Number as PropType<number>
+    },
+
+    /**
+     * Set max input length value
+     */
+     useIcon: {
+        type: Boolean as PropType<boolean>,
+        default: false
     }
     
 })
@@ -164,13 +179,16 @@ const slots = useSlots();
 const label = computed(() => !!slots['label']);
 const message = computed(() => !!slots['message']);
 const error = computed(() => !!slots['error']);
-const submit = computed(() => !!slots['submit']);
 
 const customEmits = defineEmits(['update:modelValue', 'change', 'focus', 'invalid', 'send']);
 const hasEmptyModel = computed(():boolean => {
     if(!value.value) return true
     return (value.value as string).length === 0
 });
+
+const currentUseIcon = computed(() => Icons[currentType.value.toUpperCase() as keyof typeof Icons])
+
+const currentType = ref<Types>(input);
 
 const updateValue = (payload: Event) => {
     const { value } = (payload.target as HTMLInputElement)
@@ -194,6 +212,9 @@ const invalidModel = (value: string): void => {
 const changeValue = (payload: Event) => customEmits('change', { target: payload.target });
 const focus = () => customEmits('focus')
 
-const submitAction = () => customEmits('send')
+const submitAction = () => {
+    currentType.value = changePasswordVisibility({ current: currentType.value })
+    customEmits('send', { value: proxyValue })
+}
 </script>
 <style src="./BaseInput.scss" lang="scss"></style>@/components/utilities/validation/useValidation

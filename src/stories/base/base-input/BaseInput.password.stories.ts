@@ -43,7 +43,6 @@ const meta = {
 export default meta;
 
 type Story = StoryObj<typeof BaseInput>;
-
 const Templates: Story = {
     render: (args, { updateArgs }) => ({
         components: { BaseInput, BaseIcon },
@@ -53,27 +52,16 @@ const Templates: Story = {
                 <Suspense>
                     <BaseInput
                         v-bind="args"
+                        useIcon
                         @invalid="setInvalid"
                         @update:modelValue="update"
                         @change="change"
                         @focus="focus"
-                        @send="changeInputState"
+                        @send="send"
                     >
                         <template #error>{{ args.error }}</template>
                         <template #label>{{ args.label }}</template>
                         <template #message>{{ args.message }}</template>
-                        <template #submit>
-                            <template v-if="args.input === 'text'">
-                                <Suspense>
-                                    <BaseIcon id="IconEditHide" name="IconEditHide" type="edit" />
-                                </Suspense>
-                            </template>
-                            <template v-else>
-                                <Suspense>
-                                    <BaseIcon id="IconEditHide" name="IconEditShow" type="edit" />
-                                </Suspense>
-                            </template>
-                        </template>
                     </BaseInput>
                 </Suspense>
             </section>
@@ -89,9 +77,7 @@ const Templates: Story = {
             update(value: string): void {
                 updateArgs({ ...args, proxyValue: value })
             },
-            changeInputState(): void {
-                updateArgs({ ...args, input: args.input === 'password' ? Types.TEXT : Types.PASSWORD })
-            }
+            send: action('send'),
         }
     }),
 }

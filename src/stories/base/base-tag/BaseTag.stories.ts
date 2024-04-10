@@ -37,10 +37,8 @@ const Templates: Story = {
         'gap' : '10px',
       }">
         <BaseTag v-bind="args" >
-          <Suspense>
-            <BaseIcon name="IconArrowCircleRight" type="arrow" size="S"/>
-          </Suspense>
-        {{args.default}}
+          <BaseIcon name="IconArrowCircleRight" type="arrow" size="S"/>
+          {{args.default}}
         </BaseTag>
       </section>
     `

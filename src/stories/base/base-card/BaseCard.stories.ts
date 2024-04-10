@@ -47,15 +47,11 @@ const Templates: Story = {
       </template>
       <template #tag>
         <BaseTag status="warning" id="tag-warning">
-          <Suspense>
-            <BaseIcon name="IconArrowCircleRight" type="arrow" size="S" />
-          </Suspense>
+          <BaseIcon name="IconArrowCircleRight" type="arrow" size="S" />
           Warning
         </BaseTag>
         <BaseTag status="damage" id="tag-damage">
-          <Suspense>
-            <BaseIcon name="IconArrowCircleRight" type="arrow" size="S" />
-          </Suspense>
+          <BaseIcon name="IconArrowCircleRight" type="arrow" size="S" />
           Damage
         </BaseTag>
       </template>

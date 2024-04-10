@@ -43,13 +43,11 @@ const Templates: Story = {
                     @submit="submit"
                 >
                     <template #icon>
-                        <Suspense>
-                            <BaseIcon
-                                name="IconArrowCircleRight"
-                                type="arrow"
-                                :size="args.collapsed ? 'M' : 'S'"
-                            />
-                        </Suspense>
+                        <BaseIcon
+                            name="IconArrowCircleRight"
+                            type="arrow"
+                            :size="args.collapsed ? 'M' : 'S'"
+                        />
                     </template>
                     <template #label>{{ args.label }}</template>
                     <template #child>{{ args.child }}</template>

@@ -1,8 +1,9 @@
 .base-input {
     $baseinput: &;
-    --animationTime: .4s;
-
+    
     &__fieldset {
+        --animationTime: .4s;
+
         display: flex;
         flex-direction: column;
         gap: var(--spacing-30, 0);
@@ -54,13 +55,10 @@
         transition: border var(--animationTime, 0s) ease-out,
                     box-shadow var(--animationTime, 0s) ease-out;
 
-        @media (hover) {
-            &:focus-within {
-                &:not(:has(input:hover)) {
-                    box-shadow:
-                        0 0 0 2px var(--color-neutral-10, #000),
-                        0 0 0 4px var(--color-outline, #000);
-                }
+        &:focus-within {
+            &:not(:has(input:hover)) {
+                box-shadow: 0 0 0 2px var(--color-neutral-10, #000),
+                            0 0 0 4px var(--color-outline, #000) 
             }
         }
 

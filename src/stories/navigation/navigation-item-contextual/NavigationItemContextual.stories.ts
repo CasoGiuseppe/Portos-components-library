@@ -35,13 +35,9 @@ const Templates: Story = {
     template: `
       <section style="display: grid; gap: 10px; grid-template-columns: repeat(6, 1fr)">
       <NavigationItemContextual v-bind="args" @send="action">
-          <Suspense>
-            <BaseIcon name="IconArrowCircleRight" type="arrow" :size="'S'" />
-          </Suspense>
+          <BaseIcon name="IconArrowCircleRight" type="arrow" :size="'S'" />
           {{ args.default }}
-          <Suspense>
-            <BaseIcon name="IconArrowCircleLeft" type="arrow" :size="'S'" />
-          </Suspense>
+          <BaseIcon name="IconArrowCircleLeft" type="arrow" :size="'S'" />
       </NavigationItemContextual>
     </section>`,
     methods: { action: action('submitted') }

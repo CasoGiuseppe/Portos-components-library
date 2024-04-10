@@ -50,7 +50,7 @@ const Templates: Story = {
             >
               <template #label> Slot label </template>
               <template #clear>
-                <Suspense><BaseIcon id="IconEditCleanCircle" name="IconEditCleanCircle" type="edit" /></Suspense>
+                <BaseIcon id="IconEditCleanCircle" name="IconEditCleanCircle" type="edit" />
               </template>
               <template #error>
                 {{args.error}}
