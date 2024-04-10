@@ -2,11 +2,7 @@
     <label
         :class="[
             'base-checkbox',
-            `base-checkbox--is-${size}`,
-            `base-checkbox--is-${status}`,
-            `${variant ? `base-checkbox--is-ALT` : ''}`,
-            { 'base-checkbox--is-INDETERMINATE': indeterminate }
-            //`${isChecked || indeterminate ? `base-checkbox--is-${status}-checked` : `base-checkbox--is-${status}`}`
+            `base-checkbox--is-${size}`
         ]"
         :title="label"
         :aria-label="label"
@@ -18,6 +14,8 @@
             type="checkbox"
             :checked="active"
             :indeterminate="indeterminate"
+            :invalid="invalid"
+            :variant="variant"
             :disabled="disabled"
             :aria-disabled="disabled"
             style="display: none"
@@ -27,7 +25,7 @@
             @keyup.space="setChangeByKey"
             class="base-checkbox__square"
         >
-            <span v-if="isChecked" class="base-checkbox--is-checked-icon">
+            <!-- <span v-if="isChecked" class="base-checkbox--is-checked-icon">
                 <Suspense>
                     <BaseIcon
                         :size="size"
@@ -47,7 +45,7 @@
                         :size="size"
                     ></BaseIcon>
                 </Suspense>
-            </span>
+            </span> -->
         </button>
         <slot />
     </label>
@@ -56,9 +54,6 @@
 import { ref, type PropType } from "vue"
 import { type UniqueId, Sizes } from "./types"
 import { validateValueCollectionExists } from "@/components/utilities/validation/useValidation"
-import BaseIcon from "../base-icon/BaseIcon.vue"
-import { Types as IconType } from "@/components/base/base-icon/types"
-import { Types } from "./types"
 
 const { active, disabled, indeterminate } = defineProps({
     /**
@@ -113,13 +108,11 @@ const { active, disabled, indeterminate } = defineProps({
         default: "component label"
     },
     /**
-     * Set the status for the checkbox square (default, error)
+     * Set the invalid status
      */
-    status: {
-        type: String as PropType<Types>,
-        default: Types.DEFAULT,
-        validator: (prop: Types) =>
-            validateValueCollectionExists({ collection: Types, value: prop })
+    invalid: {
+        type: Boolean as PropType<boolean>,
+        default: false
     }
 })
 
