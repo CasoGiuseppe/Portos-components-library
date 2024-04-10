@@ -2,9 +2,10 @@
   <!-- Poor Draco Malfoy, never was understood enought-->
   <section class="slider">
     <button @click="moveTo({ type: 'prev' })" class="slider--is-prev">
-      <Suspense>
+      TEST
+      <!-- <Suspense>
         <BaseIcon id="card" :type="Types.CHEVRON" name="IconChevronLeftM" :size="Sizes.S" />
-      </Suspense>
+      </Suspense> -->
     </button>
 
     <section class="slider__wrapper">
@@ -21,6 +22,7 @@
     </button>
   </section>
 </template>
+
 <script setup lang="ts">
 import useIntersectionObserver from '@/shared/composables/useIntersectionObserver'
 import { onMounted, ref } from 'vue'
@@ -58,12 +60,8 @@ const updateMovePossibility = () => {
   canMoveNext.value = !!currentHTMLNode.value.nextElementSibling
 }
 
-const getNextTargetPosition = ({ current }: { current: HTMLElement }): number => {
-  currentHTMLNode.value = current
-  return current.offsetLeft
-}
-
 const moveTo = ({ type = 'next' }: { type?: string }): void => {
+  console.log('1) move to', currentHTMLNode.value)
   if ((type === 'prev' && !canMovePrev.value) || (type === 'next' && !canMoveNext.value)) return
   if (!list.value) return
   if (!currentHTMLNode.value) return
@@ -76,11 +74,6 @@ const moveTo = ({ type = 'next' }: { type?: string }): void => {
   updateMovePossibility()
 }
 
-const setNewPositionVariable = ({ position }: { position: number }): void => {
-  if (!list.value) return
-  list.value.style.setProperty('--slider-position', `${position?.toString()}px` || '0')
-}
-
 const getNextPrevSibling = ({
   element,
   type = 'next'
@@ -89,10 +82,23 @@ const getNextPrevSibling = ({
   type?: string
 }): HTMLElement => {
   const target = type === 'next' ? element.nextElementSibling : element.previousElementSibling
+  console.log('2.2) => sibling', target)
   const HTMLTarget = target as HTMLElement
   currentHTMLNode.value = HTMLTarget
 
   return HTMLTarget
+}
+
+const getNextTargetPosition = ({ current }: { current: HTMLElement }): number => {
+  console.log('3) current.OFFSETLEFT', current.offsetLeft)
+  currentHTMLNode.value = current
+  return current.offsetLeft
+}
+
+const setNewPositionVariable = ({ position }: { position: number }): void => {
+  if (!list.value) return
+  list.value.style.setProperty('--slider-position', `${position?.toString()}px` || '0')
+  console.log('4) set new position', list.value, position)
 }
 
 onMounted(() => {
@@ -107,8 +113,12 @@ onMounted(() => {
     currentHTMLNode.value = childElements[0]
   }
 
-  currentHTMLNode.value = listCollection.firstChild as HTMLElement
+  console.log(listCollection)
+
+  //currentHTMLNode.value = listCollection.firstChild as HTMLElement
+  //console.log(currentHTMLNode.value.offsetLeft)
   childElements.forEach((element) => {
+    console.log(element.offsetLeft, element.offsetWidth)
     createObserver({
       element: element,
       options: {
