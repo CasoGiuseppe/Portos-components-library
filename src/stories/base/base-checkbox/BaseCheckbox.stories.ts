@@ -26,8 +26,6 @@ const meta: Meta = {
         variant: false,
         indeterminate: false,
         invalid: false,
-        // Agrega un handler para el evento 'checked' usando 'action' de Storybook
-        onChecked: action("checked")
     }
 } as Meta<typeof BaseCheckbox>
 
@@ -36,7 +34,7 @@ export default meta
 type Story = StoryObj
 
 const Templates: Story = {
-    render: (args) => ({
+    render: (args, { updateArgs }) => ({
         components: { BaseCheckbox },
         setup() {
             return { args }
@@ -50,12 +48,16 @@ const Templates: Story = {
           'background-color' : args.variant === true ? '#002C5F' : 'white'
         }"
       >
-        <BaseCheckbox v-bind="args">
+        <BaseCheckbox v-bind="args" @checked="setActiveState">
           Label checkbox
         </BaseCheckbox>
       </section>
       `,
-        methods: { action: action("checked") }
+      methods: {
+            setActiveState(value: boolean): void {
+                updateArgs({ ...args, active: value })
+            }
+        }
     })
 }
 

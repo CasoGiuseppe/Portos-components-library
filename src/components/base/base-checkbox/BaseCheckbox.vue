@@ -94,14 +94,12 @@ const { active, disabled, indeterminate } = defineProps({
     }
 })
 
-const isChecked = ref(active)
 const checkbox = ref<HTMLInputElement | null>(null)
 const emits = defineEmits(["checked"])
 
 const handleChange = (payload: Event) => {
     const { checked } = payload.target as HTMLInputElement
-    isChecked.value = checked
-    emits("checked", { cheked: checked, indeterminate: indeterminate })
+    emits("checked", checked)
 }
 
 const setChangeByKey = () => {
@@ -109,12 +107,8 @@ const setChangeByKey = () => {
     if (!checkbox.value) return
     const { checked } = checkbox.value
     checkbox.value.checked = !checked
-    isChecked.value = checkbox.value.checked
 
-    emits("checked", {
-        checked: checkbox.value.checked,
-        indeterminate: indeterminate
-    })
+    emits("checked", checked )
 }
 </script>
 <style src="./BaseCheckbox.scss" lang="scss"></style>
