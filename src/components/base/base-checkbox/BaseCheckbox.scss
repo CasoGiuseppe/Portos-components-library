@@ -8,6 +8,11 @@
     --square-border: 1px solid var(--color-neutral-70, #000);
     --square-focus: 0 0 0 2px var(--color-neutral-10, #000),
                     0 0 0 4px var(--color-outline, #000);
+    --check-rotate: rotate(45deg);
+    --check-height: 55%;
+    --check-width: 30%;
+    --check-border-bottom: 2px solid currentColor;
+    --check-border-right: 2px solid currentColor;
 
     @include text-body-m--regular;
     align-items: center;
@@ -20,7 +25,8 @@
     &:has(input:checked) {
         #{$basecheckbox}__square {
             &::after {
-                content: 'c';
+                content: '';
+                transform: translateY(-50%) translateY(-2px) var(--check-rotate);
             }
         }
     }
@@ -28,7 +34,13 @@
     &:has(input:indeterminate) {
         #{$basecheckbox}__square {
             &::after {
-                content: 'i';
+                --check-border-right: none;
+                --check-rotate: rotate(0);
+                --check-width: 60%;
+                --check-height: 0px;
+
+                content: '';
+                transform: translateY(-1px) var(--check-rotate);
             }
         }
     }
@@ -116,6 +128,7 @@
         align-items: center;
         display: flex;
         justify-content: center;
+        position: relative;
 
         background-color: var(--square-background);
         border-radius: var(--radius-200, 4px);
@@ -131,6 +144,16 @@
 
         &::after {
             color: inherit;
+            display: inline-block;
+            height: var(--check-height);
+            position: absolute;
+            width: var(--check-width);
+            top: 50%;
+
+            border-bottom: var(--check-border-bottom);
+            border-right: var(--check-border-right);
+
+            transform: var(--check-rotate);
         }
     }
 

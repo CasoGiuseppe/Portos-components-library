@@ -24,29 +24,7 @@
             @keyup.enter="setChangeByKey"
             @keyup.space="setChangeByKey"
             class="base-checkbox__square"
-        >
-            <!-- <span v-if="isChecked" class="base-checkbox--is-checked-icon">
-                <Suspense>
-                    <BaseIcon
-                        :size="size"
-                        :type="IconType.FEEDBACK"
-                        :name="'IconFeedbackCheck'"
-                    ></BaseIcon>
-                </Suspense>
-            </span>
-            <span
-                v-if="indeterminate && !isChecked"
-                class="base-checkbox--is-indeterminate-icon"
-            >
-                <Suspense>
-                    <BaseIcon
-                        :type="IconType.EDIT"
-                        :name="'IconEditRemoveMinus'"
-                        :size="size"
-                    ></BaseIcon>
-                </Suspense>
-            </span> -->
-        </button>
+        />
         <slot />
     </label>
 </template>
