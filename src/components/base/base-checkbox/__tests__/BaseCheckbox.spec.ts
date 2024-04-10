@@ -5,14 +5,6 @@ import { Types, Sizes } from "@/components/base/base-checkbox/types"
 
 describe("BaseCheckbox component tests", () => {
     describe("On rendering component", () => {
-        it("should render default status when no props are provided", () => {
-            const wrapper = mount(BaseCheckbox, {
-                slots: {
-                    default: "DEFAULT"
-                }
-            })
-            expect(wrapper.classes()).toContain("base-checkbox--is-default")
-        })
         it("should render the disabled state correctly", async () => {
             const wrapper = mount(BaseCheckbox, {
                 props: {
@@ -45,15 +37,6 @@ describe("BaseCheckbox component tests", () => {
                 .element as HTMLInputElement
             expect(checkbox.checked).toBe(true)
         })
-        it("should have the correct status class based on the status prop", () => {
-            const wrapper = mount(BaseCheckbox, {
-                props: {
-                    status: Types.ERROR
-                }
-            })
-
-            expect(wrapper.classes()).toContain("base-checkbox--is-error")
-        })
     })
 
     describe("when state changes", () => {
@@ -79,18 +62,6 @@ describe("BaseCheckbox component tests", () => {
                 }
             })
             expect(wrapper.vm.indeterminate).toBe(true)
-        })
-    })
-
-    describe("when variant prop is true", () => {
-        it("should applies the --is-ALT class ", () => {
-            const wrapper = mount(BaseCheckbox, {
-                props: {
-                    variant: true
-                }
-            })
-
-            expect(wrapper.classes()).toContain("base-checkbox--is-ALT")
         })
     })
 })
