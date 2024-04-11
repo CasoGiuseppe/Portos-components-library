@@ -11,3 +11,11 @@ export enum Icons {
   PASSWORD = 'IconEditShow',
   TEXT = 'IconEditHide',
 }
+
+export enum Emits {
+  UPDATE = 'update:modelValue',
+  CHANGE = 'change',
+  FOCUS = 'focus',
+  INVALID = 'invalid',
+  SEND ='send'
+}

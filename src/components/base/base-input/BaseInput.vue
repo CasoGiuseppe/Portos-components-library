@@ -47,7 +47,7 @@
                 @click="focus"
             />
             <button
-                v-if="hasIconTrigger"
+                v-if="typeAllowedIcon"
                 data-testID="ui-input-submit"
                 class="base-input__submit"
                 :disabled="hasEmptyModel"
@@ -80,15 +80,15 @@
     </fieldset>
 </template>
 <script setup lang="ts">
-import { computed, reactive, ref, useSlots, type PropType } from 'vue';
+import { computed, useSlots, type PropType } from 'vue';
 import {  Types, Icons } from './types';
 import { validateValueCollectionExists } from '@ui/utilities/validation/useValidation';
 import BaseIcon from '@ui/base/base-icon/BaseIcon.vue';
 import { Types as iconType } from '@ui/base/base-icon/types';
-import { changePasswordVisibility } from './service';
+import useCustomBehaviours from './useCustomBehaviours';
 
 const value = defineModel('proxyValue')
-const { input, required, pattern, proxyValue } = defineProps({
+const { input, required, pattern } = defineProps({
     /**
      * Set the unique id of the ui input
      */
@@ -171,18 +171,16 @@ const label = computed(() => !!slots['label']);
 const message = computed(() => !!slots['message']);
 const error = computed(() => !!slots['error']);
 const currentUseIcon = computed(() => Icons[currentType.value.toUpperCase() as keyof typeof Icons])
-const hasIconTrigger = computed(() => allowIcon.includes(Icons[input.toUpperCase() as keyof typeof Icons]));
 
-const allowIcon = reactive<Icons[]>([Icons.PASSWORD]);
 
 const customEmits = defineEmits(['update:modelValue', 'change', 'focus', 'invalid', 'send']);
+const { currentType, behavioursType, typeAllowedIcon } = useCustomBehaviours({ customEmits, type: input });
+
 const hasEmptyModel = computed(():boolean => {
     if(!value.value) return true
     return (value.value as string).length === 0
 });
 
-
-const currentType = ref<Types>(input);
 
 const updateValue = (payload: Event) => {
     const { value } = (payload.target as HTMLInputElement)
@@ -205,10 +203,6 @@ const invalidModel = (value: string): void => {
 
 const changeValue = (payload: Event) => customEmits('change', { target: payload.target });
 const focus = () => customEmits('focus')
-
-const submitAction = () => {
-    currentType.value = changePasswordVisibility({ current: currentType.value })
-    customEmits('send', { value: proxyValue })
-}
+const submitAction = () => behavioursType[input]({ value: value.value })
 </script>
 <style src="./BaseInput.scss" lang="scss"></style>@/components/utilities/validation/useValidation
