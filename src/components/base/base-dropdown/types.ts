@@ -1,14 +1,8 @@
-import { type Names, Types } from '@/components/base/base-icon/types';
 
-export interface IDropdownOption {
-	label: string
-	icon: {
-	  name: Names
-	  type: Types
-	}
-}
+import { type IListOption } from '@/components/base/base-list/types';
 
 export interface IBaseDropdownComponent {
 	placeholder?: string
-	label?: string
+	label?: string,
+	selectedOption?: IListOption
 }

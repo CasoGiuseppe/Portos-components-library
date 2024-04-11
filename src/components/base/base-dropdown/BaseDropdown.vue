@@ -4,9 +4,13 @@
 		:data-active="isActive"
 		:data-error="hasError"
 		:data-disabled="isDisabled"
+		v-click-outside="toggleDropdown"
 	>
 		<div class="base-dropdown--header">
-			<slot name="header" :label="label" />
+			<slot
+				name="header"
+				:label="label"
+			/>
 		</div>
 
 		<button
@@ -24,16 +28,11 @@
 			<i class="base-dropdown--button-icon" />
 		</button>
 
-		<ul
-			v-if="isActive"
-			class="base-dropdown--options"
-		>
-			<slot
-				name="options"
-				:selectOption="selectOption"
-				:selectedOption="selectedOption?.label"
-			/>
-		</ul>
+		<slot
+			name="options"
+			:isActive="isActive"
+			:toggleDropdown="toggleDropdown"
+		/>
 
 		<div class="base-dropdown--footer">
 			<slot
@@ -45,32 +44,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
-import {
-	type IDropdownOption,
-	type IBaseDropdownComponent
-} from './types';
+import { type IBaseDropdownComponent } from './types';
 
-const selectedOption = ref<IDropdownOption>();
 const isActive = ref<boolean>(false);
 const hasError = ref<boolean>(false);
 const isDisabled = ref<boolean>(false);
 const error = ref<string>('Error text');
 
-withDefaults(defineProps<IBaseDropdownComponent>(), {
-  placeholder: 'Select your option',
+const props = withDefaults(defineProps<IBaseDropdownComponent>(), {
+  	placeholder: 'Select your option',
 	label: ''
+});
+
+watch(() => props.selectedOption, newSelectedOption => {
+	if (newSelectedOption && isActive) {
+		toggleDropdown();
+	}
 });
 
 const toggleDropdown = () => {
 	isActive.value = !isActive.value
-};
-
-const selectOption = (option: IDropdownOption) => {
-	selectedOption.value = option;
-
-	toggleDropdown();
 };
 </script>
 

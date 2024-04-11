@@ -1,0 +1,169 @@
+.base-checkbox {
+    $basecheckbox: &;
+    --animationTime: 0.4s;
+    --label-color: var(--color-neutral-70, #000);
+    --square-width: var(--spacing-60, 24px);
+    --square-background: var(--color-neutral-10, #000);
+    --square-color: var(--color-neutral-10, #000);
+    --square-border: 1px solid var(--color-neutral-70, #000);
+    --square-focus: 0 0 0 2px var(--color-neutral-10, #000),
+                    0 0 0 4px var(--color-outline, #000);
+    --check-rotate: rotate(45deg);
+    --check-height: 55%;
+    --check-width: 30%;
+    --check-border-bottom: 2px solid currentColor;
+    --check-border-right: 2px solid currentColor;
+
+    @include text-body-m--regular;
+    align-items: center;
+    display: inline-flex;
+    gap: var(--spacing-30, 0);
+    color: var(--label-color);
+
+    transition: color var(--animationTime, 0s) ease-out;
+    
+    &:has(input:checked) {
+        #{$basecheckbox}__square {
+            &::after {
+                content: '';
+                transform: translateY(-50%) translateY(-2px) var(--check-rotate);
+            }
+        }
+    }
+
+    &:has(input:indeterminate) {
+        #{$basecheckbox}__square {
+            &::after {
+                --check-border-right: none;
+                --check-rotate: rotate(0);
+                --check-width: 60%;
+                --check-height: 0px;
+
+                content: '';
+                transform: translateY(-1px) var(--check-rotate);
+            }
+        }
+    }
+
+    &:has(input[variant=true]) {
+       --label-color: var(--color-neutral-10, #000);
+    }
+
+    &:not(:has(input:disabled)) {
+        cursor: pointer;
+
+        // checked state
+        &:has(input:checked),
+        &:has(input:indeterminate) {
+            --square-background: var(--color-primary-40, #000);
+
+            &:has(input[variant=true]) {
+                --square-background: var(--color-primary-20, #000);
+                --square-color: var(--color-primary-60, #000);
+            }
+        }
+
+        @media (hover) {
+            &:hover {
+                #{$basecheckbox}__square {
+                    box-shadow: var(--shadow-100);
+                }
+            }
+        }
+
+        &:focus-within {
+            --square-border: none;
+
+            &:has(input[variant=true]) {
+                --square-focus: 0 0 0 2px var(--color-outline, #000),
+                                0 0 0 4px var(--color-neutral-10, #000);
+            }
+
+            #{$basecheckbox}__square {
+                box-shadow: var(--square-focus);
+            }
+        }
+
+        &:has(input[invalid=true]) {
+            --square-border: 1px solid var(--color-error-30, #000);
+            
+            &:has(input:checked),
+            &:has(input:indeterminate) {
+                --square-background: var(--color-error-30, #000);
+
+                &:has(input[variant=true]) {
+                    --square-color: var(--color-primary-60, #000);
+                }
+            }
+        }
+    }
+
+    &:has(input:disabled) {
+        --square-background: var(--color-neutral-20, #000);
+        --square-border: 1px solid var(--color-neutral-50, #000);
+        --label-color: var(--color-neutral-60, #000);
+
+        &:has(input[variant=true]) {
+            --label-color: var(--color-neutral-40, #000);
+        }
+
+        &:has(input:checked),
+        &:has(input:indeterminate) {
+            --square-background: var(--color-neutral-50, #000);
+
+            &:has(input[variant=true]) {
+                --square-background: var(--color-neutral-50, #000);
+                --square-border: 1px solid var(--color-neutral-50, #000);
+                --square-color: var(--color-neutral-70, #000);
+                --label-color: var(--color-neutral-40, #000);
+            }
+        }
+    }
+
+    &__square {
+        aspect-ratio: 1/1;
+        width: var(--square-width);
+        pointer-events: none;
+
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        position: relative;
+
+        background-color: var(--square-background);
+        border-radius: var(--radius-200, 4px);
+        border: var(--square-border);
+        color: var(--square-color);
+
+        transition: background var(--animationTime, 0s) ease-out,
+                    box-shadow var(--animationTime, 0s) ease-out;
+
+        #{$basecheckbox}--is-S & {
+            --square-width: calc(var(--spacing-50) + 4px)
+        }
+
+        &::after {
+            color: inherit;
+            display: inline-block;
+            height: var(--check-height);
+            position: absolute;
+            width: var(--check-width);
+            top: 50%;
+
+            border-bottom: var(--check-border-bottom);
+            border-right: var(--check-border-right);
+
+            transform: var(--check-rotate);
+        }
+    }
+
+    &--is {
+        &-M {
+            @include text-body-m--regular;
+        }
+
+        &-S {
+            @include text-body-s--regular;
+        }
+    }
+}

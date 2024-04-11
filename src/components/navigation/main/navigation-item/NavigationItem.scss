@@ -113,8 +113,8 @@
 
     [data-collapsed = "true"] & {
         align-items: center;
-        aspect-ratio: 1/1;
         display: flex;
+        height: var(--spacing-100);
         width: var(--spacing-100);
         justify-content:center;
 

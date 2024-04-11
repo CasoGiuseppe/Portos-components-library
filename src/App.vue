@@ -1,5 +1,6 @@
 <template>
-  <BaseDropDown
+  <BaseDropdown
+    :selected-option="selectedOption"
     placeholder="Select your option (x)"
     label="Label"
   >
@@ -14,32 +15,12 @@
       />
     </template>
 
-    <template #options="{ selectOption, selectedOption }">
-      <li
-        v-for="(option, index) in options"
-        :key="option.label"
-        :class="[
-          'base-dropdown--options-item',
-          selectedOption === option.label ? 'base-dropdown--options-item-is-selected' : '',
-        ]"
-        :ref="index === activeIndex ? 'activeOption' : ''"
-        @click="selectOption(option)"
-        @keyup.enter="selectOption(option)"
-        @keydown.arrow-up.prevent="handleArrowUp"
-        @keydown.arrow-down.prevent="handleArrowDown"
-        @keydown.tab.prevent="handleArrowDown"
-        tabindex="0"
-      >
-        <BaseIcon
-          :name="option.icon.name"
-          :type="option.icon.type"
-        />
-        <p v-text="option.label" />
-        <i
-          v-if="selectedOption === option.label"
-          class="base-dropdown--options-item-check"
-        />
-			</li>
+    <template #options="{ isActive }">
+      <BaseList
+        v-show="isActive"
+        :options="options"
+        @select="selectOption"
+      />
     </template>
     
     <template #footer="{ error }">
@@ -50,21 +31,24 @@
       />
       <p v-text="error" />
     </template>
-  </BaseDropDown>
+  </BaseDropdown>
 </template>
 
 <script setup lang="ts">
-import { nextTick, ref } from 'vue';
+import { ref } from 'vue';
 
-import BaseDropDown from '@/components/base/base-dropdown/BaseDropdown.vue';
-import BaseIcon from '@/components/base/base-icon/BaseIcon.vue';
-import { Types, Sizes } from '@/components/base/base-icon/types';
-import { type IDropdownOption } from '@/components/base/base-dropdown/types';
+import BaseDropdown from '@/components/base/base-dropdown/BaseDropdown.vue';
+import BaseList from '@/components/base/base-list/BaseList.vue';
+import { Sizes, Types } from './components/base/base-icon/types';
+import { type IListOption } from '@/components/base/base-list/types';
 
-const activeIndex = ref<number>(-1);
-const activeOption = ref<HTMLCollectionOf<HTMLElement> | null>(null);
+const selectedOption = ref<IListOption>();
 
-const options: IDropdownOption[] = [
+const selectOption = (option: IListOption) => {
+  selectedOption.value = option;
+};
+
+const options: IListOption[] = [
   {
     label: 'Option 1',
     icon: {
@@ -108,34 +92,4 @@ const options: IDropdownOption[] = [
     }
   }
 ];
-
-const focusActiveOption = () => {
-  nextTick(() => {
-    activeOption?.value?.[0].focus();
-  }); 
-}
-
-const handleArrowUp = (event: KeyboardEvent) => {
-  event.preventDefault();
-
-  activeIndex.value > 0
-    ? (activeIndex.value--)
-    : (activeIndex.value = options.length - 1);
-
-  focusActiveOption();
-};
-
-const handleArrowDown = (event: KeyboardEvent) => {
-  event.preventDefault();
-  
-  if (activeIndex.value < 0) {
-    activeIndex.value = 0;
-  }
-
-  activeIndex.value < options.length - 1
-    ? (activeIndex.value++)
-    : (activeIndex.value = 0);
-
-  focusActiveOption();
-};
 </script>
