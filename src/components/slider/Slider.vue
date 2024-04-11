@@ -3,31 +3,23 @@
     <button @click="moveTo({ type: 'prev' })" class="slider--is-prev">prev</button>
     <section class="slider__wrapper">
       <ul class="slider__list" ref="list">
-        <li class="slider__item small">
+        <li class="slider__item">
           <NavigationItemContextual>test1</NavigationItemContextual>
         </li>
-        <li class="slider__item big">
+        <li class="slider__item">
+          <NavigationItemContextual>tes 2 2 2 2ta sdf sdf sdf</NavigationItemContextual>
+        </li>
+        <li class="slider__item">
           <NavigationItemContextual>tes 2 2 2 2t</NavigationItemContextual>
         </li>
-        <li class="slider__item small">
-          <div>
-            <NavigationItemContextual>tes 2 2 2 2t</NavigationItemContextual>
-          </div>
+        <li class="slider__item">
+          <NavigationItemContextual>tes 2 2 2 2tsd sdf sdf </NavigationItemContextual>
         </li>
-        <li class="slider__item medium">
-          <div>
-            <NavigationItemContextual>tes 2 2 2 2t</NavigationItemContextual>
-          </div>
+        <li class="slider__item">
+          <NavigationItemContextual>tes 2 2 2 2tsdf sfd </NavigationItemContextual>
         </li>
-        <li class="slider__item small">
-          <div>
-            <NavigationItemContextual>tes 2 2 2 2t</NavigationItemContextual>
-          </div>
-        </li>
-        <li class="slider__item medium">
-          <div>
-            <NavigationItemContextual>tes 2 2 2 2t</NavigationItemContextual>
-          </div>
+        <li class="slider__item">
+          <NavigationItemContextual>tes 2 2 2 2t</NavigationItemContextual>
         </li>
       </ul>
     </section>
