@@ -46,14 +46,14 @@ const Templates: Story = {
                 'background-color' : args.variant === true ? '#002C5F' : 'white'
             }"
         >  
-            <BaseToggle v-bind="args" @checked="action">
+            <BaseToggle v-bind="args" @checked="setActiveState">
                 {{ args.default }}
             </BaseToggle>
           </section>
       `,
         methods: {
             setActiveState(value: boolean): void {
-              updateArgs({ ...args, checked: value })
+              updateArgs({ ...args, active: value })
             }
         }
     })

@@ -11,10 +11,11 @@ $map-gaps: (
     @if($breakpoint == 0) {
         @content;
     } @else {
-        @media screen and (#{$min-or-max}-width: $breakpoint * 1px) {
-        @content;
-        }
-    }
+      $width-value: $breakpoint * 1px;
+      @media screen and (#{$min-or-max}-width: $width-value) {
+          @content;
+      }
+  }
 }
 
 @mixin create-grid-classes($modifier, $grid-cols, $breakpoint) {

@@ -9,7 +9,7 @@ export default function useResizeObserver({ action } : { action?: (e:any) => any
   const _settingObserver = () : ResizeObserver => {
     const observerEvent = new ResizeObserver(async (mutations: any) => {
         for(const mutation of mutations) {
-          if(action) action(mutation.contentRect)
+          if(action) action(mutation)
         }
     });
 

@@ -35,6 +35,10 @@ export default [
                 token: 'IconArrowRightMD',
                 copy: '<IconAsync name=IconArrowRightMD type=arrow />'
             },
+            {
+                token: 'IconArrowLeftRight',
+                copy: '<IconAsync name=IconArrowLeftRight type=arrow />'
+            },
         ]
     },
     {
@@ -306,6 +310,10 @@ export default [
             {
                 token: 'IconFileStopCircle',
                 copy: '<IconAsync name=IconFileStopCircle type=file />'
+            },
+            {
+                token: 'IconFileBilling',
+                copy: '<IconAsync name=IconFileBilling type=file />'
             }
         ]
     },
@@ -360,7 +368,11 @@ export default [
             {
                 token: 'IconLocationMapPin',
                 copy: '<IconAsync name=IconLocationMapPin type=location />'
-            }
+            },
+            {
+                token: 'IconLocationUnit',
+                copy: '<IconAsync name=IconLocationUnit type=location />'
+            },
         ]
     },
     {
@@ -462,6 +474,10 @@ export default [
             {
                 token: 'IconSystemWindowClose',
                 copy: '<IconAsync name=IconSystemWindowClose type=system />'
+            },
+            {
+                token: 'IconSystemConfiguration',
+                copy: '<IconAsync name=IconSystemConfiguration type=system />'
             }
         ]
     },
@@ -476,7 +492,21 @@ export default [
             {
                 token: 'IconUserUserCircle',
                 copy: '<IconAsync name=IconUserUserCircle type=user />'
+            },
+            {
+                token: 'IconUserUserCardId',
+                copy: '<IconAsync name=IconUserUserCardId type=user />'
             }
+        ]
+    },
+    {
+        area: 'Placeholder',
+        parent: 'placeholder',
+        items: [
+            {
+                token: 'IconPlaceholderBase',
+                copy: '<IconAsync name=IconPlaceholderBase type=placeholder />'
+            },
         ]
     }
 ];

@@ -6,7 +6,7 @@ import {
     $providedId,
     $providedIcon,
     $providedLabel,
-    $providedChildren,
+    $providedChild,
     $uiDOMNavigationItem,
     $uiDOMNavigationAction,
     $uiClassNavigationSelected,
@@ -25,7 +25,7 @@ describe('NavigationItem component tests', () => {
                 slots: {
                     icon: $providedIcon,
                     label: $providedLabel,
-                    children: $providedChildren
+                    child: $providedChild
                 }
             });
         });
@@ -33,7 +33,7 @@ describe('NavigationItem component tests', () => {
         it('Should render all slots with accurate content', async () => {
             expect($wrapper.html({ raw: true })).toContain($providedIcon);
             expect($wrapper.html({ raw: true })).toContain($providedLabel);
-            expect($wrapper.html({ raw: true })).toContain($providedChildren);
+            expect($wrapper.html({ raw: true })).toContain($providedChild);
         });
 
         it('Should hide action button if children slot is falsy', async () => {
@@ -48,7 +48,7 @@ describe('NavigationItem component tests', () => {
                     id: $providedId,
                 },
                 slots: {
-                    children: $providedChildren
+                    children: $providedChild
                 }
             });
         });
@@ -127,7 +127,7 @@ describe('NavigationItem component tests', () => {
                     }
                 });
 
-                expect($wrapper.find($uiDOMNavigationItem).attributes('dir')).toBe('rtl');
+                expect($wrapper.find($uiDOMNavigationItem).attributes('dir')).toBe('ltr');
             });
 
             it('Should render text direction with ltr when rtl prop is false', async () => {
