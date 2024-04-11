@@ -34,6 +34,13 @@ import NavigationItemContextual from '../navigation/contextual/navigation-item/N
 const list = ref<HTMLElement | null>(null)
 const currentHTMLNode = ref<HTMLElement | null>(null)
 
+withDefaults(defineProps<{ items: any[] }>(), {
+  /**
+   * Set slider items list content
+   */
+  items: () => []
+})
+
 const { createObserver } = useIntersectionObserver({
   action: (e: any) => {
     const { isIntersecting } = e
