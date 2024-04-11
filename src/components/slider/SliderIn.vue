@@ -1,22 +1,22 @@
 <template>
-  <!-- Poor Draco Malfoy, never was understood enought-->
   <section class="slider">
     <button @click="moveTo({ type: 'prev' })" class="slider--is-prev">
       <Suspense>
-        <BaseIcon id="card" :type="Types.CHEVRON" name="IconChevronLeftM" :size="Sizes.S" />
+        <BaseIcon id="sliderPrev" :type="Types.CHEVRON" name="IconChevronLeftM" :size="Sizes.S" />
       </Suspense>
     </button>
 
     <section class="slider__wrapper">
       <ul class="slider__list" ref="list">
         <li v-for="item in items" :key="item.id" class="slider__item">
+          <!-- @slot Item: should be the item id -->
           <slot :name="`item-${item.id}`"></slot>
         </li>
       </ul>
     </section>
     <button @click="moveTo({})" class="slider--is-next">
       <Suspense>
-        <BaseIcon id="card" :type="Types.CHEVRON" name="IconChevronRightM" :size="Sizes.S" />
+        <BaseIcon id="sliderNext" :type="Types.CHEVRON" name="IconChevronRightM" :size="Sizes.S" />
       </Suspense>
     </button>
   </section>
@@ -27,6 +27,7 @@ import useIntersectionObserver from '@/shared/composables/useIntersectionObserve
 import { onMounted, ref } from 'vue'
 import BaseIcon from '../base/base-icon/BaseIcon.vue'
 import { Types, Sizes } from '../base/base-icon/types'
+import { type ISliderItem } from './types'
 
 const list = ref<HTMLElement | null>(null)
 const currentHTMLNode = ref<HTMLElement | null>(null)
@@ -34,7 +35,7 @@ const currentHTMLNode = ref<HTMLElement | null>(null)
 const canMovePrev = ref(true)
 const canMoveNext = ref(true)
 
-withDefaults(defineProps<{ items: any[] }>(), {
+withDefaults(defineProps<{ items: ISliderItem[] }>(), {
   /**
    * Set slider items list content
    */
@@ -60,7 +61,6 @@ const updateMovePossibility = () => {
 }
 
 const moveTo = ({ type = 'next' }: { type?: string }): void => {
-  console.log('1) move to', currentHTMLNode.value)
   if ((type === 'prev' && !canMovePrev.value) || (type === 'next' && !canMoveNext.value)) return
   if (!list.value) return
   if (!currentHTMLNode.value) return
@@ -81,7 +81,6 @@ const getNextPrevSibling = ({
   type?: string
 }): HTMLElement => {
   const target = type === 'next' ? element.nextElementSibling : element.previousElementSibling
-  console.log('2.2) => sibling', target)
   const HTMLTarget = target as HTMLElement
   currentHTMLNode.value = HTMLTarget
 
@@ -89,7 +88,6 @@ const getNextPrevSibling = ({
 }
 
 const getNextTargetPosition = ({ current }: { current: HTMLElement }): number => {
-  console.log('3) current.OFFSETLEFT', current.offsetLeft)
   currentHTMLNode.value = current
   return current.offsetLeft
 }
@@ -97,7 +95,6 @@ const getNextTargetPosition = ({ current }: { current: HTMLElement }): number =>
 const setNewPositionVariable = ({ position }: { position: number }): void => {
   if (!list.value) return
   list.value.style.setProperty('--slider-position', `${position?.toString()}px` || '0')
-  console.log('4) set new position', list.value, position)
 }
 
 onMounted(() => {
@@ -112,10 +109,7 @@ onMounted(() => {
     currentHTMLNode.value = childElements[0]
   }
 
-  console.log(listCollection)
-
-  currentHTMLNode.value = listCollection.children[0] as HTMLElement //listCollection.firstChild as HTMLElement
-  //console.log(currentHTMLNode.value.offsetLeft)
+  currentHTMLNode.value = listCollection.children[0] as HTMLElement
   childElements.forEach((element) => {
     createObserver({
       element: element,
