@@ -52,7 +52,6 @@ const Templates: Story = {
                 <Suspense>
                     <BaseInput
                         v-bind="args"
-                        useIcon
                         @invalid="setInvalid"
                         @update:modelValue="update"
                         @change="change"

@@ -47,7 +47,7 @@
                 @click="focus"
             />
             <button
-                v-if="useIcon"
+                v-if="hasIconTrigger"
                 data-testID="ui-input-submit"
                 class="base-input__submit"
                 :disabled="hasEmptyModel"
@@ -80,7 +80,7 @@
     </fieldset>
 </template>
 <script setup lang="ts">
-import { computed, onMounted, ref, useSlots, type PropType } from 'vue';
+import { computed, reactive, ref, useSlots, type PropType } from 'vue';
 import {  Types, Icons } from './types';
 import { validateValueCollectionExists } from '@ui/utilities/validation/useValidation';
 import BaseIcon from '@ui/base/base-icon/BaseIcon.vue';
@@ -164,21 +164,16 @@ const { input, required, pattern, proxyValue } = defineProps({
     maxLength: {
         type: Number as PropType<number>
     },
-
-    /**
-     * Set max input length value
-     */
-     useIcon: {
-        type: Boolean as PropType<boolean>,
-        default: false
-    }
-    
 })
 
 const slots = useSlots();
 const label = computed(() => !!slots['label']);
 const message = computed(() => !!slots['message']);
 const error = computed(() => !!slots['error']);
+const currentUseIcon = computed(() => Icons[currentType.value.toUpperCase() as keyof typeof Icons])
+const hasIconTrigger = computed(() => allowIcon.includes(Icons[input.toUpperCase() as keyof typeof Icons]));
+
+const allowIcon = reactive<Icons[]>([Icons.PASSWORD]);
 
 const customEmits = defineEmits(['update:modelValue', 'change', 'focus', 'invalid', 'send']);
 const hasEmptyModel = computed(():boolean => {
@@ -186,7 +181,6 @@ const hasEmptyModel = computed(():boolean => {
     return (value.value as string).length === 0
 });
 
-const currentUseIcon = computed(() => Icons[currentType.value.toUpperCase() as keyof typeof Icons])
 
 const currentType = ref<Types>(input);
 
