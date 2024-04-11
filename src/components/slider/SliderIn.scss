@@ -50,7 +50,7 @@
   &:has(#{$slider}__item:first-child[data-visible='true']) {
     #{$slider}--is-prev {
       // visibility: hidden;
-      display: block;
+      display: none;
     }
   }
 

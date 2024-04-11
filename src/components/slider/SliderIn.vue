@@ -2,10 +2,9 @@
   <!-- Poor Draco Malfoy, never was understood enought-->
   <section class="slider">
     <button @click="moveTo({ type: 'prev' })" class="slider--is-prev">
-      TEST
-      <!-- <Suspense>
+      <Suspense>
         <BaseIcon id="card" :type="Types.CHEVRON" name="IconChevronLeftM" :size="Sizes.S" />
-      </Suspense> -->
+      </Suspense>
     </button>
 
     <section class="slider__wrapper">
@@ -115,10 +114,9 @@ onMounted(() => {
 
   console.log(listCollection)
 
-  //currentHTMLNode.value = listCollection.firstChild as HTMLElement
+  currentHTMLNode.value = listCollection.children[0] as HTMLElement //listCollection.firstChild as HTMLElement
   //console.log(currentHTMLNode.value.offsetLeft)
   childElements.forEach((element) => {
-    console.log(element.offsetLeft, element.offsetWidth)
     createObserver({
       element: element,
       options: {
@@ -126,6 +124,8 @@ onMounted(() => {
       }
     })
   })
+
+  list.value!.style.setProperty('--slider-position', `0px`)
 })
 </script>
 <style src="./SliderIn.scss" lang="scss"></style>

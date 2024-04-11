@@ -1,12 +1,14 @@
 <template>
-  <section style="padding: 30px; background: #ccc">
-    <SliderIn :items="sliderItems">
-      <template v-for="item in sliderItems" :key="item.id" v-slot:[`item-${item.id}`]>
-        <NavigationItemContextual :id="item.id" :selected="item.selected" @send="handleSend">{{
-          item.title
-        }}</NavigationItemContextual>
-      </template>
-    </SliderIn>
+  <section style="padding: 0px; background: #ccc">
+    <div style="display: block">
+      <SliderIn :items="sliderItems">
+        <template v-for="item in sliderItems" :key="item.id" v-slot:[`item-${item.id}`]>
+          <NavigationItemContextual :id="item.id" :selected="item.selected" @send="handleSend">{{
+            item.title
+          }}</NavigationItemContextual>
+        </template>
+      </SliderIn>
+    </div>
   </section>
 </template>
 
