@@ -12,8 +12,8 @@
         tabindex="0"
       >
         <BaseIcon
-            :name="option.icon.name"
-            :type="option.icon.type"
+            :name="option?.icon?.name"
+            :type="option?.icon?.type"
         />
         <p v-text="option.label" />
         <i class="base-list--option-check" />

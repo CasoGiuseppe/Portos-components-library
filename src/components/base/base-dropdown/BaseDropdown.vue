@@ -1,40 +1,42 @@
 <template>
 	<div
 		class="base-dropdown"
+		data-testID="ui-dropdown"
 		:data-active="isActive"
-		:data-error="hasError"
+		:data-error="!!error"
 		:data-disabled="isDisabled"
-		v-click-outside="toggleDropdown"
+		v-click-outside="closeList"
 	>
-		<div class="base-dropdown--header">
-			<slot
-				name="header"
-				:label="label"
-			/>
+		<div class="base-dropdown__header">
+			<slot name="header" />
 		</div>
 
 		<button
-			class="base-dropdown--button"
+			class="base-dropdown__button"
+			data-testID="ui-dropdown-button"
 			:disabled="isDisabled"
-			@click="toggleDropdown"
-			@keydown.arrow-down.prevent="isActive = true"
-			@keydown.arrow-up.prevent="isActive = false"
+			@click="toggleList"
 		>
 			<p
 				v-text="selectedOption?.label || placeholder"
 				:data-checked="!!selectedOption"
-				class="base-dropdown--button-placeholder"
+				class="base-dropdown__button-placeholder"
 			/>
-			<i class="base-dropdown--button-icon" />
+			<i class="base-dropdown__button-icon" />
 		</button>
 
-		<slot
-			name="options"
-			:isActive="isActive"
-			:toggleDropdown="toggleDropdown"
-		/>
+		<div
+			v-show="!isDisabled && isActive"
+			class="base-dropdown__list"
+			data-testID="ui-dropdown-list"
+		>
+			<slot name="list" />
+		</div>
 
-		<div class="base-dropdown--footer">
+		<div
+			v-if="error"
+			class="base-dropdown__footer"
+		>
 			<slot
 				name="footer"
 				:error="error"
@@ -45,27 +47,24 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-
 import { type IBaseDropdownComponent } from './types';
-
-const isActive = ref<boolean>(false);
-const hasError = ref<boolean>(false);
-const isDisabled = ref<boolean>(false);
-const error = ref<string>('Error text');
 
 const props = withDefaults(defineProps<IBaseDropdownComponent>(), {
   	placeholder: 'Select your option',
-	label: ''
 });
 
-watch(() => props.selectedOption, newSelectedOption => {
-	if (newSelectedOption && isActive) {
-		toggleDropdown();
-	}
+const isActive = ref<boolean>(false);
+
+watch(() => props.selectedOption, newValue => {
+	(newValue) && closeList();
 });
 
-const toggleDropdown = () => {
-	isActive.value = !isActive.value
+const toggleList = () => {
+	isActive.value = !isActive.value;
+};
+
+const closeList = () => {
+	(isActive.value) && toggleList();
 };
 </script>
 

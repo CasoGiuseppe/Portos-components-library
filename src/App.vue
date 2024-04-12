@@ -2,22 +2,17 @@
   <BaseDropdown
     :selected-option="selectedOption"
     placeholder="Select your option (x)"
-    label="Label"
   >
-    <template #header="{ label }">
-      <label
-        v-text="label"
-        class="base-dropdown--header-label"
-      />
+    <template #header>
+      <label>Label</label>
       <BaseIcon
         name="IconFeedbackAnswer"
         :type="Types.FEEDBACK"
       />
     </template>
 
-    <template #options="{ isActive }">
+    <template #list>
       <BaseList
-        v-show="isActive"
         :options="options"
         @select="selectOption"
       />
@@ -38,6 +33,7 @@
 import { ref } from 'vue';
 
 import BaseDropdown from '@/components/base/base-dropdown/BaseDropdown.vue';
+import BaseIcon from '@/components/base/base-icon/BaseIcon.vue';
 import BaseList from '@/components/base/base-list/BaseList.vue';
 import { Sizes, Types } from './components/base/base-icon/types';
 import { type IListOption } from '@/components/base/base-list/types';
