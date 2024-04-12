@@ -1,5 +1,8 @@
 <template>
-    <ul class="base-list" ref="listParent">
+    <ul
+        class="base-list" ref="listParent"
+        :data-mode="mode"
+    >
         <li
             class="base-list__item"
             v-for="(item, index) in list"
@@ -21,6 +24,8 @@
 </template>
 <script setup lang="ts">
 import { computed, onMounted, ref, type PropType } from 'vue';
+import { Mode } from './types';
+import { validateValueCollectionExists } from '@ui/utilities/validation/useValidation';
 
 export type ITableList = {
     id: string,
@@ -42,6 +47,15 @@ const { current } = defineProps({
    */
    current: {
     type: String as PropType<String>,
+  },
+
+  /**
+   * Set the current selected item
+   */
+   mode: {
+    type: String as PropType<Mode>,
+    default: Mode.DEFAULT,
+    validator: (prop: Mode) => validateValueCollectionExists({ collection: Mode, value: prop})
   },
 })
 

@@ -8,6 +8,7 @@
       <input type="text" :value="labelField">
       <BaseList
         :list="list"
+        :mode="Mode.DROPDOWN"
         current="option2"
         @send="setValue"
       >
@@ -18,7 +19,7 @@
 
 <script setup lang="ts">
 import { Types } from './components/base/base-icon/types';
-import { type IListOption } from '@/components/base/base-list/types';
+import { Mode } from '@/components/base/base-list/types';
 
 import BaseList from '@ui/base/base-list/BaseList.vue';
 import { ref } from 'vue';

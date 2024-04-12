@@ -52,18 +52,21 @@
             @include item-focus();
             box-shadow: inset var(--spacing-10, 0) 0 0 var(--color-primary-40, #000);
 
-            &::after {
-                color: inherit;
-                content: '';
-                display: inline-block;
-                height: var(--check-height);
-                width: var(--check-width);
-
-                border-bottom: var(--check-border-bottom);
-                border-right: var(--check-border-right);
-
-                transform: var(--check-rotate);
+            [data-mode='dropdown'] & {
+                &::after {
+                    color: inherit;
+                    content: '';
+                    display: inline-block;
+                    height: var(--check-height);
+                    width: var(--check-width);
+    
+                    border-bottom: var(--check-border-bottom);
+                    border-right: var(--check-border-right);
+    
+                    transform: var(--check-rotate);
+                }
             }
+            
         }
     }
 
