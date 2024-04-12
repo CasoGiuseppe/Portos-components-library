@@ -1,117 +1,140 @@
 <template>
-  <section class="slider">
-    <button @click="moveTo({ type: 'prev' })" class="slider--is-prev" :disabled="isDisabled">
-      <Suspense>
-        <BaseIcon id="sliderPrev" :type="Types.CHEVRON" name="IconChevronLeftM" :size="Sizes.S" />
-      </Suspense>
-    </button>
-    <section class="slider__wrapper">
-      <ul class="slider__list" ref="list">
-        <li
-          v-for="{ id, label, className } in body"
-          :key="id"
-          class="slider__item"
-          :class="`slider__item ${className}`"
+    <section class="slider">
+        <button
+            @click="moveTo({ type: 'prev' })"
+            class="slider--is-prev"
+            data-testID="ui-slider-prev"
+            :disabled="isDisabled"
         >
-          <slot :property="{ label, id }" name="item"></slot>
-        </li>
-      </ul>
+            <Suspense>
+                <BaseIcon
+                    id="sliderPrev"
+                    :type="Types.CHEVRON"
+                    name="IconChevronLeftM"
+                    :size="Sizes.S"
+                />
+            </Suspense>
+        </button>
+        <section class="slider__wrapper">
+            <ul class="slider__list" ref="list">
+                <li
+                    v-for="{ id, label, className } in body"
+                    :key="id"
+                    class="slider__item"
+                    :class="`slider__item ${className}`"
+                    data-testID="ui-slider-item"
+                >
+                    <!-- @Slot for item with :property-->
+                    <slot :property="{ label, id }" name="item"></slot>
+                </li>
+            </ul>
+        </section>
+        <button
+            @click="moveTo({})"
+            class="slider--is-next"
+            data-testID="ui-slider-next"
+            :disabled="isDisabled"
+        >
+            <Suspense>
+                <BaseIcon
+                    id="sliderNext"
+                    :type="Types.CHEVRON"
+                    name="IconChevronRightM"
+                    :size="Sizes.S"
+                />
+            </Suspense>
+        </button>
     </section>
-    <button @click="moveTo({})" class="slider--is-next" :disabled="isDisabled">
-      <Suspense>
-        <BaseIcon id="sliderNext" :type="Types.CHEVRON" name="IconChevronRightM" :size="Sizes.S" />
-      </Suspense>
-    </button>
-  </section>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import useIntersectionObserver from '@/shared/composables/useIntersectionObserver'
 import BaseIcon from '@/components/base/base-icon/BaseIcon.vue'
-import { Types, Sizes } from '../base/base-icon/types'
+import { Types, Sizes } from '@/components/base/base-icon/types'
 
 const list = ref<HTMLElement | null>(null)
 const currentHTMLNode = ref<HTMLElement | null>(null)
 const isDisabled = ref<boolean>(false)
 
 export interface ISLiderItems {
-  body: Record<string, any>[]
+    body: Record<string, any>[]
 }
 
 withDefaults(defineProps<ISLiderItems>(), {
-  /**
-   * Set table body content
-   */
-  body: () => []
+    /**
+     * Set table body content
+     */
+    body: () => []
 })
 
 const { createObserver } = useIntersectionObserver({
-  action: (e: any) => {
-    const { isIntersecting } = e
-    e.target.dataset.visible = isIntersecting
-  }
+    action: (e: any) => {
+        const { isIntersecting } = e
+        e.target.dataset.visible = isIntersecting
+    }
 })
 
 const getNextTargetPosition = ({ current }: { current: HTMLElement }): number => {
-  if (!current) return 0
-  currentHTMLNode.value = current
-  return current.offsetLeft
+    if (!current) return 0
+    currentHTMLNode.value = current
+    return current.offsetLeft
 }
 
 const moveTo = ({ type = 'next' }: { type?: string }): void => {
-  if (!list.value) return
-  if (!currentHTMLNode.value) return
-  isDisabled.value = true
-  setNewPositionVariable({
-    position: getNextTargetPosition({
-      current: getNextPrevSibling({ element: currentHTMLNode.value, type })
+    if (!list.value) return
+    if (!currentHTMLNode.value) return
+    isDisabled.value = true
+    setNewPositionVariable({
+        position: getNextTargetPosition({
+            current: getNextPrevSibling({ element: currentHTMLNode.value, type })
+        })
     })
-  })
+
 }
 
 const setNewPositionVariable = ({ position }: { position: number }): void => {
-  if (!list.value) return
-  list.value.style.setProperty('--slider-position', `${position?.toString()}px` || '0')
+    if (!list.value) return
+    list.value.style.setProperty('--slider-position', `${position?.toString()}px` || '0')
 
-  list.value.addEventListener('transitionend', () => (isDisabled.value = false))
+    list.value.addEventListener('transitionend', () => (isDisabled.value = false))
 }
 
 const getNextPrevSibling = ({
-  element,
-  type = 'next'
+    element,
+    type = 'next'
 }: {
-  element: HTMLElement
-  type?: string
+    element: HTMLElement
+    type?: string
 }): HTMLElement => {
-  const target = type === 'next' ? element.nextElementSibling : element.previousElementSibling
-  const HTMLTarget = target as HTMLElement
-  currentHTMLNode.value = HTMLTarget
-  return HTMLTarget
+    const target = type === 'next' ? element.nextElementSibling : element.previousElementSibling
+    const HTMLTarget = target as HTMLElement
+    currentHTMLNode.value = HTMLTarget
+    return HTMLTarget
 }
 
 onMounted(() => {
-  const listCollection = list.value
-  if (!listCollection) return
+    const listCollection = list.value
+    if (!listCollection) return
 
-  const collectionChildSize = Array.from(listCollection.childNodes).filter(
-    (node) => node.nodeName !== '#text'
-  )
-  if (collectionChildSize.length === 1) return
-  const childs = [collectionChildSize.at(0), collectionChildSize.at(-1)]
+    const collectionChildSize = Array.from(listCollection.childNodes).filter(
+        (node) => node.nodeName !== '#text'
+    )
+    if (collectionChildSize.length === 1) return
+    const childs = [collectionChildSize.at(0), collectionChildSize.at(-1)]
 
-  currentHTMLNode.value = collectionChildSize.at(0) as HTMLElement
+    currentHTMLNode.value = collectionChildSize.at(0) as HTMLElement
 
-  childs.forEach((element) => {
-    createObserver({
-      element: element as HTMLElement,
-      options: {
-        threshold: 1
-      }
+    childs.forEach((element) => {
+        createObserver({
+            element: element as HTMLElement,
+            options: {
+                threshold: 1
+            }
+        })
     })
-  })
 
-  list.value!.style.setProperty('--slider-position', `0px`)
+    list.value!.style.setProperty('--slider-position', `0px`)
 })
 </script>
 

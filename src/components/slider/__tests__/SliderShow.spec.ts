@@ -1,135 +1,157 @@
+// core
 import { describe, it, expect, beforeAll, beforeEach, vi } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { VueWrapper, mount } from '@vue/test-utils'
+import { type ComponentPublicInstance } from 'vue'
+// components
 import SliderShow from '@ui/slider/SliderShow.vue'
 import BaseIcon from '@/components/base/base-icon/BaseIcon.vue'
+// utils
+import {
+    $providedSlot,
+    $providedSlotContent,
+    $providedBody,
+    $uiDOMSliderItem,
+    $uiDOMSliderNextButton,
+    $uiDOMSliderPrevButton
+} from './utilities'
 
 class IntersectionObserverMock {
-  root: Element | null = null
-  rootMargin: string = ''
-  thresholds: ReadonlyArray<number> = []
-  takeRecords(): IntersectionObserverEntry[] {
-    return []
-  }
+    root: Element | null = null
+    rootMargin: string = ''
+    thresholds: ReadonlyArray<number> = []
+    takeRecords(): IntersectionObserverEntry[] {
+        return []
+    }
 
-  constructor(
-    public callback: IntersectionObserverCallback,
-    public options?: IntersectionObserverInit
-  ) {}
+    constructor(
+        public callback: IntersectionObserverCallback,
+        public options?: IntersectionObserverInit
+    ) {}
 
-  observe(target: Element): void {}
+    observe(target: Element): void {}
 
-  unobserve(target: Element): void {}
+    unobserve(target: Element): void {}
 
-  disconnect(): void {}
+    disconnect(): void {}
+}
+
+// mocked instance of component to use refs
+interface SliderShowInstance extends ComponentPublicInstance {
+    isDisabled: boolean
+    moveTo: (options: { type?: string }) => void
+    setNewPositionVariable: (params: { position: number }) => void
 }
 
 describe('Slider Component', () => {
-  beforeAll(() => {
-    // @ts-ignore
-    global.IntersectionObserver = IntersectionObserverMock
-  })
-
-  describe('When component loads', () => {
-    it('it should render component', () => {
-      const body = [
-        { id: '1', label: 'Item 1', className: 'item-1' },
-        { id: '2', label: 'Item 2', className: 'item-2' }
-      ]
-
-      const wrapper = mount(SliderShow, {
-        props: { body },
-        global: {
-          components: {
-            BaseIcon
-          },
-          stubs: {
-            Suspense: true
-          }
-        }
-      })
-
-      expect(wrapper.exists()).toBe(true)
-      expect(wrapper.findAll('.slider__item').length).toBe(body.length)
-      expect(wrapper.find('.slider--is-prev').exists()).toBe(true)
-      expect(wrapper.find('.slider--is-next').exists()).toBe(true)
-    })
-    it('should render slot content within each slider item', () => {
-      const slotContent = 'Test slot content'
-      const wrapper = mount(SliderShow, {
-        props: { body: [{ id: '1', label: 'Item 1', className: 'item-1' }] },
-        slots: {
-          item: slotContent
-        },
-        global: {
-          components: { BaseIcon },
-          stubs: { Suspense: true }
-        }
-      })
-
-      expect(wrapper.html()).toContain(slotContent)
-    })
-    it('should apply correct classes to slider items based on their properties', () => {
-      const wrapper = mount(SliderShow, {
-        props: { body: [{ id: '1', label: 'Item 1', className: 'custom-class' }] },
-        global: {
-          components: { BaseIcon },
-          stubs: { Suspense: true }
-        }
-      })
-
-      const firstItem = wrapper.find('.slider__item')
-      expect(firstItem.classes()).toContain('custom-class')
-    })
-  })
-
-  describe('Interaction with navigation buttons', () => {
-    let wrapper: any
-    beforeEach(() => {
-      const body = [
-        { id: '1', label: 'Item 1', className: 'item-1' },
-        { id: '2', label: 'Item 2', className: 'item-2' },
-        { id: '3', label: 'Item 3', className: 'item-3' }
-      ]
-
-      const slotContent = '<span>Test slot content</span>'
-      wrapper = mount(SliderShow, {
-        props: { body },
-        slots: {
-          item: `<template #item="{ label, id }">${slotContent}</template>`
-        },
-        global: {
-          components: { BaseIcon },
-          stubs: { Suspense: true }
-        }
-      })
-
-      // Stubbing internal methods to monitor calls and behavior.
-      vi.spyOn(wrapper.vm, 'moveTo')
-      vi.spyOn(wrapper.vm, 'setNewPositionVariable')
+    beforeAll(() => {
+        // @ts-ignore
+        global.IntersectionObserver = IntersectionObserverMock
     })
 
-    it('should call moveTo with prev when previous button is clicked', async () => {
-      await wrapper.find('.slider--is-prev').trigger('click')
-      await wrapper.vm.$nextTick()
+    describe('When component loads', () => {
+        it('it should render component', () => {
+            const body = $providedBody
 
-      expect(wrapper.vm.moveTo).toHaveBeenCalledWith({ type: 'prev' })
+            const wrapper = mount(SliderShow, {
+                props: { body },
+                global: {
+                    components: {
+                        BaseIcon
+                    },
+                    stubs: {
+                        Suspense: true
+                    }
+                }
+            })
+
+            expect(wrapper.exists()).toBe(true)
+            expect(wrapper.findAll($uiDOMSliderItem).length).toBe(body.length)
+            expect(wrapper.find($uiDOMSliderPrevButton).exists()).toBe(true)
+            expect(wrapper.find($uiDOMSliderNextButton).exists()).toBe(true)
+        })
+        it('should render slot content within each slider item', () => {
+            const slotContent = $providedSlotContent
+            const wrapper = mount(SliderShow, {
+                props: { body: $providedBody },
+                slots: {
+                    item: slotContent
+                },
+                global: {
+                    components: { BaseIcon },
+                    stubs: { Suspense: true }
+                }
+            })
+
+            expect(wrapper.html()).toContain(slotContent)
+        })
+        it('should apply correct classes to slider items based on their properties', () => {
+            const wrapper = mount(SliderShow, {
+                props: { body: [{ id: '1', label: 'Item 1', className: 'custom-class' }] },
+                global: {
+                    components: { BaseIcon },
+                    stubs: { Suspense: true }
+                }
+            })
+
+            const firstItem = wrapper.find($uiDOMSliderItem)
+            expect(firstItem.classes()).toContain('custom-class')
+        })
     })
 
-    it('should call moveTo with next when next button is clicked', async () => {
-      await wrapper.find('.slider--is-next').trigger('click')
-      expect(wrapper.vm.moveTo).toHaveBeenCalledWith({})
+    describe('Interaction with navigation buttons', () => {
+        let wrapper: any
+        beforeEach(() => {
+            const body = $providedBody
+
+            wrapper = mount(SliderShow, {
+                props: { body },
+                slots: {
+                    item: $providedSlot
+                },
+                global: {
+                    components: { BaseIcon },
+                    stubs: { Suspense: true }
+                }
+            })
+
+            // Stubbing internal methods to monitor calls and behavior.
+            vi.spyOn(wrapper.vm, 'setNewPositionVariable')
+            vi.spyOn(wrapper.vm, 'moveTo')
+        })
+
+        it('should call moveTo with prev when previous button is clicked', async () => {
+            await wrapper.find($uiDOMSliderPrevButton).trigger('click')
+            await wrapper.vm.$nextTick()
+
+            expect(wrapper.vm.moveTo).toHaveBeenCalledWith({ type: 'prev' })
+        })
+
+        it('should call moveTo with next when next button is clicked', async () => {
+            await wrapper.find($uiDOMSliderNextButton).trigger('click')
+            expect(wrapper.vm.moveTo).toHaveBeenCalledWith({})
+        })
     })
-    /* 
-    it('should update position when next is clicked', async () => {
-      await wrapper.find('.slider--is-next').trigger('click')
-      expect(wrapper.vm.setNewPositionVariable).toHaveBeenCalled()
+
+    describe('Transition Handling', () => {
+        let wrapper: VueWrapper<ComponentPublicInstance>
+        let vm: SliderShowInstance
+
+        beforeEach(() => {
+            wrapper = mount(SliderShow, {
+                props: { body: $providedBody },
+                global: {
+                    components: { BaseIcon },
+                    stubs: { Suspense: true }
+                }
+            })
+            vm = wrapper.vm as SliderShowInstance
+        })
+        it('should re-enable the component after transition ends', async () => {
+            await wrapper.find($uiDOMSliderNextButton).trigger('click')
+            await wrapper.vm.$nextTick()
+            wrapper.find('.slider__list').trigger('transitionend')
+
+            expect(vm.isDisabled).toBe(false)
+        })
     })
-    
-    it('should disable navigation buttons during transition', async () => {
-      await wrapper.find('.slider--is-next').trigger('click')
-      expect(wrapper.vm.isDisabled.value).toBe(true)
-      await wrapper.setData({ isDisabled: false })
-      expect(wrapper.vm.isDisabled.value).toBe(false)
-    }) */
-  })
 })
