@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll } from 'vitest'
+import { describe, it, expect, beforeAll, beforeEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import SliderShow from '@ui/slider/SliderShow.vue'
 import BaseIcon from '@/components/base/base-icon/BaseIcon.vue'
@@ -82,47 +82,54 @@ describe('Slider Component', () => {
     })
   })
 
-  /* describe('Slider Navigation Buttons', () => {
-    it('should disable the prev button when at the first item', async () => {
+  describe('Interaction with navigation buttons', () => {
+    let wrapper: any
+    beforeEach(() => {
       const body = [
         { id: '1', label: 'Item 1', className: 'item-1' },
-        { id: '2', label: 'Item 2', className: 'item-2' }
+        { id: '2', label: 'Item 2', className: 'item-2' },
+        { id: '3', label: 'Item 3', className: 'item-3' }
       ]
 
-      const wrapper = mount(SliderShow, {
+      const slotContent = '<span>Test slot content</span>'
+      wrapper = mount(SliderShow, {
         props: { body },
+        slots: {
+          item: `<template #item="{ label, id }">${slotContent}</template>`
+        },
         global: {
           components: { BaseIcon },
           stubs: { Suspense: true }
         }
       })
 
-      // Simulate moving to the first item
-      await wrapper.vm.moveTo({ type: 'prev' })
-
-      const prevButton = wrapper.find('.slider--is-prev')
-      expect(prevButton.attributes('disabled')).toBeTruthy()
+      // Stubbing internal methods to monitor calls and behavior.
+      vi.spyOn(wrapper.vm, 'moveTo')
+      vi.spyOn(wrapper.vm, 'setNewPositionVariable')
     })
 
-    it('should disable the next button when at the last item', async () => {
-      const body = [
-        { id: '1', label: 'Item 1', className: 'item-1' },
-        { id: '2', label: 'Item 2', className: 'item-2' }
-      ]
+    it('should call moveTo with prev when previous button is clicked', async () => {
+      await wrapper.find('.slider--is-prev').trigger('click')
+      await wrapper.vm.$nextTick()
 
-      const wrapper = mount(SliderShow, {
-        props: { body },
-        global: {
-          components: { BaseIcon },
-          stubs: { Suspense: true }
-        }
-      })
-
-      // Simulate moving to the last item
-      await wrapper.vm.moveTo({ type: 'next' }) // Ensure the last move would position on the last item
-
-      const nextButton = wrapper.find('.slider--is-next')
-      expect(nextButton.attributes('disabled')).toBeTruthy()
+      expect(wrapper.vm.moveTo).toHaveBeenCalledWith({ type: 'prev' })
     })
-  }) */
+
+    it('should call moveTo with next when next button is clicked', async () => {
+      await wrapper.find('.slider--is-next').trigger('click')
+      expect(wrapper.vm.moveTo).toHaveBeenCalledWith({})
+    })
+    /* 
+    it('should update position when next is clicked', async () => {
+      await wrapper.find('.slider--is-next').trigger('click')
+      expect(wrapper.vm.setNewPositionVariable).toHaveBeenCalled()
+    })
+    
+    it('should disable navigation buttons during transition', async () => {
+      await wrapper.find('.slider--is-next').trigger('click')
+      expect(wrapper.vm.isDisabled.value).toBe(true)
+      await wrapper.setData({ isDisabled: false })
+      expect(wrapper.vm.isDisabled.value).toBe(false)
+    }) */
+  })
 })

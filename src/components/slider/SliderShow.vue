@@ -24,6 +24,7 @@
     </button>
   </section>
 </template>
+
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import useIntersectionObserver from '@/shared/composables/useIntersectionObserver'
@@ -53,6 +54,7 @@ const { createObserver } = useIntersectionObserver({
 })
 
 const getNextTargetPosition = ({ current }: { current: HTMLElement }): number => {
+  if (!current) return 0
   currentHTMLNode.value = current
   return current.offsetLeft
 }
@@ -100,7 +102,6 @@ onMounted(() => {
 
   currentHTMLNode.value = collectionChildSize.at(0) as HTMLElement
 
-  // console.log(childs, listCollection)
   childs.forEach((element) => {
     createObserver({
       element: element as HTMLElement,
@@ -113,4 +114,5 @@ onMounted(() => {
   list.value!.style.setProperty('--slider-position', `0px`)
 })
 </script>
+
 <style src="./SliderShow.scss" lang="scss"></style>
