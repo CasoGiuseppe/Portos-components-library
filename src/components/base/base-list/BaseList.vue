@@ -1,83 +1,102 @@
 <template>
-  <ul class="base-list">
-    <li
-        v-for="(option, index) in options"
-        :key="option.label"
-        :data-selected="selectedOption?.label === option.label"
-        :ref="index === activeIndex ? 'activeOption' : ''"
-        @click="selectOption(option)"
-        @keyup.enter="selectOption(option)"
-        @keydown.prevent="handleKeydown"
-        class="base-list--option"
-        tabindex="0"
-      >
-        <BaseIcon
-            :name="option.icon.name"
-            :type="option.icon.type"
-        />
-        <p v-text="option.label" />
-        <i class="base-list--option-check" />
-    </li>
-  </ul>
+    <ul class="base-list" ref="listParent">
+        <li
+            class="base-list__item"
+            v-for="(item, index) in list"
+            :key="item.id"
+            tabindex="0"
+            :data-index="index"
+            :data-option="item.option"
+            @keyup.down="keyMove"
+            @keyup.up="keyMove"
+            @keyup.enter="select"
+            @focus="focus"
+            @click="select"
+        >
+            <p class="base-list__label">
+                <slot :property="{ label: item.label }" name="row"></slot>
+            </p>
+        </li>
+    </ul>
 </template>
-
 <script setup lang="ts">
-import { nextTick, ref } from 'vue';
+import { computed, onMounted, ref, type PropType } from 'vue';
 
-import type { IBaseListComponent, IListOption } from './types';
-import BaseIcon from '@/components/base/base-icon/BaseIcon.vue';
+export type ITableList = {
+    id: string,
+    label: string,
+    option: string,
+}
 
-const customEmits = defineEmits(['select']);
-const selectedOption = ref<IListOption>();
+const { current } = defineProps({
+    /**
+   * Set the list of component elements
+   */
+  list: {
+    type: Array as PropType<Array<ITableList>>,
+    default: () => []
+  },
 
-const { options } = withDefaults(defineProps<IBaseListComponent>(), {
-  options: () => ([])
-});
+   /**
+   * Set the current selected item
+   */
+   current: {
+    type: String as PropType<String>,
+  },
+})
 
-const activeIndex = ref<number>(-1);
-const activeOption = ref<HTMLCollectionOf<HTMLElement>>();
+const tabIndex = ref<number>(0)
+const listParent = ref<HTMLElement | null>(null);
+const listSize = computed(() => {
+    if(!listParent.value) return 0;
+    const childs = [...listParent.value.childNodes].filter((node) => node.nodeName !== '#text')
+    return childs.length - 1
+})
 
-const focusActiveOption = () => {
-  nextTick(() => {
-    activeOption?.value?.[0].focus();
-  }); 
+const customEmits = defineEmits(['send']);
+const keyMove = ({ code }: { code: string }) => keyHandler[code as keyof typeof keyHandler]()
+
+const keyHandler = {
+    ArrowDown: (): void => {
+        const currentIndex = tabIndex.value = tabIndex.value === listSize.value ? 0 : tabIndex.value + 1
+        const currentDOMNode = getDOMElementByData({ index: currentIndex }) as HTMLElement
+        if(!currentDOMNode) return
+        currentDOMNode.focus()
+    },
+
+    ArrowUp: (): void => {
+        const currentIndex = tabIndex.value = tabIndex.value === 0 ? listSize.value : tabIndex.value - 1
+        const currentDOMNode = getDOMElementByData({ index: currentIndex }) as HTMLElement
+        if(!currentDOMNode) return
+        currentDOMNode.focus()
+    }
+}
+
+const getDOMElementByData = ({ index } : { index: number }): Element | undefined => {
+    if(!listParent.value) return;
+    return listParent.value.querySelector(`[data-index="${index}"]`) || undefined
+}
+
+const focus = (payload: Event): void => {
+    const { dataset: { index } } = payload.target as HTMLInputElement
+    if(!index) return
+    tabIndex.value = parseInt(index, 10);
+}
+
+const select = (payload: Event): void => {
+    const { dataset: { option }, innerText } = payload.target as HTMLInputElement
+    customEmits('send', { option, label: innerText })
 };
 
-const selectOption = (option: IListOption) => {
-  selectedOption.value = option;
-  customEmits('select', selectedOption);
-};
+onMounted(() => {
+    if(!current) return;
+    if(!listParent.value) return;
 
-const handleKeydown = (event: KeyboardEvent) => {
-  const eventTypes: { [key: string]: () => void } = {
-    ArrowDown: handleArrowDown,
-    ArrowUp: handleArrowUp,
-    Tab: handleArrowDown
-  };
+    const getCurrentFromDOMElements = listParent.value.querySelector(`[data-option="${current}"]`) as HTMLElement
+    if(!getCurrentFromDOMElements) return;
 
-  const keydownCallback = eventTypes[event.code];
-
-  if (keydownCallback) {
-    keydownCallback();
-    focusActiveOption();
-  }
-};
-
-const handleArrowUp = () => {
-  activeIndex.value > 0
-    ? (activeIndex.value--)
-    : (activeIndex.value = options.length - 1);
-};
-
-const handleArrowDown = () => {
-  if (activeIndex.value < 0) {
-    activeIndex.value = 0;
-  }
-
-  activeIndex.value < options.length - 1
-    ? (activeIndex.value++)
-    : (activeIndex.value = 0);
-};
+    getCurrentFromDOMElements.dataset.current = 'true'
+    console.log(getCurrentFromDOMElements)
+})
 </script>
-
 <style src="./BaseList.scss" lang="scss"></style>
