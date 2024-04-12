@@ -12,16 +12,24 @@
         current="option2"
         @send="setValue"
       >
-        <template #row="{ property: { label } }">{{ label }}</template>
+        <template #row="{ property: { label, icon } }">
+          <component
+            v-if="icon"
+            :is="icon.type"
+            v-bind="icon.props"
+          />
+          {{ label }}
+        </template>
       </BaseList>
     </section>
 </template>
 
 <script setup lang="ts">
+import BaseList from '@ui/base/base-list/BaseList.vue';
+import BaseIcon from './components/base/base-icon/BaseIcon.vue';
+
 import { Types } from './components/base/base-icon/types';
 import { Mode } from '@/components/base/base-list/types';
-
-import BaseList from '@ui/base/base-list/BaseList.vue';
 import { ref } from 'vue';
 
 const labelField = ref<string>()
@@ -29,12 +37,28 @@ const list = [
   {
     id: '1',
     label: 'option 1',
-    option: 'option1'
+    option: 'option1',
+    icon: {
+      type: BaseIcon,
+      props: {
+        type: 'arrow',
+        name: 'IconArrowCircleRight',
+        size: 'M'
+      },
+    }
   },
   {
     id: '2',
     label: 'option 2',
-    option: 'option2'
+    option: 'option2',
+    icon: {
+      type: BaseIcon,
+      props: {
+        type: 'chevron',
+        name: 'IconChevronUpM',
+        size: 'M'
+      },
+    }
   },
   {
     id: '3',

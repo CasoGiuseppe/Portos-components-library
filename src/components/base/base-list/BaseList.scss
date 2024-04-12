@@ -18,7 +18,7 @@
         background: var(--item-focus); 
     }
 
-    &__item {
+    &__option {
         @include text-body-m--regular;
 
         align-items: center;
@@ -71,6 +71,9 @@
     }
 
     &__label {
+        align-items: center;
+        display: flex;
         flex: 1;
+        gap: var(--spacing-30);
     }
 }

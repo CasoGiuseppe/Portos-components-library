@@ -4,7 +4,7 @@
         :data-mode="mode"
     >
         <li
-            class="base-list__item"
+            class="base-list__option"
             v-for="(item, index) in list"
             :key="item.id"
             tabindex="0"
@@ -17,20 +17,25 @@
             @click="select"
         >
             <p class="base-list__label">
-                <slot :property="{ label: item.label }" name="row"></slot>
+                <slot :property="{ label: item.label, icon: item.icon }" name="row"></slot>
             </p>
         </li>
     </ul>
 </template>
 <script setup lang="ts">
-import { computed, onMounted, ref, type PropType } from 'vue';
+import { computed, onMounted, ref, type Component, type PropType } from 'vue';
 import { Mode } from './types';
 import { validateValueCollectionExists } from '@ui/utilities/validation/useValidation';
 
-export type ITableList = {
+export type IIcon = {
+    type: Component,
+    props: Record<string, any>;
+}
+export type IList = {
     id: string,
     label: string,
     option: string,
+    icon?: IIcon
 }
 
 const { current } = defineProps({
@@ -38,7 +43,7 @@ const { current } = defineProps({
    * Set the list of component elements
    */
   list: {
-    type: Array as PropType<Array<ITableList>>,
+    type: Array as PropType<Array<IList>>,
     default: () => []
   },
 
