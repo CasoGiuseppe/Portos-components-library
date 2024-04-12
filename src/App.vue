@@ -4,6 +4,7 @@
       <BaseList
         :list="list"
         :mode="Mode.DROPDOWN"
+        :visibleOptions="3"
         current="option4"
         @send="setValue"
       >

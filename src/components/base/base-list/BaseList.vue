@@ -1,33 +1,36 @@
 <template>
-    <ul
-        class="base-list" ref="listParent"
-        :data-mode="mode"
-    >
-        <li
-            class="base-list__option"
-            v-for="(item, index) in list"
-            :key="item.id"
-            tabindex="0"
-            :data-index="index"
-            :data-option="item.option"
-            :data-current="currentNode === item.option ? true : false"
-            @keyup.down="keyMove"
-            @keyup.up="keyMove"
-            @keyup.enter="select"
-            @focus="focus"
-            @click="select"
-            >
-            <span
-                v-if="icon"
-                class="base-list__icon"
-            >
-                <slot :property="{ icon: item.icon }" name="icon" />
-            </span>
-            <p class="base-list__label">
-                <slot :property="{ label: item.label }" name="row" />
-            </p>
-        </li>
-    </ul>
+    <section class="base-list" >
+        <ul
+            class="base-list__list"
+            ref="listParent"
+            :data-mode="mode"
+        >
+            <li
+                class="base-list__option"
+                v-for="(item, index) in list"
+                :key="item.id"
+                tabindex="0"
+                :data-index="index"
+                :data-option="item.option"
+                :data-current="currentNode === item.option ? true : false"
+                @keyup.down="keyMove"
+                @keyup.up="keyMove"
+                @keyup.enter="select"
+                @focus="focus"
+                @click="select"
+                >
+                <span
+                    v-if="icon"
+                    class="base-list__icon"
+                >
+                    <slot :property="{ icon: item.icon }" name="icon" />
+                </span>
+                <p class="base-list__label">
+                    <slot :property="{ label: item.label }" name="row" />
+                </p>
+            </li>
+        </ul>
+    </section>
 </template>
 <script setup lang="ts">
 import { computed, onMounted, ref, useSlots, type Component, type PropType } from 'vue';
@@ -45,7 +48,7 @@ export type IList = {
     icon?: IIcon
 }
 
-const { current } = defineProps({
+const { current, visibleOptions } = defineProps({
     /**
    * Set the list of component elements
    */
@@ -69,6 +72,13 @@ const { current } = defineProps({
     default: Mode.DEFAULT,
     validator: (prop: Mode) => validateValueCollectionExists({ collection: Mode, value: prop})
   },
+
+  /**
+   * Set list visible options
+   */
+  visibleOptions: {
+    type: Number as PropType<Number>,
+  }
 })
 
 const slots = useSlots();
@@ -120,14 +130,34 @@ const select = (payload: Event | Element): void => {
     customEmits('send', { option, label: innerText })
 };
 
-onMounted(() => {
-    if(!current) return;
+const startSelectingOption = ():void => {
     if(!listParent.value) return;
 
     const startNode = listParent.value.querySelector(`[data-option="${current}"]`);
     if(!startNode) return;
 
     select(startNode)
+}
+
+const startListMaxHeight = (): void => {
+    if(!listParent.value) return;
+    if(!visibleOptions) return;
+
+    const childs = [...listParent.value.childNodes].filter((node: ChildNode) => node.nodeName !== '#text');
+
+    if(childs.length === 0) return;
+    if(childs.length <= (visibleOptions as number)) return;
+
+    const newParentHeight = Math.max(
+        ...childs.map((el:ChildNode) => (el as HTMLElement).offsetHeight)
+    )
+
+    listParent.value.style.setProperty('--max-height', `${newParentHeight * (visibleOptions as number)}px`)
+}
+
+onMounted(() => {
+    visibleOptions ? startListMaxHeight() : null;
+    current ? startSelectingOption() : null;
 })
 </script>
 <style src="./BaseList.scss" lang="scss"></style>
