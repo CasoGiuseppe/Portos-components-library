@@ -76,4 +76,10 @@
         flex: 1;
         gap: var(--spacing-30);
     }
+
+    &__icon {
+        [data-mode='default'] & {
+            order: 2;
+        }
+    }
 }

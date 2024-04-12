@@ -15,15 +15,19 @@
             @keyup.enter="select"
             @focus="focus"
             @click="select"
-        >
+            >
+            <span
+                v-if="icon"
+                class="base-list__icon"
+            ><slot :property="{ icon: item.icon }" name="icon" /></span>
             <p class="base-list__label">
-                <slot :property="{ label: item.label, icon: item.icon }" name="row"></slot>
+                <slot :property="{ label: item.label }" name="row" />
             </p>
         </li>
     </ul>
 </template>
 <script setup lang="ts">
-import { computed, onMounted, ref, type Component, type PropType } from 'vue';
+import { computed, onMounted, ref, useSlots, type Component, type PropType } from 'vue';
 import { Mode } from './types';
 import { validateValueCollectionExists } from '@ui/utilities/validation/useValidation';
 
@@ -63,6 +67,9 @@ const { current } = defineProps({
     validator: (prop: Mode) => validateValueCollectionExists({ collection: Mode, value: prop})
   },
 })
+
+const slots = useSlots();
+const icon = computed(() => !!slots['icon']);
 
 const tabIndex = ref<number>(0)
 const listParent = ref<HTMLElement | null>(null);

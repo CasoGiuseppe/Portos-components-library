@@ -12,13 +12,13 @@
         current="option2"
         @send="setValue"
       >
-        <template #row="{ property: { label, icon } }">
+        <template #row="{ property: { label } }">{{ label }}</template>
+        <template #icon="{ property: { icon } } ">
           <component
             v-if="icon"
             :is="icon.type"
             v-bind="icon.props"
           />
-          {{ label }}
         </template>
       </BaseList>
     </section>
