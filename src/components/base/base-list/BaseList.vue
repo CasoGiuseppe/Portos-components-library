@@ -127,16 +127,16 @@ const focus = (payload: Event): void => {
 
 const select = (payload: Event | Element): void => {
     const payloadByInstance = payload instanceof Event ? payload.target as HTMLInputElement : payload as HTMLInputElement;
-    
+    const { dataset: { option }, innerText } = payloadByInstance;
+    if(option === currentNode.value) return;
+
     if (payload instanceof Event) {
         payload.preventDefault()
         payload.stopPropagation()
     }
-
-    const { dataset: { option }, innerText } = payloadByInstance;
+    payloadByInstance.scrollIntoView()
     currentNode.value = option;
     customEmits('send', { option, label: innerText })
-    payloadByInstance.scrollIntoView()
 };
 
 const startSelectingOption = ():void => {
