@@ -4,7 +4,7 @@
       <BaseList
         :list="list"
         :mode="Mode.DROPDOWN"
-        current="option2"
+        current="option4"
         @send="setValue"
       >
         <template #row="{ property: { label } }">{{ label }}</template>
@@ -67,7 +67,7 @@ const list = [
   }
 ]
 
-const setValue = ({ label, option }: { label: string, optiom: string }): void => { 
+const setValue = ({ label, option }: { label: string, option: string }): void => { 
   labelField.value = label;
   console.log(option)
 }

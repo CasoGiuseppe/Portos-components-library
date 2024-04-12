@@ -114,29 +114,20 @@ const focus = (payload: Event): void => {
     tabIndex.value = parseInt(index, 10);
 }
 
-const select = (payload: Event): void => {
-    const { dataset: { option }, innerText } = payload.target as HTMLInputElement;
-    console.log(option)
+const select = (payload: Event | Element): void => {
+    const { dataset: { option }, innerText } = payload instanceof Event ? payload.target as HTMLInputElement : payload as HTMLInputElement;
     currentNode.value = option;
     customEmits('send', { option, label: innerText })
 };
 
-// const getSelectedOption = ({ nodeValue }: { nodeValue: string }) => {
-//     if(!listParent.value) return;
-//     const getCurrentFromDOMElements = listParent.value.querySelector(`[data-option="${nodeValue}"]`) as HTMLElement;
-//     if(!getCurrentFromDOMElements) return;
-// }
-
-// set
-
 onMounted(() => {
     if(!current) return;
-    
+    if(!listParent.value) return;
 
-    
+    const startNode = listParent.value.querySelector(`[data-option="${current}"]`);
+    if(!startNode) return;
 
-    // getCurrentFromDOMElements.dataset.current = 'true'
-    // console.log(getCurrentFromDOMElements)
+    select(startNode)
 })
 </script>
 <style src="./BaseList.scss" lang="scss"></style>
