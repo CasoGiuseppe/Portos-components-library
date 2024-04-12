@@ -17,6 +17,11 @@ Add this in the main.ts of your project:
 import 'vue-components-noatum/dist/style.css';
 ```
 
+And add this in the in assets in global.scss of your project:
+```bash
+@import '../../node_modules/vue-components-noatum/src/assets/global.scss';
+```
+
 ## Declarate Modules
 
 Create a file vue-components-noatum.d.ts in your project and add the following line:

@@ -1,10 +1,17 @@
 import { resolve } from "node:path";
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import dts from 'vite-plugin-dts';
 
-// https://vitejs.dev/config/
+
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [    vue(),
+    dts({
+      outDir: 'dist/types',
+      include: ['src/**/*.ts', 'src/**/*.d.ts', 'src/**/*.vue'],
+      exclude: ['src/main.ts']
+    }),
+  ],
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),

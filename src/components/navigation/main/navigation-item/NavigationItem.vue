@@ -1,13 +1,15 @@
 <template>
     <button
-        :dir="rtl ? 'rtl' : 'ltr'"
-        :class="[
-            'navigation-item',
-            selected ? 'navigation-item--is-selected' : null,
-            collapsed ? 'navigation-item--is-collapsed' : null,
-            children ? 'navigation-item--has-second-level' : null,
-            insideFocus ? 'navigation-item--has-inside-focus' : null
-        ]"
+    :id="id"
+    :dir="rtl ? 'rtl' : 'ltr'"
+    :class="[
+        'navigation-item',
+        selected ? 'navigation-item--is-selected' : null,
+        collapsed ? 'navigation-item--is-collapsed' : null,
+        child ? 'navigation-item--has-second-level' : null,
+        insideFocus ? 'navigation-item--has-inside-focus' : null,
+        fullSize ? 'navigation-item--is-fullSize' : null
+    ]"
         data-testID="ui-navigation-item"
         v-click-outside="outsideAction"
         @click="submit"
@@ -18,7 +20,7 @@
         </picture>
 
         <button
-            v-if="children"
+            v-if="child"
             class="navigation-item__action"
             data-testID="ui-navigation-item-action"
         />
@@ -32,12 +34,12 @@
         </p>
 
         <aside
-            v-if="children"
+            v-if="child"
             class="navigation-item__second-level"
             tabindex="0"
         >
             <!-- @slot Slot for second level content -->
-            <slot name="children" />
+            <slot name="child" />
         </aside>
     </button>
 </template>
@@ -52,13 +54,14 @@ const insideFocus = ref<boolean>(false);
 const props = withDefaults(defineProps<INavigationItemComponent>(), {
     id: 'item',
     selected: false,
-    rtl: true,
-    collapsed: false
+    rtl: false,
+    collapsed: false,
+    fullSize: false
 });
 
 const slots = useSlots();
 const label = computed(() => !!slots['label']);
-const children = computed(() => !!slots['children']);
+const child = computed(() => !!slots['child']);
 const showLabel = computed(() => label.value && !props.collapsed);
 
 const submit = () => {
@@ -67,7 +70,6 @@ const submit = () => {
 };
 
 const outsideAction = () => insideFocus.value = false;
-
 </script>
 
 <style src="./NavigationItem.scss" lang="scss"></style>

@@ -21,6 +21,7 @@ export enum Types {
     NAVIGATION = 'navigation',
     SYSTEM = 'system',
     USER = 'user',
+    PLACEHOLDER = 'placeholder'
 }
 
 export type Names = keyof typeof custom

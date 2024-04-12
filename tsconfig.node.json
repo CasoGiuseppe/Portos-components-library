@@ -7,9 +7,7 @@
     "nightwatch.conf.*",
     "playwright.config.*",
     "src/**/*.ts",
-    "src/**/*.vue",
-    "src/index.ts",
-    "src/**/*.scss"
+    "src/**/*.vue"
   ],
   "exclude": [
     "node_modules",
@@ -22,10 +20,12 @@
     "lib": ["esnext", "dom"],
     "composite": true,
     "declaration": true,
-    "noEmit": true,
+    "declarationDir": "./dist/types", // Directorio para los archivos .d.ts
+    "noEmit": false, // Cambiar a false para permitir la emisión de archivos
+    "emitDeclarationOnly": true, // Emitir solo archivos de declaración
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
     "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "moduleResolution": "Node", // Cambiar a Node para resolución de módulos
     "types": ["node"],
     "paths": {
       "@/*": ["./src/*"],
