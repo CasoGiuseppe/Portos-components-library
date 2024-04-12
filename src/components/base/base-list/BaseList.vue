@@ -16,6 +16,7 @@
                 @keyup.down="keyMove"
                 @keyup.up="keyMove"
                 @keyup.enter="select"
+                @keyup.space="select"
                 @focus="focus"
                 @click="select"
                 >
@@ -125,18 +126,23 @@ const focus = (payload: Event): void => {
 }
 
 const select = (payload: Event | Element): void => {
-    const { dataset: { option }, innerText } = payload instanceof Event ? payload.target as HTMLInputElement : payload as HTMLInputElement;
+    const payloadByInstance = payload instanceof Event ? payload.target as HTMLInputElement : payload as HTMLInputElement;
+    
+    if (payload instanceof Event) {
+        payload.preventDefault()
+        payload.stopPropagation()
+    }
+
+    const { dataset: { option }, innerText } = payloadByInstance;
     currentNode.value = option;
     customEmits('send', { option, label: innerText })
+    payloadByInstance.scrollIntoView()
 };
 
 const startSelectingOption = ():void => {
     if(!listParent.value) return;
-
     const startNode = listParent.value.querySelector(`[data-option="${current}"]`);
     if(!startNode) return;
-    (startNode as HTMLElement).scrollIntoView()
-
     select(startNode)
 }
 

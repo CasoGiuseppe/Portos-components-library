@@ -5,7 +5,7 @@
         :list="list"
         :mode="Mode.DROPDOWN"
         :visibleOptions="3"
-        current="option4"
+        current="option3"
         @send="setValue"
       >
         <template #row="{ property: { label } }">{{ label }}</template>
@@ -70,7 +70,7 @@ const list = [
 
 const setValue = ({ label, option }: { label: string, option: string }): void => { 
   labelField.value = label;
-  console.log(option)
+  // console.log(option)
 }
 
 
