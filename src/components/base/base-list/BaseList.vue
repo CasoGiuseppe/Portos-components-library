@@ -135,6 +135,7 @@ const startSelectingOption = ():void => {
 
     const startNode = listParent.value.querySelector(`[data-option="${current}"]`);
     if(!startNode) return;
+    (startNode as HTMLElement).scrollIntoView()
 
     select(startNode)
 }
