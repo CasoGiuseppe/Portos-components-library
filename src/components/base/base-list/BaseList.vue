@@ -10,6 +10,7 @@
             tabindex="0"
             :data-index="index"
             :data-option="item.option"
+            :data-current="currentNode === item.option ? true : false"
             @keyup.down="keyMove"
             @keyup.up="keyMove"
             @keyup.enter="select"
@@ -19,7 +20,9 @@
             <span
                 v-if="icon"
                 class="base-list__icon"
-            ><slot :property="{ icon: item.icon }" name="icon" /></span>
+            >
+                <slot :property="{ icon: item.icon }" name="icon" />
+            </span>
             <p class="base-list__label">
                 <slot :property="{ label: item.label }" name="row" />
             </p>
@@ -73,6 +76,8 @@ const icon = computed(() => !!slots['icon']);
 
 const tabIndex = ref<number>(0)
 const listParent = ref<HTMLElement | null>(null);
+const currentNode = ref<String | undefined>(current);
+
 const listSize = computed(() => {
     if(!listParent.value) return 0;
     const childs = [...listParent.value.childNodes].filter((node) => node.nodeName !== '#text')
@@ -110,19 +115,28 @@ const focus = (payload: Event): void => {
 }
 
 const select = (payload: Event): void => {
-    const { dataset: { option }, innerText } = payload.target as HTMLInputElement
+    const { dataset: { option }, innerText } = payload.target as HTMLInputElement;
+    console.log(option)
+    currentNode.value = option;
     customEmits('send', { option, label: innerText })
 };
 
+// const getSelectedOption = ({ nodeValue }: { nodeValue: string }) => {
+//     if(!listParent.value) return;
+//     const getCurrentFromDOMElements = listParent.value.querySelector(`[data-option="${nodeValue}"]`) as HTMLElement;
+//     if(!getCurrentFromDOMElements) return;
+// }
+
+// set
+
 onMounted(() => {
     if(!current) return;
-    if(!listParent.value) return;
+    
 
-    const getCurrentFromDOMElements = listParent.value.querySelector(`[data-option="${current}"]`) as HTMLElement
-    if(!getCurrentFromDOMElements) return;
+    
 
-    getCurrentFromDOMElements.dataset.current = 'true'
-    console.log(getCurrentFromDOMElements)
+    // getCurrentFromDOMElements.dataset.current = 'true'
+    // console.log(getCurrentFromDOMElements)
 })
 </script>
 <style src="./BaseList.scss" lang="scss"></style>

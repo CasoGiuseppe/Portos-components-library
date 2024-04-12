@@ -43,11 +43,11 @@
             @include item-focus()
         }
 
-        &:not([data-current]) {
+        &:not([data-current = true]) {
             cursor: pointer;
         }
 
-        &[data-current] {
+        &[data-current = true] {
             @include text-body-m--bold;
             @include item-focus();
             box-shadow: inset var(--spacing-10, 0) 0 0 var(--color-primary-40, #000);
@@ -68,6 +68,11 @@
             }
             
         }
+    }
+
+    &__label,
+    &__icon {
+        pointer-events: none;
     }
 
     &__label {

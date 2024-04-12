@@ -1,10 +1,5 @@
 <template>
     <section style="padding: 15px;">
-      <!-- <BaseList
-        :options="options"
-        @select="selectOption"
-      />  -->
-
       <input type="text" :value="labelField">
       <BaseList
         :list="list"
@@ -72,7 +67,10 @@ const list = [
   }
 ]
 
-const setValue = ({ label }: { label: string }): void => { labelField.value = label }
+const setValue = ({ label, option }: { label: string, optiom: string }): void => { 
+  labelField.value = label;
+  console.log(option)
+}
 
 
 
