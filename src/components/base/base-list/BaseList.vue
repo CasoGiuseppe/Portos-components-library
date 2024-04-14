@@ -35,7 +35,7 @@
 </template>
 <script setup lang="ts">
 import { computed, onMounted, ref, useSlots, type Component, type PropType } from 'vue';
-import { Mode } from './types';
+import { Mode, type UniqueId } from './types';
 import { validateValueCollectionExists } from '@ui/utilities/validation/useValidation';
 
 export type IIcon = {
@@ -51,35 +51,43 @@ export type IList = {
 
 const { current, visibleOptions } = defineProps({
     /**
-   * Set the list of component elements
-   */
-  list: {
-    type: Array as PropType<Array<IList>>,
-    default: () => []
-  },
+     * Set the unique id of the list component
+     */
+    id: {
+        type: String as PropType<UniqueId>,
+        default: 'ListId'
+    },
 
-   /**
-   * Set the current selected item
-   */
-   current: {
-    type: String as PropType<String>,
-  },
+    /**
+     * Set the list of component elements
+     */
+    list: {
+        type: Array as PropType<Array<IList>>,
+        default: () => []
+    },
 
-  /**
-   * Set the current selected item
-   */
-   mode: {
-    type: String as PropType<Mode>,
-    default: Mode.DEFAULT,
-    validator: (prop: Mode) => validateValueCollectionExists({ collection: Mode, value: prop})
-  },
+    /**
+     * Set the current selected item
+     */
+    current: {
+        type: String as PropType<String>,
+    },
 
-  /**
-   * Set list visible options
-   */
-  visibleOptions: {
-    type: Number as PropType<Number>,
-  }
+    /**
+     * Set the current selected item
+     */
+    mode: {
+        type: String as PropType<Mode>,
+        default: Mode.DEFAULT,
+        validator: (prop: Mode) => validateValueCollectionExists({ collection: Mode, value: prop})
+    },
+
+    /**
+     * Set list visible options
+     */
+    visibleOptions: {
+        type: Number as PropType<Number>,
+    }
 })
 
 const slots = useSlots();
@@ -128,13 +136,13 @@ const focus = (payload: Event): void => {
 const select = (payload: Event | Element): void => {
     const payloadByInstance = payload instanceof Event ? payload.target as HTMLInputElement : payload as HTMLInputElement;
     const { dataset: { option }, innerText } = payloadByInstance;
-    if(option === currentNode.value) return;
 
     if (payload instanceof Event) {
         payload.preventDefault()
         payload.stopPropagation()
     }
-    payloadByInstance.scrollIntoView()
+
+    payloadByInstance.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
     currentNode.value = option;
     customEmits('send', { option, label: innerText })
 };

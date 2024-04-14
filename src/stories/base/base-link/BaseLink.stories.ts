@@ -59,7 +59,7 @@ const Templates: Story = {
           </BaseLink>
         </section>
     `,
-    methods: { action: action('sumitted') }
+    methods: { action: action('submitted') }
   })
 }
 
