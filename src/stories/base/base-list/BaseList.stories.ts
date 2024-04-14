@@ -59,7 +59,8 @@ const meta: Meta = {
       list: { control: 'object', options: List },
       current: { control: 'select', options: ['option1', 'option2', 'option3'] },
       mode: { control: 'select', options: Object.values(Mode)},
-      visibleOptions: { conttol: 'number' }
+      visibleOptions: { conttol: 'number' },
+      row: { control: 'text' }
     },
     
     args: {

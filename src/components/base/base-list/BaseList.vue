@@ -24,9 +24,11 @@
                     v-if="icon"
                     class="base-list__icon"
                 >
+                     <!-- @slot icon: Set option icon content -->
                     <slot :property="{ icon: item.icon }" name="icon" />
                 </span>
                 <p class="base-list__label">
+                     <!-- @slot row: Set option label content -->
                     <slot :property="{ label: item.label }" name="row" />
                 </p>
             </li>
