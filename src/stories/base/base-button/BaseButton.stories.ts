@@ -13,10 +13,7 @@ const meta = {
         label: { control: 'text' },
         type: { control: 'select', options: Object.values(Types) },
         size: { control: 'select', options: Object.values(Sizes) },
-        variant: {
-            control: 'radio', options: [true, false],
-            if: { arg: "type", eq: 'primary' },
-        },
+        variant: { control: 'radio', options: [true, false] },
         disabled: { control: 'radio', options: [true, false] },
         active: { if: { arg: 'type', eq: 'dropdown' }, control: 'radio', options: [true, false] },
         default: { control: 'text' },
@@ -49,7 +46,11 @@ const Templates: Story = {
                     'display' : 'flex',
                     'gap' : '10px',
                     'padding' : '10px',
-                    'background-color' : args.variant === true ? '#002C5F' : 'white'
+                    'background-color' : (
+                        args.variant === true &&
+                        args.type !== 'dropdown' &&
+                        args.type !== 'backToTop'
+                    ) ? '#002C5F' : 'white'
                 }"
             >
                 <template v-if="args.type === 'primary' || args.type === 'secondary' || args.type === 'tertiary'">
@@ -62,7 +63,6 @@ const Templates: Story = {
                             {{ args.default }}
                             <BaseIcon name="IconArrowCircleRight" type="arrow" size="S"/>
                         </template>
-                        <template #error>{{ args.error }}</template>
                     </BaseButton>
                 </template>
 
