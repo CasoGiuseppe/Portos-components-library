@@ -10,23 +10,30 @@
             class="base-fieldset__label">
             <slot name="label" />
         </label>
-        <BaseCheckbox
-            id="label1"
-            active
-            @load="setInitValues"
-        >label1</BaseCheckbox>
-        <BaseCheckbox
-            id="label2"
-            @load="setInitValues"
-        >label2</BaseCheckbox>
+        <ul class="base-fieldset__fields">
+            <li v-for="{ type, props, label } in fields">
+                <Component
+                    :is="type"
+                    v-bind="props"
+                    @load="setInitValues"
+                >
+                    {{  label }}
+                </Component>
+            </li>
+        </ul>
     </fieldset>
 </template>
 <script setup lang="ts">
-import { computed, ref, toRaw, useSlots, type PropType } from 'vue';
-import BaseCheckbox from '../base-checkbox/BaseCheckbox.vue';
+import { computed, ref, toRaw, useSlots, type Component, type PropType } from 'vue';
 import type { Response } from './types';
 
 const fieldSetValues = ref<Response[]>([]);
+
+export type IField = {
+    type: Component,
+    label: string,
+    props: Record<string, any>;
+}
 
 defineProps({
     /**
@@ -36,6 +43,14 @@ defineProps({
         type: Boolean as PropType<boolean>,
         default: false
     },
+
+    /**
+     * Set the list of component fields
+     */
+     fields: {
+        type: Array as PropType<Array<IField>>,
+        default: () => []
+    }
 })
 
 const slots = useSlots();

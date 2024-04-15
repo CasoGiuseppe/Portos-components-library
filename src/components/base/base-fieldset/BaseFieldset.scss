@@ -11,4 +11,14 @@
 
     border: none;
     color: var(--color-neutral-70, #000);
+
+    &__fields {
+        align-items: center;
+        display: flex;
+        gap: var(--spacing-50, 0);
+
+        > li {
+            display: flex;
+        }
+    }
 }
