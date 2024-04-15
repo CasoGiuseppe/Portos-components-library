@@ -1,3 +1,5 @@
+// TODO: crear variables para estilos comunes (fijarse en BaseCheckbox)
+
 @mixin createHoverState() {
   @media (hover){
     &:active,
@@ -10,52 +12,67 @@
 }
 
 .base-button {
-  $basebutton: &;
-  --animationTime: .4s;
+  display: grid;
+  gap: var(--spacing-30);
+  width: fit-content;
 
-  align-items: center;
-  display: flex;
-  gap: var(--spacing-40, 0);
-  justify-content: center;
-
-  border: none;
-  border-radius: var(--radius-500, 0);
-  color: var(--color-neutral-10, #000);
-
-  transition: background var(--animationTime, 0s) ease-out,
-              box-shadow var(--animationTime, 0s) ease-out,
-              border-color var(--animationTime, 0s) ease-out,
-              color var(--animationTime, 0s) ease-out;
-
-  &:disabled {
-    pointer-events: none;
-
-    &:not([class*="tertiary"]) {
-      background: var(--color-neutral-40, #000);
-      color:  var(--color-neutral-60, #000);
+  &__element {
+    $basebutton: &;
+    --animationTime: .4s;
+  
+    align-items: center;
+    display: flex;
+    gap: var(--spacing-40, 0);
+    justify-content: center;
+  
+    border: none;
+    border-radius: var(--radius-500, 0);
+    color: var(--color-neutral-10, #000);
+  
+    transition: background var(--animationTime, 0s) ease-out,
+                box-shadow var(--animationTime, 0s) ease-out,
+                border-color var(--animationTime, 0s) ease-out,
+                color var(--animationTime, 0s) ease-out;
+  
+    &:disabled {
+      pointer-events: none;
+  
+      &:not([class*="tertiary"]) {
+        background: var(--color-neutral-40, #000);
+        color:  var(--color-neutral-60, #000);
+      }
+  
+      &[class*="tertiary"] {
+        background: none;
+        border-width: 1px;
+        border-style: solid;
+      }
+  
+      &:not([class*="ALT"]) {
+        border-color: var(--color-neutral-50, #000);
+        color: var(--color-neutral-50, #000);
+      }
+  
+      border-color: var(--color-neutral-40, #000);
+      color: var(--color-neutral-40, #000);
+  
+      &[class*="dropdown"] {
+        border:  1px solid var(--color-neutral-50);
+        background-color: var(--color-neutral-20);
+        
+        &::after {
+          border-color: var(--color-neutral-50);
+        }
+      }
     }
-
-    &[class*="tertiary"] {
-      background: none;
-      border-width: 1px;
-      border-style: solid;
-    }
-
-    &:not([class*="ALT"]) {
-      border-color: var(--color-neutral-50, #000);
-      color: var(--color-neutral-50, #000);
-    }
-
-    border-color: var(--color-neutral-40, #000);
-    color: var(--color-neutral-40, #000);
-  }
-
-  @media (hover) {
-    &:focus-visible {
-      box-shadow: 0 0 0 2px var(--color-neutral-10, #000), 0 0 0 4px var(--color-outline, #000);
-
-      &[class*="ALT"] {
-        box-shadow: 0 0 0 2px var(--color-outline, #000), 0 0 0 4px var(--color-neutral-10, #000);
+  
+    @media (hover) {
+      &:focus-visible {
+        box-shadow: 0 0 0 2px var(--color-neutral-10, #000), 0 0 0 4px var(--color-outline, #000);
+  
+        &[class*="ALT"] {
+          box-shadow: 0 0 0 2px var(--color-outline, #000), 0 0 0 4px var(--color-neutral-10, #000);
+        }
       }
     }
   }
@@ -122,6 +139,46 @@
       }
     }
 
+    &-dropdown {
+      background-color: var(--color-neutral-10);
+      border: 1px solid var(--color-neutral-50);
+      border-radius: var(--radius-300);
+
+      &-placeholder {
+        color: var(--color-neutral-50);
+        font-weight: var(--font-weight-400);
+  
+        &[data-checked="true"] {
+          color: var(--color-neutral-70);
+        }
+      }
+
+      &::after {
+        content: '';
+        transition: 0.3s;
+        border: solid var(--color-primary-40);
+        border-width: 0 var(--spacing-10) var(--spacing-10) 0;
+        padding: var(--spacing-20, 0);
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        position: relative;
+        bottom: var(--spacing-10);
+      }
+
+      &[data-active="true"] {
+        &::after {
+          transform: rotate(-135deg);
+          -webkit-transform: rotate(-135deg);
+          position: relative;
+          top: var(--spacing-20);
+        }
+      }
+
+      &[data-invalid="true"] {
+        border:  1px solid var(--color-error-30);
+      }
+    }
+
     // sizing
     &-L,
     &-M {
@@ -141,4 +198,13 @@
       padding: var(--spacing-20, 0) var(--spacing-50, 0);
     }
   }
+
+  &__footer {
+    @include text-body-xs--regular;
+
+    display: flex;
+    gap: var(--spacing-30);
+    color: var(--color-error-30);
+  }
 }
+
