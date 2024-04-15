@@ -1,5 +1,4 @@
 // TODO: crear variables para estilos comunes (fijarse en BaseCheckbox)
-
 @mixin createHoverState() {
   @media (hover){
     &:active,
@@ -149,23 +148,22 @@
       }
 
       &::after {
-        content: '';
-        transition: 0.3s;
         border: solid var(--color-primary-40);
         border-width: 0 var(--spacing-10) var(--spacing-10) 0;
+        content: '';
+
         padding: var(--spacing-20, 0);
-        transform: rotate(45deg);
-        -webkit-transform: rotate(45deg);
         position: relative;
         bottom: var(--spacing-10);
+        
+        transition: 0.3s;
+        transform: rotate(45deg)
       }
 
       &[data-active="true"] {
         &::after {
           transform: rotate(-135deg);
-          -webkit-transform: rotate(-135deg);
-          position: relative;
-          top: var(--spacing-20);
+          bottom: calc(var(--spacing-10) * -1);
         }
       }
 

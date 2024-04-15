@@ -13,9 +13,14 @@ const meta = {
         label: { control: 'text' },
         type: { control: 'select', options: Object.values(Types) },
         size: { control: 'select', options: Object.values(Sizes) },
-        variant: { control: 'radio', options: [true, false] },
+        variant: {
+            control: 'radio', options: [true, false],
+            if: { arg: "type", eq: 'primary' },
+        },
         disabled: { control: 'radio', options: [true, false] },
-        default: { control: 'text' }
+        active: { if: { arg: 'type', eq: 'dropdown' }, control: 'radio', options: [true, false] },
+        default: { control: 'text' },
+        error: { if: { arg: 'type', eq: 'dropdown' }, control: 'text'}
     },
     args: {
         id: 'defaultID',
@@ -24,7 +29,9 @@ const meta = {
         size: Sizes.L,
         disabled: false,
         variant: false,
-        default: 'Button label',
+        active: false,
+        default: 'Select your option',
+        error: ''
       }
 } satisfies Meta<typeof BaseButton>;
 
@@ -45,6 +52,7 @@ const Templates: Story = {
                     'background-color' : args.variant === true ? '#002C5F' : 'white'
                 }"
             >
+                <template v-if="args.type === 'primary' || args.type === 'secondary' || args.type === 'tertiary'">
                     <BaseButton v-bind="args" @send="action">
                         <template #default>{{ args.default }}</template>
                     </BaseButton>
@@ -54,21 +62,27 @@ const Templates: Story = {
                             {{ args.default }}
                             <BaseIcon name="IconArrowCircleRight" type="arrow" size="S"/>
                         </template>
+                        <template #error>{{ args.error }}</template>
                     </BaseButton>
+                </template>
 
-                    <BaseButton v-bind="args" @send="action">
+                <template v-if="args.type === 'backToTop'">
+                    <BaseButton v-bind="args" type='backToTop' @send="action">
+                        <template #default>
+                            {{ args.default }}
+                            <BaseIcon name="IconArrowUpMD" type="arrow" size="S"/>
+                        </template>
+                    </BaseButton>
+                </template>
+
+                <template v-if="args.type === 'dropdown'">
+                    <BaseButton v-bind="args" type="dropdown" @send="action">
                         <template #default>
                             {{ args.default }}
                         </template>
-                        <template #error>
-                            <BaseIcon
-                            name="IconFeedbackError"
-                            size="XS"
-                            type="feedback"
-                        />
-                            <p v-text="'Error text'" />
-                        </template>
+                        <template v-if="args.error" #error>{{ args.error  }}</template>
                     </BaseButton>
+                </template>
             </section>
         `,
         methods: { action: action('submitted') }
