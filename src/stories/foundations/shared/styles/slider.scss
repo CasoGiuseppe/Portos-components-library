@@ -1,0 +1,24 @@
+.slider-item {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    background: hsla(209, 61%, 34%, 1);
+    color: #fff;
+    outline-offset: -1px;
+    outline: 1px solid #fff;
+    width: 160px;
+
+    &[id="3"],
+    &[id="5"],
+    &[id="9"]{
+        width: 220px;
+        background: hsla(213, 34%, 71%, 1);
+    }
+
+    &[id="2"],
+    &[id="11"] {
+        width: 100px;
+        background: hsla(356, 63%, 41%, 1);
+    }
+}
