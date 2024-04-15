@@ -1,83 +1,169 @@
 <template>
-  <ul class="base-list">
-    <li
-        v-for="(option, index) in options"
-        :key="option.label"
-        :data-selected="selectedOption?.label === option.label"
-        :ref="index === activeIndex ? 'activeOption' : ''"
-        @click="selectOption(option)"
-        @keyup.enter="selectOption(option)"
-        @keydown.prevent="handleKeydown"
-        class="base-list--option"
-        tabindex="0"
-      >
-        <BaseIcon
-            :name="option?.icon?.name"
-            :type="option?.icon?.type"
-        />
-        <p v-text="option.label" />
-        <i class="base-list--option-check" />
-    </li>
-  </ul>
+    <section class="base-list" >
+        <ul
+            class="base-list__list"
+            ref="listParent"
+            :data-mode="mode"
+        >
+            <li
+                class="base-list__option"
+                v-for="(item, index) in list"
+                :key="item.id"
+                tabindex="0"
+                :data-index="index"
+                :data-option="item.option"
+                :data-current="currentNode === item.option ? true : false"
+                @keyup.down="keyMove"
+                @keyup.up="keyMove"
+                @keyup.enter="select"
+                @keyup.space="select"
+                @focus="focus"
+                @click="select"
+                >
+                <span
+                    v-if="icon"
+                    class="base-list__icon"
+                >
+                     <!-- @slot icon: Set option icon content -->
+                    <slot :icon="item.icon" name="icon" />
+                </span>
+                <p class="base-list__label">
+                     <!-- @slot row: Set option label content -->
+                    <slot :label="item.label" name="row" />
+                </p>
+            </li>
+        </ul>
+    </section>
 </template>
-
 <script setup lang="ts">
-import { nextTick, ref } from 'vue';
+import { computed, onMounted, ref, useSlots, type PropType } from 'vue';
+import { Mode, type UniqueId, type IList } from './types';
+import { validateValueCollectionExists } from '@ui/utilities/validation/useValidation';
 
-import type { IBaseListComponent, IListOption } from './types';
-import BaseIcon from '@/components/base/base-icon/BaseIcon.vue';
+const { current, visibleOptions } = defineProps({
+    /**
+     * Set the unique id of the list component
+     */
+    id: {
+        type: String as PropType<UniqueId>,
+        default: 'ListId'
+    },
 
-const customEmits = defineEmits(['select']);
-const selectedOption = ref<IListOption>();
+    /**
+     * Set the list of component elements
+     */
+    list: {
+        type: Array as PropType<Array<IList>>,
+        default: () => []
+    },
 
-const { options } = withDefaults(defineProps<IBaseListComponent>(), {
-  options: () => ([])
-});
+    /**
+     * Set the current selected item
+     */
+    current: {
+        type: String as PropType<String>,
+    },
 
-const activeIndex = ref<number>(-1);
-const activeOption = ref<HTMLCollectionOf<HTMLElement>>();
+    /**
+     * Set the current selected item
+     */
+    mode: {
+        type: String as PropType<Mode>,
+        default: Mode.DEFAULT,
+        validator: (prop: Mode) => validateValueCollectionExists({ collection: Mode, value: prop})
+    },
 
-const focusActiveOption = () => {
-  nextTick(() => {
-    activeOption?.value?.[0].focus();
-  }); 
+    /**
+     * Set list visible options
+     */
+    visibleOptions: {
+        type: Number as PropType<Number>,
+    }
+})
+
+const slots = useSlots();
+const icon = computed(() => !!slots['icon']);
+
+const tabIndex = ref<number>(0)
+const listParent = ref<HTMLElement | null>(null);
+const currentNode = ref<String | undefined>(current);
+
+const listSize = computed(() => {
+    if(!listParent.value) return 0;
+    const childs = [...listParent.value.childNodes].filter((node) => node.nodeName !== '#text')
+    return childs.length - 1
+})
+
+const customEmits = defineEmits(['send']);
+const keyMove = ({ code }: { code: string }) => keyHandler[code as keyof typeof keyHandler]()
+
+const keyHandler = {
+    ArrowDown: (): void => {
+        const currentIndex = tabIndex.value = tabIndex.value === listSize.value ? 0 : tabIndex.value + 1
+        const currentDOMNode = getDOMElementByData({ index: currentIndex }) as HTMLElement
+        if(!currentDOMNode) return
+        currentDOMNode.focus()
+    },
+
+    ArrowUp: (): void => {
+        const currentIndex = tabIndex.value = tabIndex.value === 0 ? listSize.value : tabIndex.value - 1
+        const currentDOMNode = getDOMElementByData({ index: currentIndex }) as HTMLElement
+        if(!currentDOMNode) return
+        currentDOMNode.focus()
+    }
+}
+
+const getDOMElementByData = ({ index } : { index: number }): Element | undefined => {
+    if(!listParent.value) return;
+    return listParent.value.querySelector(`[data-index="${index}"]`) || undefined
+}
+
+const focus = (payload: Event): void => {
+    const { dataset: { index } } = payload.target as HTMLInputElement
+    if(!index) return
+    tabIndex.value = parseInt(index, 10);
+}
+
+const select = (payload: Event | Element): void => {
+    const payloadByInstance = payload instanceof Event ? payload.target as HTMLInputElement : payload as HTMLInputElement;
+    const { dataset: { option }, innerText } = payloadByInstance;
+
+    if (payload instanceof Event) {
+        payload.preventDefault()
+        payload.stopPropagation()
+    }
+
+    payloadByInstance.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
+    currentNode.value = option;
+    customEmits('send', { option, label: innerText })
 };
 
-const selectOption = (option: IListOption) => {
-  selectedOption.value = option;
-  customEmits('select', selectedOption.value);
-};
+const startSelectingOption = ():void => {
+    if(!listParent.value) return;
+    const startNode = listParent.value.querySelector(`[data-option="${current}"]`);
+    if(!startNode) return;
+    select(startNode)
+}
 
-const handleKeydown = (event: KeyboardEvent) => {
-  const eventTypes: { [key: string]: () => void } = {
-    ArrowDown: handleArrowDown,
-    ArrowUp: handleArrowUp,
-    Tab: handleArrowDown
-  };
+const startListMaxHeight = (): void => {
+    if(!listParent.value) return;
+    if(!visibleOptions) return;
 
-  const keydownCallback = eventTypes[event.code];
+    const childs = [...listParent.value.childNodes].filter((node: ChildNode) => node.nodeName !== '#text');
 
-  if (keydownCallback) {
-    keydownCallback();
-    focusActiveOption();
-  }
-};
+    if(childs.length === 0) return;
+    if(childs.length <= (visibleOptions as number)) return;
 
-const handleArrowUp = () => {
-  activeIndex.value > 0
-    ? (activeIndex.value--)
-    : (activeIndex.value = options.length - 1);
-};
+    const newParentHeight = Math.max(
+        ...childs.map((el:ChildNode) => (el as HTMLElement).offsetHeight)
+    )
 
-const handleArrowDown = () => {
-  if (activeIndex.value < 0) {
-    activeIndex.value = 0;
-  }
+    listParent.value.style.setProperty('--max-height', `${newParentHeight * (visibleOptions as number)}px`)
+}
 
-  activeIndex.value < options.length - 1
-    ? (activeIndex.value++)
-    : (activeIndex.value = 0);
-};
+onMounted(() => {
+    visibleOptions ? startListMaxHeight() : null;
+    current ? startSelectingOption() : null;
+})
 </script>
-
 <style src="./BaseList.scss" lang="scss"></style>

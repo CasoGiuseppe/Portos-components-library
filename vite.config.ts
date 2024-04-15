@@ -17,6 +17,7 @@ export default defineConfig({
       '@': resolve(__dirname, 'src'),
       '@ui': resolve(__dirname, 'src/components'),
       '@tests': resolve(__dirname, 'src/shared/tests'),
+      // añadir alias para: composables, assets, helpers
     }
   },
   css: {

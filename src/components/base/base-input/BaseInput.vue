@@ -7,9 +7,11 @@
         ]"
         :disabled="disabled"
     >
-        <header class="base-input__header">
+        <header
+            v-if="label"
+            class="base-input__header"
+        >
             <label
-                v-if="label"
                 class="base-input__label"
                 :data-required="!required ? '(optional)' : null"
                 :for="id"

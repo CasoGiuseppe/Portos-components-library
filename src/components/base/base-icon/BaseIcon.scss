@@ -1,7 +1,15 @@
 .base-icon {
     --animationTime: 0.2s;
+    align-items: center;
+    justify-items: center;
     display: flex;
     aspect-ratio: 1/1;
+
+    > svg {
+        align-items: center;
+        display: flex;
+        justify-items: center;
+    }
 
     @include create-animation(
       $name: 'appear-icon',

@@ -22,7 +22,7 @@
 <script setup lang="ts">
 import { defineEmits, type PropType } from 'vue'
 import { type UniqueId, Sizes, Types } from './types';
-import { validateValueCollectionExists } from '@/components/utilities/validation/useValidation';
+import { validateValueCollectionExists } from '@ui/utilities/validation/useValidation';
 
 
 defineProps({

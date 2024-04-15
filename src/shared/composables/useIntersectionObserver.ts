@@ -5,7 +5,7 @@ import type {
 
 const config = {
     root: document.body,
-    rootMargin: '0',
+    rootMargin: '0px',
     threshold: 1,
 };
 

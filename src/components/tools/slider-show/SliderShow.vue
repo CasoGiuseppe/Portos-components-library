@@ -1,0 +1,126 @@
+<template>
+    <section class="slider">
+        <button
+            @click="moveTo({ type: 'prev' })"
+            class="slider--is-prev"
+            data-testID="ui-slider-prev"
+            :disabled="isDisabled"
+        >
+            <BaseIcon
+                id="sliderPrev"
+                :type="Types.CHEVRON"
+                name="IconChevronLeftM"
+                :size="Sizes.S"
+            />
+        </button>
+        <section class="slider__wrapper">
+            <ul class="slider__list" ref="list">
+                <li
+                    v-for="{ id, label, className } in body"
+                    :key="id"
+                    class="slider__item"
+                    :class="`slider__item ${className}`"
+                    data-testID="ui-slider-item"
+                >
+                    <!-- @Slot for item with :property-->
+                    <slot :property="{ label, id }" name="item"></slot>
+                </li>
+            </ul>
+        </section>
+        <button
+            @click="moveTo({})"
+            class="slider--is-next"
+            data-testID="ui-slider-next"
+            :disabled="isDisabled"
+        >
+            <BaseIcon
+                id="sliderNext"
+                :type="Types.CHEVRON"
+                name="IconChevronRightM"
+                :size="Sizes.S"
+            />
+        </button>
+    </section>
+</template>
+
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import useIntersectionObserver from '@/shared/composables/useIntersectionObserver'
+import BaseIcon from '@ui/base/base-icon/BaseIcon.vue'
+import { Types, Sizes } from '@ui/base/base-icon/types'
+import { AwaitScrollIntoView } from '@/shared/helpers';
+
+const list = ref<HTMLElement | null>(null)
+const currentHTMLNode = ref<HTMLElement | null>(null)
+const isDisabled = ref<boolean>(false)
+
+export interface ISLiderItems {
+    body: Record<string, any>[]
+}
+
+withDefaults(defineProps<ISLiderItems>(), {
+    /**
+     * Set table body content
+     */
+    body: () => []
+})
+
+const { createObserver } = useIntersectionObserver({
+    action: (e: any) => {
+        const { isIntersecting } = e
+        e.target.dataset.visible = isIntersecting
+    }
+})
+
+const moveTo = async ({ type = 'next' }: { type?: string }): Promise<void> => {
+    if (!list.value) return
+    if (!currentHTMLNode.value) return
+    isDisabled.value = true
+    const currentNode = getNextPrevSibling({ element: currentHTMLNode.value, type });
+    if(!currentNode) return;
+
+    await AwaitScrollIntoView(
+        currentNode,
+        { block: 'nearest', inline: 'start' }
+    ).then(() => isDisabled.value = false)
+}
+
+const getNextPrevSibling = ({
+    element,
+    type = 'next'
+}: {
+    element: HTMLElement
+    type?: string
+}): HTMLElement => {
+    const target = type === 'next' ? element.nextElementSibling : element.previousElementSibling
+    const HTMLTarget = target as HTMLElement
+    currentHTMLNode.value = HTMLTarget
+    return HTMLTarget
+}
+
+onMounted(() => {
+    const listCollection = list.value
+    if (!listCollection) return
+
+    const collectionChildSize = Array.from(listCollection.childNodes).filter(
+        (node) => node.nodeName !== '#text'
+    )
+    if (collectionChildSize.length === 1) return
+    const childs = [collectionChildSize.at(0), collectionChildSize.at(-1)]
+
+    currentHTMLNode.value = collectionChildSize.at(0) as HTMLElement
+
+    childs.forEach((element) => {
+        createObserver({
+            element: element as HTMLElement,
+            options: {
+                threshold: 1
+            }
+        })
+    })
+
+    list.value!.style.setProperty('--slider-position', `0px`)
+})
+</script>
+
+<style src="./SliderShow.scss" lang="scss"></style>
