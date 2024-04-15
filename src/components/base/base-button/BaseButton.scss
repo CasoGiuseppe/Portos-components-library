@@ -12,10 +12,6 @@
 }
 
 .base-button {
-  display: grid;
-  gap: var(--spacing-30);
-  width: fit-content;
-
   &__element {
     $basebutton: &;
     --animationTime: .4s;
@@ -143,11 +139,10 @@
       background-color: var(--color-neutral-10);
       border: 1px solid var(--color-neutral-50);
       border-radius: var(--radius-300);
+      color: var(--color-neutral-50);
+      font-weight: var(--font-weight-400);
 
       &-placeholder {
-        color: var(--color-neutral-50);
-        font-weight: var(--font-weight-400);
-  
         &[data-checked="true"] {
           color: var(--color-neutral-70);
         }
@@ -201,6 +196,7 @@
 
   &__footer {
     @include text-body-xs--regular;
+    margin-top: var(--spacing-30);
 
     display: flex;
     gap: var(--spacing-30);
