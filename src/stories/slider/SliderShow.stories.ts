@@ -4,7 +4,7 @@ import SliderShow from '@ui/slider/SliderShow.vue'
 import NavigationItemContextual from '@/components/navigation/contextual/navigation-item/NavigationItemContextual.vue'
 
 const meta: Meta<typeof SliderShow> = {
-  title: 'Slider/Slider',
+  title: 'Tools/Slider',
   component: SliderShow,
   tags: ['autodocs'],
   args: {
@@ -74,7 +74,10 @@ export const Default: Story = {
         <section style="width: 70vw; padding: 10px">
           <SliderShow :body="args.body">
             <template #item="{ property: { label, id } }">
-              <div style="padding: 1rem; border: 1px solid #e8e8e8">{{ label }}{{ id }}</div>
+              <div
+                :id="id"
+                class="slider-item"
+              >{{ label }}{{ id }}</div>
             </template>
           </SliderShow>
         </section>

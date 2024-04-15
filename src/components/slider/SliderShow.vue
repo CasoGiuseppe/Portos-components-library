@@ -6,14 +6,12 @@
             data-testID="ui-slider-prev"
             :disabled="isDisabled"
         >
-            <Suspense>
-                <BaseIcon
-                    id="sliderPrev"
-                    :type="Types.CHEVRON"
-                    name="IconChevronLeftM"
-                    :size="Sizes.S"
-                />
-            </Suspense>
+            <BaseIcon
+                id="sliderPrev"
+                :type="Types.CHEVRON"
+                name="IconChevronLeftM"
+                :size="Sizes.S"
+            />
         </button>
         <section class="slider__wrapper">
             <ul class="slider__list" ref="list">
@@ -35,14 +33,12 @@
             data-testID="ui-slider-next"
             :disabled="isDisabled"
         >
-            <Suspense>
-                <BaseIcon
-                    id="sliderNext"
-                    :type="Types.CHEVRON"
-                    name="IconChevronRightM"
-                    :size="Sizes.S"
-                />
-            </Suspense>
+            <BaseIcon
+                id="sliderNext"
+                :type="Types.CHEVRON"
+                name="IconChevronRightM"
+                :size="Sizes.S"
+            />
         </button>
     </section>
 </template>
@@ -50,8 +46,9 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import useIntersectionObserver from '@/shared/composables/useIntersectionObserver'
-import BaseIcon from '@/components/base/base-icon/BaseIcon.vue'
-import { Types, Sizes } from '@/components/base/base-icon/types'
+import BaseIcon from '@ui/base/base-icon/BaseIcon.vue'
+import { Types, Sizes } from '@ui/base/base-icon/types'
+import { AwaitScrollIntoView } from '@/shared/helpers';
 
 const list = ref<HTMLElement | null>(null)
 const currentHTMLNode = ref<HTMLElement | null>(null)
@@ -75,29 +72,17 @@ const { createObserver } = useIntersectionObserver({
     }
 })
 
-const getNextTargetPosition = ({ current }: { current: HTMLElement }): number => {
-    if (!current) return 0
-    currentHTMLNode.value = current
-    return current.offsetLeft
-}
-
-const moveTo = ({ type = 'next' }: { type?: string }): void => {
+const moveTo = async ({ type = 'next' }: { type?: string }): Promise<void> => {
     if (!list.value) return
     if (!currentHTMLNode.value) return
     isDisabled.value = true
-    setNewPositionVariable({
-        position: getNextTargetPosition({
-            current: getNextPrevSibling({ element: currentHTMLNode.value, type })
-        })
-    })
+    const currentNode = getNextPrevSibling({ element: currentHTMLNode.value, type });
+    if(!currentNode) return;
 
-}
-
-const setNewPositionVariable = ({ position }: { position: number }): void => {
-    if (!list.value) return
-    list.value.style.setProperty('--slider-position', `${position?.toString()}px` || '0')
-
-    list.value.addEventListener('transitionend', () => (isDisabled.value = false))
+    await AwaitScrollIntoView(
+        currentNode,
+        { block: 'nearest', inline: 'start' }
+    ).then(() => isDisabled.value = false)
 }
 
 const getNextPrevSibling = ({

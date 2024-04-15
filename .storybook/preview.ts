@@ -5,6 +5,7 @@ import '../src/stories/foundations/shared/styles/modifiers.scss';
 import '../src/stories/foundations/shared/styles/graduate_colors.scss';
 import '../src/stories/foundations/shared/styles/typography.scss';
 import '../src/stories/foundations/shared/styles/grid.scss';
+import '../src/stories/foundations/shared/styles/slider.scss';
 import { useArgs } from '@storybook//preview-api';
 import ClickOutside from "../src/components/utilities/directives/clickOutside";
 
