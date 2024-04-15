@@ -1,5 +1,5 @@
-.base-fieldset {
-    $basefieldset: &;
+.fieldset-list {
+    $fieldsetlist: &;
 
     @include text-body-m--regular;
 

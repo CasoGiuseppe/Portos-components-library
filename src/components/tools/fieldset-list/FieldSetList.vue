@@ -1,17 +1,21 @@
 <template>
     <fieldset
-        class="base-fieldset"
+        class="fieldset-list"
         :aria-disabled="disabled"
         :disabled="disabled"
         @change="change"
     >
         <label
             v-if="label"
-            class="base-fieldset__label">
+            class="fieldset-list__label">
+            <!-- @slot label: Set label title -->
             <slot name="label" />
         </label>
-        <ul class="base-fieldset__fields">
-            <li v-for="{ type, props, label } in fields">
+        <ul class="fieldset-list__fields">
+            <li
+                v-for="{ type, props, label } in fields"
+                :key="label.trim()"
+            >
                 <Component
                     :is="type"
                     v-bind="props"
@@ -25,7 +29,7 @@
 </template>
 <script setup lang="ts">
 import { computed, ref, toRaw, useSlots, type Component, type PropType } from 'vue';
-import type { Response } from './types';
+import type { Response, UniqueId } from './types';
 
 const fieldSetValues = ref<Response[]>([]);
 
@@ -36,6 +40,14 @@ export type IField = {
 }
 
 defineProps({
+    /**
+     * Set the unique id of the fieldset component
+     */
+     id: {
+        type: String as PropType<UniqueId>,
+        default: 'FieldSetId'
+    },
+
     /**
      * Handle disabled state
      */
@@ -69,4 +81,4 @@ const setInitValues = ({ id, active }: {id: string, active: boolean}) => {
     customEmits('send', toRaw(fieldSetValues.value))
 }
 </script>
-<style src="./BaseFieldset.scss" lang="scss"></style>
+<style src="./FieldSetList.scss" lang="scss"></style>
