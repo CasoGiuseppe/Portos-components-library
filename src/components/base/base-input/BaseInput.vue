@@ -198,4 +198,4 @@ const focus = () => customEmits('focus')
 
 const submitAction = () => customEmits('send')
 </script>
-<style src="./BaseInput.scss" lang="scss"></style>@/components/utilities/validation/useValidation
+<style src="./BaseInput.scss" lang="scss"></style>
