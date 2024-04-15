@@ -26,6 +26,7 @@
       v-if="hasErrorSlot"
       class="base-button__footer"
     >
+      <!-- @slot Error slot to show user message -->
       <slot name="error" />
     </p>
   </section>

@@ -11,10 +11,10 @@
 }
 
 .base-button {
+  $basebutton: &;
+  --animationTime: .4s;
+
   &__element {
-    $basebutton: &;
-    --animationTime: .4s;
-  
     align-items: center;
     display: flex;
     gap: var(--spacing-40, 0);
@@ -156,14 +156,15 @@
         position: relative;
         bottom: var(--spacing-10);
         
-        transition: 0.3s;
-        transform: rotate(45deg)
+        transform: rotate(45deg);
+        transition: transform var(--animationTime) ease-out,
+                    bottom var(--animationTime) ease-out;
       }
 
       &[data-active="true"] {
         &::after {
           transform: rotate(-135deg);
-          bottom: calc(var(--spacing-10) * -1);
+          bottom: calc(var(--spacing-20) * -1);
         }
       }
 

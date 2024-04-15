@@ -31,7 +31,7 @@ const meta = {
         variant: false,
         active: false,
         default: 'Select your option',
-        error: ''
+        error: 'error'
       }
 } satisfies Meta<typeof BaseButton>;
 
@@ -40,7 +40,7 @@ export default meta;
 type Story = StoryObj<typeof BaseButton>;
 
 const Templates: Story = {
-    render: (args) => ({
+    render: (args, { updateArgs }) => ({
         components: { BaseButton, BaseIcon },
         setup() { return { args } },
         template: `
@@ -76,16 +76,21 @@ const Templates: Story = {
                 </template>
 
                 <template v-if="args.type === 'dropdown'">
-                    <BaseButton v-bind="args" type="dropdown" @send="action">
+                    <BaseButton v-bind="args" type="dropdown" @send="setActiveState">
                         <template #default>
                             {{ args.default }}
                         </template>
-                        <template v-if="args.error" #error>{{ args.error  }}</template>
+                        <template v-if="args.error !== ''" #error>{{ args.error }}</template>
                     </BaseButton>
                 </template>
             </section>
         `,
-        methods: { action: action('submitted') }
+        methods: {
+            action: action('submitted'),
+            setActiveState(): void {
+                updateArgs({ ...args, active: !args.active })
+            }
+        }
     }),
 }
 
