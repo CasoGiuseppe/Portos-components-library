@@ -4,12 +4,14 @@
 		data-testID="ui-dropdown"
 		:data-active="isActive"
 		:data-error="!!error"
-		:data-disabled="isDisabled"
 		v-click-outside="closeList"
 	>
-		<div class="base-dropdown__header">
+		<h2
+			v-if="hasHeaderSlot"
+			class="base-dropdown__header"
+		>
 			<slot name="header" />
-		</div>
+		</h2>
 
 		<button
 			class="base-dropdown__button"
@@ -17,23 +19,21 @@
 			:disabled="isDisabled"
 			@click="toggleList"
 		>
-			<p
-				v-text="selectedOption?.label || placeholder"
-				:data-checked="!!selectedOption"
-				class="base-dropdown__button-placeholder"
+			<slot
+				name="placeholder"
+				:placeholder="placeholder"
 			/>
-			<i class="base-dropdown__button-icon" />
 		</button>
 
-		<div
+		<aside
 			v-show="!isDisabled && isActive"
 			class="base-dropdown__list"
 			data-testID="ui-dropdown-list"
 		>
 			<slot name="list" />
-		</div>
+		</aside>
 
-		<div
+		<p
 			v-if="error"
 			class="base-dropdown__footer"
 		>
@@ -41,19 +41,23 @@
 				name="footer"
 				:error="error"
 			/>
-		</div>
+		</p>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, useSlots, watch } from 'vue';
+
 import { type IBaseDropdownComponent } from './types';
 
 const props = withDefaults(defineProps<IBaseDropdownComponent>(), {
-  	placeholder: 'Select your option',
+	placeholder: 'Select your option',
 });
 
+const { header } = useSlots();
 const isActive = ref<boolean>(false);
+
+const hasHeaderSlot = !!header;
 
 watch(() => props.selectedOption, newValue => {
 	(newValue) && closeList();

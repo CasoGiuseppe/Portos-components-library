@@ -1,7 +1,6 @@
 <template>
   <BaseDropdown
     :selected-option="selectedOption"
-    placeholder="Select your option (x)"
   >
     <template #header>
       <label>Label</label>
@@ -9,6 +8,14 @@
         name="IconFeedbackAnswer"
         :type="Types.FEEDBACK"
       />
+    </template>
+
+    <template #placeholder="{ placeholder }">
+      <p
+				v-text="selectedOption?.label || placeholder"
+				:data-checked="!!selectedOption"
+				class="base-dropdown__button-placeholder"
+			/>
     </template>
 
     <template #list>
