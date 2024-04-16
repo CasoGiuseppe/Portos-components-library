@@ -1,12 +1,13 @@
 <template>
     <fieldset
+        ref="fieldset"
         class="fieldset-list"
         :aria-disabled="disabled"
         :disabled="disabled"
         @change="change"
     >
         <label
-            v-if="label"
+            v-if="$slots['label']"
             class="fieldset-list__label">
             <!-- @slot label: Set label title -->
             <slot name="label" />
@@ -19,7 +20,7 @@
                 <Component
                     :is="type"
                     v-bind="props"
-                    @load="setInitValues"
+                    :name="name"
                 >
                     {{  label }}
                 </Component>
@@ -28,10 +29,10 @@
     </fieldset>
 </template>
 <script setup lang="ts">
-import { computed, onMounted, ref, toRaw, useSlots, type Component, type PropType } from 'vue';
+import { onMounted, ref, type Component, type PropType } from 'vue';
 import type { Response, UniqueId } from './types';
 
-const fieldSetValues = ref<Response[]>([]);
+const fieldset = ref<HTMLElement | null>();
 
 export type IField = {
     type: Component,
@@ -39,7 +40,7 @@ export type IField = {
     props: Record<string, any>;
 }
 
-defineProps({
+const { name } = defineProps({
     /**
      * Set the unique id of the fieldset component
      */
@@ -62,25 +63,27 @@ defineProps({
      fields: {
         type: Array as PropType<Array<IField>>,
         default: () => []
-    }
+    },
+    /**
+     * Set the checkbox name
+     */
+     name: {
+        type: String as PropType<string>,
+        default: 'fieldsetName'
+    },
 })
 
-const slots = useSlots();
-const label = computed(() => !!slots['label']);
-
 const customEmits = defineEmits(['send', 'load']);
-
-const change = (payload: Event) => {
-    const { checked, id } = (payload.target as HTMLInputElement);
-    fieldSetValues.value = Object.assign(fieldSetValues.value, { [id]: checked } as Response );
-    customEmits('send', toRaw(fieldSetValues.value))
+const change = () => customEmits('send', getElementsListValues())
+const getElementsListValues = ():Response[] | undefined => {
+    if(!fieldset.value) return;
+    return [...fieldset.value.querySelectorAll(`*[name=${name}]`)].map(node => {
+        return {
+            [node.id]: (node as HTMLInputElement).checked,
+        }
+    })
 }
 
-const setInitValues = ({ id, active }: {id: string, active: boolean}) => {
-    fieldSetValues.value = Object.assign(fieldSetValues.value, { [id]: active } as Response );
-    customEmits('send', toRaw(fieldSetValues.value))
-}
-
-onMounted(() => customEmits('load', toRaw(fieldSetValues.value)))
+onMounted(() => customEmits('load', getElementsListValues()))
 </script>
 <style src="./FieldSetList.scss" lang="scss"></style>

@@ -36,6 +36,7 @@ const meta: Meta<typeof FieldSetList> = {
     tags: ["autodocs"],
     argTypes: {
         id: { control: 'text' },
+        name: { control: 'text' },
         fields: { control: 'object', options: Fields },
         disabled: { control: 'radio', options: [true, false] },
         label: { control: 'text' },
@@ -43,7 +44,8 @@ const meta: Meta<typeof FieldSetList> = {
     },
 
     args: {
-        id: 'linkId',
+        id: 'fieldSetId',
+        name: 'checkboxTest',
         fields: Fields,
         disabled: false,
         label: 'Choose your select:'

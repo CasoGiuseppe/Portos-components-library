@@ -13,6 +13,7 @@
             ref="checkbox"
             type="checkbox"
             :id="id"
+            :name="name"
             :checked="active"
             :indeterminate="indeterminate"
             :invalid="invalid"
@@ -30,7 +31,7 @@
     </label>
 </template>
 <script lang="ts" setup>
-import { onMounted, ref, type PropType } from "vue"
+import { ref, type PropType } from "vue"
 import { type UniqueId, Sizes } from "./types"
 import { validateValueCollectionExists } from "@/components/utilities/validation/useValidation"
 
@@ -92,11 +93,18 @@ const { id, active, disabled, indeterminate } = defineProps({
     invalid: {
         type: Boolean as PropType<boolean>,
         default: false
-    }
+    },
+    /**
+     * Set the checkbox name
+     */
+     name: {
+        type: String as PropType<string>,
+        default: 'checkboxName'
+    },
 })
 
 const checkbox = ref<HTMLInputElement | null>(null)
-const emits = defineEmits(["checked", "load"])
+const emits = defineEmits(["checked"])
 
 const handleChange = (payload: Event) => {
     const { checked } = payload.target as HTMLInputElement
@@ -111,7 +119,5 @@ const setChangeByKey = () => {
 
     emits("checked", { id, checked } )
 }
-
-onMounted(() => emits("load", { id, active } ))
 </script>
 <style src="./BaseCheckbox.scss" lang="scss"></style>
