@@ -36,7 +36,7 @@ const Template: Story = {
         },
         template: `
       <div>
-        <BaseButton type="secondary" @click="toggleModal" style="border: 1px solid grey">Toogle Modal</BaseButton>
+        <BaseButton type="secondary" @click="toggleModal">Toogle Modal</BaseButton>
        
         <ModalDialog :is-Open="isOpen" :id="'modal-3234'" :size="args.size" @close="closeModal">
           <template #header>
@@ -44,7 +44,7 @@ const Template: Story = {
           :id="'TitleIcon'"
           type="calendar"
           :name="'IconCalendarCalendar'"
-          style="margin-right: 1rem"
+          style="margin-right: 0.5rem"
       ></BaseIcon> {{ args.headerText || 'This is the modal header' }}
           </template>
           <template #default>
