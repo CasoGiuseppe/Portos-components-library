@@ -28,7 +28,7 @@
     </fieldset>
 </template>
 <script setup lang="ts">
-import { computed, ref, toRaw, useSlots, type Component, type PropType } from 'vue';
+import { computed, onMounted, ref, toRaw, useSlots, type Component, type PropType } from 'vue';
 import type { Response, UniqueId } from './types';
 
 const fieldSetValues = ref<Response[]>([]);
@@ -68,7 +68,7 @@ defineProps({
 const slots = useSlots();
 const label = computed(() => !!slots['label']);
 
-const customEmits = defineEmits(['send']);
+const customEmits = defineEmits(['load', 'send']);
 
 const change = (payload: Event) => {
     const { checked, id } = (payload.target as HTMLInputElement);
@@ -80,5 +80,7 @@ const setInitValues = ({ id, active }: {id: string, active: boolean}) => {
     fieldSetValues.value = Object.assign(fieldSetValues.value, { [id]: active } as Response );
     customEmits('send', toRaw(fieldSetValues.value))
 }
+
+onMounted(() => customEmits('load', toRaw(fieldSetValues.value)))
 </script>
 <style src="./FieldSetList.scss" lang="scss"></style>
