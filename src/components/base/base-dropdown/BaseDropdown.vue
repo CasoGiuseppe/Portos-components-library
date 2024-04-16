@@ -5,6 +5,8 @@
 		:data-active="isActive"
 		:data-error="!!error"
 		v-click-outside="closeList"
+		@focus="toggleList"
+		tabindex="0"
 	>
 		<h2
 			v-if="hasHeaderSlot"
@@ -26,7 +28,7 @@
 		</button>
 
 		<aside
-			v-show="!isDisabled && isActive"
+			v-if="!isDisabled && isActive"
 			class="base-dropdown__list"
 			data-testID="ui-dropdown-list"
 		>

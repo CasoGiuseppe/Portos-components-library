@@ -23,7 +23,7 @@
         :list="list"
         :mode="Mode.DROPDOWN"
         :current="selectedOption?.label"
-        :visible-options="4"
+        :visible-options="5"
         @send="selectOption"
       >
         <template #icon="{ icon }">
