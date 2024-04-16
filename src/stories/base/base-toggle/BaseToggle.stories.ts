@@ -14,7 +14,7 @@ const meta: Meta = {
         variant: { control: "radio", options: [true, false] },
         label: { control: "text" },
         default: { control: "text" },
-        changeOrder: { control: "radio", options: [true, false] },
+        direction: { control: "radio", options: [true, false] },
         fullWidth: { control: "radio", options: [true, false] }
     },
 
@@ -26,7 +26,7 @@ const meta: Meta = {
         variant: false,
         label: "component label",
         default: "Label",
-        changeOrder: false,
+        direction: false,
         fullWidth: false
     }
 } as Meta<typeof BaseToggle>
@@ -56,8 +56,8 @@ const Templates: Story = {
           </section>
       `,
         methods: {
-            setActiveState(event: { checked: boolean }): void {
-                updateArgs({ active: event.checked })
+            setActiveState(event: { [id: string]: boolean }): void {
+                updateArgs({ active: event[Object.keys(event)[0]] })
             }
         }
     })

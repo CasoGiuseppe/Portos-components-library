@@ -9,7 +9,7 @@
         :title="label"
         :aria-label="label"
         @change="handleChange"
-        :dir="changeOrder ? 'rtl' : 'ltr'"
+        :dir="direction ? 'rtl' : 'ltr'"
     >
         <input
             data-testID="ui-checkbox"
@@ -89,7 +89,7 @@ const { disabled, id } = defineProps({
     /**
      * Set change order for the label
      */
-    changeOrder: {
+    direction: {
         type: Boolean as PropType<boolean>,
         default: false
     }
@@ -100,7 +100,7 @@ const checkbox = ref<HTMLInputElement | null>(null)
 
 const handleChange = (payload: Event) => {
     const { checked } = payload.target as HTMLInputElement
-    emits("checked", { id, checked })
+    emits("checked", { [id]: checked })
 }
 
 const setChangeByKey = () => {
@@ -108,7 +108,7 @@ const setChangeByKey = () => {
     if (!checkbox.value) return
     const { checked } = checkbox.value
     checkbox.value.checked = !checked
-    emits("checked", { id, checked: checkbox.value.checked })
+    emits("checked", { [id]: checkbox.value.checked })
 }
 </script>
 <style src="./BaseToggle.scss" lang="scss"></style>
