@@ -8,7 +8,7 @@
         :disabled="disabled"
     >
         <header
-            v-if="label"
+            v-if="$slots['label']"
             class="base-input__header"
         >
             <label
@@ -37,6 +37,7 @@
                 :title="title"
                 :pattern="pattern"
                 :maxlength="maxLength"
+                :minlength="minLength"
                 v-model.lazy="value" 
                 autocomplete="one-time-code"
                 aria-describedby="ui-message"
@@ -49,7 +50,7 @@
                 @click="focus"
             />
             <button
-                v-if="submit"
+                v-if="$slots['submit']"
                 data-testID="ui-input-submit"
                 class="base-input__submit"
                 :disabled="hasEmptyModel"
@@ -59,31 +60,30 @@
             </button>
         </section>
         <p
-            v-if="message || error"
+            v-if="$slots['message'] || $slots['error']"
             data-testID="ui-input-message"
             class="base-input__user-message"
         >
             <!-- @slot Slot for user alert -->
-            <span
-                v-if="error"
-                data-testID="ui-input-error"
-                class="base-input__user-message-alert"
->
-                <slot name="error" />
-            </span>
-
+                <span
+                    v-if="$slots['error']"
+                    data-testID="ui-input-error"
+                    class="base-input__user-message-alert"
+    >
+                    <slot name="error" />
+                </span>
             <!-- @slot Slot for user message info -->
             <slot name="message" />
         </p>
     </fieldset>
 </template>
 <script setup lang="ts">
-import { computed, useSlots, type PropType } from 'vue';
+import { computed, type PropType } from 'vue';
 import {  Types } from './types';
 import { validateValueCollectionExists } from '@/components/utilities/validation/useValidation';
 
 const value = defineModel('proxyValue')
-const { pattern, required } = defineProps({
+const { pattern, required, minLength } = defineProps({
     /**
      * Set the unique id of the ui input
      */
@@ -158,15 +158,17 @@ const { pattern, required } = defineProps({
      */
     maxLength: {
         type: Number as PropType<number>
+    },
+
+     /**
+     * Set min input length value
+     */
+     minLength: {
+        type: Number as PropType<number>,
+        default: 0
     }
     
 })
-
-const slots = useSlots();
-const label = computed(() => !!slots['label']);
-const message = computed(() => !!slots['message']);
-const error = computed(() => !!slots['error']);
-const submit = computed(() => !!slots['submit']);
 
 const customEmits = defineEmits(['update:modelValue', 'change', 'focus', 'invalid', 'send']);
 const hasEmptyModel = computed(():boolean => {
@@ -188,9 +190,13 @@ const requiredModel = (state: boolean) => {
 
 const invalidModel = (value: string): void => {
     if(!pattern) return;
-    if(value.length === 0) return;
+    if(value.length === 0) {
+        customEmits('invalid', {mode: 'validation', value: false });
+        return;
+    };
     const re = new RegExp(pattern)
-    customEmits('invalid', {mode: 'validation', value: !re.test(value) })
+    const validation = [!re.test(value), value.length < minLength].some(value => value)
+    customEmits('invalid', {mode: 'validation', value: validation  })
 }
 
 const changeValue = (payload: Event) => customEmits('change', { target: payload.target });
