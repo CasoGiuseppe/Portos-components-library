@@ -68,7 +68,7 @@ defineProps({
 const slots = useSlots();
 const label = computed(() => !!slots['label']);
 
-const customEmits = defineEmits(['send', 'load']);
+const customEmits = defineEmits(['send']);
 
 const change = (payload: Event) => {
     const { checked, id } = (payload.target as HTMLInputElement);
@@ -81,6 +81,6 @@ const setInitValues = ({ id, active }: {id: string, active: boolean}) => {
     customEmits('send', toRaw(fieldSetValues.value))
 }
 
-onMounted(() => customEmits('load', toRaw(fieldSetValues.value)))
+onMounted(() => customEmits('send', toRaw(fieldSetValues.value)))
 </script>
 <style src="./FieldSetList.scss" lang="scss"></style>
