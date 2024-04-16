@@ -1,0 +1,75 @@
+$modal-widths: (
+    "narrow": (
+        "default": 560px,
+        "large": 536px,
+        "xlarge": 539px
+    ),
+    "wide": (
+        "default": 704px,
+        "large": 720px,
+        "xlarge": 820px
+    )
+);
+
+.modal-dialog {
+    box-shadow: var(--shadow-200);
+    background-color: var(--color-neutral-10);
+    border: none;
+    border-radius: var(--radius-300);
+    gap: var(--spacing-50);
+    color: var(--color-neutral-70);
+    @include text-body-m--regular;
+
+    // dialog backdrop
+    &::backdrop {
+        background-color: var(--color-neutral-70);
+        opacity: 0.4;
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        padding: var(--spacing-20) 0;
+
+        &--title {
+            display: flex;
+            @include text-heading-l;
+            font-size: var(--spacing-60);
+        }
+
+        &--close {
+            padding: 0;
+        }
+    }
+
+    &__body {
+        padding: var(--spacing-50) 0;
+    }
+
+    &__footer {
+        padding-top: var(--spacing-50);
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+@each $key, $type in $modal-widths {
+    @each $breakpoint, $width in $type {
+        @if $breakpoint == "default" {
+            .modal-dialog--is-#{$key} {
+                width: $width;
+            }
+        } @else {
+            $media-query: if(
+                $breakpoint == "large",
+                "(max-width: 1280px)",
+                "(min-width: 1281px)"
+            );
+            @media #{$media-query} {
+                .modal-dialog--is-#{$key} {
+                    width: $width;
+                }
+            }
+        }
+    }
+}
