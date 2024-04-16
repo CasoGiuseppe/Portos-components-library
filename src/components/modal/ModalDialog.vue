@@ -1,7 +1,10 @@
 <template>
     <dialog
         ref="dialogRef"
-        :class="`modal-dialog modal-dialog--is-${size}`"
+        :class="[
+            `modal-dialog modal-dialog--is-${size}`,
+            { 'modal-dialog--is-open': isOpen }
+        ]"
         @cancel="close"
         v-bind="$attrs"
     >
@@ -30,9 +33,9 @@
 
 <script setup lang="ts">
 import { type PropType, defineProps, ref, watch, onMounted } from "vue"
-import BaseIcon from "@/components/base/base-icon/BaseIcon.vue"
 import { vOnClickOutside } from "@vueuse/components"
-import { Types } from "../base/base-icon/types"
+import BaseIcon from "@/components/base/base-icon/BaseIcon.vue"
+import { Types } from "@/components/base/base-icon/types"
 import type { UniqueId, SizeType } from "./types"
 
 const emits = defineEmits(["close", "open"])

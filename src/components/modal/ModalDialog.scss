@@ -1,3 +1,5 @@
+// those values were taken from figma ui
+// no columns available in this component
 $modal-widths: (
     "narrow": (
         "default": 560px,
@@ -13,17 +15,30 @@ $modal-widths: (
 
 .modal-dialog {
     box-shadow: var(--shadow-200);
-    background-color: var(--color-neutral-10);
+    background-color: var(--color-neutral-10, #fff);
     border: none;
     border-radius: var(--radius-300);
     gap: var(--spacing-50);
-    color: var(--color-neutral-70);
+    color: var(--color-neutral-70, #000);
     @include text-body-m--regular;
+
+    // transition
+    display: block;
+    transform: translateY(-100%);
+    opacity: 0;
+    transition:
+        transform 0.3s ease,
+        opacity 0.3s ease;
 
     // dialog backdrop
     &::backdrop {
-        background-color: var(--color-neutral-70);
+        background-color: var(--color-neutral-70, #000);
         opacity: 0.4;
+    }
+
+    &--is-open {
+        transform: translateY(0);
+        opacity: 1 !important;
     }
 
     &__header {
