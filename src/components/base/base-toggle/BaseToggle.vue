@@ -9,7 +9,7 @@
         :title="label"
         :aria-label="label"
         @change="handleChange"
-        :dir="direction ? 'rtl' : 'ltr'"
+        :dir="rtl ? 'rtl' : 'ltr'"
     >
         <input
             data-testID="ui-checkbox"
@@ -89,7 +89,7 @@ const { disabled, id } = defineProps({
     /**
      * Set change order for the label
      */
-    direction: {
+    rtl: {
         type: Boolean as PropType<boolean>,
         default: false
     }

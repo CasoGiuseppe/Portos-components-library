@@ -14,7 +14,7 @@ const meta: Meta = {
         variant: { control: "radio", options: [true, false] },
         label: { control: "text" },
         default: { control: "text" },
-        direction: { control: "radio", options: [true, false] },
+        rtl: { control: "radio", options: [true, false] },
         fullWidth: { control: "radio", options: [true, false] }
     },
 
@@ -26,7 +26,7 @@ const meta: Meta = {
         variant: false,
         label: "component label",
         default: "Label",
-        direction: false,
+        rtl: false,
         fullWidth: false
     }
 } as Meta<typeof BaseToggle>
