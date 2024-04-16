@@ -70,7 +70,6 @@ export const Default: Story = {
           <FieldSetList
             v-bind="args"
             @send="action"
-            @load="action"
           >
             <template #label>{{ args.label }}</template>
           </FieldSetList>
