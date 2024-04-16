@@ -4,7 +4,7 @@ export type UniqueId = string
 
 type IComponent = {
     type: Component,
-    props: Record<string, any>;
+    props: Record<string, any>
 }
 
 export type IList = {

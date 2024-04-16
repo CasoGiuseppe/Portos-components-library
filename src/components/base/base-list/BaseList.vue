@@ -12,7 +12,7 @@
                 tabindex="0"
                 :data-index="index"
                 :data-option="item.option"
-                :data-current="currentNode === item.option ? true : false"
+                :data-current="currentNode === item.option"
                 @keyup.down="keyMove"
                 @keyup.up="keyMove"
                 @keyup.enter="select"
@@ -21,8 +21,8 @@
                 @click="select"
             >
                 <span
-                    v-if="icon"
-                    class="base-list__icon"
+                    v-if="component"
+                    class="base-list__component"
                 >
                      <!-- @slot component: Set option component content -->
                     <slot
@@ -41,11 +41,11 @@
         </ul>
     </section>
 </template>
+
 <script setup lang="ts">
 import { computed, onMounted, ref, useSlots, type PropType } from 'vue';
 import { Mode, type UniqueId, type IList } from './types';
 import { validateValueCollectionExists } from '@ui/utilities/validation/useValidation';
-
 
 const { current, visibleOptions } = defineProps({
     /**
@@ -89,7 +89,7 @@ const { current, visibleOptions } = defineProps({
 })
 
 const slots = useSlots();
-const icon = computed(() => !!slots['icon']);
+const component = computed(() => !!slots['component']);
 
 const tabIndex = ref<number>(0)
 const listParent = ref<HTMLElement | null>(null);
@@ -132,17 +132,25 @@ const focus = (payload: Event): void => {
 }
 
 const select = (payload: Event | Element): void => {
-    const payloadByInstance = payload instanceof Event ? payload.target as HTMLInputElement : payload as HTMLInputElement;
+    const payloadByInstance = payload instanceof Event
+		? payload.target as HTMLInputElement
+		: payload as HTMLInputElement;
+
     const { dataset: { option }, innerText } = payloadByInstance;
 
     if (payload instanceof Event) {
-        payload.preventDefault()
-        payload.stopPropagation()
+        payload.preventDefault();
+        payload.stopPropagation();
     }
 
-    payloadByInstance.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
+    payloadByInstance.scrollIntoView({
+		behavior: 'smooth',
+		block: 'nearest',
+		inline: 'start'
+	});
+
     currentNode.value = option;
-    customEmits('send', { option, label: innerText })
+	customEmits('send', { option, label: innerText })
 };
 
 const startSelectingOption = ():void => {
