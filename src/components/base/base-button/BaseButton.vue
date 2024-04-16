@@ -85,6 +85,9 @@ defineProps({
     type: String as PropType<string>,
     default: 'component label'
   },
+  /**
+   * Set the active button state
+   */
   active: {
     type: Boolean as PropType<boolean>,
     default: false
