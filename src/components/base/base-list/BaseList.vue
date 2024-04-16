@@ -19,37 +19,33 @@
                 @keyup.space="select"
                 @focus="focus"
                 @click="select"
-                >
+            >
                 <span
                     v-if="icon"
                     class="base-list__icon"
                 >
-                     <!-- @slot icon: Set option icon content -->
-                    <slot :property="{ icon: item.icon }" name="icon" />
+                     <!-- @slot component: Set option component content -->
+                    <slot
+                        name="component"
+                        :component="item.component"
+                    />
                 </span>
                 <p class="base-list__label">
                      <!-- @slot row: Set option label content -->
-                    <slot :property="{ label: item.label }" name="row" />
+                    <slot
+                        name="row"
+                        :label="item.label"
+                    />
                 </p>
             </li>
         </ul>
     </section>
 </template>
 <script setup lang="ts">
-import { computed, onMounted, ref, useSlots, type Component, type PropType } from 'vue';
-import { Mode, type UniqueId } from './types';
+import { computed, onMounted, ref, useSlots, type PropType } from 'vue';
+import { Mode, type UniqueId, type IList } from './types';
 import { validateValueCollectionExists } from '@ui/utilities/validation/useValidation';
 
-export type IIcon = {
-    type: Component,
-    props: Record<string, any>;
-}
-export type IList = {
-    id: string,
-    label: string,
-    option: string,
-    icon?: IIcon
-}
 
 const { current, visibleOptions } = defineProps({
     /**

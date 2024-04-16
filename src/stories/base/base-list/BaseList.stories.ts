@@ -94,13 +94,13 @@ const meta: Meta = {
                 v-bind="args"
                 @send="action"
             >
-                <template #row="{ property: { label } }">{{ label }}</template>
-                <template #icon="{ property: { icon } } ">
-                <component
-                    v-if="icon"
-                    :is="icon.type"
-                    v-bind="icon.props"
-                />
+                <template #row="{ label }">{{ label }}</template>
+                <template #icon="{ icon }">
+                  <component
+                      v-if="icon"
+                      :is="icon.type"
+                      v-bind="icon.props"
+                  />
                 </template>
             </BaseList>
           </section>
