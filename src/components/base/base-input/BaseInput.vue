@@ -7,9 +7,11 @@
         ]"
         :disabled="disabled"
     >
-        <header class="base-input__header">
+        <header
+            v-if="label"
+            class="base-input__header"
+        >
             <label
-                v-if="label"
                 class="base-input__label"
                 :data-required="!required ? '(optional)' : null"
                 :for="id"
@@ -196,4 +198,4 @@ const focus = () => customEmits('focus')
 
 const submitAction = () => customEmits('send')
 </script>
-<style src="./BaseInput.scss" lang="scss"></style>@/components/utilities/validation/useValidation
+<style src="./BaseInput.scss" lang="scss"></style>
