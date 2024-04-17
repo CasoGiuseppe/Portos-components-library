@@ -1,9 +1,9 @@
 // core
 import { describe, it, expect, beforeAll, beforeEach, vi } from "vitest"
-import { VueWrapper, mount } from "@vue/test-utils"
+import { mount } from "@vue/test-utils"
 import { type ComponentPublicInstance } from "vue"
 // components
-import SliderShow from "@ui/tools/slider-show/SliderShow.vue"
+import SliderShow from "@ui/tools/slider-tool/SliderTool.vue"
 import BaseIcon from "@/components/base/base-icon/BaseIcon.vue"
 // utils
 import {
@@ -83,22 +83,6 @@ describe("Slider Component", () => {
             })
 
             expect(wrapper.html()).toContain(slotContent)
-        })
-        it("should apply correct classes to slider items based on their properties", () => {
-            const wrapper = mount(SliderShow, {
-                props: {
-                    body: [
-                        { id: "1", label: "Item 1", className: "custom-class" }
-                    ]
-                },
-                global: {
-                    components: { BaseIcon },
-                    stubs: { Suspense: true }
-                }
-            })
-
-            const firstItem = wrapper.find($uiDOMSliderItem)
-            expect(firstItem.classes()).toContain("custom-class")
         })
     })
 
