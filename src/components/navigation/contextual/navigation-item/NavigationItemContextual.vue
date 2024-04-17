@@ -3,14 +3,20 @@
     v-if="isTypeRouterLink"
     :id="id"
     :to="to"
-    :class="navigationClasses"
+    :class="[
+      'navigation-item-contextual',
+      selected ? 'navigation-item-contextual--is-selected' : null
+    ]"
   >
     <slot/>
   </RouterLink>
   <component
     v-else
     :is="elementType"
-    :class="navigationClasses"
+    :class="[
+      'navigation-item-contextual',
+      selected ? 'navigation-item-contextual--is-selected' : null
+    ]"
     :id="id"
     data-testID="ui-navigation-item-contextual"
     @click="handleSendEvent"
@@ -24,7 +30,7 @@
 
 <script setup lang="ts">
 import { validateValueCollectionExists } from '@/components/utilities/validation/useValidation'
-import { computed, reactive, toRaw, type PropType } from 'vue'
+import { computed, reactive, type PropType } from 'vue'
 import { type INavigationItemContextualComponent, type RouterTo, Element } from './types'
 
 const { id, selected, elementType }: INavigationItemContextualComponent = defineProps({
@@ -60,10 +66,6 @@ const { id, selected, elementType }: INavigationItemContextualComponent = define
 
 const isTypeRouterLink = computed(() => elementType === Element.ROUTERLINK );
 
-const navigationClasses = reactive({
-  'navigation-item-contextual': true,
-  'navigation-item-contextual--is-selected': selected
-})
 // emits
 const customEmits = defineEmits(['send'])
 const handleSendEvent = () => {
