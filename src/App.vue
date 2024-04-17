@@ -1,7 +1,5 @@
 <template>
-  <BaseDropdown
-    :selected-option="selectedOption"
-  >
+  <BaseDropdown :selected-option="selectedOption">
     <template #header>
       <label>Label</label>
       <BaseIcon
@@ -22,19 +20,17 @@
       <BaseList
         :list="list"
         :mode="Mode.DROPDOWN"
-        :current="selectedOption?.label"
-        :visible-options="5"
+        :current="selectedOption?.option"
         @send="selectOption"
       >
-        <template #icon="{ icon }">
-          <BaseIcon
-            :type="icon?.props.type"
-            :name="icon?.props.name"
+        <template #row="{ label }">{{ label }}</template>
+        <template #component="{ component }">
+          <Component
+            v-if="component"
+            :is="component.type"
+            v-bind="component.props"
           />
         </template>
-        <template #row="{ label }">
-          {{ label }}
-      </template>
       </BaseList>
     </template>
     
@@ -56,11 +52,11 @@ import BaseDropdown from '@/components/base/base-dropdown/BaseDropdown.vue';
 import BaseIcon from '@/components/base/base-icon/BaseIcon.vue';
 import BaseList from '@/components/base/base-list/BaseList.vue';
 import { Sizes, Types } from '@/components/base/base-icon/types';
-import { Mode, type IList, type ISelectedOption } from '@/components/base/base-list/types';
+import { Mode, type IList, type ISelected } from '@/components/base/base-list/types';
 
-const selectedOption = ref<ISelectedOption>();
+const selectedOption = ref<ISelected>();
 
-const selectOption = (option: ISelectedOption) => {
+const selectOption = (option: ISelected) => {
   selectedOption.value = option;
 };
 
@@ -68,7 +64,7 @@ const list: IList[] = [
   {
     id: '1',
     label: 'Option 1',
-    icon: {
+    component: {
       type: BaseIcon,
       props: {
         type: Types.PLACEHOLDER,
@@ -80,7 +76,7 @@ const list: IList[] = [
   {
     id: '2',
     label: 'Option 2',
-    icon: {
+    component: {
       type: BaseIcon,
       props: {
         type: Types.ARROW,
@@ -92,7 +88,7 @@ const list: IList[] = [
   {
     id: '3',
     label: 'Option 3',
-    icon: {
+    component: {
       type: BaseIcon,
       props: {
         type: Types.PLACEHOLDER,
@@ -104,7 +100,7 @@ const list: IList[] = [
   {
     id: '4',
     label: 'Option 4',
-    icon: {
+    component: {
       type: BaseIcon,
       props: {
         type: Types.PLACEHOLDER,
@@ -116,7 +112,7 @@ const list: IList[] = [
   {
     id: '5',
     label: 'Option 5',
-    icon: {
+    component: {
       type: BaseIcon,
       props: {
         type: Types.PLACEHOLDER,
@@ -128,7 +124,7 @@ const list: IList[] = [
   {
     id: '6',
     label: 'Option 6',
-    icon: {
+    component: {
       type: BaseIcon,
       props: {
         type: Types.PLACEHOLDER,

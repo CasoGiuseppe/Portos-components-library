@@ -82,7 +82,7 @@
     }
 
     &__label,
-    &__icon {
+    &__component {
         pointer-events: none;
     }
 
@@ -93,7 +93,7 @@
         gap: var(--spacing-30);
     }
 
-    &__icon {
+    &__component {
         [data-mode='default'] & {
             order: 2;
         }

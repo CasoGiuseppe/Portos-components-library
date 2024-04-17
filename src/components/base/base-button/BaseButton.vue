@@ -1,29 +1,48 @@
 <template>
-  <button
-    data-testID="ui-button"
-    :id="id"
+  <section
     :class="[
       'base-button',
-      `base-button--is-${type}`,
-      `base-button--is-${size}`,
-      `${variant ? `base-button--is-${type}-ALT` : ''}`
-    ]"
-    :disabled="disabled"
-    :title="label"
-    :aria-disabled="disabled"
-    :aria-label="label"
-    @click="handleClick"
-  >
-    <!-- @slot Default slot for button label -->
-    <slot />
-  </button>
+      `${fullSize ? `base-button--is-fullSize` : ''}`
+    ]">
+    <button
+      data-testID="ui-button"
+      :id="id"
+      :class="[
+        'base-button__element',
+        `base-button--is-${type}`,
+        `base-button--is-${size}`,
+        `${variant ? `base-button--is-${type}-ALT` : ''}`,
+      ]"
+      :disabled="disabled"
+      :data-invalid="hasErrorSlot"
+      :data-active="active"
+      :title="label"
+      :aria-disabled="disabled"
+      :aria-invalid="disabled"
+      :aria-label="label"
+      @click="handleClick"
+    >
+      <!-- @slot Default slot for button label -->
+      <slot />
+    </button>
+
+    <p
+      v-if="hasErrorSlot"
+      class="base-button__footer"
+    >
+      <!-- @slot Error slot to show user message -->
+      <slot name="error" />
+    </p>
+  </section>
 </template>
 
 <script setup lang="ts">
-import { defineEmits, type PropType } from 'vue'
+import { defineEmits, useSlots, type PropType } from 'vue'
 import { type UniqueId, Sizes, Types } from './types';
 import { validateValueCollectionExists } from '@ui/utilities/validation/useValidation';
 
+const { error } = useSlots();
+const hasErrorSlot = !!error;
 
 defineProps({
   /**
@@ -69,10 +88,27 @@ defineProps({
   label: {
     type: String as PropType<string>,
     default: 'component label'
-  }
+  },
+  /**
+   * Set the active button state
+   */
+  active: {
+    type: Boolean as PropType<boolean>,
+    default: false
+  },
+
+  /**
+   * Set fullsize 100% width
+   */
+   fullSize: {
+    type: Boolean as PropType<boolean>,
+    default: false
+  },
 });
-const emits = defineEmits(['send'])
-const handleClick = () => emits('send')
+
+const emits = defineEmits(['send']);
+
+const handleClick = () => emits('send');
 
 </script>
 

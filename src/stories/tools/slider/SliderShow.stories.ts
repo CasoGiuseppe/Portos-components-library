@@ -55,8 +55,6 @@ const meta: Meta<typeof SliderShow> = {
             }
         ]
     },
-
-    subcomponents: { NavigationItemContextual, BaseIcon }
 }
 
 export default meta

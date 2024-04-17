@@ -15,17 +15,28 @@
 			<slot name="header" />
 		</h2>
 
-		<button
-			class="base-dropdown__button"
+		<BaseButton
 			data-testID="ui-dropdown-button"
 			:disabled="isDisabled"
-			@click="toggleList"
+			:type="Types.DROPDOWN"
+			:active="isActive"
+			@send="toggleList"
 		>
-			<slot
-				name="placeholder"
-				:placeholder="placeholder"
+			<template #default>
+				<slot
+					name="placeholder"
+					:placeholder="placeholder"
+				/>
+			</template>
+			<template #error>
+				<BaseIcon
+				name="IconFeedbackError"
+				:size="Sizes.XS"
+				:type="IconTypes.FEEDBACK"
 			/>
-		</button>
+			<p v-text="'Error text'" />
+			</template>
+		</BaseButton>
 
 		<aside
 			v-if="!isDisabled && isActive"
@@ -50,7 +61,12 @@
 <script setup lang="ts">
 import { ref, useSlots, watch } from 'vue';
 
+
 import { type IBaseDropdownComponent } from './types';
+import BaseButton from '@/components/base/base-button/BaseButton.vue';
+import BaseIcon from '@/components/base/base-icon/BaseIcon.vue';
+import { Types } from '@/components/base/base-button/types';
+import { Types as IconTypes, Sizes } from '@/components/base/base-icon/types';
 
 const props = withDefaults(defineProps<IBaseDropdownComponent>(), {
 	placeholder: 'Select your option',
@@ -67,6 +83,7 @@ watch(() => props.selectedOption, newValue => {
 
 const toggleList = () => {
 	isActive.value = !isActive.value;
+	console.log({ isActive: isActive.value });
 };
 
 const closeList = () => {

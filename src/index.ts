@@ -31,6 +31,7 @@ import useResizeObserver from "./shared/composables/useResizeObserver"
 
 // tools
 import SliderShow from "./components/tools/slider-show/SliderShow.vue"
+import FieldSetList from "./components/tools/fieldset-list/FieldSetList.vue"
 
 // types
 import type {
@@ -74,6 +75,7 @@ export {
 
     // tools
     SliderShow,
+    FieldSetList,
 
     // types with renamed exports
     type UniqueIconId,
@@ -103,6 +105,7 @@ export function install(app: App): void {
 
     //tools
     app.component("SliderShow", SliderShow)
+    app.component("FieldSetList", FieldSetList)
 
     // navigation components
     app.component("NavigationItemContextual", NavigationItemContextual)

@@ -12,6 +12,8 @@
             data-testID="ui-checkbox"
             ref="checkbox"
             type="checkbox"
+            :id="id"
+            :name="name"
             :checked="active"
             :indeterminate="indeterminate"
             :invalid="invalid"
@@ -33,7 +35,7 @@ import { ref, type PropType } from "vue"
 import { type UniqueId, Sizes } from "./types"
 import { validateValueCollectionExists } from "@/components/utilities/validation/useValidation"
 
-const { active, disabled, indeterminate } = defineProps({
+const { id, active, disabled, indeterminate } = defineProps({
     /**
      * Set the unique id of the ui checkbox
      */
@@ -91,7 +93,14 @@ const { active, disabled, indeterminate } = defineProps({
     invalid: {
         type: Boolean as PropType<boolean>,
         default: false
-    }
+    },
+    /**
+     * Set the checkbox name
+     */
+     name: {
+        type: String as PropType<string>,
+        default: 'checkboxName'
+    },
 })
 
 const checkbox = ref<HTMLInputElement | null>(null)
@@ -99,7 +108,7 @@ const emits = defineEmits(["checked"])
 
 const handleChange = (payload: Event) => {
     const { checked } = payload.target as HTMLInputElement
-    emits("checked", checked)
+    emits("checked", { id, checked })
 }
 
 const setChangeByKey = () => {
@@ -108,7 +117,7 @@ const setChangeByKey = () => {
     const { checked } = checkbox.value
     checkbox.value.checked = !checked
 
-    emits("checked", checked )
+    emits("checked", { id, checked } )
 }
 </script>
 <style src="./BaseCheckbox.scss" lang="scss"></style>
