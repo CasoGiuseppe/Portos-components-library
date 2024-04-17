@@ -1,24 +1,54 @@
 .fieldset-list {
     $fieldsetlist: &;
+    --gap-spacing: var(--spacing-50, 0);
 
     @include text-body-m--regular;
 
     align-items: center;
     display: flex;
-    gap: var(--spacing-50, 0);
+    gap: var(--gap-spacing);
     margin: 0;
     padding: 0;
 
     border: none;
     color: var(--color-neutral-70, #000);
 
+    &[data-column] {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
     &__fields {
         align-items: center;
         display: flex;
-        gap: var(--spacing-50, 0);
+        gap: var(--gap-spacing);
+
+        [data-column] & {
+            flex-direction: column;
+            width: 100%;
+        }
 
         > li {
             display: flex;
+            [data-column] & {
+                width: 100%;
+            }
+
+            > * {
+                width: 100%;
+            }
+        }
+    }
+
+    &--has {
+        &-spacing {
+            &-S {
+                --gap-spacing: var(--spacing-50, 0);
+            }
+
+            &-M {
+                --gap-spacing: var(--spacing-60, 0);
+            }
         }
     }
 }

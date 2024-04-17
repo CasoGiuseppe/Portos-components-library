@@ -30,7 +30,7 @@ import clickOutside from "./components/utilities/directives/clickOutside"
 import useResizeObserver from "./shared/composables/useResizeObserver"
 
 // tools
-import SliderShow from "./components/tools/slider-show/SliderShow.vue"
+import SliderTool from "./components/tools/slider-tool/SliderTool.vue"
 import FieldSetList from "./components/tools/fieldset-list/FieldSetList.vue"
 
 // types
@@ -74,7 +74,7 @@ export {
     useResizeObserver,
 
     // tools
-    SliderShow,
+    SliderTool,
     FieldSetList,
 
     // types with renamed exports
@@ -104,7 +104,7 @@ export function install(app: App): void {
     app.component("BaseToggle", BaseToggle)
 
     //tools
-    app.component("SliderShow", SliderShow)
+    app.component("SliderTool", SliderTool)
     app.component("FieldSetList", FieldSetList)
 
     // navigation components

@@ -13,7 +13,7 @@ export interface IKeyHandler {
 }
 
 export type IList = {
-    id: string,
+    id: UniqueId,
     label: string,
     option: string,
     component?: IComponent

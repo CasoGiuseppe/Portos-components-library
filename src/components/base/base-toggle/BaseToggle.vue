@@ -15,9 +15,11 @@
             data-testID="ui-checkbox"
             ref="checkbox"
             type="checkbox"
+            :id="id"
             :checked="active"
             :disabled="disabled"
             :aria-disabled="disabled"
+            :name="name"
             style="display: none"
         />
         <button
@@ -92,7 +94,14 @@ const { disabled, id } = defineProps({
     rtl: {
         type: Boolean as PropType<boolean>,
         default: false
-    }
+    },
+    /**
+     * Set the checkbox name
+     */
+     name: {
+        type: String as PropType<string>,
+        default: 'toggleName'
+    },
 })
 
 const emits = defineEmits(["checked"])

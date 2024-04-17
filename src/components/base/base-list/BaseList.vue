@@ -43,7 +43,6 @@
 </template>
 <script setup lang="ts">
 import { computed, onMounted, ref, type PropType } from 'vue';
-
 import { Mode, type UniqueId, type IList, type IKeyHandler } from './types';
 import { validateValueCollectionExists } from '@ui/utilities/validation/useValidation';
 

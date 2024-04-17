@@ -74,7 +74,9 @@ const { elementType } = defineProps({
    * Set the element type (button or a)
    */
   elementType: {
-    type: String as PropType<Element>
+    type: String as PropType<Element>,
+    default: Element.BUTTON,
+    validator: (prop: Element) => validateValueCollectionExists({ collection: Element, value: prop })
   }
 })
 const emits = defineEmits(['send'])

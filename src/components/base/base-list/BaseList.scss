@@ -27,6 +27,8 @@
         max-height: var(--max-height);
         overflow-y: auto;
         scroll-behavior: smooth;
+        scrollbar-color: var(--color-neutral-40, #000) transparent;
+        scrollbar-width: thin;
     }
 
     &__option {

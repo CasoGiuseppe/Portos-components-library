@@ -1,7 +1,11 @@
 <template>
     <fieldset
         ref="fieldset"
-        class="fieldset-list"
+        :class="[
+            'fieldset-list',
+            `fieldset-list--has-spacing-${spacing}`,
+        ]"
+        :data-column="column ? true : null"
         :aria-disabled="disabled"
         :disabled="disabled"
         @change="change"
@@ -22,7 +26,7 @@
                     v-bind="props"
                     :name="name"
                 >
-                    {{  label }}
+                    {{ label }}
                 </Component>
             </li>
         </ul>
@@ -30,7 +34,8 @@
 </template>
 <script setup lang="ts">
 import { onMounted, ref, type Component, type PropType } from 'vue';
-import type { Response, UniqueId } from './types';
+import { type Response, type UniqueId, Spacing } from './types';
+import { validateValueCollectionExists } from '@ui/utilities/validation/useValidation';
 
 const fieldset = ref<HTMLElement | null>();
 
@@ -70,6 +75,22 @@ const { name } = defineProps({
      name: {
         type: String as PropType<string>,
         default: 'fieldsetName'
+    },
+    /**
+     * Set the checkbox name
+     */
+     column: {
+        type: Boolean as PropType<boolean>,
+        default: false
+    },
+
+    /**
+     * Set gap spacing
+     */
+    spacing: {
+        type: String as PropType<Spacing>,
+        default: Spacing.S,
+        validator: (prop: Spacing) => validateValueCollectionExists({ collection: Spacing, value: prop})
     },
 })
 
