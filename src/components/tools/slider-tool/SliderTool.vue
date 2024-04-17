@@ -16,16 +16,13 @@
         <section class="slider-tool__wrapper">
             <ul class="slider-tool__list" ref="list">
                 <li
-                    v-for="{ id, label, className } in body"
+                    v-for="{ id, label, component } in body"
                     :key="id"
-                    :class="[
-                        'slider-tool__item',
-                        `${className}`
-                    ]"
+                    class="slider-tool__item"
                     data-testID="ui-slider-item"
                 >
                     <!-- @Slot for item with :property-->
-                    <slot :property="{ label, id }" name="item"></slot>
+                    <slot :property="{ label, id, component }" name="item"></slot>
                 </li>
             </ul>
         </section>
@@ -46,25 +43,26 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, type PropType } from 'vue'
 import useIntersectionObserver from '@/shared/composables/useIntersectionObserver'
 import BaseIcon from '@ui/base/base-icon/BaseIcon.vue'
 import { Types, Sizes } from '@ui/base/base-icon/types'
+import type { ISliderItems } from './types';
 import { AwaitScrollIntoView } from '@/shared/helpers';
 
 const list = ref<HTMLElement | null>(null)
 const currentHTMLNode = ref<HTMLElement | null>(null)
 const isDisabled = ref<boolean>(false)
 
-export interface ISLiderItems {
-    body: Record<string, any>[]
-}
 
-withDefaults(defineProps<ISLiderItems>(), {
+const { body } = defineProps({
     /**
-     * Set table body content
+     * Set the list of component elements
      */
-    body: () => []
+     body: {
+        type: Array as PropType<Array<ISliderItems>>,
+        default: () => []
+    },
 })
 
 const { createObserver } = useIntersectionObserver({

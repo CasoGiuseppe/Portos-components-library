@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
-import { vueRouter } from 'storybook-vue3-router'
+import { vueRouter } from 'storybook-vue3-router';
 import NavigationItemContextual from '@/components/navigation/contextual/navigation-item/NavigationItemContextual.vue';
 import { Element } from '@/components/navigation/contextual/navigation-item/types';
 import BaseIcon from '@/components/base/base-icon/BaseIcon.vue';
