@@ -12,10 +12,11 @@ const meta: Meta = {
         active: { control: "radio", options: [true, false] },
         disabled: { control: "radio", options: [true, false] },
         variant: { control: "radio", options: [true, false] },
+        rtl: { control: "radio", options: [true, false] },
+        name: { control: "text" },
+        fullWidth: { control: "radio", options: [true, false] },
         label: { control: "text" },
         default: { control: "text" },
-        rtl: { control: "radio", options: [true, false] },
-        fullWidth: { control: "radio", options: [true, false] }
     },
 
     args: {
@@ -24,10 +25,11 @@ const meta: Meta = {
         active: false,
         disabled: false,
         variant: false,
+        rtl: false,
+        fullWidth: false,
+        name: 'testToggle',
         label: "component label",
         default: "Label",
-        rtl: false,
-        fullWidth: false
     }
 } as Meta<typeof BaseToggle>
 
