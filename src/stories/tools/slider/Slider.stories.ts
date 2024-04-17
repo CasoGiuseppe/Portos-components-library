@@ -103,7 +103,7 @@ export const Default: Story = {
             return { args }
         },
         template: `
-        <section style="width: 30vw; padding: 10px">
+        <section style="width: 100%; padding: 10px">
           <SliderShow :body="args.body">
             <template #item="{ property: { label, id, component: { type, props } } }">
                 <Component

@@ -49,6 +49,7 @@ import BaseIcon from '@ui/base/base-icon/BaseIcon.vue'
 import { Types, Sizes } from '@ui/base/base-icon/types'
 import type { ISliderItems } from './types';
 import { AwaitScrollIntoView } from '@/shared/helpers';
+import { nextTick } from 'process';
 
 const list = ref<HTMLElement | null>(null)
 const currentHTMLNode = ref<HTMLElement | null>(null)
@@ -68,6 +69,7 @@ defineProps({
 const { createObserver } = useIntersectionObserver({
     action: (e: any) => {
         const { isIntersecting } = e
+        console.log(e, isIntersecting)
         e.target.dataset.visible = isIntersecting
     }
 })
@@ -114,7 +116,7 @@ onMounted(() => {
         createObserver({
             element: element as HTMLElement,
             options: {
-                threshold: 1
+                threshold: .5
             }
         })
     })

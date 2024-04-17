@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import { validateValueCollectionExists } from '@/components/utilities/validation/useValidation'
-import { computed, reactive, type PropType } from 'vue'
+import { computed, type PropType } from 'vue'
 import { type INavigationItemContextualComponent, type RouterTo, Element } from './types'
 
 const { id, selected, elementType }: INavigationItemContextualComponent = defineProps({
@@ -60,7 +60,7 @@ const { id, selected, elementType }: INavigationItemContextualComponent = define
 
   to: {
     type: Object as PropType<RouterTo>,
-    default: () => {}
+    default: () => { return { path: '/' }}
   }
 })
 
