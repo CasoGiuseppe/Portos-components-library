@@ -19,7 +19,7 @@
     display: flex;
     gap: var(--spacing-40, 0);
     justify-content: center;
-  
+
     border: none;
     border-radius: var(--radius-500, 0);
     color: var(--color-neutral-10, #000);
@@ -28,7 +28,11 @@
                 box-shadow var(--animationTime, 0s) ease-out,
                 border-color var(--animationTime, 0s) ease-out,
                 color var(--animationTime, 0s) ease-out;
-  
+    
+    #{$basebutton}--is-fullSize & {
+      width: 100%;
+    }
+
     &:disabled {
       pointer-events: none;
   
@@ -196,6 +200,10 @@
       &[data-invalid="true"] {
         border: 1px solid var(--color-error-30);
       }
+    }
+
+    &-fullSize {
+      width: 100%
     }
   }
 

@@ -1,5 +1,9 @@
 <template>
-  <section class="base-button">
+  <section
+    :class="[
+      'base-button',
+      `${fullSize ? `base-button--is-fullSize` : ''}`
+    ]">
     <button
       data-testID="ui-button"
       :id="id"
@@ -7,7 +11,7 @@
         'base-button__element',
         `base-button--is-${type}`,
         `base-button--is-${size}`,
-        `${variant ? `base-button--is-${type}-ALT` : ''}`
+        `${variant ? `base-button--is-${type}-ALT` : ''}`,
       ]"
       :disabled="disabled"
       :data-invalid="hasErrorSlot"
@@ -89,6 +93,14 @@ defineProps({
    * Set the active button state
    */
   active: {
+    type: Boolean as PropType<boolean>,
+    default: false
+  },
+
+  /**
+   * Set fullsize 100% width
+   */
+   fullSize: {
     type: Boolean as PropType<boolean>,
     default: false
   },

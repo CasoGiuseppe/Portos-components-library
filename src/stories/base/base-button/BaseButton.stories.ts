@@ -16,6 +16,7 @@ const meta = {
         variant: { control: 'radio', options: [true, false] },
         disabled: { control: 'radio', options: [true, false] },
         active: { if: { arg: 'type', eq: 'dropdown' }, control: 'radio', options: [true, false] },
+        fullSize: { control: 'radio', options: [true, false] },
         default: { control: 'text' },
         error: { if: { arg: 'type', eq: 'dropdown' }, control: 'text'}
     },
@@ -27,6 +28,7 @@ const meta = {
         disabled: false,
         variant: false,
         active: false,
+        fullSize: false,
         default: 'Select your option',
         error: 'error'
       }
@@ -46,6 +48,7 @@ const Templates: Story = {
                     'display' : 'flex',
                     'gap' : '10px',
                     'padding' : '10px',
+                    'max-width' : '50%',
                     'background-color' : (
                         args.variant === true &&
                         args.type !== 'dropdown' &&
