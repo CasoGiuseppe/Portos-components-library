@@ -55,7 +55,7 @@ const currentHTMLNode = ref<HTMLElement | null>(null)
 const isDisabled = ref<boolean>(false)
 
 
-const { body } = defineProps({
+defineProps({
     /**
      * Set the list of component elements
      */

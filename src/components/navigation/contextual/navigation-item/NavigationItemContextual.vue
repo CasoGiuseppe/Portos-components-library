@@ -60,7 +60,7 @@ const { id, selected, elementType }: INavigationItemContextualComponent = define
 
   to: {
     type: Object as PropType<RouterTo>,
-    default: () => { return { path: '/' }}
+    default: () => {}
   }
 })
 
