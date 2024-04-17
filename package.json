@@ -44,6 +44,7 @@
     "dependencies": {
         "@storybook/components": "^8.0.8",
         "@vueuse/components": "^10.9.0",
+        "storybook-vue3-router": "^5.0.0",
         "vue": "^3.4.15",
         "vue-router": "^4.2.5"
     },
