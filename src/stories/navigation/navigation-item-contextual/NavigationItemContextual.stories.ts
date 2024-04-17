@@ -17,7 +17,7 @@ const meta = {
   args: {
     id: 'navigationID',
     selected: false,
-    elementType: Element.BUTTON,
+    elementType: Element.ROUTERLINK,
     default: 'item'
   }
 } satisfies Meta<typeof NavigationItemContextual>

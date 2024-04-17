@@ -1,10 +1,16 @@
 <template>
+  <RouterLink
+    v-if="isTypeRouterLink"
+    :id="id"
+    :to="to"
+    :class="navigationClasses"
+  >
+    <slot/>
+  </RouterLink>
   <component
+    v-else
     :is="elementType"
-    :class="[
-      'navigation-item-contextual',
-      selected ? 'navigation-item-contextual--is-selected' : null
-    ]"
+    :class="navigationClasses"
     :id="id"
     data-testID="ui-navigation-item-contextual"
     @click="handleSendEvent"
@@ -18,10 +24,10 @@
 
 <script setup lang="ts">
 import { validateValueCollectionExists } from '@/components/utilities/validation/useValidation'
-import { type PropType } from 'vue'
-import { type INavigationItemContextualComponent, Element } from './types'
+import { computed, reactive, toRaw, type PropType } from 'vue'
+import { type INavigationItemContextualComponent, type RouterTo, Element } from './types'
 
-const { id, selected }: INavigationItemContextualComponent = defineProps({
+const { id, selected, elementType }: INavigationItemContextualComponent = defineProps({
   /**
    * Set the unique id of the ui button
    */
@@ -37,14 +43,26 @@ const { id, selected }: INavigationItemContextualComponent = defineProps({
     default: false
   },
   /**
-   * Set the element type (button or a)
+   * Set the element type (button, a, router-link)
    */
   elementType: {
     type: String as PropType<Element>,
-    default: Element.BUTTON,
+    default: Element.ROUTERLINK,
     validator: (prop: Element) =>
       validateValueCollectionExists({ collection: Element, value: prop })
+  },
+
+  to: {
+    type: Object as PropType<RouterTo>,
+    default: () => { return { path: '/' }}
   }
+})
+
+const isTypeRouterLink = computed(() => elementType === Element.ROUTERLINK );
+
+const navigationClasses = reactive({
+  'navigation-item-contextual': true,
+  'navigation-item-contextual--is-selected': selected
 })
 // emits
 const customEmits = defineEmits(['send'])
