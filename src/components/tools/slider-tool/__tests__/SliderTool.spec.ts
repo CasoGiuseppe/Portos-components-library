@@ -1,9 +1,9 @@
 // core
 import { describe, it, expect, beforeAll, beforeEach, vi } from "vitest"
-import { VueWrapper, mount } from "@vue/test-utils"
+import {  mount } from "@vue/test-utils"
 import { type ComponentPublicInstance } from "vue"
 // components
-import SliderShow from "@ui/tools/slider-show/SliderShow.vue"
+import SliderShow from "@ui/tools/slider-tool/SliderTool.vue"
 import BaseIcon from "@/components/base/base-icon/BaseIcon.vue"
 // utils
 import {

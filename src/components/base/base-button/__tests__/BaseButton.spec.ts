@@ -88,15 +88,18 @@ describe('BaseButton component tests', () => {
       })
     })
     it('Should have a correct type class', async () => {
-      expect($wrapper.classes()).toContain('base-button--is-secondary')
+      const $child = $wrapper.find('.base-button__element')
+      expect($child.classes()).toContain('base-button--is-secondary')
     })
 
     it('Should have a correct variant class', async () => {
-      expect($wrapper.classes()).toContain('base-button--is-secondary-ALT')
+      const $child = $wrapper.find('.base-button__element')
+      expect($child.classes()).toContain('base-button--is-secondary-ALT')
     })
 
     it('Should have a correct size class', async () => {
-      expect($wrapper.classes()).toContain('base-button--is-M')
+      const $child = $wrapper.find('.base-button__element')
+      expect($child.classes()).toContain('base-button--is-M')
     })
   })
 })
