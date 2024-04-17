@@ -7,6 +7,11 @@ type IComponent = {
     props: Record<string, any>
 }
 
+export interface IKeyHandler {
+    ArrowDown: () => void,
+    ArrowUp: () => void
+}
+
 export type IList = {
     id: string,
     label: string,
