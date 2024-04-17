@@ -1,7 +1,5 @@
 <template>
-  <BaseDropdown
-    :selected-option="selectedOption"
-  >
+  <BaseDropdown :selected-option="selectedOption">
     <template #header>
       <label>Label</label>
       <BaseIcon

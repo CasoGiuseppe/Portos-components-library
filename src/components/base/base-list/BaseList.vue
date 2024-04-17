@@ -86,7 +86,7 @@ const { current, visibleOptions } = defineProps({
     visibleOptions: {
         type: Number as PropType<Number>,
     }
-})
+});
 
 const customEmits = defineEmits(['send']);
 

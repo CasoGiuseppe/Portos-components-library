@@ -4,13 +4,13 @@
 		data-testID="ui-dropdown"
 		:data-active="isActive"
 		:data-error="!!error"
-		:data-disabled="isDisabled"
+		:data-disabled="disabled"
 		v-click-outside="closeList"
 		@focus="toggleList"
 		tabindex="0"
 	>
 		<h2
-			v-if="hasHeaderSlot"
+			v-if="!!slots['header']"
 			class="base-dropdown__header"
 		>
 			<slot name="header" />
@@ -19,7 +19,7 @@
 		<BaseButton
 			data-testID="ui-dropdown-button"
 			fullSize
-			:disabled="isDisabled"
+			:disabled="!!disabled"
 			:type="Types.DROPDOWN"
 			:active="isActive"
 			@send="toggleList"
@@ -33,7 +33,7 @@
 		</BaseButton>
 
 		<aside
-			v-if="!isDisabled && isActive"
+			v-if="!disabled && isActive"
 			class="base-dropdown__list"
 			data-testID="ui-dropdown-list"
 		>
@@ -53,28 +53,62 @@
 </template>
 
 <script setup lang="ts">
-import { ref, useSlots, watch } from 'vue';
+import { ref, useSlots, watch, type PropType } from 'vue';
 
-
-import { type IBaseDropdownComponent } from './types';
+import { type UniqueId } from './types';
 import BaseButton from '@/components/base/base-button/BaseButton.vue';
 import { Types } from '@/components/base/base-button/types';
+import { type ISelected } from '@/components/base/base-list/types';
 
-const props = withDefaults(defineProps<IBaseDropdownComponent>(), {
-	placeholder: 'Select your option',
+const props = defineProps({
+    /**
+     * Set the unique id of the dropdown component
+     */
+    id: {
+        type: String as PropType<UniqueId>,
+        default: 'ListId'
+    },
+
+    /**
+     * Set the placeholder/text message
+     */
+    placeholder: {
+        type: String as PropType<String>,
+        default: 'Select your option'
+    },
+
+    /**
+     * Set the current selected item
+     */
+	 selectedOption: {
+        type: Object as PropType<ISelected>,
+    },
+
+    /**
+     * Set disabled status
+     */
+    disabled: {
+        type: Boolean as PropType<Boolean>,
+        default: false,
+    },
+
+    /**
+     * Set error message
+     */
+    error: {
+        type: String as PropType<String>,
+    }
 });
 
-const { header } = useSlots();
+const slots = useSlots();
 const isActive = ref<boolean>(false);
-
-const hasHeaderSlot = !!header;
 
 watch(() => props.selectedOption, newValue => {
 	(newValue) && closeList();
 });
 
 const toggleList = () => {
-	if (!props.isDisabled) {
+	if (!props.disabled) {
 		isActive.value = !isActive.value;
 	}
 };
