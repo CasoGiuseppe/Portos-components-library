@@ -1,5 +1,7 @@
 <template>
-  <BaseDropdown :selected-option="selectedOption">
+  <BaseDropdown
+    :selected-option="selectedOption"
+  >
     <template #header>
       <label>Label</label>
       <BaseIcon
@@ -12,7 +14,7 @@
       <p
 				v-text="selectedOption?.label || placeholder"
 				:data-checked="!!selectedOption"
-				class="base-dropdown__button-placeholder"
+				class="base-dropdown__placeholder"
 			/>
     </template>
 
@@ -21,6 +23,7 @@
         :list="list"
         :mode="Mode.DROPDOWN"
         :current="selectedOption?.option"
+        :visible-options="5"
         @send="selectOption"
       >
         <template #row="{ label }">{{ label }}</template>
@@ -33,15 +36,6 @@
         </template>
       </BaseList>
     </template>
-    
-    <template #footer="{ error }">
-      <BaseIcon
-        name="IconFeedbackError"
-        :size="Sizes.XS"
-        :type="Types.FEEDBACK"
-      />
-      <p v-text="error" />
-    </template>
   </BaseDropdown>
 </template>
 
@@ -51,7 +45,7 @@ import { ref } from 'vue';
 import BaseDropdown from '@/components/base/base-dropdown/BaseDropdown.vue';
 import BaseIcon from '@/components/base/base-icon/BaseIcon.vue';
 import BaseList from '@/components/base/base-list/BaseList.vue';
-import { Sizes, Types } from '@/components/base/base-icon/types';
+import { Types } from '@/components/base/base-icon/types';
 import { Mode, type IList, type ISelected } from '@/components/base/base-list/types';
 
 const selectedOption = ref<ISelected>();

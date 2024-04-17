@@ -161,8 +161,10 @@ const select = (payload: Event | Element): void => {
 		inline: 'start'
 	});
 
-    currentNode.value = option;
-    customEmits('send', { option, label: innerText });
+	if (currentNode.value !== option) {
+		currentNode.value = option;
+		customEmits('send', { option, label: innerText });
+	};
 };
 
 const startSelectingOption = (): void => {
