@@ -173,7 +173,7 @@ const startSelectingOption = (): void => {
     
 	if (!startNode) return;
 	select(startNode);
-}
+};
 
 const startListMaxHeight = (): undefined | number => {
     if (!listParent.value || !visibleOptions) return;
@@ -191,7 +191,7 @@ const startListMaxHeight = (): undefined | number => {
     listParent.value.style.setProperty('--max-height', `${newParentHeight * (visibleOptions as number)}px`);
 
 	return newParentHeight;
-}
+};
 
 onMounted(() => {
     visibleOptions ? startListMaxHeight() : null;

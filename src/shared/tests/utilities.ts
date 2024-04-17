@@ -1,10 +1,14 @@
-import clickOutside from "@/components/utilities/directives/clickOutside";
-import { shallowMount } from "@vue/test-utils";
+import type { Component } from 'vue';
+import * as VueTestUtils from '@vue/test-utils';
 
-import type { Component } from "vue";
+import clickOutside from '@/components/utilities/directives/clickOutside';
 
-export const mountComponent = async (component: Component, props?: Record<string, any>) => {
-  return await shallowMount(component, {
+export const mountComponent = async (
+  component: Component,
+  props?: Record<string, any>,
+  typeMount: 'shallowMount' | 'mount' = 'shallowMount'
+) => {
+  return await VueTestUtils[typeMount](component, {
     ...props,
     global:  {
       ...props?.global,

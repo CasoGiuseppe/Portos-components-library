@@ -2,11 +2,11 @@
 export const $providedHeader = '<label>Mock Label</label>';
 export const $providedList = '<ul><li>Option 1</li></ul>';
 export const $providedFooter = '<footer>Error text</footer>';
+export const $providedPlaceholder = '<span>Mock placeholder</span>';
 
 // DOM elements
 export const $uiDropdown = '[data-testID=ui-dropdown]';
-export const $uiDropdownList = '[data-testID=ui-dropdown-list]';
-export const $uiDropdownButton = '[data-testID=ui-dropdown-button]';
+export const $uiDropdownButton = '[data-testID=ui-button]';
 
 // Props
 export const $propPlaceholder = 'Mock placeholder';

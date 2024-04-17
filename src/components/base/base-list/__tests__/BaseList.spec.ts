@@ -102,11 +102,11 @@ describe('BaseList component tests', () => {
                 }
             });
 
-            const liElement = await $wrapper.find('li');
+            const [firstLi, secondLi, thirdLi] = await $wrapper.findAll('li');
 
-            await liElement.trigger('keyup.enter');
-            await liElement.trigger('keyup.space');
-            await liElement.trigger('click');
+            await firstLi.trigger('keyup.enter');
+            await secondLi.trigger('keyup.space');
+            await thirdLi.trigger('click');
     
             expect($wrapper.emitted()).toHaveProperty('send');
             expect($wrapper.emitted().send).toHaveLength(3);
@@ -491,13 +491,15 @@ describe('BaseList component tests', () => {
                 $wrapper = await mountComponent(BaseList, {
                     props: {
                         list: $providedList,
-                        current: $providedList[0].option
+                        current: $providedList[3].option
                     },
                     slots: {
                         row: $providedRow,
                         component: $providedComponent
                     }
                 });
+
+                $wrapper.vm.currentNode = $providedList[0].option
 
                 const { startSelectingOption } = $wrapper.vm;
                 

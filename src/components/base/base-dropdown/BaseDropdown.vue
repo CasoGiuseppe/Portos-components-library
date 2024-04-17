@@ -35,7 +35,6 @@
 		<aside
 			v-if="!disabled && isActive"
 			class="base-dropdown__list"
-			data-testID="ui-dropdown-list"
 		>
 			<slot name="list" />
 		</aside>
