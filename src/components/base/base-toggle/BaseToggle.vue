@@ -15,6 +15,7 @@
             data-testID="ui-checkbox"
             ref="checkbox"
             type="checkbox"
+            :id="id"
             :checked="active"
             :disabled="disabled"
             :aria-disabled="disabled"

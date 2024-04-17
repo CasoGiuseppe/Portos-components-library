@@ -26,7 +26,7 @@
                     v-bind="props"
                     :name="name"
                 >
-                    {{  label }}
+                    {{ label }}
                 </Component>
             </li>
         </ul>
