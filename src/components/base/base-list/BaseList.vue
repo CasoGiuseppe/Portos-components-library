@@ -21,7 +21,7 @@
                 @click="select"
             >
                 <span
-                    v-if="component"
+                    v-if="$slots['component']"
                     class="base-list__component"
                 >
                      <!-- @slot component: Set option component content -->
@@ -42,7 +42,7 @@
     </section>
 </template>
 <script setup lang="ts">
-import { computed, onMounted, ref, useSlots, type PropType } from 'vue';
+import { computed, onMounted, ref, type PropType } from 'vue';
 
 import { Mode, type UniqueId, type IList, type IKeyHandler } from './types';
 import { validateValueCollectionExists } from '@ui/utilities/validation/useValidation';
@@ -88,8 +88,6 @@ const { current, visibleOptions } = defineProps({
     }
 })
 
-const slots = useSlots();
-const component = computed(() => !!slots['component']);
 const customEmits = defineEmits(['send']);
 
 const tabIndex = ref<number>(0);

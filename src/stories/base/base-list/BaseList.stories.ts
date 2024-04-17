@@ -67,7 +67,7 @@ const meta: Meta = {
     list: List,
     current: 'option3',
     mode: Mode.DEFAULT,
-    visibleOptions: 5
+    visibleOptions: 3
   }
 } as Meta<typeof BaseList>;
   
