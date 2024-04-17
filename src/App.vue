@@ -4,7 +4,7 @@
             :duration="3000"
             :border-color="'#ff0000'"
             :type="UIToastType.SUCCESS"
-            :visibility="'visible'"
+            :visibility="isVisible ? 'visible' : 'hidden'"
             @close="onClose"
             @action="onAction"
         >
@@ -24,6 +24,12 @@
                 >
             </template>
         </ToastBox>
+        <BaseButton
+            @click="changeVisibility"
+            :type="ButtonTypes.TERTIARY"
+            :size="ButtonSizes.S"
+            >ON TOAST {{ isVisible }}</BaseButton
+        >
     </section>
 </template>
 <script setup lang="ts">
@@ -39,6 +45,9 @@ import {
     Types as ButtonTypes,
     Sizes as ButtonSizes
 } from "./components/base/base-button/types"
+import { ref } from "vue"
+
+const isVisible = ref(false)
 
 const onClose = () => {
     console.log("closed")
@@ -46,5 +55,9 @@ const onClose = () => {
 
 const onAction = () => {
     console.log("action!")
+}
+
+const changeVisibility = () => {
+    isVisible.value = !isVisible.value
 }
 </script>

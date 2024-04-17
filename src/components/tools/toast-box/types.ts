@@ -8,3 +8,4 @@ export enum UIToastType {
 }
 
 export type UIToastVariant = "default" | "inline"
+export type UIToastVisibility = "visible" | "hidden"

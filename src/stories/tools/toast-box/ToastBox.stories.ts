@@ -20,14 +20,21 @@ const meta: Meta = {
         borderColor: { control: "color" },
         duration: { control: "number" },
         type: { control: "select", options: Object.values(UIToastType) },
-        visibility: { control: "text" },
+        visibility: {
+            control: "boolean"
+        },
+        variant: {
+            control: "select",
+            options: { default: "default", inline: "inline" }
+        },
         close: { action: "close" },
         action: { action: "action" }
     },
     args: {
         duration: 3000,
         type: UIToastType.SUCCESS,
-        visibility: "visible"
+        visibility: "visible",
+        variant: "default"
     }
 } as Meta<typeof ToastBox>
 
@@ -71,7 +78,8 @@ const Template: Story = {
                 :duration="args.duration"
                 :border-color="args.borderColor"
                 :type="args.type"
-                :visibility="args.visibility"
+                :visibility="args.visibility ? 'visible' : 'hidden'"
+                :variant="args.variant"
                 @close="onClose"
                 @action="onAction"
             >

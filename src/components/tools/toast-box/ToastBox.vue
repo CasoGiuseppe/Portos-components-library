@@ -9,11 +9,11 @@
         @mouseover="resetTimer"
         @mouseleave="startTimer"
     >
-        <div class="toast-box__grid-item toast-box__icon">
+        <div class="toast-box__icon">
             <slot name="icon"></slot>
         </div>
 
-        <header class="toast-box__grid-item toast-box__header">
+        <header class="toast-box__header">
             <slot name="header">Default Header</slot>
         </header>
 
@@ -26,25 +26,26 @@
             :size="Sizes.XS"
         ></BaseIcon>
 
-        <div class="toast-box__grid-item toast-box__body">
+        <div class="toast-box__body">
             <slot name="body">Default Body</slot>
         </div>
 
-        <div class="toast-box__grid-item toast-box__footer">
+        <div class="toast-box__footer">
             <slot name="footer"> </slot>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, type PropType } from "vue"
+import { watchEffect, ref, onMounted, onUnmounted, type PropType } from "vue"
 import BaseIcon from "@/components/base/base-icon/BaseIcon.vue"
 import { Types, Sizes } from "@/components/base/base-icon/types"
 import { validateValueCollectionExists } from "@/components/utilities/validation/useValidation"
 import {
     type UniqueId,
     type UIToastVariant,
-    UIToastType
+    UIToastType,
+    type UIToastVisibility
 } from "@/components/tools/toast-box/types"
 
 const props = defineProps({
@@ -60,12 +61,15 @@ const props = defineProps({
      */
     type: {
         type: String as PropType<UIToastType>,
-        default: UIToastType.INFO
-        /* validator: (prop: UIToastType) =>
-            validateValueCollectionExists({ collection: Types, value: prop }) */
+        default: UIToastType.INFO,
+        validator: (prop: UIToastType) =>
+            validateValueCollectionExists({
+                collection: UIToastType,
+                value: prop
+            })
     },
     /**
-     * Set variant type state
+     * Set variant type
      */
     variant: {
         type: String as PropType<UIToastVariant>,
@@ -78,12 +82,22 @@ const props = defineProps({
     duration: {
         type: Number as PropType<number>,
         default: 3000
+    },
+    /**
+     * Set the component visibility
+     */
+    visibility: {
+        type: String as PropType<UIToastVisibility>,
+        default: "hidden"
     }
 })
 
 const emits = defineEmits(["close", "action"])
 
-const visibility = ref("visible")
+let visibility = ref(props.visibility)
+watchEffect(() => {
+    visibility.value = props.visibility
+})
 
 const timer = ref<ReturnType<typeof setTimeout> | null>(null)
 
@@ -125,51 +139,89 @@ onUnmounted(() => {
 <style scoped lang="scss">
 .toast-box {
     @include text-body-m--regular;
-    color: var(--color-neutral-70);
+    color: var(--color-neutral-70, #000);
+
+    display: grid;
+    grid-template-columns: auto 2fr auto;
+    grid-template-rows: 1fr 2fr;
+    gap: 4px 4px;
+    position: fixed;
 
     max-width: 441px;
-    //grid
-    display: grid;
-    grid-template-columns: auto 1fr auto; // 3 columns: icon, content, close button
-    grid-template-rows: auto 1fr auto; // 3 rows: header, body, footer
-    gap: 0.5rem; // You can adjust the gap between grid items
-    position: relative;
-    transition: visibility 0.5s;
     border: var(--spacing-10, 2px) solid;
     border-left: var(--spacing-30, 8px) solid;
     border-radius: var(--radius-300, 8px);
-    padding: var(--spacing-50, 16px);
-    gap: var(--spacing-50, 16px);
+    padding: var(--spacing-50, 16px) var(--spacing-50, 16px)
+        var(--spacing-50, 16px) var(--spacing-30, 8px);
 
-    &__grid-item {
-        //display: flex;
+    transition:
+        transform 0.5s ease,
+        opacity 0.5s ease;
+
+    &__icon,
+    &__header,
+    &__close,
+    &__body,
+    &__footer {
+        transition: inherit;
     }
 
     &__icon {
-        grid-area: 1 / 1 / 2 / 2; // Icon position in grid
+        grid-area: 1 / 1 / 2 / 2;
         display: flex;
     }
 
     &__header {
-        grid-area: 1 / 2 / 2 / 3; // Header position in grid
+        grid-area: 1 / 2 / 2 / 3;
         @include text-body-m--bold;
-        //font-size: var(--spacing-60);
     }
 
     &__close {
-        grid-area: 1 / 3 / 2 / 4; // Close button position in grid
+        grid-area: 1 / 3 / 2 / 4;
         aspect-ratio: unset;
-        display: flex;
-        justify-content: flex-end;
+        justify-self: end;
+        cursor: pointer;
     }
 
     &__body {
-        grid-area: 2 / 2 / 4 / 3; // Body position in grid
+        grid-area: 2 / 2 / 3 / 3;
         color: var(--color-neutral-60, grey);
     }
 
     &__footer {
-        grid-area: 3 / 3 / 4 / 4; // Footer button position in grid
+        grid-area: 2 / 3 / 3 / 4;
+        display: flex;
+        align-items: flex-end;
+    }
+
+    &--is-default {
+        top: 32px;
+        right: 8px;
+        transform: translateX(100%);
+        opacity: 0;
+
+        box-shadow: var(--shadow-200);
+
+        &.visible {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        &.hidden {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+    }
+
+    &--is-inline {
+        opacity: 0;
+        &.visible {
+            opacity: 1;
+        }
+
+        &.hidden {
+            opacity: 0;
+        }
     }
 
     &--is {
@@ -188,12 +240,5 @@ onUnmounted(() => {
             border-color: var(--color-error-30, red);
         }
     }
-}
-
-.hidden {
-    //visibility: hidden;
-}
-.visible {
-    visibility: visible;
 }
 </style>
