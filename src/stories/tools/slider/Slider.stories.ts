@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/vue3"
 import BaseIcon from "@/components/base/base-icon/BaseIcon.vue"
-import SliderShow from "@ui/tools/slider-show/SliderShow.vue"
+import SliderShow from "@ui/tools/slider-tool/SliderTool.vue"
 import NavigationItemContextual from "@/components/navigation/contextual/navigation-item/NavigationItemContextual.vue"
 
 const meta: Meta<typeof SliderShow> = {

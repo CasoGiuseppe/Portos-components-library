@@ -1,8 +1,8 @@
 <template>
-    <section class="slider">
+    <section class="slider-tool">
         <button
             @click="moveTo({ type: 'prev' })"
-            class="slider--is-prev"
+            class="slider-tool--is-prev"
             data-testID="ui-slider-prev"
             :disabled="isDisabled"
         >
@@ -13,13 +13,15 @@
                 :size="Sizes.S"
             />
         </button>
-        <section class="slider__wrapper">
-            <ul class="slider__list" ref="list">
+        <section class="slider-tool__wrapper">
+            <ul class="slider-tool__list" ref="list">
                 <li
                     v-for="{ id, label, className } in body"
                     :key="id"
-                    class="slider__item"
-                    :class="`slider__item ${className}`"
+                    :class="[
+                        'slider-tool__item',
+                        `${className}`
+                    ]"
                     data-testID="ui-slider-item"
                 >
                     <!-- @Slot for item with :property-->
@@ -29,7 +31,7 @@
         </section>
         <button
             @click="moveTo({})"
-            class="slider--is-next"
+            class="slider-tool--is-next"
             data-testID="ui-slider-next"
             :disabled="isDisabled"
         >
@@ -123,4 +125,4 @@ onMounted(() => {
 })
 </script>
 
-<style src="./SliderShow.scss" lang="scss"></style>
+<style src="./SliderTool.scss" lang="scss"></style>
