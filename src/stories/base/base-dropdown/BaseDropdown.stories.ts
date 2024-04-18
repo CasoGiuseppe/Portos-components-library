@@ -116,7 +116,7 @@ const Templates: Story = {
                         :list="args.list"
                         mode="dropdown"
                         :current="args.selectedOption?.option"
-                        :visible-options="5"
+                        :visible-options="3"
                         @send="option => args.selectedOption = option"
                     >
                         <template #row="{ label }">{{ label }}</template>
