@@ -48,6 +48,10 @@ const Template: Story = {
         setup() {
             const onClose = action("close")
             const onAction = action("action")
+            const onButtonAction = () => {
+                action("Button clicked!")()
+                alert("Button was clicked!")
+            }
             const iconName = (type: UIToastType) => {
                 switch (type) {
                     case UIToastType.SUCCESS:
@@ -64,6 +68,7 @@ const Template: Story = {
                 args,
                 onClose,
                 onAction,
+                onButtonAction,
                 IconTypes,
                 IconSizes,
                 ButtonTypes,
@@ -94,7 +99,7 @@ const Template: Story = {
                 <template #header> Custom Header</template>
                 <template #body>This is a very very very very looong text</template>
                 <template #footer>
-                    <BaseButton :type="ButtonTypes.TERTIARY" :size="ButtonSizes.S">
+                    <BaseButton @click="onButtonAction" :type="ButtonTypes.TERTIARY" :size="ButtonSizes.S">
                         Test me please
                     </BaseButton>
                 </template>

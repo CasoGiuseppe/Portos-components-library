@@ -7,6 +7,7 @@
             :visibility="isVisible ? 'visible' : 'hidden'"
             @close="onClose"
             @action="onAction"
+            :variant="'inline'"
         >
             <template #icon>
                 <BaseIcon
