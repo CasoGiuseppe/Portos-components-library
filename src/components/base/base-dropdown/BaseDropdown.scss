@@ -1,7 +1,7 @@
 .base-dropdown {
   display: grid;
   position: relative;
-  width: var(--spacing-160);
+  width: 100%;
   gap: var(--spacing-30);
 
   &__header {
