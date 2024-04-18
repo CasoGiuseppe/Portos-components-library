@@ -118,7 +118,7 @@ const Templates: Story = {
         </section>
       `,
       methods: {
-        changeCurrentValue({ label, option }): void {
+        changeCurrentValue({ label, option }: { label: string, option: string }): void {
           updateArgs({ value: label,  current: option })
         }
     }
@@ -129,11 +129,3 @@ const Templates: Story = {
     ...Templates,
     args: {}
   };
-
-//   <template #placeholder="{ placeholder }">
-//   <p
-//       v-text="args.selectedOption?.label || placeholder"
-//       :data-checked="!!args.selectedOption"
-//       class="base-dropdown__placeholder"
-//   />
-// </template>

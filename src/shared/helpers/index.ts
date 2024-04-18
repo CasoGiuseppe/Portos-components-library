@@ -1,4 +1,4 @@
-import { Fragment, VNode } from "vue";
+import { Fragment, type VNode } from "vue";
 
 export const debounce = (fn: Function, ms = 2000) => {
     let timeoutId: ReturnType<typeof setTimeout>;
