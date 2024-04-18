@@ -1,21 +1,17 @@
 .toast-box {
     @include text-body-m--regular;
     color: var(--color-neutral-70, #000);
-
     display: grid;
     grid-template-columns: auto 2fr auto;
     grid-template-rows: 1fr 2fr;
     gap: 4px 4px;
     position: fixed;
-
-    max-width: 441px; //TODO: should be fixed ? this : any% ???
-
+    max-width: 441px;
     border: var(--spacing-10, 2px) solid;
     border-left: var(--spacing-30, 8px) solid;
     border-radius: var(--radius-300, 8px);
     padding: var(--spacing-50, 16px) var(--spacing-50, 16px)
         var(--spacing-50, 16px) var(--spacing-30, 8px);
-
     transition:
         transform 0.5s ease,
         opacity 0.5s ease;
@@ -57,12 +53,21 @@
     }
 
     &--is-default {
-        top: 32px;
-        right: 8px;
-        transform: translateX(100%);
-        opacity: 0;
+        top: var(--spacing-110);
+        right: var(--spacing-100);
+        @include media("large") {
+            top: var(--spacing-110);
+            right: var(--spacing-100);
+        }
 
-        box-shadow: var(--shadow-200);
+        @include media("medium") {
+            top: var(--spacing-90);
+            right: var(--spacing-70);
+        }
+        @include media("small") {
+            top: var(--spacing-50);
+            right: var(--spacing-50);
+        }
 
         &.visible {
             transform: translateX(0);
@@ -73,6 +78,8 @@
             transform: translateX(100%);
             opacity: 0;
         }
+
+        box-shadow: var(--shadow-200);
     }
 
     &--is-inline {
@@ -80,7 +87,6 @@
         &.visible {
             opacity: 1;
         }
-
         &.hidden {
             opacity: 0;
         }
@@ -93,11 +99,9 @@
         &-success {
             border-color: var(--color-success-30, green);
         }
-
         &-warning {
             border-color: var(--color-warning-30, orange);
         }
-
         &-error {
             border-color: var(--color-error-30, red);
         }
