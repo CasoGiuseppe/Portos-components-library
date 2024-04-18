@@ -23,6 +23,9 @@ const meta: Meta = {
         visibility: {
             control: "boolean"
         },
+        canClose: {
+            control: "boolean"
+        },
         variant: {
             control: "select",
             options: { default: "default", inline: "inline" }
@@ -34,7 +37,8 @@ const meta: Meta = {
         duration: 3000,
         type: UIToastType.SUCCESS,
         visibility: "visible",
-        variant: "default"
+        variant: "default",
+        canClose: true
     }
 } as Meta<typeof ToastBox>
 
@@ -85,6 +89,7 @@ const Template: Story = {
                 :type="args.type"
                 :visibility="args.visibility ? 'visible' : 'hidden'"
                 :variant="args.variant"
+                :canClose="args.canClose"
                 @close="onClose"
                 @action="onAction"
             >

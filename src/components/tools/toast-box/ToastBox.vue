@@ -8,17 +8,20 @@
         ]"
         @mouseover="resetTimer"
         @mouseleave="startTimer"
+        data-testID="ui-toast-box"
     >
         <div class="toast-box__icon">
             <slot name="icon"></slot>
         </div>
 
-        <header class="toast-box__header">
-            <slot name="header">Default Header</slot>
+        <header class="toast-box__header" data-testID="ui-toast-box-header">
+            <slot name="header"></slot>
         </header>
 
         <BaseIcon
+            v-if="canClose"
             class="toast-box__close"
+            data-testID="ui-toast-box-close"
             :id="'CloseIcon'"
             :type="Types.NAVIGATION"
             :name="'IconNavigationCloseM'"
@@ -26,12 +29,20 @@
             :size="Sizes.XS"
         ></BaseIcon>
 
-        <div class="toast-box__body">
-            <slot name="body">Default Body</slot>
+        <div
+            class="toast-box__body"
+            v-if="$slots['body']"
+            data-testID="ui-toast-box-body"
+        >
+            <slot name="body"></slot>
         </div>
 
-        <div class="toast-box__footer">
-            <slot name="footer"> </slot>
+        <div
+            class="toast-box__footer"
+            v-if="$slots['footer']"
+            data-testID="ui-toast-box-footer"
+        >
+            <slot name="footer"></slot>
         </div>
     </div>
 </template>
@@ -55,6 +66,13 @@ const props = defineProps({
     id: {
         type: String as PropType<UniqueId>,
         default: "toastId"
+    },
+    /**
+     * Set the close icon visibility
+     */
+    canClose: {
+        type: Boolean as PropType<boolean>,
+        default: true
     },
     /**
      * Set the toast type [success, warning, info, error]

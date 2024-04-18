@@ -16,14 +16,6 @@
         transform 0.5s ease,
         opacity 0.5s ease;
 
-    &__icon,
-    &__header,
-    &__close,
-    &__body,
-    &__footer {
-        transition: inherit;
-    }
-
     &__icon {
         grid-area: 1 / 1 / 2 / 2;
         display: flex;
@@ -53,20 +45,16 @@
     }
 
     &--is-default {
-        top: var(--spacing-110);
-        right: var(--spacing-100);
-        @include media("large") {
-            top: var(--spacing-110);
-            right: var(--spacing-100);
-        }
+        top: var(--spacing-110, 80px);
+        right: var(--spacing-100, 64px);
 
         @include media("medium") {
-            top: var(--spacing-90);
-            right: var(--spacing-70);
+            top: var(--spacing-90, 48px);
+            right: var(--spacing-70, 32px);
         }
         @include media("small") {
-            top: var(--spacing-50);
-            right: var(--spacing-50);
+            top: var(--spacing-50, 16px);
+            right: var(--spacing-50, 16px);
         }
 
         &.visible {
