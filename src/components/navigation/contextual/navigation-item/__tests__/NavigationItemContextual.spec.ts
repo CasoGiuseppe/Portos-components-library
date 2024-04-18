@@ -54,7 +54,8 @@ describe('NavigationItemContextual', () => {
     const wrapper = mount(NavigationItemContextual, {
       props: {
         id: 'testId',
-        selected: false
+        selected: false,
+        elementType: Element.BUTTON
       }
     })
 

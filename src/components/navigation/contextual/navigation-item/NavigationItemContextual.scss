@@ -21,18 +21,19 @@
 
   &:focus {
     box-shadow:
-      0 0 0 2px var(--color-neutral-10, #fff),
-      0 0 0 4px var(--color-outline, #bd20cb);
+      inset 0 0 0 2px var(--color-outline, #000),
+      inset 0 0 0 4px var(--color-neutral-10, #fff)
   }
 
   @media (hover) {
     &:not(#{$navigationItemContextual}--is-selected) {
       &:hover {
-        box-shadow: inset 0px -3px 0px 0px var(--color-neutral-40, #c7cccf);
-        color: var(--color-primary-30, #7090b7); // Cambiar el color a gris
-        transition:
-          box-shadow $animationTime ease-out,
-          color $animationTime ease-out;
+        &:not(:focus) {
+          box-shadow: inset 0px -3px 0px 0px var(--color-neutral-40, #c7cccf);
+          color: var(--color-primary-30, #7090b7); // Cambiar el color a gris
+          transition: box-shadow $animationTime ease-out,
+                      color $animationTime ease-out;
+        }
       } 
     }
   }
@@ -41,5 +42,12 @@
     @include text-body-m--bold;
     pointer-events: none;
     box-shadow: inset 0px -3px 0px 0px var(--color-brand-50, #aa272f);
+  }
+
+  // router link classes
+  &.router-link-active,
+  &.router-link-exact-active {
+    text-decoration: none;
+    outline: none;
   }
 }

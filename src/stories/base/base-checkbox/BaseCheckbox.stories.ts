@@ -15,7 +15,8 @@ const meta: Meta = {
         disabled: { control: "boolean" },
         variant: { control: "boolean" },
         indeterminate: { control: "boolean" },
-        invalid: { control: "boolean" }
+        invalid: { control: "boolean" },
+        name: { control: "text" },
     },
     args: {
         id: "checkboxId",
@@ -26,6 +27,7 @@ const meta: Meta = {
         variant: false,
         indeterminate: false,
         invalid: false,
+        name: 'testCheckbox'
     }
 } as Meta<typeof BaseCheckbox>
 

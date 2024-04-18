@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/vue3"
 import FieldSetList from "@/components/tools/fieldset-list/FieldSetList.vue"
+import { Spacing } from "@/components/tools/fieldset-list/types"
 import BaseCheckbox from "@/components/base/base-checkbox/BaseCheckbox.vue"
 import { shallowRef, type Component } from "vue"
 import { action } from '@storybook/addon-actions'
@@ -36,16 +37,22 @@ const meta: Meta<typeof FieldSetList> = {
     tags: ["autodocs"],
     argTypes: {
         id: { control: 'text' },
+        name: { control: 'text' },
         fields: { control: 'object', options: Fields },
         disabled: { control: 'radio', options: [true, false] },
+        column: { control: 'radio', options: [true, false] },
+        spacing: { control: 'select', options: Object.values(Spacing) },
         label: { control: 'text' },
 
     },
 
     args: {
-        id: 'linkId',
+        id: 'fieldSetId',
+        name: 'checkboxTest',
         fields: Fields,
         disabled: false,
+        column: false,
+        spacing: Spacing.S,
         label: 'Choose your select:'
       }
 } as Meta<typeof FieldSetList>

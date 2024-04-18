@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
+import { vueRouter } from 'storybook-vue3-router';
 import NavigationItemContextual from '@/components/navigation/contextual/navigation-item/NavigationItemContextual.vue';
 import { Element } from '@/components/navigation/contextual/navigation-item/types';
 import BaseIcon from '@/components/base/base-icon/BaseIcon.vue';
@@ -17,7 +18,7 @@ const meta = {
   args: {
     id: 'navigationID',
     selected: false,
-    elementType: Element.BUTTON,
+    elementType: Element.ROUTERLINK,
     default: 'item'
   }
 } satisfies Meta<typeof NavigationItemContextual>
@@ -34,7 +35,11 @@ const Templates: Story = {
     },
     template: `
       <section style="display: grid; gap: 10px; grid-template-columns: repeat(6, 1fr)">
-      <NavigationItemContextual v-bind="args" @send="action">
+      <NavigationItemContextual
+        v-bind="args"
+        :key="args.elementType"
+        @send="action"
+      >
           <Suspense>
             <BaseIcon name="IconArrowCircleRight" type="arrow" :size="'S'" />
           </Suspense>
@@ -52,3 +57,7 @@ export const Default: Story = {
   ...Templates,
   args: {}
 }
+
+Default.decorators = [
+  vueRouter()
+]

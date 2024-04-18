@@ -15,7 +15,10 @@ const meta = {
         size: { control: 'select', options: Object.values(Sizes) },
         variant: { control: 'radio', options: [true, false] },
         disabled: { control: 'radio', options: [true, false] },
-        default: { control: 'text' }
+        active: { if: { arg: 'type', eq: 'dropdown' }, control: 'radio', options: [true, false] },
+        fullSize: { control: 'radio', options: [true, false] },
+        default: { control: 'text' },
+        error: { if: { arg: 'type', eq: 'dropdown' }, control: 'text'}
     },
     args: {
         id: 'defaultID',
@@ -24,7 +27,10 @@ const meta = {
         size: Sizes.L,
         disabled: false,
         variant: false,
-        default: 'Button label',
+        active: false,
+        fullSize: false,
+        default: 'Select your option',
+        error: 'error'
       }
 } satisfies Meta<typeof BaseButton>;
 
@@ -33,7 +39,7 @@ export default meta;
 type Story = StoryObj<typeof BaseButton>;
 
 const Templates: Story = {
-    render: (args) => ({
+    render: (args, { updateArgs }) => ({
         components: { BaseButton, BaseIcon },
         setup() { return { args } },
         template: `
@@ -42,9 +48,15 @@ const Templates: Story = {
                     'display' : 'flex',
                     'gap' : '10px',
                     'padding' : '10px',
-                    'background-color' : args.variant === true ? '#002C5F' : 'white'
+                    'max-width' : '50%',
+                    'background-color' : (
+                        args.variant === true &&
+                        args.type !== 'dropdown' &&
+                        args.type !== 'backToTop'
+                    ) ? '#002C5F' : 'white'
                 }"
             >
+                <template v-if="args.type === 'primary' || args.type === 'secondary' || args.type === 'tertiary'">
                     <BaseButton v-bind="args" @send="action">
                         <template #default>{{ args.default }}</template>
                     </BaseButton>
@@ -52,14 +64,36 @@ const Templates: Story = {
                     <BaseButton v-bind="args" @send="action">
                         <template #default>
                             {{ args.default }}
-                            <Suspense>
-                                <BaseIcon name="IconArrowCircleRight" type="arrow" size="S"/>
-                            </Suspense>
+                            <BaseIcon name="IconArrowCircleRight" type="arrow" size="S"/>
                         </template>
                     </BaseButton>
+                </template>
+
+                <template v-if="args.type === 'backToTop'">
+                    <BaseButton v-bind="args" type='backToTop' @send="action">
+                        <template #default>
+                            {{ args.default }}
+                            <BaseIcon name="IconArrowUpMD" type="arrow" size="S"/>
+                        </template>
+                    </BaseButton>
+                </template>
+
+                <template v-if="args.type === 'dropdown'">
+                    <BaseButton v-bind="args" type="dropdown" @send="setActiveState">
+                        <template #default>
+                            {{ args.default }}
+                        </template>
+                        <template v-if="args.error !== ''" #error>{{ args.error }}</template>
+                    </BaseButton>
+                </template>
             </section>
         `,
-        methods: { action: action('submitted') }
+        methods: {
+            action: action('submitted'),
+            setActiveState(): void {
+                updateArgs({ ...args, active: !args.active })
+            }
+        }
     }),
 }
 
