@@ -19,6 +19,11 @@ export type IList = {
     component?: IComponent
 }
 
+export type ISelected = {
+    label: string
+    option: string
+}
+
 export enum Mode {
     DEFAULT = 'default',
     DROPDOWN = 'dropdown',
