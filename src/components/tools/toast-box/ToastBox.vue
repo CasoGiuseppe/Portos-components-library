@@ -139,6 +139,9 @@ watch(
     () => props.visibility,
     (isVisible) => {
         visibility.value = isVisible
+        if (isVisible) {
+            startTimer()
+        }
     }
 )
 
