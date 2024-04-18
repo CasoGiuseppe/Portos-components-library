@@ -5,13 +5,14 @@
     --label-focus: 0 0 0 2px var(--color-neutral-10, #000),
         0 0 0 4px var(--color-outline, #000);
     margin: 30px 50px;
-    border: 1px solid var(--color-neutral-40, #000);
     border-radius: var(--radius-300, 0);
+    box-shadow: var(--shadow-100);
 
     &--nested {
         margin: 0;
         border: none;
-        padding: 0;
+        box-shadow: none;
+        padding-bottom: var(--spacing-10, 0);
     }
 
     &__title {
