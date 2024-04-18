@@ -9,11 +9,7 @@
 
     display: flex;
     justify-content: space-between;
-    color: var(--color-primary-40);
-
-    label {
-      color: var(--color-neutral-70);
-    }
+    color: var(--color-neutral-70);
   }
 
   &__placeholder {
