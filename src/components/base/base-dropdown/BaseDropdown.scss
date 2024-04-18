@@ -1,5 +1,6 @@
 .base-dropdown {
   display: grid;
+  position: relative;
   width: var(--spacing-160);
   gap: var(--spacing-30);
 
@@ -23,36 +24,9 @@
     }
   }
 
-  &[data-error="true"] & {
-    &__button {
-      border:  1px solid var(--color-error-30);
-    }
-
-    &__footer {
-      @include text-body-xs--regular;
-
-      display: flex;
-      gap: var(--spacing-30);
-      color: var(--color-error-30);
-    }
-  }
-
-  [data-disabled="true"] & {
-    &__button {
-      border:  1px solid var(--color-neutral-50);
-      background-color: var(--color-neutral-20);
-
-      &::after {
-        border-color: var(--color-neutral-50);
-      }
-    }
-
-    &__header {
-      color: var(--color-neutral-50);
-
-      label {
-        color: var(--color-neutral-60);
-      }
-    }
+  &__list {
+    position: absolute;
+    top: 100%;
+    width: 100%;
   }
 }

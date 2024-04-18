@@ -1,3 +1,5 @@
+import { Fragment, VNode } from "vue";
+
 export const debounce = (fn: Function, ms = 2000) => {
     let timeoutId: ReturnType<typeof setTimeout>;
     return function (this: any, ...args: any[]) {
@@ -37,3 +39,24 @@ export const AwaitScrollIntoView = (
     }
     });
 }
+
+export const isVnodeEmpty = (vnodes: Array<VNode>) => {
+    return vnodes.every((node: VNode) => {
+      if (node.type === Comment) {
+        return true
+      }
+  
+      if (node.type === Text && typeof node.children === 'string' && !node.children.trim()) {
+        return true
+      }
+  
+      if (
+        node.type === Fragment
+        && isVnodeEmpty(node.children as Array<VNode>)
+      ) {
+        return true
+      }
+  
+      return false
+    })
+  }

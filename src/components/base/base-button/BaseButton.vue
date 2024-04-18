@@ -14,7 +14,7 @@
         `${variant ? `base-button--is-${type}-ALT` : ''}`,
       ]"
       :disabled="disabled"
-      :data-invalid="hasErrorSlot"
+      :data-invalid="hasSlotContent(slots?.error)"
       :data-active="active"
       :title="label"
       :aria-disabled="disabled"
@@ -27,7 +27,7 @@
     </button>
 
     <p
-      v-if="hasErrorSlot"
+      v-if="slots.error"
       class="base-button__footer"
     >
       <!-- @slot Error slot to show user message -->
@@ -37,12 +37,18 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmits, useSlots, type PropType } from 'vue'
+import { defineEmits, useSlots, type PropType, type Slot } from 'vue'
 import { type UniqueId, Sizes, Types } from './types';
 import { validateValueCollectionExists } from '@ui/utilities/validation/useValidation';
+import { isVnodeEmpty } from '@/shared/helpers';
 
-const { error } = useSlots();
-const hasErrorSlot = !!error;
+const slots = useSlots();
+const hasErrorSlot = !!slots.error;
+
+const hasSlotContent = (slot: Slot<any> | undefined) => {
+  if (!slot) return false
+  return !isVnodeEmpty(slot())
+}
 
 defineProps({
   /**

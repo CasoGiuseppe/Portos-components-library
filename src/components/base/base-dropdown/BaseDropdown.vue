@@ -1,12 +1,8 @@
 <template>
-	<div
+	<section
 		class="base-dropdown"
 		data-testID="ui-dropdown"
-		:data-active="isActive"
-		:data-error="!!error"
-		:data-disabled="disabled"
 		v-click-outside="closeList"
-		@focus="toggleList"
 		tabindex="0"
 	>
 		<h2
@@ -24,11 +20,9 @@
 			:active="isActive"
 			@send="toggleList"
 		>
-			<template #default>
-				<slot
-					name="placeholder"
-					:placeholder="placeholder"
-				/>
+			<template #default>{{ value }}</template>
+			<template #error>
+				<slot name="error" />
 			</template>
 		</BaseButton>
 
@@ -38,17 +32,7 @@
 		>
 			<slot name="list" />
 		</aside>
-
-		<p
-			v-if="error"
-			class="base-dropdown__footer"
-		>
-			<slot
-				name="footer"
-				:error="error"
-			/>
-		</p>
-	</div>
+	</section>
 </template>
 
 <script setup lang="ts">
@@ -57,7 +41,6 @@ import { ref, useSlots, watch, type PropType } from 'vue';
 import { type UniqueId } from './types';
 import BaseButton from '@/components/base/base-button/BaseButton.vue';
 import { Types } from '@/components/base/base-button/types';
-import { type ISelected } from '@/components/base/base-list/types';
 
 const props = defineProps({
     /**
@@ -69,18 +52,18 @@ const props = defineProps({
     },
 
     /**
-     * Set the placeholder/text message
+     * Set the choosed label
      */
-    placeholder: {
+    value: {
         type: String as PropType<String>,
         default: 'Select your option'
     },
 
-    /**
-     * Set the current selected item
+	/**
+     * Set the choosed option
      */
-	 selectedOption: {
-        type: Object as PropType<ISelected>,
+	 current: {
+        type: String as PropType<String>
     },
 
     /**
@@ -90,19 +73,12 @@ const props = defineProps({
         type: Boolean as PropType<Boolean>,
         default: false,
     },
-
-    /**
-     * Set error message
-     */
-    error: {
-        type: String as PropType<String>,
-    }
 });
 
 const slots = useSlots();
 const isActive = ref<boolean>(false);
 
-watch(() => props.selectedOption, newValue => {
+watch(() => props.value, newValue => {
 	(newValue) && closeList();
 });
 

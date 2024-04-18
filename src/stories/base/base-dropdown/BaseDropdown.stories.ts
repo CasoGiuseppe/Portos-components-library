@@ -55,22 +55,17 @@ const meta: Meta = {
     tags: ['autodocs'],
     argTypes: {
         id: { control: 'text' },
-        placeholder: { control: 'text' },
-        selectedOption: {
-            control: 'object',
-            options: List.map(item => ({
-                label: item.label,
-                option: item.option
-            }))
-        },
+        value: { control: 'text' },
+        current: { control: 'text' },
         disabled: { control: 'radio', options: [true, false] },
         error: { control: 'text' },
     },
     
     args: {
         id: 'dropdownId',
+        current: 'option5',
         disabled: false,
-        list: List
+        list: List,
     }
 } as Meta<typeof BaseList>;
 
@@ -79,12 +74,10 @@ export default meta;
 type Story = StoryObj;
 
 const Templates: Story = {
-    render: (args) => ({
+    render: (args, { updateArgs }) => ({
       components: { BaseDropdown, BaseList, BaseIcon },
       setup() {
-        return {
-            args
-        }
+        return { args }
       },
       template: `
         <section
@@ -102,22 +95,13 @@ const Templates: Story = {
                         type="feedback"
                     />
                 </template>
-            
-                <template #placeholder="{ placeholder }">
-                    <p
-                        v-text="args.selectedOption?.label || placeholder"
-                        :data-checked="!!args.selectedOption"
-                        class="base-dropdown__placeholder"
-                    />
-                </template>
-            
                 <template #list>
                     <BaseList
                         :list="args.list"
                         mode="dropdown"
-                        :current="args.selectedOption?.option"
+                        :current="args.current"
                         :visible-options="3"
-                        @send="option => args.selectedOption = option"
+                        @send="changeCurrentValue"
                     >
                         <template #row="{ label }">{{ label }}</template>
                         <template #component="{ component }">
@@ -129,9 +113,15 @@ const Templates: Story = {
                         </template>
                     </BaseList>
                 </template>
+                <template #error v-if="args.error">{{ args.error }}</template>
             </BaseDropdown>
         </section>
       `,
+      methods: {
+        changeCurrentValue({ label, option }): void {
+          updateArgs({ value: label,  current: option })
+        }
+    }
     })
   };
 
@@ -139,3 +129,11 @@ const Templates: Story = {
     ...Templates,
     args: {}
   };
+
+//   <template #placeholder="{ placeholder }">
+//   <p
+//       v-text="args.selectedOption?.label || placeholder"
+//       :data-checked="!!args.selectedOption"
+//       class="base-dropdown__placeholder"
+//   />
+// </template>
