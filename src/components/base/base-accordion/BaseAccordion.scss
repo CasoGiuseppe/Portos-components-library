@@ -3,72 +3,79 @@
     --animationTime: 0.4s;
     --description-background: var(--color-neutral-20, #000);
     --label-focus: 0 0 0 2px var(--color-neutral-10, #000),
-        0 0 0 4px var(--color-outline, #000);
-    margin: 30px 50px;
+                    0 0 0 4px var(--color-outline, #000);
+
     border-radius: var(--radius-300, 0);
     box-shadow: var(--shadow-100);
 
-    &--nested {
-        margin: 0;
-        border: none;
-        box-shadow: none;
-        padding-bottom: var(--spacing-10, 0);
-    }
-
-    &__title {
-        @include text-body-m--bold;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: var(--spacing-50, 0);
-        cursor: pointer;
-        gap: 8px;
-
+    details {
         transition: box-shadow var(--animationTime, 0s) ease-out;
+        
+        &[open] {
+            summary {
+                &::after {
+                    transform: rotate(-135deg) translateY(-2px);
+                }
+            }
+        }
 
-        @media (hover) {
-            &:focus-visible {
-                outline: none;
-                border-radius: var(--radius-300, 0);
-                background-color: var(--color-neutral-10, #000);
-                box-shadow: var(--label-focus);
+        ~ #{$baseaccordion} {
+            border-radius: none;
+            box-shadow: none;
+
+           &:is(:last-child) {
+                &:has(details[open]) {
+                    padding-bottom: var(--spacing-50, 0)
+                }
+           }
+        }
+
+        &:focus-within {
+            border-radius: var(--radius-300, 0);
+            background-color: var(--color-neutral-10, #000);
+            box-shadow: var(--label-focus);
+        }
+
+        summary {
+            @include text-body-m--bold;
+    
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            padding: var(--spacing-50, 0);
+            outline: none;
+    
+            cursor: pointer;
+            gap: var(--spacing-40, 0);
+
+            &::after {
+                content: '';
+                display: inline-block;
+                padding: var(--spacing-20, 0);
+
+                border: solid black;
+                border-width: 0 var(--spacing-10, 0) var(--spacing-10, 0) 0;
+
+                transform: rotate(45deg);
+                transition: transform var(--animationTime) ease-out;
+            }
+
+            > * {
+                &:is(:last-child) {
+                    margin-left: auto;
+                }
+            }
+
+            + article {
+                @include text-body-s--regular;
+                
+                max-height: fit-content;
+                margin: 0 var(--spacing-40, 0);
+                overflow: hidden;
+                padding: var(--spacing-30, 0);
+
+                background-color: var(--description-background);
             }
         }
     }
-    &__title-sumary {
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    &__description {
-        @include text-body-s--regular;
-        max-height: fit-content;
-        overflow: hidden;
-        background-color: var(--description-background);
-        padding: var(--spacing-30, 0);
-        margin: var(--spacing-40, 0);
-    }
-
-    &__icon-chevron {
-        color: var(--color-primary-40, #000);
-        transition: transform 0.3s ease;
-        transform-origin: 50% 50%;
-        padding: 4px 7px;
-
-        &::before {
-            content: "";
-            display: block;
-            width: 12px;
-            height: 12px;
-            border-style: solid;
-            border-width: 2px 2px 0 0;
-            transform: rotate(135deg);
-        }
-    }
-}
-
-details[open] summary .base-accordion__icon-chevron {
-    transform: rotate(180deg);
 }
