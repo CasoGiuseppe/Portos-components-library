@@ -1,6 +1,6 @@
 {
     "name": "vue-components-noatum",
-    "version": "1.2.30",
+    "version": "1.2.31",
     "type": "module",
     "description": "Library Components Portos",
     "main": "dist/vue-components-noatum.umd.js",
