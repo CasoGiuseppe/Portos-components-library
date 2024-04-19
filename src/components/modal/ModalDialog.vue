@@ -1,42 +1,39 @@
 <template>
     <dialog
         ref="dialogRef"
+        :id="id"
         :class="[
-            `modal-dialog modal-dialog--is-${size}`,
-            { 'modal-dialog--is-open': isOpen }
+            'modal',
+            `modal--is-${size}`,
         ]"
-        @cancel="close"
-        v-bind="$attrs"
+        @cancel="behaviours.close"
     >
-        <div v-on-click-outside="close">
-            <header class="modal-dialog__header">
-                <h2 class="modal-dialog__header--title">
+        <section
+            class="modal__content"
+            v-on-click-outside="behaviours.close"
+        >
+                <h2 class="modal__title">
                     <!-- @slot The title for modal with/without icon-->
                     <slot name="header"></slot>
+                    <button class="modal__close" @click="behaviours.close" />
                 </h2>
-
-                <button class="modal-dialog__header--close" @click="close">
-                    <BaseIcon
-                        :id="'CloseIcon'"
-                        :type="Types.NAVIGATION"
-                        :name="'IconNavigationCloseM'"
-                    ></BaseIcon>
-                </button>
-            </header>
-            <section>
-                <!-- @slot for default values. The body and footer (buttons)-->
-                <slot name="default"></slot>
+            <section class="modal__body">
+                <!-- @slot for default values-->
+                <slot />
             </section>
-        </div>
+            <footer class="modal__footer">
+                <!-- @slot for footer values-->
+                <slot name="footer"></slot>
+            </footer>
+        </section>
     </dialog>
 </template>
 
 <script setup lang="ts">
 import { type PropType, defineProps, ref, watch, onMounted } from "vue"
 import { vOnClickOutside } from "@vueuse/components"
-import BaseIcon from "@/components/base/base-icon/BaseIcon.vue"
-import { Types } from "@/components/base/base-icon/types"
-import type { UniqueId, SizeType } from "./types"
+import { type UniqueId, Sizes } from "./types"
+import { validateValueCollectionExists } from '@ui/utilities/validation/useValidation';
 
 const emits = defineEmits(["close", "open"])
 const props = defineProps({
@@ -44,48 +41,37 @@ const props = defineProps({
         type: String as PropType<UniqueId>,
         default: "modalDialog"
     },
-    isOpen: {
-        type: Boolean
+    active: {
+        type: Boolean as PropType<boolean>,
+        default: false
     },
 
     size: {
-        type: String as PropType<SizeType>,
+        type: String as PropType<Sizes>,
         default: "narrow",
-        validator: (value: SizeType) => ["wide", "narrow"].includes(value)
+        validator: (prop: Sizes) => validateValueCollectionExists({ collection: Sizes, value: prop})
     }
 })
-
-watch(
-    () => props.isOpen,
-    (newVal) => {
-        console.log(props.isOpen, newVal)
-        if (newVal) open()
-        else close()
-    }
-)
 
 const dialogRef = ref<HTMLDialogElement | null>(null)
+const behaviours = {
+    close : (): void => {
+        dialogRef.value?.close();
+        emits('close')
+    },
 
-function open() {
-    emits("open")
-    dialogRef.value?.showModal()
+    open : (): void => {
+        dialogRef.value?.showModal();
+        emits('open')
+    }
 }
 
-function close() {
-    dialogRef.value?.close()
-    emits("close")
-}
+watch(
+    () => props.active,
+    (newVal) => behaviours[newVal ? 'open' : 'close']()
+)
 
-onMounted(() => {
-    console.log(props.isOpen)
-    if (props.isOpen) open()
-})
-
-// @discuss not sure if should be exposed in the future to manage those from parent components
-defineExpose({
-    open,
-    close
-})
+onMounted(() => { if (props.active) behaviours.open() })
 </script>
 
 <style lang="scss" src="./ModalDialog.scss"></style>
