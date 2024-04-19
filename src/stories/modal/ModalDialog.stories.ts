@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/vue3"
-import ModalDialog from "@/components/modal/ModalDialog.vue"
+import ModalDialog from "@/components/tools/modal/Modal.vue"
 import BaseButton from "@/components/base/base-button/BaseButton.vue"
 import BaseIcon from "@/components/base/base-icon/BaseIcon.vue"
-import { Sizes } from "@/components/modal/types";
+import { Sizes } from "@/components/tools/modal/types";
 
 const meta: Meta<typeof ModalDialog> = {
     title: "Modal/ModalDialog",
@@ -51,7 +51,6 @@ const Template: Story = {
                 :id="'TitleIcon'"
                 type="calendar"
                 :name="'IconCalendarCalendar'"
-                style="margin-right: 0.5rem"
             ></BaseIcon> {{ args.header }}
           </template>
           {{ args.default }}

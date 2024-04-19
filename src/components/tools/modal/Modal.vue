@@ -74,4 +74,4 @@ watch(
 onMounted(() => { if (props.active) behaviours.open() })
 </script>
 
-<style lang="scss" src="./ModalDialog.scss"></style>
+<style lang="scss" src="./Modal.scss"></style>
