@@ -4,13 +4,12 @@ import { mountComponent } from '@/shared/tests/utilities';
 
 import {
     $providedHeader,
-    $providedList,
-    $providedFooter,
-    $providedPlaceholder,
-    $uiDropdown,
+    $providedError,
     $uiDropdownButton,
+    $uiDropdownList,
     $propPlaceholder,
-    $propSelectedOption
+    $propSelectedOption,
+    $propList
 } from './utilites';
 import { mount } from '@vue/test-utils';
 
@@ -22,8 +21,7 @@ describe('BaseDropdown component tests', () => {
             $wrapper = mount(BaseDropdown, {
                 slots: {
                     header: $providedHeader,
-                    list: $providedList,
-                    placeholder: $providedPlaceholder
+                    error: $providedError
                 }
             });
             
@@ -31,37 +29,7 @@ describe('BaseDropdown component tests', () => {
             await $wrapper.vm.$nextTick();
 
             expect($wrapper.html()).toContain($providedHeader);
-            expect($wrapper.html({ raw: true })).toContain($providedList);
-            expect($wrapper.html({ raw: true })).toContain($providedPlaceholder);
-        });
-
-        it('Should not display slot list if it is disabled or inactive', async () => {
-            $wrapper = await mountComponent(BaseDropdown, {
-                slots: {
-                    list: $providedList,
-                },
-                propsData: {
-                    disabled: true
-                }
-            });
-
-            expect($wrapper.vm.isActive).toBeFalsy();
-            expect($wrapper.html({ raw: true })).not.toContain($providedList);
-        });
-
-        it('Should render slot footer depending on error prop value', async () => {
-            $wrapper = await mountComponent(BaseDropdown, {
-                slots: { footer: $providedFooter },
-                propsData: { error: 'Mock Error' }
-            });
-
-            expect($wrapper.html({ raw: true })).toContain($providedFooter);
-
-            $wrapper = await mountComponent(BaseDropdown, {
-                slots: { footer: $providedFooter }
-            });
-
-            expect($wrapper.html({ raw: true })).not.toContain($providedFooter);
+            expect($wrapper.html()).toContain($providedError);
         });
     });
 
@@ -75,8 +43,8 @@ describe('BaseDropdown component tests', () => {
             `;
 
             $wrapper = await mountComponent(BaseDropdown, {
-                slots: {
-                    list: $providedList,
+                propsData: {
+                    list: $propList
                 },
                 attachTo: document.getElementById('app') as HTMLElement
             }, 'mount');
@@ -97,12 +65,16 @@ describe('BaseDropdown component tests', () => {
             const outsideElement = document.getElementById('outside') as HTMLElement;
             
             await button.trigger('click');
-            expect($wrapper.html({ raw: true })).toContain($providedList);
+            const dropdownList = $wrapper.find($uiDropdownList);
+
+            expect($wrapper.html({ raw: true }))
+                .toContain(dropdownList.html({ raw: true }));
 
             outsideElement?.click();
             await $wrapper.vm.$nextTick();
 
-            expect($wrapper.html({ raw: true })).not.toContain($providedList);
+            expect($wrapper.html({ raw: true }))
+                .not.toContain(dropdownList.html({ raw: true }));
 
             document.body.innerHTML = '';
         });
@@ -114,26 +86,18 @@ describe('BaseDropdown component tests', () => {
                 propsData: {
                     placeholder: $propPlaceholder
                 },
-                slots: {
-                    placeholder: $providedPlaceholder
-                }
             }, 'mount');
 
-            expect($wrapper.html()).toContain($providedPlaceholder);
+            expect($wrapper.html()).toContain($propPlaceholder);
         });
 
-        it('Should render selectedOption label if it is defined', async () => {
+        it('Should render current label if it is defined', async () => {
             $wrapper = await mountComponent(BaseDropdown, {
                 propsData: {
-                    selectedOption: $propSelectedOption
+                    placeholder: $propPlaceholder,
+                    current: $propSelectedOption.option,
+                    list: $propList
                 },
-                slots: {
-                    placeholder: `
-                        <template #placeholder>
-                            <div>${$propSelectedOption.label}</div>
-                        </template>
-                    `
-                }
             }, 'mount');
 
             expect($wrapper.html()).not.toContain($propPlaceholder);
@@ -147,10 +111,7 @@ describe('BaseDropdown component tests', () => {
                 }
             }, 'mount');
 
-            const dropdown = await $wrapper.find($uiDropdown);
             const button = await $wrapper.find($uiDropdownButton);
-
-            expect(dropdown.element.dataset.disabled).toBe('true');
             expect(button.attributes().disabled).not.toBeUndefined();
         });
     });

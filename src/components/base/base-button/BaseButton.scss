@@ -168,7 +168,7 @@
       padding: var(--spacing-30, 0) var(--spacing-40, 0);
       justify-content: space-between;
 
-      &-placeholder {
+      :nth-child(1) {
         &[data-checked="true"] {
           color: var(--color-neutral-70);
         }
