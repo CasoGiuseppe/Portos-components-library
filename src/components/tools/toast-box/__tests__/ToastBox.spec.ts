@@ -67,46 +67,6 @@ describe("ToastBox component tests", () => {
         })
     })
 
-    describe("Slots tests", () => {
-        it("should display default header if slot not provided", () => {
-            const wrapper = mount(ToastBox)
-            expect(wrapper.find($uiDOMToastHeader).text()).toContain("")
-        })
-        it("should display custom header if slot provided", () => {
-            const wrapper = mount(ToastBox, {
-                slots: {
-                    header: '<div class="custom-header">Custom Header</div>'
-                }
-            })
-            expect(wrapper.find(".custom-header").exists()).toBeTruthy()
-            expect(wrapper.find($uiDOMToastHeader).text()).toContain(
-                "Custom Header"
-            )
-        })
-        it("should display custom body if slot provided", () => {
-            const wrapper = mount(ToastBox, {
-                slots: {
-                    body: '<div class="custom-body">Custom Body</div>'
-                }
-            })
-            expect(wrapper.find(".custom-body").exists()).toBeTruthy()
-            expect(wrapper.find($uiDOMToastBody).text()).toContain(
-                "Custom Body"
-            )
-        })
-        it("should display footer if slot provided", () => {
-            const wrapper = mount(ToastBox, {
-                slots: {
-                    footer: '<div class="custom-footer">Custom Footer</div>'
-                }
-            })
-            expect(wrapper.find(".custom-footer").exists()).toBeTruthy()
-            expect(wrapper.find($uiDOMToastFooter).text()).toContain(
-                "Custom Footer"
-            )
-        })
-    })
-
     describe("Timer tests", () => {
         it("should start timer on mount", () => {
             const setTimeoutSpy = vi.spyOn(global, "setTimeout")

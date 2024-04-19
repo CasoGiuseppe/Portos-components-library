@@ -1,5 +1,6 @@
 <template>
-    <div
+    <component
+        :is="variant === 'default' ? 'dialog' : 'aside'"
         :class="[
             'toast-box',
             `toast-box--is-${type}`,
@@ -10,41 +11,49 @@
         @mouseleave="startTimer"
         data-testID="ui-toast-box"
     >
-        <div class="toast-box__icon">
+        <section class="toast-box__icon" v-if="$slots['icon']">
             <slot name="icon"></slot>
-        </div>
+        </section>
+        <main class="toast-box__main">
+            <header
+                class="toast-box__main-header"
+                data-testID="ui-toast-box-header"
+                v-if="$slots['header']"
+            >
+                <slot name="header"></slot>
+            </header>
+            <section
+                class="toast-box__main-body"
+                v-if="$slots['body']"
+                data-testID="ui-toast-box-body"
+            >
+                <slot name="body"></slot>
+            </section>
+        </main>
 
-        <header class="toast-box__header" data-testID="ui-toast-box-header">
-            <slot name="header"></slot>
-        </header>
+        <section class="toast-box__actions">
+            <div>
+                <BaseIcon
+                    v-if="canClose"
+                    class="toast-box__actions-close"
+                    data-testID="ui-toast-box-close"
+                    :id="'CloseIcon'"
+                    :type="Types.NAVIGATION"
+                    :name="'IconNavigationCloseM'"
+                    @click="closeToast"
+                    :size="Sizes.XS"
+                ></BaseIcon>
+            </div>
 
-        <BaseIcon
-            v-if="canClose"
-            class="toast-box__close"
-            data-testID="ui-toast-box-close"
-            :id="'CloseIcon'"
-            :type="Types.NAVIGATION"
-            :name="'IconNavigationCloseM'"
-            @click="closeToast"
-            :size="Sizes.XS"
-        ></BaseIcon>
-
-        <div
-            class="toast-box__body"
-            v-if="$slots['body']"
-            data-testID="ui-toast-box-body"
-        >
-            <slot name="body"></slot>
-        </div>
-
-        <div
-            class="toast-box__footer"
-            v-if="$slots['footer']"
-            data-testID="ui-toast-box-footer"
-        >
-            <slot name="footer"></slot>
-        </div>
-    </div>
+            <footer
+                class="toast-box__actions-footer"
+                v-if="$slots['footer']"
+                data-testID="ui-toast-box-footer"
+            >
+                <slot name="footer"></slot>
+            </footer>
+        </section>
+    </component>
 </template>
 
 <script setup lang="ts">
@@ -119,9 +128,11 @@ const emits = defineEmits(["close", "action"])
 let visibility = ref(props.visibility)
 
 const startTimer = () => {
-    timer.value = setTimeout(() => {
-        closeToast()
-    }, props.duration)
+    if (props.variant === "default") {
+        timer.value = setTimeout(() => {
+            closeToast()
+        }, props.duration)
+    }
 }
 
 const resetTimer = () => {
@@ -139,14 +150,16 @@ watch(
     () => props.visibility,
     (isVisible) => {
         visibility.value = isVisible
-        if (isVisible) {
+        if (isVisible === "visible") {
             startTimer()
         }
     }
 )
 
 onMounted(() => {
-    startTimer()
+    if (props.variant === "default") {
+        startTimer()
+    }
 })
 
 onUnmounted(() => {
