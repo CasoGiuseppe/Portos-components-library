@@ -34,7 +34,7 @@ import useResizeObserver from "./shared/composables/useResizeObserver"
 // tools
 import SliderTool from "./components/tools/slider-tool/SliderTool.vue"
 import FieldSetList from "./components/tools/fieldset-list/FieldSetList.vue"
-import ModalDialog from "./components/tools/modal/ModalDialog.vue"
+import ModalDialog from "./components/tools/modal/Modal.vue"
 
 // types
 import type {
@@ -114,7 +114,7 @@ export function install(app: App): void {
     //tools
     app.component("SliderTool", SliderTool)
     app.component("FieldSetList", FieldSetList)
-    app.component("ModalDialog", Modal)
+    app.component("ModalDialog", ModalDialog)
 
     // navigation components
     app.component("NavigationItemContextual", NavigationItemContextual)
