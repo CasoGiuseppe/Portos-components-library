@@ -20,6 +20,7 @@
                 data-testID="ui-toast-box-title"
                 v-if="$slots['title']"
             >
+                <!-- @slot for the toast title-->
                 <slot name="title"></slot>
             </header>
             <p
@@ -27,6 +28,7 @@
                 v-if="$slots['description']"
                 data-testID="ui-toast-box-description"
             >
+                <!-- @slot for the toast description-->
                 <slot name="description"></slot>
             </p>
         </section>
@@ -50,6 +52,7 @@
                 v-if="$slots['footer']"
                 data-testID="ui-toast-box-footer"
             >
+                <!-- @slot for the footer button-->
                 <slot name="footer"></slot>
             </footer>
         </section>
@@ -101,7 +104,7 @@ const props = defineProps({
      */
     tag: {
         type: String as PropType<UIToastTag>,
-        default: "aside",
+        default: "dialog",
         validator: (prop: UIToastTag) => ["dialog", "aside"].includes(prop)
     },
 
