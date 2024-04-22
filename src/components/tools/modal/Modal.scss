@@ -48,43 +48,33 @@
         animation: out var(--animationTime) forwards;
     }
 
-    @include media('large') {
-        &--is{
-            &-narrow {
-                --modal-width: calc(var(--spacing-30, 0) * 67);
-            }
+    &[data-size="narrow"] {
+        @include media('large') {
+            --modal-width: calc(var(--spacing-30, 0) * 67);
+        }
 
-            &-wide {
-                --modal-width:calc(var(--spacing-30, 0) * 102);
-            }
+        @include media('medium') {
+            --modal-width: calc(var(--spacing-30, 0) * 67);
+        }
+
+        @include media('small') {
+            --modal-width: calc(var(--spacing-30, 0) * 70);
         }
     }
 
-    @include media('medium') {
-        &--is{
-            &-narrow {
-                --modal-width: calc(var(--spacing-30, 0) * 67);
-            }
+    &[data-size="wide"] {
+        @include media('large') {
+            --modal-width:calc(var(--spacing-30, 0) * 102);
+        }
 
-            &-wide {
-                --modal-width: calc(var(--spacing-30, 0) * 90);
-            }
+        @include media('medium') {
+            --modal-width: calc(var(--spacing-30, 0) * 90);
+        }
+
+        @include media('small') {
+            --modal-width: calc(var(--spacing-30, 0) * 87);
         }
     }
-
-    @include media('small') {
-        &--is{
-            &-narrow {
-                --modal-width: calc(var(--spacing-30, 0) * 70);
-            }
-
-            &-wide {
-                --modal-width: calc(var(--spacing-30, 0) * 87);
-            }
-        }
-    }
-
-    
 
     &__close {
         aspect-ratio: 1/1;
@@ -93,6 +83,9 @@
         justify-content: center;
         position: relative;
         width: var(--spacing-60, 0);
+
+        background: none;
+        border: none;
 
         &:before,
         &:after {

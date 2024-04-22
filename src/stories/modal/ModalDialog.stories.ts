@@ -12,6 +12,7 @@ const meta: Meta<typeof ModalDialog> = {
         id: {control: "text"},
         size: { control: "select", options: Object.values(Sizes) },
         active: { control: 'radio', options: [true, false] },
+        isPanel: { control: 'radio', options: [true, false] },
         header: { control: "text" },
         default: { control: "text" },
         footer: { control: "text" }
@@ -20,6 +21,7 @@ const meta: Meta<typeof ModalDialog> = {
         id: "modalID",
         size: Sizes.NARROW,
         active: false,
+        isPanel: false,
         header: "Modal title",
         default: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
     },

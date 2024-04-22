@@ -2,10 +2,9 @@
     <dialog
         ref="dialogRef"
         :id="id"
-        :class="[
-            'modal',
-            `modal--is-${size}`,
-        ]"
+        class="modal"
+        :data-size="size"
+        :data-panel="isPanel ? true : null"
         @cancel="behaviours.close"
     >
         <section
@@ -45,12 +44,15 @@ const props = defineProps({
         type: Boolean as PropType<boolean>,
         default: false
     },
-
     size: {
         type: String as PropType<Sizes>,
-        default: "narrow",
+        default: "wide",
         validator: (prop: Sizes) => validateValueCollectionExists({ collection: Sizes, value: prop})
-    }
+    },
+    isPanel: {
+        type: Boolean as PropType<boolean>,
+        default: false
+    },
 })
 
 const dialogRef = ref<HTMLDialogElement | null>(null)
