@@ -30,7 +30,7 @@ const meta: Meta = {
 
 export default meta
 
-type Story = StoryObj<typeof BaseRadio>
+type Story = StoryObj
 
 const Template: Story = {
     render: (args) => ({
@@ -41,7 +41,6 @@ const Template: Story = {
         template: `
             <div style="padding: 20px">
                 <BaseRadio v-bind="args">
-                    <template #legend>{{ args.legendContent }}</template>
                 </BaseRadio>
             </div>
         `
@@ -55,18 +54,7 @@ export const Default: Story = {
     }
 }
 
-export const WithLegend: Story = {
-    ...Template,
-    args: {
-        ...meta.args,
-        legendContent: "Example Radio Group"
-    }
-}
-
 export const Disabled: Story = {
     ...Template,
-    args: {
-        ...meta.args,
-        disabled: true
-    }
+    args: {}
 }

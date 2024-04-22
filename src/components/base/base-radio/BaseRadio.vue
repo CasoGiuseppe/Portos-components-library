@@ -1,9 +1,5 @@
 <template>
     <fieldset class="base-radio__fieldset" :disabled="disabled">
-        <legend v-if="$slots['legend']" class="base-radio__legend">
-            <!-- @slot Slot for the legend of the radio group -->
-            <slot name="legend" />
-        </legend>
         <div class="base-radio__wrapper">
             <div
                 v-for="(option, index) in options"
@@ -30,18 +26,23 @@
 
 <script setup lang="ts">
 import { defineProps, defineEmits, type PropType } from "vue"
+import { type UniqueId, type UIRadioOptions } from "./types"
 
-const props = defineProps({
+const { options, name, disabled, modelValue } = defineProps({
+    /**
+     * Set the unique id of the ui toggle
+     */
     id: {
-        type: String,
-        default: "radio"
+        type: String as PropType<UniqueId>,
+        default: "radioId"
     },
+
     name: {
-        type: String,
+        type: String as PropType<string>,
         required: true
     },
     disabled: {
-        type: Boolean,
+        type: Boolean as PropType<boolean>,
         default: false
     },
     modelValue: {
@@ -49,7 +50,7 @@ const props = defineProps({
         default: ""
     },
     options: {
-        type: Array as PropType<any>,
+        type: Array as PropType<UIRadioOptions[]>,
         default: () => []
     }
 })
