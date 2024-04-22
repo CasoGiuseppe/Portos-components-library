@@ -18,10 +18,17 @@ const meta: Meta = {
     component: ToastBox,
     argTypes: {
         borderColor: { control: "color" },
-        duration: { control: "number" },
         type: { control: "select", options: Object.values(UIToastType) },
         visibility: {
             control: "boolean"
+        },
+        timerActive: {
+            control: "boolean",
+            name: "Timer Active"
+        },
+        timerDuration: {
+            control: "number",
+            name: "Timer Duration"
         },
         canClose: {
             control: "boolean"
@@ -34,11 +41,12 @@ const meta: Meta = {
         action: { action: "action" }
     },
     args: {
-        duration: 3000,
         type: UIToastType.SUCCESS,
         visibility: "visible",
         tag: "dialog",
-        canClose: true
+        canClose: true,
+        timerActive: false,
+        timerDuration: 3000
     }
 } as Meta<typeof ToastBox>
 
@@ -85,12 +93,12 @@ const Template: Story = {
         <section style="padding: 3rem">
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Et leo duis ut diam quam nulla porttitor massa. Libero id faucibus nisl tincidunt eget nullam non. Vestibulum rhoncus est pellentesque elit ullamcorper dignissim cras tincidunt. Libero enim sed faucibus turpis in eu mi bibendum. Praesent elementum facilisis leo vel. Nullam eget felis eget nunc. Ullamcorper velit sed ullamcorper morbi tincidunt ornare massa eget. Et ultrices neque ornare aenean euismod elementum. Sit amet tellus cras adipiscing enim eu turpis egestas. Sagittis vitae et leo duis ut diam quam nulla porttitor. Nisl rhoncus mattis rhoncus urna neque viverra justo. Risus pretium quam vulputate dignissim suspendisse in est. Scelerisque felis imperdiet proin fermentum leo vel orci. Diam sit amet nisl suscipit adipiscing bibendum est. Viverra suspendisse potenti nullam ac tortor.</p>
         <ToastBox
-            :duration="args.duration"
             :border-color="args.borderColor"
             :type="args.type"
             :visibility="args.visibility ? 'visible' : 'hidden'"
             :tag="args.tag"
             :canClose="args.canClose"
+            :timer="{ active: args.timerActive, duration: args.timerDuration }"
             @close="onClose"
             @action="onAction"
         >

@@ -9,3 +9,8 @@ export enum UIToastType {
 
 export type UIToastTag = "dialog" | "aside"
 export type UIToastVisibility = "visible" | "hidden"
+
+export interface UIToastTimer {
+    active: boolean
+    duration: number
+}

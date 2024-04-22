@@ -65,7 +65,8 @@ import {
     type UniqueId,
     type UIToastTag,
     UIToastType,
-    type UIToastVisibility
+    type UIToastVisibility,
+    type UIToastTimer
 } from "@/components/tools/toast-box/types"
 
 const props = defineProps({
@@ -104,12 +105,9 @@ const props = defineProps({
         validator: (prop: UIToastTag) => ["dialog", "aside"].includes(prop)
     },
 
-    /**
-     * Set the toast duration time in miliseconds
-     */
-    duration: {
-        type: Number as PropType<number>,
-        default: 3000
+    timer: {
+        type: Object as PropType<UIToastTimer>,
+        default: { active: false, duration: 3000 } as UIToastTimer
     },
     /**
      * Set the component visibility
@@ -122,21 +120,21 @@ const props = defineProps({
     }
 })
 
-const timer = ref<ReturnType<typeof setTimeout> | null>(null)
+const countDown = ref<ReturnType<typeof setTimeout> | null>(null)
 const emits = defineEmits(["close", "action"])
 let visibility = ref(props.visibility)
 
 const startTimer = () => {
-    if (props.tag === "dialog") {
-        timer.value = setTimeout(() => {
+    if (props.timer && props.timer.active) {
+        countDown.value = setTimeout(() => {
             closeToast()
-        }, props.duration)
+        }, props.timer.duration)
     }
 }
 
 const resetTimer = () => {
-    if (timer.value) {
-        clearTimeout(timer.value)
+    if (countDown.value) {
+        clearTimeout(countDown.value)
     }
 }
 
@@ -156,15 +154,12 @@ watch(
 )
 
 onMounted(() => {
-    console.log(props)
-    if (props.tag === "dialog") {
-        startTimer()
-    }
+    startTimer()
 })
 
 onUnmounted(() => {
-    if (timer.value) {
-        clearTimeout(timer.value)
+    if (countDown.value) {
+        clearTimeout(countDown.value)
     }
 })
 </script>
