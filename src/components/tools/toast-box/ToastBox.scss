@@ -1,6 +1,7 @@
 .toast-box {
     @include text-body-m--regular;
     color: var(--color-neutral-70, #000);
+    background-color: var(--color-neutral-10, #fff);
     display: flex;
     gap: var(--spacing-30, 8px);
     max-width: 441px;

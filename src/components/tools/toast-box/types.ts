@@ -7,5 +7,5 @@ export enum UIToastType {
     ERROR = "error"
 }
 
-export type UIToastVariant = "default" | "inline"
+export type UIToastTag = "dialog" | "aside"
 export type UIToastVisibility = "visible" | "hidden"

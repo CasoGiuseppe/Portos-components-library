@@ -1,11 +1,11 @@
 <template>
     <component
-        :is="variant === 'default' ? 'dialog' : 'aside'"
+        :is="tag"
         :class="[
             'toast-box',
             `toast-box--is-${type}`,
             visibility,
-            `toast-box--is-${variant}`
+            `toast-box--is-${tag}`
         ]"
         @mouseover="resetTimer"
         @mouseleave="startTimer"
@@ -63,7 +63,7 @@ import { Types, Sizes } from "@/components/base/base-icon/types"
 import { validateValueCollectionExists } from "@/components/utilities/validation/useValidation"
 import {
     type UniqueId,
-    type UIToastVariant,
+    type UIToastTag,
     UIToastType,
     type UIToastVisibility
 } from "@/components/tools/toast-box/types"
@@ -96,13 +96,12 @@ const props = defineProps({
             })
     },
     /**
-     * Set variant type
+     * Set tag type
      */
-    variant: {
-        type: String as PropType<UIToastVariant>,
-        default: "default",
-        validator: (prop: UIToastVariant) =>
-            ["default", "inline"].includes(prop)
+    tag: {
+        type: String as PropType<UIToastTag>,
+        default: "aside",
+        validator: (prop: UIToastTag) => ["dialog", "aside"].includes(prop)
     },
 
     /**
@@ -128,7 +127,7 @@ const emits = defineEmits(["close", "action"])
 let visibility = ref(props.visibility)
 
 const startTimer = () => {
-    if (props.variant === "default") {
+    if (props.tag === "dialog") {
         timer.value = setTimeout(() => {
             closeToast()
         }, props.duration)
@@ -157,7 +156,8 @@ watch(
 )
 
 onMounted(() => {
-    if (props.variant === "default") {
+    console.log(props)
+    if (props.tag === "dialog") {
         startTimer()
     }
 })
