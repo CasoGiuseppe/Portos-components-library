@@ -5,7 +5,7 @@
             'toast-box',
             `toast-box--is-${type}`,
             visibility,
-            `toast-box--is-${tag}`
+            { 'toast-box--is-default': tag === 'dialog' }
         ]"
         @mouseover="resetTimer"
         @mouseleave="startTimer"
