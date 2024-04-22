@@ -14,6 +14,8 @@ import BaseTable from "./components/base/base-table/BaseTable.vue"
 import BaseTag from "./components/base/base-tag/BaseTag.vue"
 import BaseTextarea from "./components/base/base-textarea/BaseTextarea.vue"
 import BaseToggle from "./components/base/base-toggle/BaseToggle.vue"
+import BaseDropdown from "./components/base/base-dropdown/BaseDropdown.vue"
+import BaseAccordion from "./components/base/base-accordion/BaseAccordion.vue"
 
 // navigation components
 import NavigationItemContextual from "./components/navigation/contextual/navigation-item/NavigationItemContextual.vue"
@@ -32,6 +34,7 @@ import useResizeObserver from "./shared/composables/useResizeObserver"
 // tools
 import SliderTool from "./components/tools/slider-tool/SliderTool.vue"
 import FieldSetList from "./components/tools/fieldset-list/FieldSetList.vue"
+import ModalDialog from "./components/tools/modal/Modal.vue"
 
 // types
 import type {
@@ -58,6 +61,8 @@ export {
     BaseTag,
     BaseTextarea,
     BaseToggle,
+    BaseDropdown,
+    BaseAccordion,
 
     // navigation components
     NavigationItemContextual,
@@ -76,6 +81,7 @@ export {
     // tools
     SliderTool,
     FieldSetList,
+    ModalDialog,
 
     // types with renamed exports
     type UniqueIconId,
@@ -102,10 +108,13 @@ export function install(app: App): void {
     app.component("BaseTag", BaseTag)
     app.component("BaseTextarea", BaseTextarea)
     app.component("BaseToggle", BaseToggle)
-
+    app.component("BaseDropdown", BaseDropdown)
+    app.component("BaseAccordion", BaseAccordion)
+    
     //tools
     app.component("SliderTool", SliderTool)
     app.component("FieldSetList", FieldSetList)
+    app.component("ModalDialog", ModalDialog)
 
     // navigation components
     app.component("NavigationItemContextual", NavigationItemContextual)

@@ -1,0 +1,44 @@
+.main-navigation {
+    --animationTime: .4s;
+
+    &__list {
+        display: inline-flex;
+        flex-direction: column;
+        max-width: var(--spacing-140);
+
+        > li {
+            &:last-child {
+                border-top: 1px solid var(--color-primary-30, #000);
+            }
+        }
+    }
+
+    &__logo {
+        display: flex;
+        justify-content: center;
+        padding: var(--spacing-40, 0) 0;
+
+        background: var(--color-neutral-10, #000);
+    }
+
+    &--has-image {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        max-width: 100%;        
+
+        &:is(figure) {
+            padding: 0;
+            margin: 0;
+        }
+
+        > img {
+            width: inherit;
+            transition: width var(--animationTime, 0s) ease-out;
+            
+            [data-collapsed = "true"] & {
+                width: 80%;
+            }
+        }
+    }
+}

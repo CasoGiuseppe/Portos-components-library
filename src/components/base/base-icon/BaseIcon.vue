@@ -1,19 +1,21 @@
 <template>
-  <picture class="base-icon">
-    <Transition
-      name="appear-icon"
-      mode="out-in"
-    >
-      <component
-        v-if="name !== null"
-        data-testID="ui-icon"
-        :is="asyncComponent"
-        :id="id"
-        :key="id"
-        :class="[`base-icon--is-${size}`]"
-      />
-    </Transition>
-  </picture>
+  <Suspense>
+    <picture class="base-icon">
+      <Transition
+        name="appear-icon"
+        mode="out-in"
+      >
+        <component
+          v-if="name !== null"
+          data-testID="ui-icon"
+          :is="asyncComponent"
+          :id="id"
+          :key="id"
+          :class="[`base-icon--is-${size}`]"
+        />
+      </Transition>
+    </picture>
+  </Suspense>
 </template>
 <script lang="ts" setup>
 import { onMounted, type PropType, shallowRef, watch } from 'vue'

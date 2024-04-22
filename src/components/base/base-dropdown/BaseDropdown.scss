@@ -1,0 +1,28 @@
+.base-dropdown {
+  display: grid;
+  position: relative;
+  width: 100%;
+  gap: var(--spacing-30);
+
+  &__header {
+    @include text-heading-m;
+
+    display: flex;
+    justify-content: space-between;
+    color: var(--color-neutral-70);
+  }
+
+  &__placeholder {
+    color: var(--color-neutral-50);
+
+    &[data-checked="true"] {
+      color: var(--color-neutral-70);
+    }
+  }
+
+  &__list {
+    position: absolute;
+    top: 100%;
+    width: 100%;
+  }
+}

@@ -85,7 +85,7 @@ const { current, visibleOptions } = defineProps({
     visibleOptions: {
         type: Number as PropType<Number>,
     }
-})
+});
 
 const customEmits = defineEmits(['send']);
 
@@ -160,8 +160,10 @@ const select = (payload: Event | Element): void => {
 		inline: 'start'
 	});
 
-    currentNode.value = option;
-    customEmits('send', { option, label: innerText });
+	if (currentNode.value !== option) {
+		currentNode.value = option;
+		customEmits('send', { option, label: innerText });
+	};
 };
 
 const startSelectingOption = (): void => {
@@ -170,7 +172,7 @@ const startSelectingOption = (): void => {
     
 	if (!startNode) return;
 	select(startNode);
-}
+};
 
 const startListMaxHeight = (): undefined | number => {
     if (!listParent.value || !visibleOptions) return;
@@ -188,7 +190,7 @@ const startListMaxHeight = (): undefined | number => {
     listParent.value.style.setProperty('--max-height', `${newParentHeight * (visibleOptions as number)}px`);
 
 	return newParentHeight;
-}
+};
 
 onMounted(() => {
     visibleOptions ? startListMaxHeight() : null;

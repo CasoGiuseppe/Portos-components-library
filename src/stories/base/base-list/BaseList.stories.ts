@@ -1,9 +1,10 @@
+import { shallowRef, type Component } from 'vue';
 import type { Meta, StoryObj } from '@storybook/vue3';
+import { action } from '@storybook/addon-actions';
+
 import BaseList from '@/components/base/base-list/BaseList.vue';
 import BaseIcon from "@/components/base/base-icon/BaseIcon.vue";
 import { Mode } from '@/components/base/base-list/types';
-import { action } from '@storybook/addon-actions'
-import { shallowRef, type Component } from 'vue';
 
 const BaseIconRef = shallowRef<Component>(BaseIcon);
 
@@ -58,7 +59,7 @@ const meta: Meta = {
     list: { control: 'object', options: List },
     current: { control: 'select', options: ['option1', 'option2', 'option3'] },
     mode: { control: 'select', options: Object.values(Mode)},
-    visibleOptions: { conttol: 'number' },
+    visibleOptions: { control: 'number' },
     row: { control: 'text' }
   },
   

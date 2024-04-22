@@ -1,0 +1,145 @@
+.modal {
+    $modal: &;
+    --animationTime: 0.4s;
+    --modal-width: 100%;
+
+    @include text-body-m--regular;
+    transition: max-width var(--animationTime) ease-out;
+
+    @keyframes enter {
+        0% {
+            opacity: 0;
+            transform: translateY(100%);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0%);
+        }
+    }
+
+    @keyframes out {
+        0% { opacity: 1; }
+        100% { opacity: 0; }
+    }
+
+    box-shadow: var(--shadow-200);
+    background-color: var(--color-neutral-10, #fff);
+    border: none;
+    border-radius: var(--radius-300);
+    gap: var(--spacing-50);
+    max-width: var(--modal-width);
+    width: 100%;
+
+    color: var(--color-neutral-70, #000);
+
+    &::backdrop {
+        background-color: var(--color-neutral-70, #000);
+        opacity: 0.4;
+    }
+
+    &[open]{
+        animation: enter var(--animationTime) forwards;
+    }
+
+    &[closing] {
+        display: block;
+        inset: 0;
+        pointer-events: none;
+        animation: out var(--animationTime) forwards;
+    }
+
+    @include media('large') {
+        &--is{
+            &-narrow {
+                --modal-width: calc(var(--spacing-30, 0) * 67);
+            }
+
+            &-wide {
+                --modal-width:calc(var(--spacing-30, 0) * 102);
+            }
+        }
+    }
+
+    @include media('medium') {
+        &--is{
+            &-narrow {
+                --modal-width: calc(var(--spacing-30, 0) * 67);
+            }
+
+            &-wide {
+                --modal-width: calc(var(--spacing-30, 0) * 90);
+            }
+        }
+    }
+
+    @include media('small') {
+        &--is{
+            &-narrow {
+                --modal-width: calc(var(--spacing-30, 0) * 70);
+            }
+
+            &-wide {
+                --modal-width: calc(var(--spacing-30, 0) * 87);
+            }
+        }
+    }
+
+    
+
+    &__close {
+        aspect-ratio: 1/1;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        position: relative;
+        width: var(--spacing-60, 0);
+
+        &:before,
+        &:after {
+            height: 1px;
+            content: '';
+            display: inline-block;
+            position: absolute;
+            width: 100%;
+
+            background: black
+        }
+
+        &::before {
+            transform: rotate(45deg)
+        }
+
+        &::after {
+            transform: rotate(-45deg)
+        }
+    }
+
+    &__title {
+        @include text-display-s;
+
+        align-items: center;
+        display: flex;
+        gap: var(--spacing-30, 0);
+        justify-content: flex-start;
+
+        * {
+            &:is(:last-child) {
+                margin-left: auto;
+            }
+        }
+
+        + #{$modal}__body {
+            margin-top: var(--spacing-50, 0);
+        }
+
+        ~ #{$modal}__footer {
+            margin-top: var(--spacing-70, 0)
+        }
+    }
+
+    &__footer {
+        display: flex;
+        gap: var(--spacing-50, 0);
+        justify-content: flex-end;
+    }
+}
