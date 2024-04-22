@@ -14,22 +14,22 @@
         <section class="toast-box__icon" v-if="$slots['icon']">
             <slot name="icon"></slot>
         </section>
-        <main class="toast-box__main">
+        <section class="toast-box__middle">
             <header
-                class="toast-box__main-header"
-                data-testID="ui-toast-box-header"
-                v-if="$slots['header']"
+                class="toast-box__middle-title"
+                data-testID="ui-toast-box-title"
+                v-if="$slots['title']"
             >
-                <slot name="header"></slot>
+                <slot name="title"></slot>
             </header>
-            <section
-                class="toast-box__main-body"
-                v-if="$slots['body']"
-                data-testID="ui-toast-box-body"
+            <p
+                class="toast-box__middle-description"
+                v-if="$slots['description']"
+                data-testID="ui-toast-box-description"
             >
-                <slot name="body"></slot>
-            </section>
-        </main>
+                <slot name="description"></slot>
+            </p>
+        </section>
 
         <section class="toast-box__actions">
             <div>

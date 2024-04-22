@@ -102,8 +102,8 @@ const Template: Story = {
                     :size="IconSizes.S"
                 ></BaseIcon>
             </template>
-            <template #header> Custom Header</template>
-            <template #body>This is a very very very very looong text and much more more more large text</template>
+            <template #title> Custom Header</template>
+            <template #description>This is a very very very very looong text and much more more more large text</template>
             <template #footer>
                 <BaseButton @click="onButtonAction" :type="ButtonTypes.TERTIARY" :size="ButtonSizes.S">
                     Action
