@@ -2,11 +2,15 @@
     $modal: &;
     --animationTime: 0.4s;
     --modal-width: 100%;
+    --modal-padding: var(--spacing-60);
+    --modal-gap: var(--spacing-50);
+    --close-width: var(--spacing-60, 0);
+    --shadow: var(--shadow-200);
+    --shadow-thin: var(--shadow-100);
+    --animation-enter: slide-from-bottom var(--animationTime) forwards
 
     @include text-body-m--regular;
-    transition: max-width var(--animationTime) ease-out;
-
-    @keyframes enter {
+    @keyframes slide-from-bottom {
         0% {
             opacity: 0;
             transform: translateY(100%);
@@ -14,6 +18,17 @@
         100% {
             opacity: 1;
             transform: translateY(0%);
+        }
+    }
+
+    @keyframes slide-from-right {
+        0% {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0%);
         }
     }
 
@@ -25,20 +40,64 @@
     box-shadow: var(--shadow-200);
     background-color: var(--color-neutral-10, #fff);
     border: none;
-    border-radius: var(--radius-300);
-    gap: var(--spacing-50);
+    overflow: hidden;
+    padding: var(--spacing-60, 0);
     max-width: var(--modal-width);
     width: 100%;
 
     color: var(--color-neutral-70, #000);
+    transition: max-width var(--animationTime) ease-out;
+
+    &:not([data-drawer]) {
+        border-radius: var(--radius-300);
+    }
+
 
     &::backdrop {
         background-color: var(--color-neutral-70, #000);
         opacity: 0.4;
     }
 
+    &[data-drawer] {
+        inset: auto 0 auto auto;
+        height: 100%;
+        max-height: 100vh;
+        margin: 0;
+        padding: 0;
+        top: 0;
+
+        &[data-size='narrow'] {
+            #{$modal}__footer {
+                align-items: center;
+                flex-direction: column; 
+            }
+        }
+
+        &[data-scroll='true'] {
+            #{$modal}__header {
+                box-shadow: var(--shadow);
+            }
+
+            #{$modal}__footer {
+                box-shadow: var(--shadow-thin);
+            }
+
+            #{$modal}__body {
+                > * {
+                    &:first-child {
+                        padding: var(--spacing-50, 0);
+                    }
+                }
+            }
+        }
+    }
+
     &[open]{
-        animation: enter var(--animationTime) forwards;
+        animation: slide-from-bottom var(--animationTime) forwards;
+
+        &[data-drawer] {
+            animation: slide-from-right var(--animationTime) forwards;
+        }
     }
 
     &[closing] {
@@ -51,39 +110,80 @@
     &[data-size="narrow"] {
         @include media('large') {
             --modal-width: calc(var(--spacing-30, 0) * 67);
+
+            &[data-drawer] {
+                --modal-width: var(--spacing-170, 0)
+            }
         }
 
         @include media('medium') {
             --modal-width: calc(var(--spacing-30, 0) * 67);
+
+            &[data-drawer] {
+                --modal-width: var(--spacing-170, 0)
+            }
         }
 
         @include media('small') {
             --modal-width: calc(var(--spacing-30, 0) * 70);
+
+            &[data-drawer] {
+                --modal-width: var(--spacing-170, 0)
+            }
         }
     }
 
     &[data-size="wide"] {
         @include media('large') {
             --modal-width:calc(var(--spacing-30, 0) * 102);
+
+            &[data-drawer] {
+                --modal-width: var(--spacing-200, 0)
+            }
         }
 
         @include media('medium') {
             --modal-width: calc(var(--spacing-30, 0) * 90);
+
+            &[data-drawer] {
+                --modal-width: var(--spacing-200, 0)
+            }
         }
 
         @include media('small') {
             --modal-width: calc(var(--spacing-30, 0) * 87);
+
+            &[data-drawer] {
+                --modal-width: var(--spacing-200, 0)
+            }
         }
     }
 
+    &__content {
+        display: flex;
+        flex-direction: column;
+        height: inherit;
+        gap: var(--spacing-50, 0);
+        position: relative;
+
+        [data-drawer] &{
+            gap: var(--spacing-00, 0);
+        }
+    }
+
+    &__action {
+        display: flex;
+        justify-content: space-between;
+    }
+
     &__close {
-        aspect-ratio: 1/1;
-        align-items: center;
         display: flex;
         justify-content: center;
         position: relative;
-        width: var(--spacing-60, 0);
-
+        margin: 0 0 0 auto;
+        width: var(--close-width);
+        height: var(--close-width);
+        
         background: none;
         border: none;
 
@@ -92,10 +192,12 @@
             height: 1px;
             content: '';
             display: inline-block;
+            left: 0;
             position: absolute;
             width: 100%;
+            top: 50%;
 
-            background: black
+            background: var(--color-neutral-70, #000)
         }
 
         &::before {
@@ -107,26 +209,47 @@
         }
     }
 
-    &__title {
-        @include text-display-s;
-
+    &__header {
         align-items: center;
         display: flex;
         gap: var(--spacing-30, 0);
-        justify-content: flex-start;
 
-        * {
-            &:is(:last-child) {
-                margin-left: auto;
-            }
+        [data-drawer] & {
+            flex-wrap: wrap;
+            gap: var(--spacing-50, 0);
+            padding: var(--spacing-60, 0)
+        }
+    }
+
+    &__title {
+        @include text-display-s;
+        
+        display: flex;
+        gap: var(--spacing-30, 0);
+
+        color: var(--color-neutral-70, #000);
+
+        [data-drawer] & {
+            order: 3;
+            flex: 0 0 100%;
+        }
+    }
+
+    &__body {
+        overflow: auto;
+        scrollbar-color: var(--color-neutral-40, #000) transparent;
+        scrollbar-width: thin;
+
+        [data-drawer] & {
+            padding: 0 var(--spacing-60, 0) var(--spacing-60, 0)
         }
 
-        + #{$modal}__body {
+        + #{$modal}__footer {
             margin-top: var(--spacing-50, 0);
-        }
 
-        ~ #{$modal}__footer {
-            margin-top: var(--spacing-70, 0)
+            [data-drawer] & {
+                margin: 0;
+            }
         }
     }
 
@@ -134,5 +257,9 @@
         display: flex;
         gap: var(--spacing-50, 0);
         justify-content: flex-end;
+
+        [data-drawer] & {
+            padding: var(--spacing-60, 0)
+        }
     }
 }

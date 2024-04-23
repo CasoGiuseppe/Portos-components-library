@@ -1,5 +1,6 @@
 <template>
     <section>
+        {{ isOpen }}<button @click="changeState">open/close</button>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis convallis convallis tellus id interdum velit laoreet id donec. Blandit aliquam etiam erat velit scelerisque in. Lorem ipsum dolor sit amet consectetur adipiscing. Penatibus et magnis dis parturient montes nascetur ridiculus. Nibh sit amet commodo nulla facilisi nullam vehicula ipsum. Viverra ipsum nunc aliquet bibendum enim facilisis. Mattis rhoncus urna neque viverra justo nec. Nulla posuere sollicitudin aliquam ultrices sagittis orci a. Leo duis ut diam quam.
 
 Pellentesque sit amet porttitor eget. Magna fringilla urna porttitor rhoncus. Pretium vulputate sapien nec sagittis aliquam malesuada bibendum arcu. Facilisi nullam vehicula ipsum a arcu. Mauris rhoncus aenean vel elit scelerisque mauris pellentesque pulvinar. Morbi leo urna molestie at. Diam vulputate ut pharetra sit amet aliquam. Maecenas ultricies mi eget mauris pharetra et ultrices neque. Facilisi etiam dignissim diam quis. Dictumst quisque sagittis purus sit amet volutpat consequat. Augue lacus viverra vitae congue eu. Pellentesque elit eget gravida cum sociis natoque penatibus et. Turpis egestas integer eget aliquet. Egestas quis ipsum suspendisse ultrices gravida dictum fusce. Metus dictum at tempor commodo ullamcorper a. Pulvinar pellentesque habitant morbi tristique.
@@ -30,19 +31,53 @@ Aliquet eget sit amet tellus cras adipiscing enim eu. Dictum fusce ut placerat o
 
 Nunc congue nisi vitae suscipit tellus mauris a diam. Sit amet mattis vulputate enim nulla aliquet. Quam adipiscing vitae proin sagittis nisl rhoncus. Euismod in pellentesque massa placerat duis ultricies lacus. Tincidunt nunc pulvinar sapien et ligula ullamcorper. Ultrices eros in cursus turpis. Viverra aliquet eget sit amet tellus cras. Risus nullam eget felis eget nunc lobortis mattis aliquam faucibus. In metus vulputate eu scelerisque felis imperdiet. Nisl nisi scelerisque eu ultrices vitae auctor eu augue ut. Tortor dignissim convallis aenean et. Ornare arcu odio ut sem nulla pharetra diam. Netus et malesuada fames ac turpis egestas integer. Phasellus faucibus scelerisque eleifend donec pretium vulputate sapien nec. Dignissim cras tincidunt lobortis feugiat vivamus at augue eget arcu.
         <Modal
+            v-if="isOpen"
             id="test"
             active
-            @open="openModal"
-            @close="closeModal"
+            @close="changeState"
         >
-            <template #header>header</template>
+            <template #header>
+                <BaseIcon
+                    id="'TitleIcon'"
+                    :type="Types.CALENDAR"
+                    name="IconCalendarCalendar"
+                ></BaseIcon>
+                header
+            </template>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. -->
+
+            end
+            <template #footer><div>footer</div><div>footer</div></template>
         </Modal>
     </section>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
+import BaseIcon from './components/base/base-icon/BaseIcon.vue';
+import { Types } from './components/base/base-icon/types'
 import Modal from './components/tools/modal/Modal.vue';
-const openModal = () => document.body.classList.add('is-blocked')
-const closeModal = () => document.body.classList.remove('is-blocked')
+
+
+const isOpen = ref(false)
+const changeState = () => {
+    console.log('state')
+    const bodyIsBlocked = document.body.classList.contains('is-blocked')
+    bodyIsBlocked ? document.body.classList.remove('is-blocked') : document.body.classList.add('is-blocked')
+    isOpen.value = !isOpen.value
+}
 </script>
