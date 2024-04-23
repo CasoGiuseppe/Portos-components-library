@@ -53,9 +53,7 @@ const Templates: Story = {
 
           <BaseLink v-bind="args" @send="action">
               {{ args.default }}
-              <Suspense>
-                <BaseIcon name="IconArrowCircleRight" type="arrow" size="M"/>
-              </Suspense>
+              <BaseIcon name="IconArrowCircleRight" type="arrow" size="M"/>
           </BaseLink>
         </section>
     `,
