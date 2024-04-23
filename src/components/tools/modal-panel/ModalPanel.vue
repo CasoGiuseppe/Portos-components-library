@@ -54,7 +54,7 @@ const { isDrawer } = defineProps({
     },
     isDrawer: {
         type: Boolean as PropType<boolean>,
-        default: true
+        default: false
     },
 })
 
@@ -85,16 +85,16 @@ onMounted(() => {
     if(!observed.value) return;
     if(!isDrawer) return;
 
-    //dialogRef.value?.addEventListener("animationend", (event) => {
-    createObserver({
-        element: observed.value as HTMLElement,
-        options: {
-            root: null,
-            rootMargin: "0px",
-            threshold: 1
-        }
+    dialogRef.value?.addEventListener("animationend", () => {
+        createObserver({
+            element: observed.value as HTMLElement,
+            options: {
+                root: null,
+                rootMargin: "0px",
+                threshold: 1
+            }
+        })
     })
-    //})
 })
 
 </script>

@@ -1,6 +1,6 @@
 .modal-panel {
     $modal: &;
-    --animationTime: 0.4s;
+    --animationTime: .4s;
     --modal-width: 100%;
     --modal-padding: var(--spacing-60);
     --modal-gap: var(--spacing-50);
@@ -85,7 +85,7 @@
             #{$modal}__body {
                 > * {
                     &:first-child {
-                        padding: var(--spacing-50, 0);
+                        padding: var(--spacing-50, 0) 0;
                     }
                 }
             }
@@ -263,7 +263,7 @@
 
         > * {
             &:first-child {
-                transition: padding var(--animationTime, 0) ease-out;
+                transition: padding .1s ease-out;
             }
         }
     }
