@@ -18,7 +18,10 @@
     align-items: center;
     display: flex;
     gap: var(--spacing-40, 0);
+    overflow: hidden;
     justify-content: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
     border: none;
     border-radius: var(--radius-500, 0);

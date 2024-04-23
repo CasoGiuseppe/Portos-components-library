@@ -2,31 +2,31 @@
     <dialog
         ref="dialogRef"
         :id="id"
-        class="modal"
+        class="modal-panel"
         :data-size="size"
         :data-drawer="isDrawer ? true : null"
-        :data-scroll="!isScrolled"
+        :data-scroll="checkIntersectingState"
         @cancel="behaviours.close"
     >
         <section
-            class="modal__content"
+            class="modal-panel__content"
             v-on-click-outside="behaviours.close"
         >
-            <header class="modal__header">
+            <header class="modal-panel__header">
                 <slot name="back" />
-                <h2 class="modal__title">
+                <h2 class="modal-panel__title">
                     <!-- @slot The title for modal with/without icon-->
                     <slot name="header"></slot>
                 </h2>
-                <button class="modal__close" @click="behaviours.close" />
+                <button class="modal-panel__close" @click="behaviours.close" />
             </header>
-            <section class="modal__body">
+            <section class="modal-panel__body">
                 <section ref="observed">
                     <!-- @slot for default values-->
                     <slot />
                 </section>
             </section>
-            <footer class="modal__footer">
+            <footer class="modal-panel__footer">
                 <!-- @slot for footer values-->
                 <slot name="footer"></slot>
             </footer>
@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { type PropType, defineProps, ref, onMounted } from "vue"
+import { type PropType, defineProps, ref, onMounted, computed } from "vue"
 import { vOnClickOutside } from "@vueuse/components"
 import useIntersectionObserver from '@/shared/composables/useIntersectionObserver'
 import { type UniqueId, Sizes } from "./types"
@@ -49,18 +49,19 @@ const { isDrawer } = defineProps({
     },
     size: {
         type: String as PropType<Sizes>,
-        default: "wide",
+        default: "auto",
         validator: (prop: Sizes) => validateValueCollectionExists({ collection: Sizes, value: prop})
     },
     isDrawer: {
         type: Boolean as PropType<boolean>,
-        default: false
+        default: true
     },
 })
 
 const dialogRef = ref<HTMLDialogElement | null>(null)
 const observed = ref<HTMLElement | null>(null)
-const isScrolled = ref<boolean>(false);
+const isScrolled = ref<boolean |undefined>(undefined);
+const checkIntersectingState = computed(() => isScrolled.value === undefined ? null : !isScrolled.value)
 
 const { createObserver } = useIntersectionObserver({
   action: (e: any) => {
@@ -84,6 +85,7 @@ onMounted(() => {
     if(!observed.value) return;
     if(!isDrawer) return;
 
+    //dialogRef.value?.addEventListener("animationend", (event) => {
     createObserver({
         element: observed.value as HTMLElement,
         options: {
@@ -92,7 +94,9 @@ onMounted(() => {
             threshold: 1
         }
     })
+    //})
 })
+
 </script>
 
-<style lang="scss" src="./Modal.scss"></style>
+<style lang="scss" src="./ModalPanel.scss"></style>

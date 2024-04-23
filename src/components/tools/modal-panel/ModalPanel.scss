@@ -1,4 +1,4 @@
-.modal {
+.modal-panel {
     $modal: &;
     --animationTime: 0.4s;
     --modal-width: 100%;
@@ -7,9 +7,9 @@
     --close-width: var(--spacing-60, 0);
     --shadow: var(--shadow-200);
     --shadow-thin: var(--shadow-100);
-    --animation-enter: slide-from-bottom var(--animationTime) forwards
+    --animation-enter: slide-from-bottom var(--animationTime) forwards;
 
-    @include text-body-m--regular;
+    
     @keyframes slide-from-bottom {
         0% {
             opacity: 0;
@@ -105,6 +105,10 @@
         inset: 0;
         pointer-events: none;
         animation: out var(--animationTime) forwards;
+    }
+
+    &[data-size="auto"] {
+        --modal-width: fit-content;
     }
 
     &[data-size="narrow"] {
@@ -209,6 +213,11 @@
         }
     }
 
+    &__header,
+    &__footer {
+        transition: box-shadow var(--animationTime, 0) ease-out;
+    }
+
     &__header {
         align-items: center;
         display: flex;
@@ -249,6 +258,12 @@
 
             [data-drawer] & {
                 margin: 0;
+            }
+        }
+
+        > * {
+            &:first-child {
+                transition: padding var(--animationTime, 0) ease-out;
             }
         }
     }
