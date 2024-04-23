@@ -1,34 +1,46 @@
 <template>
-    <fieldset class="base-radio__fieldset" :disabled="disabled">
-        <div class="base-radio__wrapper">
-            <div
-                v-for="(option, index) in options"
-                :key="index"
-                class="base-radio__option"
-            >
-                <input
-                    :id="`${id}-${index}`"
-                    :value="option.value"
-                    :name="name"
-                    type="radio"
-                    :checked="option.value === modelValue"
-                    :disabled="option.disabled || disabled"
-                    @change="emitChange(option.value)"
-                    class="base-radio__input"
-                />
-                <label :for="`${id}-${index}`" class="base-radio__label">{{
-                    option.label
-                }}</label>
-            </div>
-        </div>
+    <fieldset
+        :class="[
+            'base-radio',
+            `base-radio--is-${size}`,
+            `${variant ? `base-radio--is-ALT` : ''}`
+        ]"
+        :style="`flex-direction:${direction}`"
+    >
+        <legend v-if="false"></legend>
+        <section
+            v-for="(option, index) in options"
+            :key="index"
+            class="base-radio__option"
+        >
+            <input
+                :id="`${id}-${index}`"
+                :value="option.value"
+                :name="name"
+                type="radio"
+                :checked="option.value === modelValue"
+                :disabled="option.disabled || disabled"
+                @change="emitChange(option.value)"
+                class="base-radio__input"
+            />
+            <label :for="`${id}-${index}`" class="base-radio__label">{{
+                option.label
+            }}</label>
+        </section>
     </fieldset>
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, type PropType } from "vue"
-import { type UniqueId, type UIRadioOptions } from "./types"
+import { defineProps, defineEmits, type PropType, onMounted } from "vue"
+import {
+    type UniqueId,
+    type UIRadioOptions,
+    UIRadioDirection,
+    Sizes
+} from "./types"
+import { validateValueCollectionExists } from "@/components/utilities/validation/useValidation"
 
-const { options, name, disabled, modelValue } = defineProps({
+const { options, name, disabled, modelValue, direction } = defineProps({
     /**
      * Set the unique id of the ui toggle
      */
@@ -52,6 +64,31 @@ const { options, name, disabled, modelValue } = defineProps({
     options: {
         type: Array as PropType<UIRadioOptions[]>,
         default: () => []
+    },
+    direction: {
+        type: String as PropType<UIRadioDirection>,
+        default: UIRadioDirection.ROW,
+        validator: (prop: UIRadioDirection) =>
+            validateValueCollectionExists({
+                collection: UIRadioDirection,
+                value: prop
+            })
+    },
+    /**
+     * Set the radio size mode [M, S]
+     */
+    size: {
+        type: String as PropType<Sizes>,
+        default: Sizes.M,
+        validator: (prop: Sizes) =>
+            validateValueCollectionExists({ collection: Sizes, value: prop })
+    },
+    /**
+     * Set variant type state
+     */
+    variant: {
+        type: Boolean as PropType<boolean>,
+        default: false
     }
 })
 
@@ -60,6 +97,10 @@ const emit = defineEmits(["update:modelValue"])
 const emitChange = (value: any) => {
     emit("update:modelValue", value)
 }
+
+onMounted(() => {
+    console.log(options)
+})
 </script>
 
 <style lang="scss" src="./BaseRadio.scss"></style>

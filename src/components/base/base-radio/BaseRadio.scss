@@ -1,26 +1,14 @@
 .base-radio {
     $baseRadio: &;
-    --animationTime: 0.4s; // TODO: check used?
+    --animationTime: 0.4s;
     --label-color: var(--color-neutral-70, #000);
-    @include text-body-m--regular;
-    align-items: center;
-    display: inline-flex;
-    gap: var(--spacing-30, 0);
-    color: var(--label-color);
 
-    &__fieldset {
-        border: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-    &__wrapper {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-    }
+    gap: var(--spacing-30, 10px);
+    color: var(--label-color);
+    border: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
 
     &__option {
         display: flex;
@@ -33,7 +21,101 @@
         width: 0;
         height: 0;
 
-        &:checked + .base-radio__label:before {
+        /* &:focus:checked + #{$baseRadio}__label:before {
+            box-shadow:
+                0px 0px 0px 2px var(--color-neutral-10),
+                0 0 0 4px #bd20cb;
+        } */
+        &:focus + #{$baseRadio}__label:before {
+            box-shadow:
+                0px 0px 0px 2px var(--color-neutral-10),
+                0 0 0 4px #bd20cb;
+        }
+
+        &:disabled + #{$baseRadio}__label:before {
+            border: 1px solid #818a8f;
+        }
+
+        &:disabled:checked + #{$baseRadio}__label:before {
+            background-color: #484d50;
+            border: 6px solid #818a8f;
+        }
+    }
+
+    &__label {
+        position: relative;
+        padding-left: 30px;
+        cursor: pointer;
+
+        &:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border: 1px solid var(--color-neutral-50, grey);
+            border-radius: 50%;
+            background-color: var(--color-neutral-10, #fff);
+
+            transition: box-shadow 0.3s ease;
+        }
+
+        &:hover:before {
+            box-shadow: 0px 0px 4px 0px #1d1e2033;
+        }
+
+        &:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 4px;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: transparent;
+            opacity: 0;
+        }
+
+        .base-radio__input:checked + &:before {
+            border: 6px solid var(--color-primary-40, #21578a);
+        }
+        .base-radio__input:checked + &:after {
+            background-color: var(--color-primary-40, #21578a);
+            opacity: 0;
+        }
+        .base-radio__input:checked + &:after {
+            left: 8px;
+            top: 8px;
+            height: 9px;
+            width: 9px;
+            border-radius: 50%;
+            background: #ffffff;
+            transition: background 250ms;
+        }
+    }
+
+    &--is-M {
+        & #{$baseRadio}__label:before {
+            width: 24px;
+            height: 24px;
+        }
+
+        & #{$baseRadio}__label {
+            @include text-body-m--regular;
+        }
+    }
+
+    &--is-S {
+        & #{$baseRadio}__label:before {
+            width: 20px;
+            height: 20px;
+        }
+
+        & #{$baseRadio}__label {
+            @include text-body-s--regular;
         }
     }
 }

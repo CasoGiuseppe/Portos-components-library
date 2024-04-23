@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/vue3"
 import BaseRadio from "@/components/base/base-radio/BaseRadio.vue"
 
 const meta: Meta = {
-    title: "Base/BaseRadio",
+    title: "Base/Base Radio",
     component: BaseRadio,
     argTypes: {
         id: { control: "text" },
@@ -40,7 +40,7 @@ const Template: Story = {
         },
         template: `
             <div style="padding: 20px">
-                <BaseRadio v-bind="args">
+                <BaseRadio :id="asdasd" :name="fdsfsdf" :options="args.options">
                 </BaseRadio>
             </div>
         `
@@ -49,9 +49,7 @@ const Template: Story = {
 
 export const Default: Story = {
     ...Template,
-    args: {
-        // default args can be modified here if needed
-    }
+    args: {}
 }
 
 export const Disabled: Story = {

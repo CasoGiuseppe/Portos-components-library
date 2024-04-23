@@ -15,6 +15,7 @@ import BaseTag from "./components/base/base-tag/BaseTag.vue"
 import BaseTextarea from "./components/base/base-textarea/BaseTextarea.vue"
 import BaseToggle from "./components/base/base-toggle/BaseToggle.vue"
 import BaseDropdown from "./components/base/base-dropdown/BaseDropdown.vue"
+import BaseRadio from "./components/base/base-radio/BaseRadio.vue"
 
 // navigation components
 import NavigationItemContextual from "./components/navigation/contextual/navigation-item/NavigationItemContextual.vue"
@@ -60,6 +61,7 @@ export {
     BaseTextarea,
     BaseToggle,
     BaseDropdown,
+    BaseRadio,
 
     // navigation components
     NavigationItemContextual,
@@ -105,6 +107,7 @@ export function install(app: App): void {
     app.component("BaseTextarea", BaseTextarea)
     app.component("BaseToggle", BaseToggle)
     app.component("BaseDropdown", BaseDropdown)
+    app.component("BaseRadio", BaseRadio)
 
     //tools
     app.component("SliderTool", SliderTool)
