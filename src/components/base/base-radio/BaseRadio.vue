@@ -1,10 +1,6 @@
 <template>
     <fieldset
-        :class="[
-            'base-radio',
-            `base-radio--is-${size}`,
-            `${variant ? `base-radio--is-ALT` : ''}`
-        ]"
+        :class="['base-radio', `base-radio--is-${size}`]"
         :style="`flex-direction:${direction}`"
     >
         <legend v-if="false"></legend>
@@ -20,6 +16,7 @@
                 type="radio"
                 :checked="option.value === modelValue"
                 :disabled="option.disabled || disabled"
+                :variant="variant"
                 @change="emitChange(option.value)"
                 class="base-radio__input"
             />

@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section style="padding: 1rem; background: #00204e">
         <BaseRadio
             id="my-radio-group"
             name="myRadioGroup"
@@ -8,7 +8,7 @@
             v-model="selectedOption"
             @update:modelValue="onSelectionChanged"
             :size="Sizes.M"
-            :variant="false"
+            :variant="true"
         >
         </BaseRadio>
     </section>
@@ -21,7 +21,7 @@
             v-model="selectedOption"
             @update:modelValue="onSelectionChanged"
             :size="Sizes.S"
-            :variant="true"
+            :variant="false"
         >
         </BaseRadio>
     </section>

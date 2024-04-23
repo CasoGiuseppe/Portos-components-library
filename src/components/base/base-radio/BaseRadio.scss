@@ -2,6 +2,15 @@
     $baseRadio: &;
     --animationTime: 0.4s;
     --label-color: var(--color-neutral-70, #000);
+    --label-color-variant: var(--color-neutral-10, #fff);
+    --border-color: var(--color-neutral-50, grey);
+    --border-color-focus: var(--color-outline);
+    --border-color-checked: var(--color-primary-40, #21578a);
+    --background-color-checked: var(--color-primary-40, #21578a);
+    --box-shadow-focus: 0px 0px 0px 2px var(--color-neutral-10, #fff),
+        0 0 0 4px var(--color-outline);
+    --box-shadow-focus-variant: 0px 0px 0px 2px var(--color-outline),
+        0 0 0 4px var(--color-neutral-10);
 
     gap: var(--spacing-30, 10px);
     color: var(--label-color);
@@ -21,24 +30,41 @@
         width: 0;
         height: 0;
 
-        /* &:focus:checked + #{$baseRadio}__label:before {
-            box-shadow:
-                0px 0px 0px 2px var(--color-neutral-10),
-                0 0 0 4px #bd20cb;
-        } */
         &:focus + #{$baseRadio}__label:before {
-            box-shadow:
-                0px 0px 0px 2px var(--color-neutral-10),
-                0 0 0 4px #bd20cb;
+            box-shadow: var(--box-shadow-focus);
         }
 
         &:disabled + #{$baseRadio}__label:before {
-            border: 1px solid #818a8f;
+            border: 1px solid var(--color-neutral-50, #818a8f);
         }
 
         &:disabled:checked + #{$baseRadio}__label:before {
-            background-color: #484d50;
-            border: 6px solid #818a8f;
+            border: 7.5px solid var(--color-neutral-50, #818a8f);
+            background-color: var(--color-neutral-60, #000);
+        }
+        &[variant="true"]:focus + #{$baseRadio}__label:before {
+            box-shadow: var(--box-shadow-focus-variant);
+        }
+
+        &[variant="true"]:disabled + #{$baseRadio}__label:before {
+            background-color: var(--color-neutral-20, lightgrey);
+            border: 1px solid var(--color-neutral-50, grey);
+        }
+        &[variant="true"] + #{$baseRadio}__label:hover:before {
+            box-shadow: var(--shadow-alt-100);
+        }
+
+        &[variant="true"]:checked:disabled + #{$baseRadio}__label:before {
+            border-color: var(--color-neutral-50, darkgrey);
+            background-color: var(--color-neutral-70, #000);
+        }
+        &[variant="true"]:checked + #{$baseRadio}__label:before {
+            border-color: #9bb2ce;
+            background-color: var(--color-primary-60, #000);
+        }
+
+        &[variant="true"] + #{$baseRadio}__label {
+            color: var(--label-color-variant);
         }
     }
 
@@ -63,7 +89,7 @@
         }
 
         &:hover:before {
-            box-shadow: 0px 0px 4px 0px #1d1e2033;
+            box-shadow: var(--shadow-100);
         }
 
         &:after {
@@ -80,7 +106,7 @@
         }
 
         .base-radio__input:checked + &:before {
-            border: 6px solid var(--color-primary-40, #21578a);
+            border: 7.5px solid var(--color-primary-40, #21578a);
         }
         .base-radio__input:checked + &:after {
             background-color: var(--color-primary-40, #21578a);
@@ -106,6 +132,10 @@
         & #{$baseRadio}__label {
             @include text-body-m--regular;
         }
+
+        #{$baseRadio}__input:checked + #{$baseRadio}__label:before {
+            border-width: 7.5px;
+        }
     }
 
     &--is-S {
@@ -116,6 +146,10 @@
 
         & #{$baseRadio}__label {
             @include text-body-s--regular;
+        }
+
+        #{$baseRadio}__input:checked + #{$baseRadio}__label:before {
+            border-width: 6.25px;
         }
     }
 }
