@@ -1,23 +1,45 @@
 .base-radio {
     $baseRadio: &;
     --animationTime: 0.4s;
-    --label-color: var(--color-neutral-70, #000);
+
+    // labels
+    --label-color-default: var(--color-neutral-70, #000);
     --label-color-variant: var(--color-neutral-10, #fff);
-    --border-color: var(--color-neutral-50, grey);
+
+    // borders
+    --border-color-default: var(--color-neutral-50, grey);
     --border-color-focus: var(--color-outline);
     --border-color-checked: var(--color-primary-40, #21578a);
+    --border-color-disabled: var(--color-neutral-50, #818a8f);
+    --border-color-checked-disabled: var(--color-neutral-60, #000);
+    --border-color-checked-variant: var(--color-primary-20, #9bb2ce);
+
+    //background
     --background-color-checked: var(--color-primary-40, #21578a);
-    --box-shadow-focus: 0px 0px 0px 2px var(--color-neutral-10, #fff),
+    --background-color-checked-variant: var(--color-primary-60, #000);
+    --background-color-disabled: var(--color-neutral-20, #f2f4f5);
+    --background-color-checked-disabled: var(--color-neutral-60, #000);
+
+    // shadows
+    --box-shadow-focus-default: 0px 0px 0px 2px var(--color-neutral-10, #fff),
         0 0 0 4px var(--color-outline);
     --box-shadow-focus-variant: 0px 0px 0px 2px var(--color-outline),
-        0 0 0 4px var(--color-neutral-10);
+        0 0 0 4px var(--color-neutral-10, #fff);
+    --shadow-default: var(--shadow-100);
+    --shadow-hover: var(--shadow-alt-100);
 
+    // Positioning
+    display: flex;
+    position: relative;
+
+    // Display & Box Model
     gap: var(--spacing-30, 10px);
-    color: var(--label-color);
     border: none;
     margin: 0;
     padding: 0;
-    display: flex;
+
+    // Color
+    color: var(--label-color-default);
 
     &__option {
         display: flex;
@@ -25,66 +47,94 @@
     }
 
     &__input {
+        // Positioning
         position: absolute;
+
+        // Display & Box Model
         opacity: 0;
         width: 0;
         height: 0;
 
+        // Other
+        cursor: pointer;
+
         &:focus + #{$baseRadio}__label:before {
-            box-shadow: var(--box-shadow-focus);
+            box-shadow: var(--box-shadow-focus-default);
         }
 
         &:disabled + #{$baseRadio}__label:before {
-            border: 1px solid var(--color-neutral-50, #818a8f);
+            border: 1px solid var(--border-color-default);
+            background-color: var(--background-color-disabled);
+        }
+
+        &:disabled + #{$baseRadio}__label {
+            color: var(--color-neutral-60, #000);
         }
 
         &:disabled:checked + #{$baseRadio}__label:before {
-            border: 7.5px solid var(--color-neutral-50, #818a8f);
-            background-color: var(--color-neutral-60, #000);
-        }
-        &[variant="true"]:focus + #{$baseRadio}__label:before {
-            box-shadow: var(--box-shadow-focus-variant);
+            background-color: var(--background-color-checked-disabled);
+            border: 6.25px solid var(--border-color-disabled);
         }
 
-        &[variant="true"]:disabled + #{$baseRadio}__label:before {
-            background-color: var(--color-neutral-20, lightgrey);
-            border: 1px solid var(--color-neutral-50, grey);
-        }
-        &[variant="true"] + #{$baseRadio}__label:hover:before {
-            box-shadow: var(--shadow-alt-100);
-        }
+        // variants
+        &[variant="true"] {
+            + #{$baseRadio}__label {
+                color: var(--label-color-variant);
 
-        &[variant="true"]:checked:disabled + #{$baseRadio}__label:before {
-            border-color: var(--color-neutral-50, darkgrey);
-            background-color: var(--color-neutral-70, #000);
-        }
-        &[variant="true"]:checked + #{$baseRadio}__label:before {
-            border-color: #9bb2ce;
-            background-color: var(--color-primary-60, #000);
-        }
+                &:hover:before {
+                    box-shadow: var(--shadow-alt-100);
+                }
+            }
 
-        &[variant="true"] + #{$baseRadio}__label {
-            color: var(--label-color-variant);
+            &:focus + #{$baseRadio}__label:before {
+                box-shadow: var(--box-shadow-focus-variant);
+            }
+
+            &:disabled {
+                + #{$baseRadio}__label:before {
+                    background-color: var(--background-color-disabled);
+                    border: 1px solid var(--border-color-disabled);
+                }
+                + #{$baseRadio}__label {
+                    color: var(--color-neutral-40, grey);
+                }
+            }
+
+            &:checked {
+                &:disabled + #{$baseRadio}__label:before {
+                    border-color: var(--border-color-disabled);
+                    background-color: var(--color-neutral-70, #000);
+                }
+                + #{$baseRadio}__label:before {
+                    border-color: #9bb2ce;
+                    background-color: var(--color-primary-60, #000);
+                }
+            }
         }
     }
 
     &__label {
         position: relative;
-        padding-left: 30px;
         cursor: pointer;
 
         &:before {
-            content: "";
+            // Positioning
             position: absolute;
-            left: 0;
             top: 50%;
+            left: 0;
             transform: translateY(-50%);
-            width: 20px;
-            height: 20px;
-            border: 1px solid var(--color-neutral-50, grey);
+
+            // Display & Box Model
+            width: var(--spacing-60);
+            height: var(--spacing-60);
+            border: 1px solid var(--border-color-default);
             border-radius: 50%;
+            content: "";
+
+            // Color
             background-color: var(--color-neutral-10, #fff);
 
+            // Other
             transition: box-shadow 0.3s ease;
         }
 
@@ -92,45 +142,20 @@
             box-shadow: var(--shadow-100);
         }
 
-        &:after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 4px;
-            transform: translateY(-50%);
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: transparent;
-            opacity: 0;
-        }
-
         .base-radio__input:checked + &:before {
-            border: 7.5px solid var(--color-primary-40, #21578a);
-        }
-        .base-radio__input:checked + &:after {
-            background-color: var(--color-primary-40, #21578a);
-            opacity: 0;
-        }
-        .base-radio__input:checked + &:after {
-            left: 8px;
-            top: 8px;
-            height: 9px;
-            width: 9px;
-            border-radius: 50%;
-            background: #ffffff;
-            transition: background 250ms;
+            border: 7.5px solid var(--border-color-checked, #21578a);
         }
     }
 
     &--is-M {
         & #{$baseRadio}__label:before {
-            width: 24px;
-            height: 24px;
+            width: var(--spacing-60);
+            height: var(--spacing-60);
         }
 
         & #{$baseRadio}__label {
             @include text-body-m--regular;
+            padding-left: var(--spacing-70);
         }
 
         #{$baseRadio}__input:checked + #{$baseRadio}__label:before {
@@ -140,12 +165,13 @@
 
     &--is-S {
         & #{$baseRadio}__label:before {
-            width: 20px;
-            height: 20px;
+            width: calc(var(--spacing-50) + 4px);
+            height: calc(var(--spacing-50) + 4px);
         }
 
         & #{$baseRadio}__label {
             @include text-body-s--regular;
+            padding-left: calc(var(--spacing-60) + 4px);
         }
 
         #{$baseRadio}__input:checked + #{$baseRadio}__label:before {
