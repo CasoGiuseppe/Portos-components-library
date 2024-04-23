@@ -3,7 +3,6 @@
         :class="['base-radio', `base-radio--is-${size}`]"
         :style="`flex-direction:${direction}`"
     >
-        <legend v-if="false"></legend>
         <section
             v-for="(option, index) in options"
             :key="index"
@@ -11,14 +10,15 @@
         >
             <input
                 :id="`${id}-${index}`"
-                :value="option.value"
-                :name="name"
-                type="radio"
-                :checked="option.value === modelValue"
-                :disabled="option.disabled || disabled"
-                :variant="variant"
-                @change="emitChange(option.value)"
                 class="base-radio__input"
+                type="radio"
+                data-testID="ui-checkbox"
+                :name="name"
+                :value="option.value"
+                :checked="option.value === modelValue"
+                :variant="variant"
+                :disabled="option.disabled || disabled"
+                @change="emitChange(option.value)"
             />
             <label :for="`${id}-${index}`" class="base-radio__label">{{
                 option.label
@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, type PropType, onMounted } from "vue"
+import { defineProps, defineEmits, type PropType } from "vue"
 import {
     type UniqueId,
     type UIRadioOptions,
@@ -46,22 +46,37 @@ const { options, name, disabled, modelValue, direction } = defineProps({
         default: "radioId"
     },
 
+    /**
+     * Set the name for the radio group
+     */
     name: {
         type: String as PropType<string>,
         required: true
     },
+    /*
+     * Set if the fieldset should be disabled
+     */
     disabled: {
         type: Boolean as PropType<boolean>,
         default: false
     },
+    /*
+     * Allows to pass the model value
+     */
     modelValue: {
         type: [String, Number],
         default: ""
     },
+    /*
+     * Set the radio input options as UIRadioOptions (label, value, disabled)
+     */
     options: {
         type: Array as PropType<UIRadioOptions[]>,
         default: () => []
     },
+    /**
+     * Set the direction for radio group (row, column)
+     */
     direction: {
         type: String as PropType<UIRadioDirection>,
         default: UIRadioDirection.ROW,
@@ -94,10 +109,6 @@ const emit = defineEmits(["update:modelValue"])
 const emitChange = (value: any) => {
     emit("update:modelValue", value)
 }
-
-onMounted(() => {
-    console.log(options)
-})
 </script>
 
 <style lang="scss" src="./BaseRadio.scss"></style>

@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/vue3"
+import { action } from "@storybook/addon-actions"
 import BaseRadio from "@/components/base/base-radio/BaseRadio.vue"
+import { UIRadioDirection, Sizes } from "@/components/base/base-radio/types" // Assuming the path is correct
 
-const meta: Meta = {
+const meta = {
     title: "Base/Base Radio",
     component: BaseRadio,
     argTypes: {
@@ -12,47 +14,55 @@ const meta: Meta = {
         options: {
             control: "object",
             description:
-                "Array of objects with label and value and optionally disabled state"
-        }
-    },
-    args: {
-        id: "radio-group-1",
-        name: "exampleGroup",
-        disabled: false,
-        modelValue: "",
-        options: [
-            { label: "Option 1", value: "1" },
-            { label: "Option 2", value: "2", disabled: false },
-            { label: "Option 3", value: "3", disabled: true }
-        ]
+                "Array of objects with label, value, and optionally disabled state"
+        },
+        direction: {
+            control: "radio",
+            options: [UIRadioDirection.ROW, UIRadioDirection.COLUMN],
+            description: "Layout direction of the radio buttons"
+        },
+        size: {
+            control: "radio",
+            options: [Sizes.M, Sizes.S],
+            description: "Size of the radio buttons"
+        },
+        variant: { control: "boolean" }
     }
-} as Meta<typeof BaseRadio>
+} satisfies Meta<typeof BaseRadio>
 
 export default meta
 
-type Story = StoryObj
+type Story = StoryObj<typeof BaseRadio>
 
 const Template: Story = {
     render: (args) => ({
         components: { BaseRadio },
         setup() {
-            return { args }
+            const onSelectionChanged = action("update:modelValue")
+            return { args, onSelectionChanged }
         },
         template: `
-            <div style="padding: 20px">
-                <BaseRadio :id="asdasd" :name="fdsfsdf" :options="args.options">
-                </BaseRadio>
-            </div>
-        `
+        <div style="padding: 20px">
+            <BaseRadio v-bind="args" @update:modelValue="onSelectionChanged" />
+        </div>
+    `
     })
 }
 
 export const Default: Story = {
     ...Template,
-    args: {}
-}
-
-export const Disabled: Story = {
-    ...Template,
-    args: {}
+    args: {
+        id: "default-radio-group",
+        name: "defaultGroup",
+        disabled: false,
+        modelValue: "",
+        options: [
+            { label: "Option 1", value: "1" },
+            { label: "Option 2", value: "2" },
+            { label: "Option 3", value: "3", disabled: true }
+        ],
+        direction: UIRadioDirection.COLUMN,
+        size: Sizes.M,
+        variant: false
+    }
 }
