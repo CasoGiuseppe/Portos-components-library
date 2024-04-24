@@ -11,6 +11,11 @@ export interface IFileIcons {
     [key: string]: IIconProps;
 }
 
+export interface IFeedback {
+    title?: string
+    message: string
+}
+
 export enum AttachModes {
     DRAG = 'drag',
     BUTTON = 'button'

@@ -4,6 +4,8 @@
             <slot name="title" />
         </div>
 
+        <slot name="feedback" />
+
         <form class="file-uploader__form" ref="form">
             <slot name="input" />
             <section
@@ -63,7 +65,7 @@
 <script setup lang="ts">
 import { ref, type PropType } from 'vue';
 
-import { type UniqueId, AttachModes } from './types';
+import { AttachModes, type UniqueId, type IFeedback } from './types';
 import BaseLink from '@/components/base/base-link/BaseLink.vue';
 import { Element } from '@/components/base/base-link/types';
 import BaseButton from '@/components/base/base-button/BaseButton.vue';
@@ -97,7 +99,7 @@ const { label, accept, maxFileSize } = defineProps({
      */
      maxFileSize: {
         type: Number as PropType<Number>,
-        default: 1
+        default: 2
     },
 });
 
@@ -108,6 +110,8 @@ const files = ref<FileList | null>(null);
 const formats = ref<string>(accept as string);
 const message = ref<string>(label as string);
 const dragging = ref<boolean>(false);
+
+const customEmits = defineEmits(['send']);
 
 const openFileInput = (): void => {
     inputFile?.value?.click();
@@ -155,13 +159,36 @@ const removeFile = (indexToRemove: number) => {
     files.value = remainingFiles.files;
 };
 
+const dispatchEmit = ({
+    title = 'Error al subir el archivo',
+    message
+}: IFeedback) => {
+    customEmits('send', { title, message });
+};
+
 const validateSize = (file: File, maxFileSize: number, ): boolean => {
     const maxSizeBytes = (1024 * 1024) * maxFileSize;
-    return file.size < maxSizeBytes;
+    const fileOversized = file.size > maxSizeBytes;
+
+    if (fileOversized) {
+        dispatchEmit({
+            message: `Los sentimos, pero el archivo supera los ${maxFileSize}MB`
+        });
+    };
+
+    return !fileOversized;
 };
 
 const validateFormat = (file: File, availableFormats: string[]): boolean => {
-    return availableFormats.includes(file.type);
+    const formatSupported = availableFormats.includes(file.type);
+
+    if (!formatSupported) {
+        dispatchEmit({
+            message: 'Los sentimos, pero el formato no es compatible'
+        });
+    };
+
+    return formatSupported;
 };
 
 interface FileValidations {
