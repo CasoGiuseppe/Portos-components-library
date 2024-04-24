@@ -20,6 +20,7 @@ import BaseAccordion from "./components/base/base-accordion/BaseAccordion.vue"
 // navigation components
 import NavigationItemContextual from "./components/navigation/contextual/navigation-item/NavigationItemContextual.vue"
 import NavigationItem from "./components/navigation/main/navigation-item/NavigationItem.vue"
+import NavigationContextualToobar from "./components/navigation/contextual/navigation-contextual-toolbar/NavigationContextualToolbar.vue"
 
 // default components
 import DefaultError from "./components/defaults/exceptions/default-error/DefaultError.vue"
@@ -67,6 +68,7 @@ export {
     // navigation components
     NavigationItemContextual,
     NavigationItem,
+    NavigationContextualToobar,
 
     // default components
     DefaultLoader,
@@ -110,7 +112,7 @@ export function install(app: App): void {
     app.component("BaseToggle", BaseToggle)
     app.component("BaseDropdown", BaseDropdown)
     app.component("BaseAccordion", BaseAccordion)
-    
+
     //tools
     app.component("SliderTool", SliderTool)
     app.component("FieldSetList", FieldSetList)
@@ -119,6 +121,7 @@ export function install(app: App): void {
     // navigation components
     app.component("NavigationItemContextual", NavigationItemContextual)
     app.component("NavigationItem", NavigationItem)
+    app.component("NavigationContextualToobar", NavigationContextualToobar)
 
     // default components
     app.component("DefaultLoader", DefaultLoader)
