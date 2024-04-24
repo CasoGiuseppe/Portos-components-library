@@ -182,11 +182,11 @@
       padding: var(--spacing-30, 0) var(--spacing-40, 0);
       justify-content: space-between;
 
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-
-      &-placeholder {
+      :nth-child(1) {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        
         &[data-checked="true"] {
           color: var(--color-neutral-70);
         }
