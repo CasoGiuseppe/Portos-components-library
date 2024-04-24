@@ -8,7 +8,7 @@ import {
     $uiDOMToastHeader,
     $uiDOMToastBody
 } from "./utilities"
-import type { UIToastType } from "../types"
+import type { Type } from "../types"
 
 describe("ToastBox component tests", () => {
     it("should mount", () => {
@@ -36,11 +36,10 @@ describe("ToastBox component tests", () => {
             expect(wrapper.props().id).toBe("toastId")
             expect(wrapper.props().type).toBe("info")
             expect(wrapper.props().tag).toBe("dialog")
-            expect(wrapper.props().timer).toEqual({
+            expect(wrapper.props().countDown).toEqual({
                 active: false,
                 duration: 3000
             })
-            expect(wrapper.props().visibility).toBe("hidden")
         })
     })
     describe("Event tests", () => {
@@ -57,7 +56,7 @@ describe("ToastBox component tests", () => {
                 props: {
                     id: "toastId",
                     canClose: true,
-                    timer: { active: false, duration: 3000 }
+                    countDown: { active: false, duration: 3000 }
                 },
                 slots: {
                     header: "this is a header",
@@ -69,22 +68,22 @@ describe("ToastBox component tests", () => {
             expect(wrapper.emitted()).toHaveProperty("close")
         })
 
-        it("should reset timer on mouseover if timer is active", async () => {
+        it("should reset countDown on mouseover if countDown is active", async () => {
             const clearTimeoutMock = vi.spyOn(global, "clearTimeout")
             const wrapper = mount(ToastBox, {
                 props: {
-                    timer: { active: true, duration: 3000 }
+                    countDown: { active: true, duration: 3000 }
                 }
             })
             await wrapper.trigger("mouseover")
             expect(clearTimeoutMock).toHaveBeenCalled()
         })
 
-        it("should restart timer on mouseleave if timer is active", async () => {
+        it("should restart countDown on mouseleave if countDown is active", async () => {
             const setTimeoutMock = vi.spyOn(global, "setTimeout")
             const wrapper = mount(ToastBox, {
                 props: {
-                    timer: { active: true, duration: 3000 }
+                    countDown: { active: true, duration: 3000 }
                 }
             })
             await wrapper.trigger("mouseleave")
@@ -96,11 +95,11 @@ describe("ToastBox component tests", () => {
     })
 
     describe("Timer tests", () => {
-        it("should start timer on mount if timer is active", () => {
+        it("should start countDown on mount if countDown is active", () => {
             const setTimeoutSpy = vi.spyOn(global, "setTimeout")
             mount(ToastBox, {
                 props: {
-                    timer: { active: true, duration: 3000 }
+                    countDown: { active: true, duration: 3000 }
                 }
             })
             expect(setTimeoutSpy).toHaveBeenCalledWith(
@@ -109,11 +108,11 @@ describe("ToastBox component tests", () => {
             )
         })
 
-        it("should not start timer on mount if timer is not active", () => {
+        it("should not start countDown on mount if countDown is not active", () => {
             const setTimeoutSpy = vi.spyOn(global, "setTimeout")
             mount(ToastBox, {
                 props: {
-                    timer: { active: false, duration: 3000 }
+                    countDown: { active: false, duration: 3000 }
                 }
             })
             expect(setTimeoutSpy).not.toHaveBeenCalled()
@@ -121,32 +120,15 @@ describe("ToastBox component tests", () => {
     })
 
     describe("ToastBox component structure tests", () => {
-        it("should contain an icon component", () => {
-            const wrapper = mount(ToastBox)
-            expect(wrapper.findComponent(BaseIcon).exists()).toBeTruthy()
-        })
-
         it("should correctly apply class based on type and variant", () => {
             const wrapper = mount(ToastBox, {
                 props: {
-                    type: "error" as UIToastType.ERROR,
+                    type: "error" as Type.ERROR,
                     variant: "inline"
                 }
             })
             const classList = wrapper.attributes("class")
             expect(classList).toContain("toast-box--is-error")
-        })
-
-        it("should update visibility class based on visibility prop changes", async () => {
-            const wrapper = mount(ToastBox, {
-                props: {
-                    visibility: "hidden"
-                }
-            })
-            expect(wrapper.attributes("class")).toContain("hidden")
-
-            await wrapper.setProps({ visibility: "visible" })
-            expect(wrapper.attributes("class")).toContain("visible")
         })
     })
 })
