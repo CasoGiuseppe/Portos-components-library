@@ -79,6 +79,9 @@ export { default as IconFilePlayCircle } from './file/IconFilePlayCircle.vue'
 export { default as IconFileShuffle } from './file/IconFileShuffle.vue'
 export { default as IconFileStopCircle } from './file/IconFileStopCircle.vue'
 export { default as IconFileBilling } from './file/IconFileBilling.vue'
+export { default as IconFilePdf } from './file/IconFilePdf.vue'
+export { default as IconFileExcel } from './file/IconFileExcel.vue'
+export { default as IconFileWord } from './file/IconFileWord.vue'
 
 // Location
 export { default as IconLocationBuilding } from './location/IconLocationBuilding.vue'

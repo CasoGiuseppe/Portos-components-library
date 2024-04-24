@@ -43,7 +43,6 @@ import { validateValueCollectionExists } from '@ui/utilities/validation/useValid
 import { isVnodeEmpty } from '@/shared/helpers';
 
 const slots = useSlots();
-const hasErrorSlot = !!slots.error;
 
 const hasSlotContent = (slot: Slot<any> | undefined) => {
   if (!slot) return false

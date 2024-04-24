@@ -314,6 +314,18 @@ export default [
             {
                 token: 'IconFileBilling',
                 copy: '<IconAsync name=IconFileBilling type=file />'
+            },
+            {
+                token: 'IconFilePdf',
+                copy: '<IconAsync name=IconFilePdf type=file />'
+            },
+            {
+                token: 'IconFileExcel',
+                copy: '<IconAsync name=IconFileExcel type=file />'
+            },
+            {
+                token: 'IconFileWord',
+                copy: '<IconAsync name=IconFileWord type=file />'
             }
         ]
     },

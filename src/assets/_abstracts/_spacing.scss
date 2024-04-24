@@ -16,6 +16,5 @@
     --spacing-120: #{px2rem(calc(useUnit.$unit-base * 12))}; // 96
     --spacing-130: #{px2rem(calc(useUnit.$unit-base * 15))}; // 120
     --spacing-140: #{px2rem(calc(useUnit.$unit-base * 16))}; // 128
-    --spacing-150: #{px2rem(calc(useUnit.$unit-base * 27))}; // 216
-    --spacing-160: #{px2rem(calc(useUnit.$unit-base * 27.5))}; // 220
+    --spacing-150: #{px2rem(calc(useUnit.$unit-base * 25))}; // 200
 }
