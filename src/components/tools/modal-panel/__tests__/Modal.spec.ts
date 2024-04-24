@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest"
 import { mount } from "@vue/test-utils"
-import ModalDialog from "../Modal.vue"
+import ModalDialog from "../ModalPanel.vue"
 import { Sizes } from "../types"
 import BaseIcon from "@/components/base/base-icon/BaseIcon.vue"
 

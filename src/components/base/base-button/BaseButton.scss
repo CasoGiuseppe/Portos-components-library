@@ -18,6 +18,7 @@
     align-items: center;
     display: flex;
     gap: var(--spacing-40, 0);
+    overflow: hidden;
     justify-content: center;
 
     border: none;
@@ -73,6 +74,19 @@
           box-shadow: 0 0 0 2px var(--color-outline, #000), 0 0 0 4px var(--color-neutral-10, #000);
         }
       }
+    }
+  }
+
+  &__label {
+    align-items: center;
+    display: flex;
+    gap: var(--spacing-40, 0);
+
+    [class*="dropdown"] &{
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 
@@ -167,6 +181,10 @@
       color: var(--color-neutral-50);
       padding: var(--spacing-30, 0) var(--spacing-40, 0);
       justify-content: space-between;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
 
       &-placeholder {
         &[data-checked="true"] {

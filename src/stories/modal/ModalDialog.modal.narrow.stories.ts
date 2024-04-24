@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/vue3"
-import ModalDialog from "@/components/tools/modal/Modal.vue"
+import ModalDialog from "@/components/tools/modal-panel/ModalPanel.vue"
 import BaseButton from "@/components/base/base-button/BaseButton.vue"
 import BaseIcon from "@/components/base/base-icon/BaseIcon.vue"
 import BaseLink from "@/components/base/base-link/BaseLink.vue"
-import { Sizes } from "@/components/tools/modal/types";
+import { Sizes } from "@/components/tools/modal-panel/types";
 
 const meta: Meta<typeof ModalDialog> = {
     title: "Modal/Narrow",
