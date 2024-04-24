@@ -1,0 +1,116 @@
+.toast-box {
+    $toastbox: &;
+
+    --border-color: var(--color-neutral-70, #000);
+    --background-color: var(--color-neutral-10, #fff);
+    --text-color: var(--color-neutral-70, #000);
+    --text-color-description: var(--color-neutral-60, grey);
+    --box-shadow: var(--shadow-200);
+
+    @include text-body-m--regular;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    display: flex;
+    gap: var(--spacing-30, 8px);
+    max-width: 441px;
+    border: var(--spacing-10, 2px) solid;
+    border-left: var(--spacing-30, 8px) solid;
+    border-color: var(--border-color);
+    border-radius: var(--radius-300, 8px);
+    padding: var(--spacing-50, 16px);
+    
+
+    &:is(dialog) {
+        inset: var(--spacing-110, 80px) var(--spacing-100, 64px) auto auto;
+        position: fixed;
+        box-shadow: var(--box-shadow);
+
+        @include media("medium") {
+            inset: var(--spacing-90, 48px) var(--spacing-70, 32px) auto auto;
+        }
+
+        @include media("small") {
+            inset: var(--spacing-50, 16px) var(--spacing-50, 16px) auto auto;
+        }
+    }
+
+    &__icon {
+        display: flex;
+        align-items: flex-start;
+    }
+    &__body {
+        flex: 2;
+    }
+
+    &__title {
+        @include text-body-m--bold;
+    }
+
+    &__description {
+        color: var(--text-color-description);
+    }
+    
+
+    &__actions {
+        display: flex;
+        align-items: flex-end;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: var(--spacing-30, 8px);
+
+        &-close {
+            align-items: center;
+            aspect-ratio: 1/1;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            width: var(--spacing-50, 0);
+
+            background: none;
+            border: none;
+
+            &::before,
+            &::after {
+                content: '';
+                height: 1px;
+                position: absolute;
+                width: 100%;
+
+                background: var(--color-neutral-70, #000);
+            }
+
+            &::before {
+                transform: rotate(45deg);
+            }
+
+            &::after {
+                transform: rotate(-45deg);
+            }
+        }
+
+        &-footer {
+            display: flex;
+            align-items: flex-end;
+        }
+    }
+
+    &--is{
+        &-success {
+            --border-color: var(--color-success-30, #000)
+        }
+    
+        &-info {
+            --border-color: var(--color-info-30, #000)
+        }
+    
+        &-warning {
+            --border-color: var(--color-warning-30, #000)
+        }
+    
+        &-error {
+            --border-color: var(--color-error-30, #000)
+        }
+    }
+
+    
+}
