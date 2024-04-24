@@ -18,6 +18,7 @@
                 :checked="option.value === modelValue"
                 :variant="variant"
                 :disabled="option.disabled || disabled"
+                :aria-disabled="option.disabled || disabled"
                 @change="emitChange(option.value)"
             />
             <label :for="`${id}-${index}`" class="base-radio__label">{{

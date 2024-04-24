@@ -4,8 +4,8 @@ import ModalDialog from "../Modal.vue"
 import { Sizes } from "../types"
 import BaseIcon from "@/components/base/base-icon/BaseIcon.vue"
 
-describe.skip("ModalDialog component tests", () => {
-    /* it("should mount", () => {
+describe("ModalDialog component tests", () => {
+    it("should mount", () => {
         const wrapper = mount(ModalDialog, {
             global: {
                 components: {
@@ -23,7 +23,7 @@ describe.skip("ModalDialog component tests", () => {
         })
 
         expect(wrapper.exists()).toBeTruthy()
-    }) */
+    })
 
     describe("When isOpen is modified,", () => {
         // REVIEW:
@@ -47,7 +47,7 @@ describe.skip("ModalDialog component tests", () => {
         //     await wrapper.vm.$nextTick()
         //     expect(window.HTMLDialogElement.prototype.showModal).toHaveBeenCalled()
         // })
-        /* it("dialog should hide if is false", async () => {
+        it("dialog should hide if is false", async () => {
             window.HTMLDialogElement.prototype.showModal = vi.fn()
 
             const wrapper = mount(ModalDialog, {
@@ -71,7 +71,7 @@ describe.skip("ModalDialog component tests", () => {
             expect(
                 window.HTMLDialogElement.prototype.showModal
             ).not.toHaveBeenCalled()
-        }) */
+        })
     })
 
     // REVIEW:
@@ -118,7 +118,7 @@ describe.skip("ModalDialog component tests", () => {
     // })
 
     describe("When slot is provided", () => {
-        /* it("renders header and default slots ", () => {
+        it("renders header and default slots ", () => {
             const wrapper = mount(ModalDialog, {
                 global: {
                     components: { BaseIcon },
@@ -137,6 +137,6 @@ describe.skip("ModalDialog component tests", () => {
 
             expect(wrapper.html()).toContain("Test Header")
             expect(wrapper.html()).toContain("Test Content")
-        }) */
+        })
     })
 })
