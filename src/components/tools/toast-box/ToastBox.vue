@@ -4,75 +4,57 @@
         :class="[
             'toast-box',
             `toast-box--is-${type}`,
-            visibility,
-            { 'toast-box--is-default': tag === 'dialog' }
+            `toast-box--is-${tag}`,
         ]"
         @mouseover="resetTimer"
         @mouseleave="startTimer"
         data-testID="ui-toast-box"
     >
-        <section class="toast-box__icon" v-if="$slots['icon']">
+        <picture
+            v-if="$slots['icon']"
+            class="toast-box__icon"
+        >
             <slot name="icon"></slot>
-        </section>
-        <section class="toast-box__middle">
+        </picture>
+        <section class="toast-box__body">
             <header
-                class="toast-box__middle-title"
+                class="toast-box__title"
                 data-testID="ui-toast-box-title"
                 v-if="$slots['title']"
             >
-                <!-- @slot for the toast title-->
+                <!-- @slot Title slot for show toast header-->
                 <slot name="title"></slot>
             </header>
             <p
-                class="toast-box__middle-description"
-                v-if="$slots['description']"
+                class="toast-box__description"
+                v-if="$slots['default']"
                 data-testID="ui-toast-box-description"
             >
-                <!-- @slot for the toast description-->
-                <slot name="description"></slot>
+                <!-- @slot Body slot for the toast description-->
+                <slot />
             </p>
         </section>
 
-        <section class="toast-box__actions">
-            <div>
-                <BaseIcon
-                    v-if="canClose"
-                    class="toast-box__actions-close"
-                    data-testID="ui-toast-box-close"
-                    :id="'CloseIcon'"
-                    :type="Types.NAVIGATION"
-                    :name="'IconNavigationCloseM'"
-                    @click="closeToast"
-                    :size="Sizes.XS"
-                ></BaseIcon>
-            </div>
-
-            <footer
-                class="toast-box__actions-footer"
-                v-if="$slots['footer']"
-                data-testID="ui-toast-box-footer"
+        <aside class="toast-box__actions">
+            <button
+                v-if="allowClose"
+                class="toast-box__actions-close"
+                @click="handleClose"
             >
-                <!-- @slot for the footer button-->
-                <slot name="footer"></slot>
-            </footer>
-        </section>
+            </button>
+
+            <!-- @slot Button custom action slot for the user handler-->
+            <slot name="action"></slot>
+        </aside>
     </component>
 </template>
 
 <script setup lang="ts">
-import { watch, ref, onMounted, onUnmounted, type PropType } from "vue"
-import BaseIcon from "@/components/base/base-icon/BaseIcon.vue"
-import { Types, Sizes } from "@/components/base/base-icon/types"
+import { ref, onMounted, onUnmounted, type PropType } from "vue"
 import { validateValueCollectionExists } from "@/components/utilities/validation/useValidation"
-import {
-    type UniqueId,
-    type UIToastTag,
-    UIToastType,
-    type UIToastVisibility,
-    type UIToastTimer
-} from "@/components/tools/toast-box/types"
+import { Tags, type UniqueId, Type, type IContdown } from "@/components/tools/toast-box/types"
 
-const props = defineProps({
+const { countDown } = defineProps({
     /**
      * Set the unique id of the ui button
      */
@@ -83,7 +65,7 @@ const props = defineProps({
     /**
      * Set the close icon visibility
      */
-    canClose: {
+     allowClose: {
         type: Boolean as PropType<boolean>,
         default: true
     },
@@ -91,78 +73,47 @@ const props = defineProps({
      * Set the toast type [success, warning, info, error]
      */
     type: {
-        type: String as PropType<UIToastType>,
-        default: UIToastType.INFO,
-        validator: (prop: UIToastType) =>
-            validateValueCollectionExists({
-                collection: UIToastType,
-                value: prop
-            })
+        type: String as PropType<Type>,
+        default: Type.INFO,
+        validator: (prop: Type) => validateValueCollectionExists({collection: Type,value: prop})
     },
     /**
      * Set tag type
      */
     tag: {
-        type: String as PropType<UIToastTag>,
-        default: "dialog",
-        validator: (prop: UIToastTag) => ["dialog", "aside"].includes(prop)
+        type: String as PropType<Tags>,
+        default: Tags.DIALOG,
+        validator: (prop: Tags) => validateValueCollectionExists({ collection: Tags, value: prop})
     },
 
-    timer: {
-        type: Object as PropType<UIToastTimer>,
-        default: { active: false, duration: 3000 } as UIToastTimer
-    },
-    /**
-     * Set the component visibility
+     /**
+     * Set timing to hide toast
      */
-    visibility: {
-        type: String as PropType<UIToastVisibility>,
-        default: "hidden",
-        validator: (prop: UIToastVisibility) =>
-            ["hidden", "visible"].includes(prop)
-    }
+    countDown: {
+        type: Object as PropType<IContdown>,
+        default: () => { return { active: false, duration: 3000 } }
+    },
 })
 
-const countDown = ref<ReturnType<typeof setTimeout> | null>(null)
-const emits = defineEmits(["close", "action"])
-let visibility = ref(props.visibility)
+const timeout = ref<ReturnType<typeof setTimeout> | null>(null)
+const emits = defineEmits(["close"])
 
 const startTimer = () => {
-    if (props.timer && props.timer.active) {
-        countDown.value = setTimeout(() => {
-            closeToast()
-        }, props.timer.duration)
-    }
+    if(!countDown?.active) return
+    timeout.value = setTimeout(() => handleClose() , countDown.duration)
 }
 
 const resetTimer = () => {
-    if (countDown.value) {
-        clearTimeout(countDown.value)
-    }
+    if (timeout.value)  clearTimeout(timeout.value)
 }
 
-const closeToast = () => {
-    visibility.value = "hidden"
-    emits("close")
-}
+const handleClose = () => emits("close")
 
-watch(
-    () => props.visibility,
-    (isVisible) => {
-        visibility.value = isVisible
-        if (isVisible === "visible") {
-            startTimer()
-        }
-    }
-)
-
-onMounted(() => {
-    startTimer()
-})
+onMounted(() => startTimer())
 
 onUnmounted(() => {
-    if (countDown.value) {
-        clearTimeout(countDown.value)
+    if (timeout.value) {
+        clearTimeout(timeout.value)
     }
 })
 </script>

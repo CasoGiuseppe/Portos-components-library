@@ -1,16 +1,18 @@
 export type UniqueId = string
 
-export enum UIToastType {
+export enum Type {
     SUCCESS = "success",
     WARNING = "warning",
     INFO = "info",
     ERROR = "error"
 }
 
-export type UIToastTag = "dialog" | "aside"
-export type UIToastVisibility = "visible" | "hidden"
+export enum Tags {
+    DIALOG = 'dialog',
+    ASIDE = 'aside',
+}
 
-export interface UIToastTimer {
+export interface IContdown {
     active: boolean
     duration: number
 }

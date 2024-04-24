@@ -1,9 +1,12 @@
 <template>
     <section>
-        <NavigationItemContextual> ciccio </NavigationItemContextual>
+        <ToastBox>
+            <template #title> Custom Header</template>
+            This is a very very very very looong text and much more more more large text
+        </ToastBox>
     </section>
 </template>
 
 <script setup lang="ts">
-import NavigationItemContextual from "./components/navigation/contextual/navigation-item/NavigationItemContextual.vue"
+import ToastBox from './components/tools/toast-box/ToastBox.vue';
 </script>
