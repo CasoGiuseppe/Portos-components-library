@@ -16,18 +16,23 @@
 
         &-drag-and-drop {
             @include text-body-s--regular;
-
+        
             display: grid;
-            place-items: center;
             color: var(--color-neutral-60);
-            text-align: center;
             border: 1px dashed var(--color-neutral-50);
             border-radius: var(--spacing-20);
             padding: var(--spacing-60);
             height: var(--spacing-150);
+            place-items: center;
+            text-align: center;
 
             button {
                 @include text-link-m--bold;
+            }
+
+            &[data-dragging="true"] {
+                background-color: var(--color-primary-10);
+                border: 1px dashed var(--color-neutral-40);
             }
         }
     }

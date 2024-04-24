@@ -6,8 +6,14 @@
 
         <form class="file-uploader__form" ref="form">
             <slot name="input" />
-            <section class="file-uploader__form-drag-and-drop">
-                <slot name="drag-and-drop" />
+            <section
+                class="file-uploader__form-drag-and-drop"
+                :data-dragging="dragging"
+                @drop.prevent="onFileDrop"
+                @dragover.prevent="dragging = true"
+                @dragleave.prevent="dragging = false"
+            >
+                    <slot name="drag-and-drop" />
 
                 <BaseLink
                     :label="message"
@@ -23,7 +29,7 @@
                     ref="inputFile"
                     hidden="hidden"
                     :accept="formats"
-                    @change="handleFileChange"
+                    @change="onFileChange"
                 />
             </section>
         
@@ -43,7 +49,7 @@
             <BaseLink
                 label="Cancelar subida de archivos"
                 :elementType="Element.BUTTON"
-                @click.prevent="handleCancel"
+                @click.prevent="onCancelForm"
             >
                 Cancelar
             </BaseLink>
@@ -57,11 +63,11 @@
 <script setup lang="ts">
 import { ref, type PropType } from 'vue';
 
-import { type UniqueId, type IFileIcons } from './types';
+import { type UniqueId, AttachModes } from './types';
 import BaseLink from '@/components/base/base-link/BaseLink.vue';
 import { Element } from '@/components/base/base-link/types';
 import BaseButton from '@/components/base/base-button/BaseButton.vue';
-import { Types } from '@/components/base/base-icon/types';
+import { fileIcons } from './helpers';
 
 const { label, accept, maxFileSize } = defineProps({
     /**
@@ -97,94 +103,43 @@ const { label, accept, maxFileSize } = defineProps({
 
 const inputFile = ref<HTMLInputElement>();
 const form = ref<HTMLFormElement>();
+const files = ref<FileList | null>(null);
 
 const formats = ref<string>(accept as string);
 const message = ref<string>(label as string);
-
-const files = ref<FileList | null>(null);
-
-const fileIcons: IFileIcons = {
-    'application/pdf': {
-        type: Types.FILE,
-        name: 'IconFilePdf'
-    },
-    'image/gif': {
-        type: Types.SYSTEM,
-        name: 'IconSystemImage'
-    },
-    'image/jpeg': {
-        type: Types.SYSTEM,
-        name: 'IconSystemImage'
-    },
-    'image/png': {
-        type: Types.SYSTEM,
-        name: 'IconSystemImage'
-    },
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': {
-        type: Types.FILE,
-        name: 'IconFileExcel'
-    },
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document': {
-        type: Types.FILE,
-        name: 'IconFileWord'
-    }
-};
+const dragging = ref<boolean>(false);
 
 const openFileInput = (): void => {
     inputFile?.value?.click();
 };
 
-const filterFiles = (files: File[], maxFileSize: number): FileList => {
-    const maxSizeBytes = (1024 * 1024) * maxFileSize;
-    const remainingFiles = new DataTransfer();
-
-    files.forEach((file): DataTransfer | undefined => {
-        if (file.size > maxSizeBytes) {
-            console.log('Los sentimos, pero el archivo supera los 200MB.');
-            return;
-        };
-
-        remainingFiles.items.add(file);
-    });
-
-    return remainingFiles.files;
-}
-
-const addFilesToDataTransfer = (dataTransfer: DataTransfer, files: FileList | null): DataTransfer => {
+const addFilesToDataTransfer = (
+    dataTransfer: DataTransfer,
+    files: FileList | null,
+    validateFile?: (file: File) => boolean
+): DataTransfer => {
     if (files) {
         Array.prototype.slice.call(files)
             .forEach((file: File) => {
-                dataTransfer.items.add(file)
+                if (validateFile) {
+                    validateFile(file) && dataTransfer.items.add(file);
+                    return;
+                };
+
+                dataTransfer.items.add(file);
             });
     };
 
     return dataTransfer;
 };
 
-const handleFileChange = (event: Event) => {
-    if (!(event.target instanceof HTMLInputElement)) {
-        return;
-    };
-
-    const filesToRender = new DataTransfer();
-
-    addFilesToDataTransfer(filesToRender, files.value);
-    addFilesToDataTransfer(filesToRender, event.target.files);
-    
-    const selectedFiles: File[] = Array.prototype.slice.call(filesToRender.files);
-    const remainingFiles = filterFiles(selectedFiles, maxFileSize as number);
-
-    event.target.files = remainingFiles;
-    files.value = remainingFiles;
-};
-
-const handleCancel = () => {
+const onCancelForm = () => {
     form.value?.reset();
     files.value = null;
 };
 
 const removeFile = (indexToRemove: number) => {
-    const currentFiles = Array.prototype.slice.call(inputFile.value?.files);
+    const currentFiles = Array.prototype.slice.call(files.value);
     const remainingFiles = new DataTransfer();
 
     currentFiles.filter((file, index): void => {
@@ -198,6 +153,72 @@ const removeFile = (indexToRemove: number) => {
     };
 
     files.value = remainingFiles.files;
+};
+
+const validateSize = (file: File, maxFileSize: number, ): boolean => {
+    const maxSizeBytes = (1024 * 1024) * maxFileSize;
+    return file.size < maxSizeBytes;
+};
+
+const validateFormat = (file: File, availableFormats: string[]): boolean => {
+    return availableFormats.includes(file.type);
+};
+
+interface FileValidations {
+    validator: (...args: any[]) => boolean;
+    args: any[]
+}
+
+const runFileValidations = (file: File, validations: FileValidations[]): boolean => {
+    return validations
+        .every(({ validator, args }) => validator(file, ...args))
+}
+
+const handleFiles = (event: Event, mode: AttachModes, targetFiles?: FileList | null) => {
+    if (!targetFiles) {
+        return;
+    };
+    
+    const filesToRender = new DataTransfer();
+    const availableFormats = accept.split(',');
+
+    addFilesToDataTransfer(filesToRender, files.value);
+    addFilesToDataTransfer(
+        filesToRender,
+        targetFiles,
+        (file: File) => runFileValidations(file, [
+            { validator: validateFormat, args: [availableFormats] },
+            { validator: validateSize, args: [maxFileSize as number] },
+        ])
+    );
+
+    if (event.target instanceof HTMLInputElement) {
+        event.target.files = filesToRender.files;
+    };
+
+    files.value = filesToRender.files; 
+}
+
+const onFileChange = (event: Event): void => {
+    const selectedFiles = event?.target as HTMLInputElement;
+
+    handleFiles(
+        event,
+        AttachModes.BUTTON,
+        selectedFiles?.files
+    );
+};
+
+const onFileDrop = (event: DragEvent): void => {
+    const droppedFiles = event?.dataTransfer?.files;
+
+    handleFiles(
+        event,
+        AttachModes.DRAG,
+        droppedFiles
+    );
+
+    dragging.value = false;
 }
 </script>
 

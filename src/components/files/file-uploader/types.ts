@@ -10,3 +10,8 @@ interface IIconProps {
 export interface IFileIcons {
     [key: string]: IIconProps;
 }
+
+export enum AttachModes {
+    DRAG = 'drag',
+    BUTTON = 'button'
+}
