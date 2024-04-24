@@ -29,7 +29,6 @@ describe("ModalDialog component tests", () => {
         // REVIEW:
         // it("dialog should appear if is true", async () => {
         //     window.HTMLDialogElement.prototype.showModal = vi.fn()
-
         //     const wrapper = mount(ModalDialog, {
         //         global: {
         //             components: {
@@ -45,9 +44,7 @@ describe("ModalDialog component tests", () => {
         //             size: Sizes.NARROW
         //         }
         //     })
-
         //     await wrapper.vm.$nextTick()
-
         //     expect(window.HTMLDialogElement.prototype.showModal).toHaveBeenCalled()
         // })
         it("dialog should hide if is false", async () => {
