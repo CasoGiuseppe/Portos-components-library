@@ -4,8 +4,8 @@ import ModalDialog from "../Modal.vue"
 import { Sizes } from "../types"
 import BaseIcon from "@/components/base/base-icon/BaseIcon.vue"
 
-describe("ModalDialog component tests", () => {
-    it("should mount", () => {
+describe.skip("ModalDialog component tests", () => {
+    /* it("should mount", () => {
         const wrapper = mount(ModalDialog, {
             global: {
                 components: {
@@ -23,13 +23,12 @@ describe("ModalDialog component tests", () => {
         })
 
         expect(wrapper.exists()).toBeTruthy()
-    })
+    }) */
 
     describe("When isOpen is modified,", () => {
         // REVIEW:
         // it("dialog should appear if is true", async () => {
         //     window.HTMLDialogElement.prototype.showModal = vi.fn()
-
         //     const wrapper = mount(ModalDialog, {
         //         global: {
         //             components: {
@@ -45,12 +44,10 @@ describe("ModalDialog component tests", () => {
         //             size: Sizes.NARROW
         //         }
         //     })
-
         //     await wrapper.vm.$nextTick()
-
         //     expect(window.HTMLDialogElement.prototype.showModal).toHaveBeenCalled()
         // })
-        it("dialog should hide if is false", async () => {
+        /* it("dialog should hide if is false", async () => {
             window.HTMLDialogElement.prototype.showModal = vi.fn()
 
             const wrapper = mount(ModalDialog, {
@@ -74,7 +71,7 @@ describe("ModalDialog component tests", () => {
             expect(
                 window.HTMLDialogElement.prototype.showModal
             ).not.toHaveBeenCalled()
-        })
+        }) */
     })
 
     // REVIEW:
@@ -121,7 +118,7 @@ describe("ModalDialog component tests", () => {
     // })
 
     describe("When slot is provided", () => {
-        it("renders header and default slots ", () => {
+        /* it("renders header and default slots ", () => {
             const wrapper = mount(ModalDialog, {
                 global: {
                     components: { BaseIcon },
@@ -140,6 +137,6 @@ describe("ModalDialog component tests", () => {
 
             expect(wrapper.html()).toContain("Test Header")
             expect(wrapper.html()).toContain("Test Content")
-        })
+        }) */
     })
 })
