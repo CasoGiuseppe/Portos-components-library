@@ -1,12 +1,14 @@
 <template>
-	<section
+	<fieldset
 		class="base-dropdown"
 		data-testID="ui-dropdown"
 		v-click-outside="closeList"
 		tabindex="0"
+		:disabled="disabled"
+		:required="required"
 	>
 		<h2
-			v-if="!!slots['header']"
+			v-if="$slots['header']"
 			class="base-dropdown__header"
 		>
 			<slot name="header" />
@@ -15,7 +17,6 @@
 		<BaseButton
 			data-testID="ui-dropdown-button"
 			fullSize
-			:disabled="!!disabled"
 			:type="Types.DROPDOWN"
 			:active="isActive"
 			@send="toggleList"
@@ -32,11 +33,11 @@
 		>
 			<slot name="list" />
 		</aside>
-	</section>
+	</fieldset>
 </template>
 
 <script setup lang="ts">
-import { ref, useSlots, watch, type PropType } from 'vue';
+import { ref, watch, type PropType } from 'vue';
 
 import { type UniqueId } from './types';
 import BaseButton from '@/components/base/base-button/BaseButton.vue';
@@ -70,12 +71,19 @@ const props = defineProps({
      * Set disabled status
      */
     disabled: {
-        type: Boolean as PropType<Boolean>,
-        default: false,
+        type: Boolean as PropType<boolean>,
+    	default: false
+    },
+
+	/**
+     * Set required status
+     */
+	 required: {
+        type: Boolean as PropType<boolean>,
+    	default: false
     },
 });
 
-const slots = useSlots();
 const isActive = ref<boolean>(false);
 
 watch(() => props.value, newValue => {

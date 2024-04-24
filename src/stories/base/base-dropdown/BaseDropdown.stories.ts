@@ -58,6 +58,7 @@ const meta: Meta = {
         value: { control: 'text' },
         current: { control: 'text' },
         disabled: { control: 'radio', options: [true, false] },
+        required: { control: 'radio', options: [true, false] },
         error: { control: 'text' },
     },
     
@@ -65,6 +66,7 @@ const meta: Meta = {
         id: 'dropdownId',
         current: 'option5',
         disabled: false,
+        required: false,
         list: List,
     }
 } as Meta<typeof BaseList>;
@@ -90,10 +92,6 @@ const Templates: Story = {
             <BaseDropdown v-bind="args">
                 <template #header>
                     <label>Label</label>
-                    <BaseIcon
-                        name="IconFeedbackAnswer"
-                        type="feedback"
-                    />
                 </template>
                 <template #list>
                     <BaseList
