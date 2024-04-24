@@ -13,7 +13,7 @@
         >
             <label
                 class="base-input__label"
-                :data-required="!required ? '(optional)' : null"
+                :data-required="!required ? '(opcional)' : null"
                 :for="id"
             >
                 <!-- @slot Slot for input label -->
