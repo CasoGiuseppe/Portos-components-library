@@ -28,10 +28,10 @@ const Template: Story = {
         template: `
         <section style="heigth: 100vh;">
           <NavigationContextualToolbar :title="args.title">
-          <ul>
-            <li>lista 1</li>
-            <li>lista 2</li>
-            <li>lista 3</li>
+          <ul style="width: 150px; text-align: center;">
+            <li style="padding: 0.5rem 1rem;">lista 1</li>
+            <li style="padding: 0.5rem 1rem; border-top: 1px solid lightgrey; border-bottom: 1px solid lightgrey;">lista 2</li>
+            <li style="padding: 0.5rem 1rem;">lista 3</li>
           </ul>
           </NavigationContextualToolbar>
                    
