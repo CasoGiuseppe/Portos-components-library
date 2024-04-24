@@ -22,8 +22,10 @@
       :aria-label="label"
       @click="handleClick"
     >
-      <!-- @slot Default slot for button label -->
-      <slot />
+      <p class="base-button__label">
+        <!-- @slot Default slot for button label -->
+        <slot />
+      </p>
     </button>
 
     <p
@@ -43,8 +45,6 @@ import { validateValueCollectionExists } from '@ui/utilities/validation/useValid
 import { isVnodeEmpty } from '@/shared/helpers';
 
 const slots = useSlots();
-const hasErrorSlot = !!slots.error;
-
 const hasSlotContent = (slot: Slot<any> | undefined) => {
   if (!slot) return false
   return !isVnodeEmpty(slot())

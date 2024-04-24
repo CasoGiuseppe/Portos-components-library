@@ -25,7 +25,12 @@ body {
 
     @include media('small') {
         margin: 0 var(--spacing-60, 0);
-        max-width: useMedia.$grid-sm * 1px
+        max-width: useMedia.$grid-sm * 1px;
+
+        @media screen and (max-width: 1023px) {
+           max-width: 100%;
+           margin: 0;
+        }
     }
 
     &__row {
@@ -40,11 +45,18 @@ body {
         @include media('medium') {
             gap: var(--spacing-50, 0)
         }
+
+        @media screen and (max-width: 1023px) {
+            flex-direction: column;
+        }
     }
 
     *[class*="grid__col"] {
-        display: flex;
         align-items: center;
+        display: flex;
+        @media screen and (max-width: 1023px) {
+            flex: 1;
+        }
     }
 
     @each $modifier , $breakpoint in useGrid.$map-grid {

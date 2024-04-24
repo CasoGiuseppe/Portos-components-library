@@ -1,5 +1,6 @@
 .base-dropdown {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   position: relative;
   width: 100%;
   gap: var(--spacing-30);
