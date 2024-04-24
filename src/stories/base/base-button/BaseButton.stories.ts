@@ -48,7 +48,7 @@ const Templates: Story = {
                     'display' : 'flex',
                     'gap' : '10px',
                     'padding' : '10px',
-                    'max-width' : '50%',
+                    'max-width' : '100%',
                     'background-color' : (
                         args.variant === true &&
                         args.type !== 'dropdown' &&

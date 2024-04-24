@@ -22,8 +22,10 @@
       :aria-label="label"
       @click="handleClick"
     >
-      <!-- @slot Default slot for button label -->
-      <slot />
+      <p class="base-button__label">
+        <!-- @slot Default slot for button label -->
+        <slot />
+      </p>
     </button>
 
     <p

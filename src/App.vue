@@ -1,8 +1,5 @@
 <template>
     <section style="width: 344px;">
-        <!-- <NavigationItemContextual>
-            ciccio
-        </NavigationItemContextual> -->
         <FileUploader>
             <template #title>
                 Añadir Documento
@@ -50,7 +47,6 @@
 </template>
 
 <script setup lang="ts">
-// import NavigationItemContextual from './components/navigation/contextual/navigation-item/NavigationItemContextual.vue';
 import FileUploader from '@/components/files/file-uploader/FileUploader.vue';
 import BaseInput from '@/components/base/base-input/BaseInput.vue';
 import BaseIcon from '@/components/base/base-icon/BaseIcon.vue';
